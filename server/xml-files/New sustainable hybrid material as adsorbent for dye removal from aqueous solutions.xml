@@ -1,0 +1,305 @@
+<document>
+	<file>./pdf-files/New sustainable hybrid material as adsorbent for dye removal from aqueous solutions.pdf</file>
+	<title>New sustainable hybrid material as adsorbent for dye removal from aqueous solutions</title>
+	<date>2017</date>
+	<doi_number>10.1016/j.jcis.2016.10.034</doi_number>
+	<img_preview_path>./pdf-preview-images/New sustainable hybrid material as adsorbent for dye removal from aqueous solutions.jpeg</img_preview_path>
+	<authors>
+		<author>Ahmed Salama</author>
+	</authors>
+	<abstract>Cellulose grafted with soy protein isolate (SPI), sustainable and cost effective material, was investigated as a bioactive material for calcium phosphate mineralization. The formation of hydroxyapatite rod-like nanocrystals with $50 nm diameter was confirmed by different characterization tools. Cellulose grafted SPI/hydroxyapatite hybrid was evaluated as recyclable adsorbent for methylene blue (MB) from aqueous solutions using batch adsorption technique. The new sustainable material exhibited adsorption capacity up to 454 mg/g. Adsorption data were examined using different kinetics and isotherms to investigate the adsorption mechanism. After four adsorption-desorption cycles, the efficiency of MB removal is $95%. These results present new sustainable, cost effective and reusable hybrid material as a promising adsorbent for organic dyes removal from waste water.</abstract>
+	<methods>
+		<method>
+			<heading>Preparation of cellulose grafted soy protein isolate (SPI)</heading>
+			<text>SPI was prepared as follow; 200 gm of defatted soy flour was stirred in 1200 mL of distilled water at pH 9.0 with continuous stirring for 2 h. After removing the insoluble portion, the pH was decreased to 4.5 to precipitate the soluble protein portion. SPI was washed with distilled water and then dried at room temperature.
+
+Cellulose (microcrystalline extra pure, from Acros) oxidation at the C2AC3 position was carried out with NaIO 4 and the aldehyde content of oxidized cellulose was evaluated as reported in the literature [18]. Cellulose containing aldehyde was reacted with SPI dissolved in aqueous acetic acid solution for 6 h. The Schiff base product was filtered, washed and dried at room temperature. Calcium phosphate mineralization was performed by immersing cellulose grafted with SPI blend in a solution containing calcium and phosphate ions as described in our previous work [12]. The mineralization process continuous for 7 days at pH 7.4.
+
+Cellulose grafted SPI/hydroxyapatite hybrid was investigated as adsorbent for MB removal from waste water. Batch adsorption experiments were conducted in 50 mL glass bottles with 50 mg dried hybrid. For desorption study, MB-loaded hybrid was agitated with 10 mL of 0.1 M HCl for 24 h. The adsorbent was dried at 60 °C and adsorption-desorption cycle was repeated several times. After adsorption and desorption at a desired condition, the solution was separated from the adsorbent with a syringe filter and the dye concentration was measured at maximum absorbance 670 nm using spectrophotometer UNICO UV-2000. Data are representative of at least three experiments, and standard deviations are less than 7.0%.</text>
+		</method>
+		<method>
+			<heading>Characterization</heading>
+			<text>Fourier transform infrared spectroscopy (FT-IR) was done on a FTIR (Mattson 5000 FTIR spectrometer) using KBr discs in the range of 500-4000 cm À1 . Scanning electron microscopy was done on Model Quanta 250 FEG (Field Emission Gun) attached with EDX unit (Energy Dispersive X-ray Analyses. Transmission electron microscope (TEM) images were taken with a JEOL JEM-2100 electron microscopy at 100kÂ magnification, with an acceleration voltage of 120 kV. XRD were performed using X-ray diffractometer (PANalytical, Netherlands) with a monochromatic Cu Ka radiation source (k = 0.154 nm) in step-scan mode with a 2h angle ranging from 5 to 70°.</text>
+		</method>
+		<method>
+			<heading>Cellulose grafted SPI/hydroxyapatite hybrid characterization</heading>
+			<text>The current study evaluates a new sustainable, available and cheap biomaterial as adsorbent for organic dyes removal from waste water. The current hybrid material was synthesized through hydroxyapatite nanocrystals mineralization in the presence of cellulose grafted with SPI blend. After subjecting to periodate oxidation, the aldehyde content of oxidized cellulose is 44% which is close to the results obtained by Kumari and Chauhan [18]. These aldehyde groups are expected to form Schiff base upon reaction with free amino groups presented in SPI. FTIR spectra was used to prove the oxidation of cellulose, Schiff base formation and calcium phosphate mineralization. From Fig. 1, oxidized cellulose showed a new band at 1736 cm À1 characteristic for AC@O stretching of aldehyde groups. Moreover, increasing the width and intensity of peak at 3435 cm À1 , reflect the hydrogen bond formation between functional groups in cellulose and SPI. Calcium phosphate mineralization was confirmed by the presence of the characteristic m3, m4 and m1 vibration modes of PO 4 3À group [12].
+
+Oxidized cellulose grafted SPI blend before and after calcium phosphate mineralization were examined using SEM and TEM as shown in Fig. 2. The morphology of oxidized cellulose grafted with SPI (Fig. 2A) is relatively homogenous, may be due to the Schiffbase formation and also for intermolecular hydrogen bonding between the two polymers. After calcium phosphate mineralization, the morphology became rougher with around 500 nm spherical calcium phosphate particles (Fig. 2B). Moreover, cellulose grafted SPI/calcium phosphate hybrid exhibits Ca/P ratio 1.66 ± 0.1 very close to the stoichiometric ratio of hydroxyapatite (1.67).
+
+The internal shape of mineralized calcium phosphate in Fig. 2C exhibits formation nano-rods with diameter less than 50 nm. The crystallinity and the lattice structure of the mineralized rods was further investigated by high resolution TEM. The interplanar spacing is $0.34 nm which may refer to (0 0 2) hydroxyapatite face.
+
+The XRD patterns of oxidized cellulose grafted SPI before and after calcium phosphate mineralization are displayed in Fig. 3A andB. In addition to the characteristic reflections at 9.1 and 22.2°of cellulose grafted with SPI, the mineralized hybrid shows new reflections at 2h (°) = 26, 29.1, 32.8, 35.5, 43.4 and 49.6 which can be indexed to (0 0 2), (1 2 0), (0 3 0), (3 0 1), (1 1 3) and (1 2 3) planes of hydroxyapatite.</text>
+		</method>
+	</methods>
+	<full_text>Removing synthetic dyes from waste effluents has become a challenge area to prevent their environmental hazard in particular for aquatic bio-systems [1,2]. Synthetic dyes are biologically non-degradable due to their aromatic structure and their synthetic origin. MB is a typical example of industrial relevant toxic cationic dyes, with known harmful effects on humans [3]. Recently, searching for ecofriendly, sustainable and cost effective technologies for dyes removal has gained considerable interest. Among these technologies, adsorption has emerging as an effective and economic technique for decontamination of organic pollutants from waste waters [4,5]. Promising studies investigated inorganic materials such as calcium phosphate [6], sodium titanate [7], silica [8,9] and metal oxides [10] as adsorbents for water purification.
+
+Polysaccharides, such as cellulose, are actually produced in great quantities with a low cost and promising alternatives in biomaterials [11][12][13]. Therefore, cellulose based materials are more likely to find affordable applications as adsorbents to remove heavy metals and organic pollutants from waste water [14]. However, the low functionality of cellulose hampers its uses as dye adsorbent. Recent trails were carried out to investigate the capability of organic-inorganic hybrid materials as adsorbent for waste water treatment. For example, composite material from hydroxyapatite imbedded into chitosan was used as adsorbent for removal of Congo red dye from aqueous solutions. The adsorption results showed that the chitosan/hydroxyapatite composite exhibited adsorption capacity much higher than pure chitosan and hydroxyapatite [15].
+
+SPI is composed of Glycinin (7S) and b-conglycinin (11S) which containing 20 different amino acids. This versatile structure provide various polar functional groups which can undergo further reactions to improve protein properties [16]. However, SPI suffers from drawbacks like solubility in acidic or basic mediums which hampers its applications in adsorption. There is a recent trial for using SPI as sustainable material for MB adsorption. Feng Liu et al. prepared SPI immobilized on deacetylated konjac glucomannan to remove MB from waste water. The porous composite material reached adsorption capacity of 272 mg/g [17].
+
+In the current study, cellulose grafted SPI/hydroxyapatite, as a sustainable hybrid material, was successfully achieved by calcium phosphate mineralization in the presence of cellulose grafted SPI. The new hybrid material was introduced as a new adsorbent and its effectiveness was examined for removing MB, as representative organic pollutant, from aqueous solutions. The effect of variation of pH, time and initial concentration on the MB adsorption was discussed.
+
+SPI was prepared as follow; 200 gm of defatted soy flour was stirred in 1200 mL of distilled water at pH 9.0 with continuous stirring for 2 h. After removing the insoluble portion, the pH was decreased to 4.5 to precipitate the soluble protein portion. SPI was washed with distilled water and then dried at room temperature.
+
+Cellulose (microcrystalline extra pure, from Acros) oxidation at the C2AC3 position was carried out with NaIO 4 and the aldehyde content of oxidized cellulose was evaluated as reported in the literature [18]. Cellulose containing aldehyde was reacted with SPI dissolved in aqueous acetic acid solution for 6 h. The Schiff base product was filtered, washed and dried at room temperature. Calcium phosphate mineralization was performed by immersing cellulose grafted with SPI blend in a solution containing calcium and phosphate ions as described in our previous work [12]. The mineralization process continuous for 7 days at pH 7.4.
+
+Cellulose grafted SPI/hydroxyapatite hybrid was investigated as adsorbent for MB removal from waste water. Batch adsorption experiments were conducted in 50 mL glass bottles with 50 mg dried hybrid. For desorption study, MB-loaded hybrid was agitated with 10 mL of 0.1 M HCl for 24 h. The adsorbent was dried at 60 °C and adsorption-desorption cycle was repeated several times. After adsorption and desorption at a desired condition, the solution was separated from the adsorbent with a syringe filter and the dye concentration was measured at maximum absorbance 670 nm using spectrophotometer UNICO UV-2000. Data are representative of at least three experiments, and standard deviations are less than 7.0%.
+
+Fourier transform infrared spectroscopy (FT-IR) was done on a FTIR (Mattson 5000 FTIR spectrometer) using KBr discs in the range of 500-4000 cm À1 . Scanning electron microscopy was done on Model Quanta 250 FEG (Field Emission Gun) attached with EDX unit (Energy Dispersive X-ray Analyses. Transmission electron microscope (TEM) images were taken with a JEOL JEM-2100 electron microscopy at 100kÂ magnification, with an acceleration voltage of 120 kV. XRD were performed using X-ray diffractometer (PANalytical, Netherlands) with a monochromatic Cu Ka radiation source (k = 0.154 nm) in step-scan mode with a 2h angle ranging from 5 to 70°.
+
+The current study evaluates a new sustainable, available and cheap biomaterial as adsorbent for organic dyes removal from waste water. The current hybrid material was synthesized through hydroxyapatite nanocrystals mineralization in the presence of cellulose grafted with SPI blend. After subjecting to periodate oxidation, the aldehyde content of oxidized cellulose is 44% which is close to the results obtained by Kumari and Chauhan [18]. These aldehyde groups are expected to form Schiff base upon reaction with free amino groups presented in SPI. FTIR spectra was used to prove the oxidation of cellulose, Schiff base formation and calcium phosphate mineralization. From Fig. 1, oxidized cellulose showed a new band at 1736 cm À1 characteristic for AC@O stretching of aldehyde groups. Moreover, increasing the width and intensity of peak at 3435 cm À1 , reflect the hydrogen bond formation between functional groups in cellulose and SPI. Calcium phosphate mineralization was confirmed by the presence of the characteristic m3, m4 and m1 vibration modes of PO 4 3À group [12].
+
+Oxidized cellulose grafted SPI blend before and after calcium phosphate mineralization were examined using SEM and TEM as shown in Fig. 2. The morphology of oxidized cellulose grafted with SPI (Fig. 2A) is relatively homogenous, may be due to the Schiffbase formation and also for intermolecular hydrogen bonding between the two polymers. After calcium phosphate mineralization, the morphology became rougher with around 500 nm spherical calcium phosphate particles (Fig. 2B). Moreover, cellulose grafted SPI/calcium phosphate hybrid exhibits Ca/P ratio 1.66 ± 0.1 very close to the stoichiometric ratio of hydroxyapatite (1.67).
+
+The internal shape of mineralized calcium phosphate in Fig. 2C exhibits formation nano-rods with diameter less than 50 nm. The crystallinity and the lattice structure of the mineralized rods was further investigated by high resolution TEM. The interplanar spacing is $0.34 nm which may refer to (0 0 2) hydroxyapatite face.
+
+The XRD patterns of oxidized cellulose grafted SPI before and after calcium phosphate mineralization are displayed in Fig. 3A andB. In addition to the characteristic reflections at 9.1 and 22.2°of cellulose grafted with SPI, the mineralized hybrid shows new reflections at 2h (°) = 26, 29.1, 32.8, 35.5, 43.4 and 49.6 which can be indexed to (0 0 2), (1 2 0), (0 3 0), (3 0 1), (1 1 3) and (1 2 3) planes of hydroxyapatite.
+
+Developing a new sustainable and efficient material for dye sequestration is necessary these days for water purification. Herein, the as-synthesized cellulose grafted SPI/hydroxyapatite hybrid was evaluated for the removal of MB from aqueous solutions. The current study investigates various parameters such as solution pH, equilibrium time and the initial concentration of the dye in order to evaluate the potential of the current hybrid as dye adsorbent.
+
+The pH value can affect the surface charge of the adsorbent and ionization degree of the dye [4]. In the current study, the pH dependence of MB adsorption was studied and the results were showed in Fig. 4. Upon increasing the pH from 2 to 7, the MB  adsorption slightly increased from 40 to 66 mg/g, respectively. However, after pH 7, the MB adsorption was highly increased to 90 mg/g. This fast increase may be due to the negatively charged surface of hydroxyapatite after its zero charge ($pH 7.2) which enhance electrostatic attraction with MB. These results indicate the role of hydroxyapatite to improve the adsorption capacity of the hybrid material.
+
+In order to elucidate the rate of adsorption and the adsorption mechanism of MB onto cellulose grafted SPI/hydroxyapatite hybrid, the adsorption capacities were calculated at different times. Fig. 5 exhibits fast adsorption process in the initial 70 min owing to the presence of many free adsorption sites on the hybrid surface. Then, the adsorption reached saturation after 80 min, which selected as equilibrium time for subsequent experiments. Pseudo-first-order and Pseudo-second-order were applied to analyze the adsorption data as shown in Eqs. ( 1) and ( 2) respectively.
+
+where q t and q e are the adsorption capacities (mg/g) at any time t (min.) and at equilibrium, respectively; k 1 (min À1 ) and k 2 (g mg À1min À1 ) are the kinetic rate constants for the pseudo-first-order and pseudo-second-order models, respectively. The kinetic adsorption parameters for the MB adsorption were summarized in Table 1. The correlation coefficient value R 2 of pseudo-second-order kinetic equation is 0.995, suggesting that the adsorption system is a chemical process including sharing or transferring the electrons.
+
+The intra-particle diffusion model was applied to further investigate the adsorption of MB molecules onto cellulose grafted SPI/ hydroxyapatite hybrid. The linear form of this model is described in Eq. (3) [19].
+
+where k (mg g À1 min À1/2 ) is the rate constant of intra-particle diffusion. Plots q t verse t 1 2 revealed multilinear segments which means that the adsorption process is controlled by more than one step. As shown in Table 1, the diffusion rate constants of the three stages follow the order of: k i,1 &gt; k i,2 &gt; k i,3 . The initial step corresponds to the rapid diffusion of MB molecules to the outer surface of the hybrid. The second step shows the diffusion of MB molecules within the pores of the hybrid and the last step represents the diffusion of dye molecules into the interior of the hybrid. The presence of multilinearity suggests that both the intra-particle diffusion and boundary layer adsorption control the rate of the adsorption process. The first diffusion stage is the fastest and higher than the others which might be attributed to the existence of active phosphate and carboxylate sites on hybrid surfaces. Fig. 6 shows the effect of MB initial concentration on the adsorption capacity of cellulose grafted SPI/hydroxyapatite hybrid. MB adsorption increases from 22.5 to 441 mg/g with MB initial concentration increasing from 25 to 1500 ppm, respectively. The increasing of initial MB concentration was accompanied by increasing of driving force for transferring MB molecules from aqueous phase to solid phase which enhanced the interaction between MB and hybrid.
+
+For better understanding the adsorption data, Langmuir and Freundlich Eqs. (( 4) and ( 5) respectively) were employed to interpret adsorption isotherm.
+
+The Langmuir isotherm was expressed as:
+
+where q e is the amount of adsorbed MB at equilibrium (mg/g), C e is the equilibrium concentration of MB in the solution (mg/L), q max represents the maximum sorption efficiency of MB that could be adsorbed on the hybrid (mg/g), and K s is a constant of the Langmuir model (mg/L).   The plot of the experimental C e /q e against C e for the experimental data exhibited high correlation coefficient (R 2 &gt; 0.99) of the linearized Langmuir equation (Table 2). These results indicate that the Langmuir model can describe the adsorption of MB on cellulose grafted SPI/hydroxyapatite hybrid. From the slope and the intercept of the straight line, the values of q max and K s are estimated and were 454 mg/g and 29.22 mg/L, respectively. The Langmuir isotherm model assumes the monolayer adsorption of the MB on the surface of cellulose grafted SPI/hydroxyapatite hybrid and all adsorption sites have equal energies and enthalpies of adsorption [16].
+
+The Freundlich isotherm was expressed as:
+
+where P is a constant representing the adsorption capacity (mg/g, and n is a constant depicting the adsorption intensity (dimensionless). Freundlich model is based on adsorption on heterogeneous surfaces. The regression coefficient value (0.831) indicates that this model does not describe very well the adsorption processes of MB on the hybrid. The values of the Freundlich model constants P and n are 30 and 2.29 respectively. The importance of Langmuir isotherm can be expressed in terms of a dimensionless separation constant factor (R L ). [20]. The R L values for the adsorption process at different concentrations are in the range between 0 and 1. This result indicates that the adsorption of MB on the hybrid is favorable.
+
+Desorption and reusability of adsorbents are crucial parameter if the material has to be applied in industrial applications. From the pH study, It is clear that desorption would be triggered in acidic solution. The adsorption-desorption cycles of cellulose grafted SPI/hydroxyapatite hybrid was repeated four times and the results are displayed in Fig. 7. In 0.1 M HCl solution the adsorption capacity decreased slightly from 99 in the first cycle to 95 after the fourth cycle. Cellulose grafted SPI/hydroxyapatite hybrid can be applied repeatedly as an efficient adsorbent for cationic dyes removal.
+
+The current study demonstrated an environmentally friendly, efficient and cost effective dye adsorbent for waste water treatment. Cellulose grafted SPI/hydroxyapatite hybrid exhibited high removal capacity and high adsorption-desorption efficiency toward MB. Pseudo-second-order and Langmuir isotherm models interpret better fitness the MB adsorption onto cellulose grafted SPI/hydroxyapatite hybrid material. These results showed that cellulose grafted SPI/hydroxyapatite hybrid may be reported as a promising sustainable material for industrial and environmental applications especially pollutants removal from waste water.
+
+Fig. 7. Reusability of cellulose grafted/SPI/hydroxyapatite hybrid for MB adsorption.</full_text>
+	<references>
+		<reference>
+			<title>ACS Appl. Mater. Interfaces</title>
+			<authors>
+				<author>J Ma</author>
+				<author>F Yu</author>
+				<author>L Zhou</author>
+				<author>L Jin</author>
+				<author>M Yang</author>
+				<author>J Luan</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Ind. Eng. Chem. Res</title>
+			<authors>
+				<author>R Gong</author>
+				<author>J Ye</author>
+				<author>W Dai</author>
+				<author>X Yan</author>
+				<author>J Hu</author>
+				<author>X Hu</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Desalination</title>
+			<authors>
+				<author>L Wang</author>
+				<author>J Zhang</author>
+				<author>A Wang</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Int. J. Biol. Macromol</title>
+			<authors>
+				<author>A Salama</author>
+				<author>N Shukry</author>
+				<author>M</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>M Monier</author>
+				<author>D Ayad</author>
+				<author>Y Wei</author>
+				<author>A Sarhan</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Desalination</title>
+			<authors>
+				<author>H Boujaady</author>
+				<author>A Rhilassi</author>
+				<author>M Bennani-Ziatni</author>
+				<author>R Hamri</author>
+				<author>A Taitai</author>
+				<author>J Lacout</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>ACS Appl. Mater. Interfaces</title>
+			<authors>
+				<author>M Feng</author>
+				<author>W You</author>
+				<author>Z Wu</author>
+				<author>Q Chen</author>
+				<author>H Zhan</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>K Parida</author>
+				<author>S Dash</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>K Parida</author>
+				<author>K Mishra</author>
+				<author>S Dash</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>E Haque</author>
+				<author>J Jun</author>
+				<author>S Jhung</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>J. Carbohydr. Chem</title>
+			<authors>
+				<author>A Salama</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Mater. Lett</title>
+			<authors>
+				<author>A Salama</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Beilstein J. Nanotechnol</title>
+			<authors>
+				<author>A Salama</author>
+				<author>M Neumann</author>
+				<author>C Günter</author>
+				<author>A Taubert</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Carbohydr. Polym</title>
+			<authors>
+				<author>M Monier</author>
+				<author>D Abdel-Latif</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>H Hou</author>
+				<author>R Zhou</author>
+				<author>P Wu</author>
+				<author>L Wu</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Int. J. Biol. Macromol</title>
+			<authors>
+				<author>F Liu</author>
+				<author>H Zou</author>
+				<author>J Peng</author>
+				<author>J Hu</author>
+				<author>H Liu</author>
+				<author>Y Chen</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>F Liu</author>
+				<author>H Zou</author>
+				<author>J Hu</author>
+				<author>H Liu</author>
+				<author>J Peng</author>
+				<author>Y Chen</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Appl. Mater. Interfaces</title>
+			<authors>
+				<author>S Kumari</author>
+				<author>G Chauhan</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>B Tanhaei</author>
+				<author>A Ayati</author>
+				<author>M Lahtinen</author>
+				<author>M Sillanpää</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Ind. Eng. Chem. Fundam</title>
+			<authors>
+				<author>K Hall</author>
+				<author>L Eagleton</author>
+				<author>A Acrivos</author>
+				<author>T Vermeulen</author>
+			</authors>
+			<date>1966</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1021/am301053m</number>
+		<number>DOI-10.1021/ie402138w</number>
+		<number>DOI-10.1016/j.desal.2010.07.065</number>
+		<number>DOI-10.1016/j.ijbiomac.2014.11.002</number>
+		<number>DOI-10.1016/j.jhazmat.2010.01.012</number>
+		<number>DOI-10.1016/j.desal.2011.03.036</number>
+		<number>DOI-10.1021/am404011k</number>
+		<number>DOI-10.1016/j.jhazmat.2010.03.051</number>
+		<number>DOI-10.1016/j.jhazmat.2012.09.052</number>
+		<number>DOI-10.1016/j.jhazmat.2010.09.035</number>
+		<number>DOI-10.1080/07328303.2016.1154152</number>
+		<number>DOI-10.1016/j.matlet.2015.05.088</number>
+		<number>DOI-10.3762/bjnano.5.167</number>
+		<number>DOI-10.1016/j.carbpol.2013.05.062</number>
+		<number>DOI-10.1016/j.cej.2012.09.100</number>
+		<number>DOI-10.1016/j.ijbiomac.2016.01.092</number>
+		<number>DOI-10.1016/j.cej.2015.11.041</number>
+		<number>DOI-10.1021/am500820n</number>
+		<number>DOI-10.1016/j.cej.2014.07.109</number>
+		<number>DOI-10.1021/i160018a011</number>
+	</reference_dois>
+</document>

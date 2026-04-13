@@ -1,0 +1,784 @@
+<document>
+	<file>./pdf-files/Enzyme immobilisation on poly-l-lysine-containing calcium phosphate particles for highly sensitive glucose detection.pdf</file>
+	<title>Enzyme immobilisation on poly-&lt;scp&gt;l&lt;/scp&gt;-lysine-containing calcium phosphate particles for highly sensitive glucose detection</title>
+	<date>2019</date>
+	<doi_number>10.1039/c9ra01764j</doi_number>
+	<img_preview_path>./pdf-preview-images/Enzyme immobilisation on poly-l-lysine-containing calcium phosphate particles for highly sensitive glucose detection.jpeg</img_preview_path>
+	<authors>
+		<author>Suzuka Kojima</author>
+		<author>Fukue Nagata</author>
+		<author>Masahiko Inagaki</author>
+		<author>Shinichi Kugimiya</author>
+		<author>Katsuya Kato</author>
+	</authors>
+	<abstract>The as-synthesised poly-l-lysine-containing HAp with high enzyme stability could be a candidate for a glucose sensor with high sensitivity.</abstract>
+	<methods>
+		<method>
+			<heading>Materials</heading>
+			<text>All chemicals were of analytical grade and used without further purication. 3-Polylysine (3-pLys) with molecular weight (M w ) of 4000 was received from JNC CO., Tokyo, Japan. Poly(L-lysine hydrobromide) (a-pLys; M w &gt; 12 000) was purchased from Peptide Institute, Inc. (Osaka, Japan). Calcium acetate monohydrate [(CH 3 COO) 2 Ca$H 2 O], diammonium hydrogen phosphate [(NH 4 ) 2 HPO 4 ], Dulbecco's PBS (À), D(+)-glucose, ethanol, 4-aminoantipyrine (4-AAP) and phenol crystals were obtained from Wako Pure Chemical Industries (Osaka, Japan). Glucose oxidase (GOX) from Aspergillus niger (isoelectric point (pI) ¼ 4.2, M w ¼ 160 000 Da), graphene oxide, peroxidase from horseradish (POD, pI ¼ 7.2, M w ¼ 40 200 Da), 8-anilino-1naphthalenesulfonic acid (ANS) and Rhodamine B isothiocyanate (Rhodamine B) were purchased from Sigma-Aldrich Co. (St. Louis., MO, USA). The Bio-Rad protein assay dye reagent concentrate was obtained from Bio-Rad Laboratories (Hercules, CA, USA).</text>
+		</method>
+		<method>
+			<heading>Preparation of pLys-HAp particles</heading>
+			<text>Poly-L-lysine-containing HAp (pLys-HAp) was synthesised as follows: poly(a-lysine) or poly(3-lysine) (20, 30 or 40 mg) was mixed with 200 mL (NH 4 ) 2 HPO 4 solution (9 mM). The solution was further stirred for 30 min at 20 C. The mixture was added to a 200 mL (CH 3 COO) 2 Ca solution (15 mM) and heated to 60 C (heating rate of 1 C min À1 ), before it was kept for 3 h at the same temperature. The solid materials were separated by centrifugation at 6000 rpm for 10 min and washed with deionised water twice. The nal products were obtained via a freeze-drying process.</text>
+		</method>
+		<method>
+			<heading>Characterisation of synthesised pLys-HAp</heading>
+			<text>Field-emission scanning electron microscopy (FE-SEM, S-4300, Hitachi Ltd., Tokyo, Japan) was used to investigate the morphologies of samples at an acceleration voltage of 10.0 kV. Transmission electron microscopy (TEM) images were taken using a JEM-2010 (JEOL Ltd., Tokyo, Japan) at an accelerator voltage of 200 kV. TriStar 3000 (Shimadzu Co., Kyoto, Japan) was used to measure the nitrogen (N 2 ) adsorption-desorption isotherms. The specic surface area, pore volume and pore size distribution were calculated via the Brunauer-Emmett-Teller (BET) and the Barrett-Joyner-Halenda (BJH) methods. Inductively coupled plasma optical emission spectrometry (ICP-OES, IRIS Advantage, Thermo Fisher Scientic Inc., Waltham, MA, USA) was used to determine the Ca/P molar ratio of pLys-HAp. Powder X-ray diffraction spectra were obtained using a Smar-tLab SE/B1 (Rigaku Co., Tokyo, Japan) with CuKa radiation generated at 40 kV and 30 mA. The scanning speed was 2.0 min À1 and the 2q range varied from 3.0 to 60.0 . Fouriertransform Infra-Red (FT-IR) spectra were measured to conrm the presence of HAp and peptide in pLys-HAp using FT/IR-4700 spectrometer (JASCO Co., Tokyo, Japan) in the range of 400-4000 cm À1 . The contents of calcium, nitrogen and phosphorus of pLys-HAp were analysed using a scanning transmission electron microscopy (STEM, JEM-2100 Plus instrument operated at 200 kV, JEOL Ltd., Tokyo, Japan) and an energy dispersive X-ray spectroscopy (EDX, Noran System 7, Thermo Fisher Scientic Inc., Waltham, MA, USA) analysis. To determine the relative amount of peptide in the composites, thermogravimetry and differential thermal analysis (TG-DTA) was performed with a Thermo Plus TG 8120 (Rigaku Co., Tokyo, Japan). The reaction temperature was increased from room temperature to 1000 C at a heating rate of 10 C min À1 . The zeta-potential of pLys-HAp was obtained using a zeta-potential analyser (ELSZ-1000, Otsuka Electronics Co., Tokyo, Japan). The particles were prepared by dispersion in 10 mM phosphate buffer (pH ¼ 7.0) and sonication for 3 min.</text>
+		</method>
+	</methods>
+	<full_text>Nowadays, many people have come to problematise the increase in the number of patients having lifestyle related diseases compared to before. These lifestyle diseases include high blood pressure, diabetes mellitus, cancer, apoplectic stroke and heart disease. It is very important to discover them early before getting sick and to prevent serious illness. Sensors play key roles for early detection. In particular, the development of biosensors has ourished recently. [1][2][3][4][5][6] Wu et al. suggested a sensitive electrochemical biosensor for detection of double-stranded deoxyribonucleic acid. 7 Li et al. reported a uorescence biosensor with an ultra-low limit of detection for folate receptors, which can be used for the observation of early cancer. 8 In addition, Shtenberg et al. studied nanostructured porous Si sensors for the detection of heavy metal ions in water by immobilising horseradish peroxidase, laccase and multi-copper oxidase. 9 Glucose oxidase (GOX) is a key enzyme for biosensors and can catalyse the oxidation of glucose. For example, GOX can be used as a blood sugar level sensor for diabetic patients by measuring the glucose concentration in their blood. 10,11 Insulin dependent diabetic patients need to control their blood sugar levels. Some of these sensors used as disposable sensors are growing. However, the catalytic activities of GOX are hard to stabilise during the repeated recognition of glucose. Therefore, enzyme immobilising technology that can improve the stability by immobilisation enzymes on carriers has been widely used in the present biosensor technologies. [12][13][14] Additionally, GOX immobilising technologies [15][16][17][18] have been widely used for other applications instead of blood sugar level sensors. Wang et al. published that the GOX immobilisation can be applied for biofuel cell (BFC) and used as a detector for microRNA-21 (miRNA-21). 19 The BFC-based self-powered sensors utilised gold nanoparticles with bare paper bres as bioelectrodes to wire GOX and bilirubin oxidase. The sensitive detection of miRNA-21 reached over a range of 5 fM to 100 pM with a detection limit of 2.7 fM. 19 Thus, these technologies have explored the range of applications such as other biosensor and biofuel cell. 20,21 It can be said that the catalytic activities of GOX become important for electrical output power and sensor sensitivity.
+
+Hydroxyapatite (Ca 10 (PO 4 ) 6 (OH) 2 , HAp) is well known as a type of a calcium phosphate compound with strong affinity for various proteins. It has been frequently reported that HAp has been used as an enzyme immobilising agent. 22 Bharath et al. prepared a glucose sensor by immobilisation of GOX on reduced graphene oxide sheets with HAp nanorods modied GCE, and these sensor indicated high sensitivity and stability by amperometric glucose determination. 23 In our previous study, we reported that peptide-containing calcium phosphate particles (peptide-HAp) can selectively adsorb proteins. 24 The selective adsorption of proteins was the result of electrostatic interactions between peptide-HAp and the protein, and these materials were expected to work as carrier materials for proteins. 24 Furthermore, the high adsorption ability of avidin on poly(a-glutamic acid) or poly(g-glutamic acid) containing HAp (pGlu-HAp) and its efficient binding activity to biotin were also reported. 25 It revealed that the morphologies of two pGlu-HAp materials showed plate-like or sheet-like particles due to the effects of peptide structure. The higher maximum adsorption amount for avidin on a-pGlu-HAp was due to the difference in the density of carboxyl groups in pGlu-HAp. In conclusion, it revealed that peptide-HAp is a useful composite for development of a biosensor.
+
+Many researchers have reported the synthesis of silica materials in the presence of poly-L-lysine as a template. [26][27][28][29] However, few researchers have reported the calcium phosphate fabricated using poly-L-lysine. Bradley et al. prepared the hydroxyapatite composited with polysaccharides (such as chondroitin sulfate and polygalacturonic acid) or poly amino acid (like poly-L-asparagine and poly-L-lysine). 30 Gao et al. reported that poly-3-lysine was introduced to the surface of bacterial cellulose nanobers via crosslinking for bone-like apatite deposition, and its nanocomposites were expected to be adapted for applications in bone tissue engineering. 31 Ding et al. synthesised poly-L-lysine/HAp/carbon nanotube hybrid biocomposite scaffolds for antibody immobilisation. 32 Thus, it can be considered that these biopolymer-hydroxyapatite composites, especially poly-3-lysine, can nd wide applications.
+
+Herein, we report that two types of poly-L-lysine (poly-a-lysine and poly-3-lysine) were compounded with HAp to form new poly-lysine containing HAp (pLys-HAp) particles. The aim of this study was to prepare pLys-HAp composites as an enzyme immobilising agent and to immobilise large quantities of GOX with high catalytic activity and high stability. Moreover, we examined the effect of peptides having different structures for these materials and the adsorption properties. The morphologies of the as-synthesised particles were observed, and the oxidative activities were analysed by GOX immobilised on the surface of the samples. Furthermore, we investigated the application as a glucose sensor by immobilised GOX on a glassy carbon electrode (GCE).
+
+All chemicals were of analytical grade and used without further purication. 3-Polylysine (3-pLys) with molecular weight (M w ) of 4000 was received from JNC CO., Tokyo, Japan. Poly(L-lysine hydrobromide) (a-pLys; M w &gt; 12 000) was purchased from Peptide Institute, Inc. (Osaka, Japan). Calcium acetate monohydrate [(CH 3 COO) 2 Ca$H 2 O], diammonium hydrogen phosphate [(NH 4 ) 2 HPO 4 ], Dulbecco's PBS (À), D(+)-glucose, ethanol, 4-aminoantipyrine (4-AAP) and phenol crystals were obtained from Wako Pure Chemical Industries (Osaka, Japan). Glucose oxidase (GOX) from Aspergillus niger (isoelectric point (pI) ¼ 4.2, M w ¼ 160 000 Da), graphene oxide, peroxidase from horseradish (POD, pI ¼ 7.2, M w ¼ 40 200 Da), 8-anilino-1naphthalenesulfonic acid (ANS) and Rhodamine B isothiocyanate (Rhodamine B) were purchased from Sigma-Aldrich Co. (St. Louis., MO, USA). The Bio-Rad protein assay dye reagent concentrate was obtained from Bio-Rad Laboratories (Hercules, CA, USA).
+
+Poly-L-lysine-containing HAp (pLys-HAp) was synthesised as follows: poly(a-lysine) or poly(3-lysine) (20, 30 or 40 mg) was mixed with 200 mL (NH 4 ) 2 HPO 4 solution (9 mM). The solution was further stirred for 30 min at 20 C. The mixture was added to a 200 mL (CH 3 COO) 2 Ca solution (15 mM) and heated to 60 C (heating rate of 1 C min À1 ), before it was kept for 3 h at the same temperature. The solid materials were separated by centrifugation at 6000 rpm for 10 min and washed with deionised water twice. The nal products were obtained via a freeze-drying process.
+
+Field-emission scanning electron microscopy (FE-SEM, S-4300, Hitachi Ltd., Tokyo, Japan) was used to investigate the morphologies of samples at an acceleration voltage of 10.0 kV. Transmission electron microscopy (TEM) images were taken using a JEM-2010 (JEOL Ltd., Tokyo, Japan) at an accelerator voltage of 200 kV. TriStar 3000 (Shimadzu Co., Kyoto, Japan) was used to measure the nitrogen (N 2 ) adsorption-desorption isotherms. The specic surface area, pore volume and pore size distribution were calculated via the Brunauer-Emmett-Teller (BET) and the Barrett-Joyner-Halenda (BJH) methods. Inductively coupled plasma optical emission spectrometry (ICP-OES, IRIS Advantage, Thermo Fisher Scientic Inc., Waltham, MA, USA) was used to determine the Ca/P molar ratio of pLys-HAp. Powder X-ray diffraction spectra were obtained using a Smar-tLab SE/B1 (Rigaku Co., Tokyo, Japan) with CuKa radiation generated at 40 kV and 30 mA. The scanning speed was 2.0 min À1 and the 2q range varied from 3.0 to 60.0 . Fouriertransform Infra-Red (FT-IR) spectra were measured to conrm the presence of HAp and peptide in pLys-HAp using FT/IR-4700 spectrometer (JASCO Co., Tokyo, Japan) in the range of 400-4000 cm À1 . The contents of calcium, nitrogen and phosphorus of pLys-HAp were analysed using a scanning transmission electron microscopy (STEM, JEM-2100 Plus instrument operated at 200 kV, JEOL Ltd., Tokyo, Japan) and an energy dispersive X-ray spectroscopy (EDX, Noran System 7, Thermo Fisher Scientic Inc., Waltham, MA, USA) analysis. To determine the relative amount of peptide in the composites, thermogravimetry and differential thermal analysis (TG-DTA) was performed with a Thermo Plus TG 8120 (Rigaku Co., Tokyo, Japan). The reaction temperature was increased from room temperature to 1000 C at a heating rate of 10 C min À1 . The zeta-potential of pLys-HAp was obtained using a zeta-potential analyser (ELSZ-1000, Otsuka Electronics Co., Tokyo, Japan). The particles were prepared by dispersion in 10 mM phosphate buffer (pH ¼ 7.0) and sonication for 3 min.
+
+First, the initial GOX solution was prepared to set the concentration to 500 mg mL À1 . Each 5 mg of pLys-HAp was added to different amounts of GOX solution (1-3 mL) and stirred overnight at 20 C. The supernatant was collected by centrifugation at 6000 rpm for 10 min. The excess GOX amounts in the supernatant were calculated according to the Bradford method using Bio-Rad protein assay via UV-vis spectroscopy (Innite F200 PRO, Tecan Group Ltd., Männedorf, Switzerland) at l ¼ 595 nm. The adsorption amounts of GOX was determined by subtracting the excess amounts of GOX from the initial GOX amounts using the following equation: 33
+
+where Q e is GOX adsorption capacity on pLys-HAp and Q is initial GOX amount. I and I 1 are absorbance intensities in the supernatant before and aer adsorption.
+
+The density of amino group in pLys-HAp samples to be used by enzyme adsorption was analysed. Each pLys-HAp materials (1 mg) were mixed with 1 mL of Rhodamine B solution (40 mg mL À1 ). Aer stirring overnight at 20 C in the dark, the precipitant was separated by centrifugation at 14 000 rpm for 5 min. The solid materials were washed four times with 10 mM phosphate buffer at pH 7.0 and resuspended in 10 mM phosphate buffer (1 mL). The amino group density in the suspension was determined using a spectrouorophotometer RF-5300PC (Shimadzu Co., Kyoto, Japan). The excitation and emission wavelengths were set as 555 and 580 nm, respectively.
+
+The changes of the three-dimensional structures of GOX by the adsorption on pLys-HAp samples were conrmed by ANS method. [34][35][36][37] GOX (500 mg) was immobilised on a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg) during the overnight stirring at 20 C. Furthermore, ANS solution (50 mg mL À1 in 10 mM phosphate buffer at pH 7.0) was added to the suspension. The mixture was incubated at 20 C for 3 h in the dark. Finally, the uorescence spectra were obtained by spectrouorophotometer (the excitation wavelengths: 387 nm, the uorescence wavelengths: 400-600 nm).
+
+GOX was dissolved in 10 mM phosphate buffer at pH 7.0 and the concentration was set to 30 mg mL À1 . Other solutions such as 4 mM glucose, 1.76% 4-AAP, 6% phenol and 1 mg mL À1 POD solution were prepared using the same buffer. Each pLys-HAp sample (1 mg) was added to 1 mL of GOX solution and the mixture was stirred overnight at 4 C. Aer removing the supernatant by centrifugation at 14 000 rpm for 5 min, 80 mL of 4 mM glucose and 850 mL of 10 mM phosphate buffer were mixed with the solid material. The mixture was stirred at 25 C for 3 min, and 20 mL of 1.76% 4-AAP, 20 mL of 6% phenol and 30 mL of 1 mg mL À1 POD solution were added to the mixture. The mixture was incubated at 25 C for 3 min and the supernatant was separated by centrifugation at 14 000 rpm for 3 min. The absorbance of product in the supernatant at 500 nm was analysed with UV-vis spectrophotometer DU 800 (Beckman Coulter Inc., IN, USA). The enzyme catalytic kinetics were measured with different concentrations of 4-AAP and calculated from the Lineweaver-Burk equation: [38][39][40][41]
+
+where V is initial velocity, K m is Michaelis constant, V max is the maximum velocity and [S] is concentration of 4-AAP. The turn over number K cat and the specicity constant K cat /K m were calculated based on this equation.
+
+The direct electrochemistry of the sample modied glassy carbon electrode (GCE) was investigated by cyclic voltammetry (CV) method using automatic polarisation system HSV-110 (HOKUTO DENKO Co., Tokyo, Japan). The electrochemical measurement was carried out in a three-electrode cell consisting of the GCE, platinum wire as the counter electrode and Ag/ AgCl saturated KCl as the reference electrode. The GCE was polished to obtain the mirror-like surface by alumina-in-water slurry. Aer cleaning with deionised water and ethanol, the electrode was dried at 25 C. Each pLys-HAp (1 mg) was mixed with 1 mL of GOX solution (150 mg mL À1 in 10 mM phosphate buffer at pH 7.0) and stirred overnight at 20 C. Aer removing the supernatant from the mixture by centrifugation at 14 000 rpm for 5 min, the solid material was redispersed in 100 mL of the same buffer by sonication for 3 min. The GOX/pLys-HAp mixture (20 mL) was added to 20 mL of aluminium silicate nanotube hydrogels (imogolite) 42 and 20 mL of graphene oxide, and the suspension (20 mL) was dropped on GCE. Aer the electrode was dried for 45 min at 25 C, the measurements were performed in O 2 -saturated Dulbecco's PBS (pH 7.3) at a scan rate of 100 mV s À1 with the addition of various concentrations of glucose.
+
+The morphologies of the poly-lysine-containing HAp composites were analysed by FE-SEM and TEM. The particles having round tips were observed and their particle sizes were $60 nm as shown in Fig. 1(a-f). However, there were no signicant changes in the morphologies of pLys-HAp in comparison with pure HAp by increasing the amount of peptides. It indicated that quite few peptides were included in these materials and the particle morphologies were not affected by the presence of polylysine.
+
+Table 1 summarises the surface area and the pore volume of pLys-HAp. For a-pLys-HAp (20, 30 and 40 mg) and 3-pLys-HAp (20, 30 and 40 mg), the specic surface areas were 132, 145, 133, 148, 146 and 152 m 2 g À1 , respectively. The pore volumes of a-pLys-HAp (20, 30 and 40 mg) and 3-pLys-HAp (20, 30 and 40 mg) were 0.80, 0.93, 0.88, 0.98, 0.98 and 1.0 cm 3 g À1 , respectively. Moreover, the pore size distribution and the nitrogen adsorption-desorption isotherms of all pLys-HAp samples indicated type IV, as shown in Fig. S1. † Fig. S1(A) † indicates that the pores with a diameter of 30 nm were only in a-pLys-HAp (30 and 40 mg). Such pore sizes of 30 nm were appeared by increasing the amount of peptides.
+
+Table 1 shows the Ca/P molar ratio of pLys-HAp measured by ICP-OES. The Ca/P ratios were 1.45, 1.45, 1.43, 1.43, 1.43 and 1.42 for a-pLys-HAp (20, 30 and 40 mg) and 3-pLys-HAp (20, 30 and 40 mg), respectively. The values are lower than 1.67 (the stoichiometric ratio of HAp). From these results, it could be considered that the calcium phosphate synthesised in this study were calcium-decient HAp or low-crystallinity HAp due to HAp and peptides composites.
+
+The diffraction patterns of pLys-HAp composites are shown in Fig. 2(A  [43][44][45] The FT-IR spectra of a-pLys, a-pLys-HAp (20, 30 and 40 mg), 3-pLys and 3-pLys-HAp (20, 30 and 40 mg) are shown in Fig. 2(B). The two strong adsorption bands observed at around 1020 and 960 cm À1 are attributed to symmetric and asymmetric bending modes of P-O in PO 4 3À in HAp, respectively. Another two  a The specic surface area and pore volume were calculated from the nitrogen adsorption-desorption isotherms via the Brunauer-Emmett-Teller (BET) and the Barrett-Joyner-Halenda (BJH) methods. b The Ca/P molar ratio was determined using an inductively coupled plasma optical emission spectrometry. c The relative amount of peptides in pLys-HAp composites was revealed by thermogravimetry. d The zeta-potential of composites was obtained using the electrophoretic light scattering method. The particles were prepared by dispersion in 10 mM phosphate buffer (pH 7.0) with sonication for 3 min.
+
+stretching bands at 600 and 560 cm À1 are assigned to O-P-O in PO 4 3À in HAp, respectively. [43][44][45][46] The stretching vibration of PO 4 3À of HAp in all pLys-HAp were observed at around 1024, 962, 601 and 561 cm À1 . For pLys, the characteristic peaks appearing from 1550 to 1485 cm À1 and from 1590 to 1660 cm À1 are the symmetric and asymmetric stretches of -NH 2 /H + of peptide. [47][48][49][50][51] In the pure a-pLys spectrum, the adsorption bands at 1615/1525 cm À1 are attributed to asymmetrical/symmetrical stretching vibrations of -NH 2 /H + , respectively. The bands of -NH 2 /H + in 3-pLys occur at 1634, 1557 and 1541 cm À1 . The peaks at 1485-1660 cm À1 for pLys-HAp samples were shied to the high-wavelength side due to the combination of hydroxyapatite and peptide. These conrmed that the assynthesised particles consisted of HAp and pLys. Moreover, it can be considered that these pLys-HAp composed from a little amount of peptide because these peaks were not signicantly changed by increasing the addition amount of peptides.
+
+The secondary structural contents of two pLys (pure and bound with PO 4 3À ) were investigated by FT-IR analysis. Before measurement, the samples were prepared as follows: a-Lys or 3-Lys (12 mg) was mixed with 20 mL (NH 4 ) 2 HPO 4 solution (27 mM) and further stirring for 2 h at 20 C. Then, the resulting product was obtained by freeze-drying. Table S1 † shows that the secondary structures of pure pLys had higher b-sheet content and that of the pLys bound with PO 4 3À was composed of other structures (a-helix, b-sheet and b-turn). In other words, it reveals that the inuence of peptide structure for pLys-HAp formation was negligible.
+
+The STEM images, EDX maps and EDX spectra of a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg) are displayed in Fig. 3 and S2. † Calcium, phosphorous and nitrogen elements can be assigned to HAp and the peptide. The STEM images showed a homogeneous distribution of nitrogen. It conrmed that the distribution of pLys in pLys-HAp particles was consistent.
+
+To conrm the peptide content in composites, TG-DTA analysis was performed and the relative amounts of peptides were calculated from weight losses in the range of 200-700 C correspond to the loss of the peptides (Fig. S3 † and Table 1). For a-pLys-HAp (20, 30 and 40 mg), the relative amounts of a-pLys were 11, 11 and 13 mg, respectively. On the other hands, the 3-pLys amounts in 3-pLys-HAp (20, 30 and 40 mg) were 5.5, 4.1 and 4.3 mg, respectively. As a result, a-pLys amounts included in a-pLys-HAp were approximately 13 mg (about 7 wt% in pLys-HAp), whereas 3-pLys-HAp can be included at a maximum of 6 mg (about 3 wt% in pLys-HAp) for 3-pLys.
+
+The zeta-potential charge of these composites is listed in Table 1. The surface charges of a-pLys-HAp with different amounts of a-pLys (20, 30 and 40 mg) are +13.9, +15.4 and +14.0 mV, respectively, while the surface potentials of 3-pLys-HAp (20, 30 and 40 mg) are +4.2, +2.8 and +4.2 mV, respectively. Taken together, the surface potentials of a-pLys-HAp were higher positively charged than that of 3-pLys-HAp. Additionally,  these results can be attributed to the amount of peptides in pLys-HAp from the TG-DTA data.
+
+To determine the adsorption mechanism, two common isotherm models (Freundlich and Langmuir models) were taken in this study. 52 Sun et al. investigated that lysozyme was adsorbed on chitosan/hydroxyapatite hybrid membrane by these models. The equilibrium data were tted well with Freundlich isotherm models more than Langmuir isotherm models. 53 The Langmuir isotherm model shows that the GOX adsorption on the surface of pLys-HAp occurs by monolayer adsorption. It is expressed as
+
+where C s is equilibrium concentration of GOX in supernatant (mg mL À1 ), Q e is amount of GOX adsorbed at equilibrium on pLys-HAp (mg mg À1 ), Q m is the maximum capacity of GOX at pLys-HAp (mg mg À1 ) and K L is Langmuir constant (mL mg À1 ).
+
+In this study, the signicance of Freundlich isotherm over the Langmuir isotherm is to conrm the heterogeneous adsorption on these samples. The Freundlich isotherm could be expressed using the following equation:
+
+where K F is Freundlich constant (ng mg À1 ) and 1/n is Freundlich adsorption intensity constant. Moreover, 'n' is reciprocal of slope value for Freundlich systems. It is empirically known that the adsorption behaviour would suggest more heterogeneous systems if the slope is close to 0. 54 Fig. 4 shows the adsorption isotherm plots for GOX on pLys-HAp, and Table 2 presents the isotherm parameters. As can be observed, the acceptable correlation coefficients (R 2 ) for the Langmuir models were 0.9999 and 0.9974 for a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg), respectively. Additionally, the R 2 values for the Freundlich models attributed to a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg) were 0.8878 and 0.8795, respectively. A better value of R 2 was obtained when Langmuir isotherm models was used. Based on linear regression, it can be considered that the Langmuir model is tted for adsorption of GOX on a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg). From Fig. 4, the maximum adsorption capacity of GOX according to a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg) were 150 and 230 mg mg À1 , respectively.
+
+To reveal the difference in the maximum capacity for GOX immobilised on pLys-HAp, the amino group density in pLys-HAp composites was evaluated using the uorescence probe Rhodamine B with isocyanate group. The amino group densities were 16.3 and 15.9 nmol m À2 for a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg), respectively. According to these results, the densities of amino group in pLys-HAp were not changed between a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg).
+
+From these results, we can discuss about the relationship between the amino group in pLys-HAp and the amount of immobilised GOX on these materials in detail. First, we suppose that all amino groups in these composites cannot be used for enzyme and protein adsorption. Especially, there were relatively many peptides in a-pLys-HAp (Fig. S3 † and Table 1), and the longer side chains in a-pLys-HAp were easy to move freely in an unsteady manner. Therefore, there is possibility that a part of amino groups formed HAp and adsorbed on the surface of HAp (something like OH À and PO 4 3À ). In contrast, it was considered that the amino groups in 3-pLys-HAp should exist on the surface of particles stably. Therefore, the amino groups in 3-pLys-HAp was capable to be efficiently used for enzyme adsorption compared with those in a-pLys-HAp. Furthermore, it revealed Table 2 Adsorption parameters of GOX on a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg) calculated according to Langmuir and Freundlich models
+
+Langmuir parameters Freundlich parameters  ). Nevertheless, in the case of GOX with high M w of 160 000 Da, more amino groups used for GOX adsorption on a-pLys-HAp because the distance between the amino groups in two pLys molecules in a-pLys-HAp is closer than that in 3-pLys-HAp. Thus, it assumed that 3-pLys-HAp had high adsorption capacity of GOX using few amino groups effectively.
+
+3.4 Analysis of conformational changes in GOX immobilised on pLys-HAp 8-Anilino-1-naphthalenesulfonic acid (ANS) is an excellent uorescence probe for binding to the hydrophobic domains of the protein. Therefore, ANS was bound to GOX to investigate the interactions between GOX and pLys-HAp composites. Fig. 5(A) shows the uorescence spectra of ANS-binding GOX immobilised on a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg). The threedimensional structure of GOX was obtained determined from Protein Data Bank; ID: 1CF3. As Fig. 5(A) shows, the enhancement of the maximum emission intensity in the spectra and its blue-shi were observed for the immobilised GOX bound with ANS. These results indicated that the conformational change in GOX occurred due to the GOX immobilisation on pLys-HAp. 37 3.5 Enzymatic kinetics and the catalytic activity of GOX on pLys-HAp Fig. S4 † shows the catalytic activities of GOX (free and immobilised on pLys-HAp). The relative activities of free GOX, immobilised on a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg) are 1.97, 1.57 and 1.59 mmol min À1 mg À1 , respectively. Thus, the oxidation activity of GOX immobilised on these materials exhibited more than 80% compared to that of native GOX (considered to be 100%). Fig. 6 shows the Lineweaver-Burk plot and Table 3 summarises the values of V max , K m , K cat and K cat /K m . V max indicates the ability that how many times enzymes can catalyse a reaction per minute. V max in the immobilised samples is lower than the native-free one. It can be assumed that these results were caused by the conformational change in GOX immobilised on pLys-HAp (Fig. 5). However, the K m value of the immobilised GOX is lower than the native GOX, which signied a higher affinity to the substrate. The ratio of K cat /K m signies the catalytic efficiency, and the ratios for GOX immobilised on a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg) are slightly lower than free GOX. From these results, GOX immobilised on pLys-HAp samples suggested a high ability for enzyme catalyst.    Moreover, cycling test was carried out and the remaining activity was measured aer each cycle. Fig. 7 shows, the relative activity of GOX immobilised on these pLys-HAp materials was kept more than 50% of the initial activity aer ten cycles. For a-pLys-HAp (40 mg), the oxidation activity remained about 80% aer seven cycles. On the other hand, the remaining activity of GOX immobilised on 3-pLys-HAp (40 mg) was kept approximately 70% aer ten cycles. These results veried that the pLys-HAp composites could be better candidates for immobilising carriers of enzymes with high stability. Additionally, it can be considered that these differences of enzyme stability between a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg) may have been affected by peptide structures and pores in pLys-HAp composites (Fig. S1 †). First of all, a GOX molecule immobilisation on a-pLys-HAp (40 mg) was supported by many amino groups in a-pLys and pores with a diameter of 30 nm, although the relative activity was decreased by repeated washing with deionised water aer seven cycles. Next, a GOX molecule immobilisation on 3-pLys-HAp (40 mg) was held by few amino groups in 3-pLys, which appeared close to the surface of composites; therefore, the remaining activity was kept high aer ten cycles. The difference of the pores in composites and the distance between amino groups in two pLys molecules may become important the key roles for enzyme stability.
+
+To reveal the glucose-sensitivity for GOX immobilised on pLys-HAp particles, these response were measured in the range of glucose concentration of 4-800 mM, as shown in Fig. 8. In both cases of GOX immobilised on a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg), the glucose response curves show a linear range from 4 to 400 mM of glucose with high correlation coef-cients (the R 2 values were 0.9980 and 0.9987 for a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg), respectively). This range in the immobilised samples was also obtained using GOX solution (native-free) with a high R 2 value (0.9991). Liu et al. reported the synthesis of graphdiyne (GDY) composites with dual-enzymatic activity via immobilisation of ferrous ion and GOX on GDY sheet. A linear calibration plot between the absorbance at 450 nm and glucose concentration was shown in the range of 5-160 mM of glucose. 55 It revealed that the as-synthesised a-pLys-HAp (40 mg) and 3-pLys-HAp (40 mg) could be utilised as glucose sensors with high sensitivity.
+
+Fig. 8 The glucose-sensitivity using GOX (free and immobilised on pLys-HAp). The inset shows the plot in the range of 4-80 mM of glucose.  3.6 Detecting glucose at the graphene oxide/imogolite/GOX/ pLys-HAp modied GCE Fig. 9 shows cyclic voltammograms of graphene oxide/ imogolite/GOX/pLys-HAp modied GCE. A voltammetric peak was monitored in the presence of glucose at a potential of À0.47 V. The reaction could be expressed as follows: 56 Glucose + GOX(FAD) / gluconolactone + GOX(FADH 2 ) (5)
+
+O 2 + 4H + + 4e À / GOX(FAD) + 2H 2 O
+
+As Fig. 9(B) shows, a good linear relationship was observed at the range of glucose concentration between 0 and 2.0 mM, the current peak at the graphene oxide/imogolite/GOX/3-pLys-HAp (40 mg)/GCE was linearly increased by improving the concentration of glucose (the R 2 value ¼ 0.9917). Therefore, the graphene oxide/imogolite/GOX/3-pLys-HAp (40 mg) modied GCE is a good enzyme electrode and could be used for glucose detection with high sensitivity.
+
+Two kinds of poly-L-lysine (a-pLys and 3-pLys) containing hydroxyapatite (pLys-HAp) were synthesised via an easy method. The amount of peptide in a-pLys-HAp is three times higher than that in 3-pLys-HAp. However, the adsorption capacity of glucose oxidase (GOX) immobilised on 3-pLys-HAp is higher than that on a-pLys-HAp. Thus, few amino groups in 3-pLys-HAp could be used for GOX adsorption effectively, while many amino groups in a-pLys-HAp were used. The oxidation activities of GOX immobilised on pLys-HAp materials were more than 80% compared to that of native GOX (considered to be 100%). Furthermore, the remaining activity of GOX immobilised on these materials was kept more than 50% of the initial activity aer ten cycles. For a-pLys-HAp (40 mg), the oxidation activity remained about 80% aer seven cycles, and the relative activity of GOX immobilised on 3-pLys-HAp (40 mg) was kept approximately 70% aer ten cycles. The difference of the pores in composites and the distance between amino groups in two pLys molecules become important key roles for enzyme stability. GOX immobilised on pLys-HAp particles was able to detect glucose from 4 to 400 mM. From the results of the direct electrochemistry by cyclic voltammetry (CV) method, the graphene oxide/imogolite/GOX/3-pLys-HAp (40 mg) modied GCE was a good enzyme electrode with high sensitivity for glucose detection. These results suggest that the synthesised particles could be good candidates for immobilising carriers of enzymes with high stability and for biosensors with high sensitivity.
+
+a V max is the maximum velocity. b K m is Michaelis constant. c K cat is turn over number. d K cat /K m is specicity constant.
+
+This journal is © The Royal Society of Chemistry 2019
+
+This journal is © The Royal Society of Chemistry 2019 RSC Adv., 2019, 9, 10832-10841 | 10841</full_text>
+	<references>
+		<reference>
+			<title>J. Mater. Chem. B</title>
+			<authors>
+				<author>A Othman</author>
+				<author>A Karimi</author>
+				<author>S Andreescu</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Chem. Soc. Rev</title>
+			<authors>
+				<author>M Sun</author>
+				<author>S Huang</author>
+				<author>L Chen</author>
+				<author>Y Li</author>
+				<author>X Yang</author>
+				<author>Z Yuan</author>
+				<author>B Su</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Chem. Soc. Rev</title>
+			<authors>
+				<author>C Anichini</author>
+				<author>W Czepa</author>
+				<author>D Pakulski</author>
+				<author>A Aliprandi</author>
+				<author>A Ciesielski</author>
+				<author>P Samori</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>F Demir</author>
+				<author>B Demir</author>
+				<author>E Yalcinkaya</author>
+				<author>S Cevik</author>
+				<author>D Demirkol</author>
+				<author>U Anik</author>
+				<author>S Timur</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Anal. Methods</title>
+			<authors>
+				<author>X Cao</author>
+				<author>Y Sun</author>
+				<author>Y Ye</author>
+				<author>Y Li</author>
+				<author>X Ge</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Anal. Methods</title>
+			<authors>
+				<author>A Kaffash</author>
+				<author>H Zare</author>
+				<author>K Rostami</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>Anal. Methods</title>
+			<authors>
+				<author>L Wu</author>
+				<author>X Lu</author>
+				<author>X Wang</author>
+				<author>Y Song</author>
+				<author>J Chen</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Anal. Methods</title>
+			<authors>
+				<author>D Li</author>
+				<author>Y Ma</author>
+				<author>Y Zhang</author>
+				<author>Z Lin</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Analyst</title>
+			<authors>
+				<author>G Shtenberg</author>
+				<author>N Massad-Ivanir</author>
+				<author>E Segal</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>H Liu</author>
+				<author>C Tao</author>
+				<author>Z Hu</author>
+				<author>S Zhang</author>
+				<author>J Wang</author>
+				<author>Y Zhan</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>H Jang</author>
+				<author>D Min</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>CrystEngComm</title>
+			<authors>
+				<author>Y Luo</author>
+				<author>F Song</author>
+				<author>X Wang</author>
+				<author>Y Wang</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Langmuir</title>
+			<authors>
+				<author>J Vranish</author>
+				<author>M Ancona</author>
+				<author>S Walper</author>
+				<author>I Medintz</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>F Eslamipour</author>
+				<author>P Hejazi</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Appl. Surf. Sci</title>
+			<authors>
+				<author>M Abbasi</author>
+				<author>R Amiri</author>
+				<author>A Bordbar</author>
+				<author>E Ranjbakhsh</author>
+				<author>A Khosropour</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>A Vilian</author>
+				<author>S Chen</author>
+				<author>M Ali</author>
+				<author>F Al-Hemaid</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Chem. A</title>
+			<authors>
+				<author>S Kumar-Krishnan</author>
+				<author>M García</author>
+				<author>E Prokhorov</author>
+				<author>M Estevez-González</author>
+				<author>R Pérez</author>
+				<author>R Esparza</author>
+				<author>M Meyyappan</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>ACS Appl. Nano Mater</title>
+			<authors>
+				<author>A Paul</author>
+				<author>G Vyas</author>
+				<author>P Paul</author>
+				<author>D Srivastava</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>ACS Appl. Mater. Interfaces</title>
+			<authors>
+				<author>Y Wang</author>
+				<author>L Zhang</author>
+				<author>K Cui</author>
+				<author>S Ge</author>
+				<author>P Zhao</author>
+				<author>J Yu</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>Z Kang</author>
+				<author>K Jiao</author>
+				<author>R Peng</author>
+				<author>Z Hu</author>
+				<author>S Jiao</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Nanoscale</title>
+			<authors>
+				<author>Y Chung</author>
+				<author>Y Ahn</author>
+				<author>M Christwardana</author>
+				<author>H Kim</author>
+				<author>Y Kwon</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Analyst</title>
+			<authors>
+				<author>C Li</author>
+				<author>H Zhang</author>
+				<author>P Wu</author>
+				<author>Z Gong</author>
+				<author>G Xu</author>
+				<author>C Cai</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Chem. B</title>
+			<authors>
+				<author>G Bharath</author>
+				<author>R Madhu</author>
+				<author>S Chen</author>
+				<author>V Veeramani</author>
+				<author>A Balamurugan</author>
+				<author>D Mangalaraj</author>
+				<author>C Viswanathan</author>
+				<author>N Popandian</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Appl. Surf. Sci</title>
+			<authors>
+				<author>S Kojima</author>
+				<author>F Nagata</author>
+				<author>S Kugimiya</author>
+				<author>K Kato</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>New J. Chem</title>
+			<authors>
+				<author>S Kojima</author>
+				<author>F Nagata</author>
+				<author>M Inagaki</author>
+				<author>S Kugimiya</author>
+				<author>K Kato</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>J. Am. Chem. Soc</title>
+			<authors>
+				<author>K Hawkins</author>
+				<author>S</author>
+				<author>-S Wang</author>
+				<author>D Ford</author>
+				<author>D Shantz</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>J. Am. Chem. Soc</title>
+			<authors>
+				<author>M Tomczak</author>
+				<author>D Glawe</author>
+				<author>L Drummy</author>
+				<author>C Lawrence</author>
+				<author>M Stone</author>
+				<author>C Perry</author>
+				<author>D Pochan</author>
+				<author>T Deming</author>
+				<author>R Naik</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>J. Phys. Chem. C</title>
+			<authors>
+				<author>Y Zhu</author>
+				<author>W Meng</author>
+				<author>H Gao</author>
+				<author>N Hanagata</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>ACS Nano</title>
+			<authors>
+				<author>S Hartono</author>
+				<author>W Gu</author>
+				<author>F Kleitz</author>
+				<author>J Liu</author>
+				<author>L He</author>
+				<author>A Middelberg</author>
+				<author>C Yu</author>
+				<author>G Lu</author>
+				<author>S Qiao</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Chem. Mater</title>
+			<authors>
+				<author>J Bradley</author>
+				<author>L Bridgland</author>
+				<author>D Colyer</author>
+				<author>M Duer</author>
+				<author>T Friščić</author>
+				<author>J Gallagher</author>
+				<author>D Reid</author>
+				<author>J Skepper</author>
+				<author>C Trasler</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Cellulose</title>
+			<authors>
+				<author>C Gao</author>
+				<author>Y Wan</author>
+				<author>X Lei</author>
+				<author>J Qu</author>
+				<author>T Yan</author>
+				<author>K Dai</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Analyst</title>
+			<authors>
+				<author>Y Ding</author>
+				<author>J Liu</author>
+				<author>X Jin</author>
+				<author>H Lu</author>
+				<author>G Shen</author>
+				<author>R Yu</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Ceram. Int</title>
+			<authors>
+				<author>T Kaneko</author>
+				<author>F Nagata</author>
+				<author>S Kugimiya</author>
+				<author>K Kato</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>D Sarkar</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Colloids Surf</title>
+			<authors>
+				<author>D Ban</author>
+				<author>S Paul</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Int. J. Biol. Macromol</title>
+			<authors>
+				<author>F Wang</author>
+				<author>X Wang</author>
+				<author>M Zhang</author>
+				<author>A Huang</author>
+				<author>L Ma</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Chem. B</title>
+			<authors>
+				<author>K Nakanishi</author>
+				<author>M Tomita</author>
+				<author>H Nakamura</author>
+				<author>K Kato</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Analyst</title>
+			<authors>
+				<author>X Cao</author>
+				<author>Y Li</author>
+				<author>Z Zhang</author>
+				<author>J Yu</author>
+				<author>J Qian</author>
+				<author>S Liu</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>K Nakanishi</author>
+				<author>M Tomita</author>
+				<author>K Kato</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>A Vilian</author>
+				<author>S Chen</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>L Wang</author>
+				<author>Y Zeng</author>
+				<author>A Shen</author>
+				<author>Y Fu</author>
+				<author>L Zeng</author>
+				<author>J Hu</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>New J. Chem</title>
+			<authors>
+				<author>K Kato</author>
+				<author>K Inukai</author>
+				<author>K Fujikura</author>
+				<author>T Kasuga</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>New J. Chem</title>
+			<authors>
+				<author>V Mishra</author>
+				<author>B Bhattacharjee</author>
+				<author>D Kumar</author>
+				<author>S Rai</author>
+				<author>O Parkash</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>CrystEngComm</title>
+			<authors>
+				<author>W Amer</author>
+				<author>K Abdelouahdi</author>
+				<author>H Ramananarivo</author>
+				<author>M Zahouily</author>
+				<author>A Fihri</author>
+				<author>K Djessas</author>
+				<author>K Zahouily</author>
+				<author>R Varma</author>
+				<author>A Solhy</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Cryst. Growth Des</title>
+			<authors>
+				<author>W Fang</author>
+				<author>H Zhang</author>
+				<author>J Yin</author>
+				<author>B Yang</author>
+				<author>Y Zhang</author>
+				<author>J Li</author>
+				<author>F Yao</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>CrystEngComm</title>
+			<authors>
+				<author>X Zhao</author>
+				<author>Y Zhu</author>
+				<author>F Chen</author>
+				<author>B Lu</author>
+				<author>C Qi</author>
+				<author>J Zhao</author>
+				<author>J Wu</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Chem. B</title>
+			<authors>
+				<author>R Gonzalez-Mcquire</author>
+				<author>J Chane-Ching</author>
+				<author>E Vignaud</author>
+				<author>A Lebugle</author>
+				<author>S Mann</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Langmuir</title>
+			<authors>
+				<author>V Humblot</author>
+				<author>C Méthivier</author>
+				<author>C Pradier</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>Cryst. Growth Des</title>
+			<authors>
+				<author>Z Sun</author>
+				<author>G Zhang</author>
+				<author>X Wang</author>
+				<author>Z Gao</author>
+				<author>X Cheng</author>
+				<author>S Zhang</author>
+				<author>D Xu</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Chem. B</title>
+			<authors>
+				<author>V Demillo</author>
+				<author>X Zhu</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>J. Ind. Eng. Chem</title>
+			<authors>
+				<author>Y Choi</author>
+				<author>N Thongsai</author>
+				<author>A Chae</author>
+				<author>S Jo</author>
+				<author>E Kang</author>
+				<author>P Paoprasert</author>
+				<author>S Park</author>
+				<author>I In</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>New J. Chem</title>
+			<authors>
+				<author>H Khal</author>
+				<author>N Batis</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Cellulose</title>
+			<authors>
+				<author>J Sun</author>
+				<author>L Wu</author>
+				<author>J Chen</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>K Foo</author>
+				<author>B Hameed</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>ACS Appl. Mater. Interfaces</title>
+			<authors>
+				<author>J Liu</author>
+				<author>X Shen</author>
+				<author>D Baimanov</author>
+				<author>L Wang</author>
+				<author>Y Xiao</author>
+				<author>H Liu</author>
+				<author>Y Li</author>
+				<author>X Gao</author>
+				<author>Y Zhao</author>
+				<author>C Chen</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>C Chen</author>
+				<author>Q Xie</author>
+				<author>D Yang</author>
+				<author>H Xiao</author>
+				<author>Y Fu</author>
+				<author>Y Tan</author>
+				<author>S Yao</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1039/C6TB02009G</number>
+		<number>DOI-10.1039/C6CS00135A</number>
+		<number>DOI-10.1039/C8CS00417J</number>
+		<number>DOI-10.1039/C4RA07026G</number>
+		<number>DOI-10.1039/c3ay41755g</number>
+		<number>DOI-10.1039/C8AY00528A</number>
+		<number>DOI-10.1039/C5AY00020C</number>
+		<number>DOI-10.1039/C6AY01504B</number>
+		<number>DOI-10.1039/C5AN00248F</number>
+		<number>DOI-10.1039/C4RA04975F</number>
+		<number>DOI-10.1039/C4RA15485A</number>
+		<number>DOI-10.1039/C7CE00466D</number>
+		<number>DOI-10.1021/acs.langmuir.7b02588</number>
+		<number>DOI-10.1039/C5RA26140F</number>
+		<number>DOI-10.1016/j.apsusc.2015.12.120</number>
+		<number>DOI-10.1039/C4RA04350B</number>
+		<number>DOI-10.1039/C7TA00583K</number>
+		<number>DOI-10.1021/acsanm.8b00748</number>
+		<number>DOI-10.1021/acsami.8b20034</number>
+		<number>DOI-10.1039/C7RA00852J</number>
+		<number>DOI-10.1039/C6NR00902F</number>
+		<number>DOI-10.1039/C0AN00825G</number>
+		<number>DOI-10.1039/C4TB01651C</number>
+		<number>DOI-10.1016/j.apsusc.2018.07.114</number>
+		<number>DOI-10.1039/C8NJ05024D</number>
+		<number>DOI-10.1021/ja049936o</number>
+		<number>DOI-10.1021/ja0524503</number>
+		<number>DOI-10.1021/jp203454g</number>
+		<number>DOI-10.1021/nn2039643</number>
+		<number>DOI-10.1021/cm101730f</number>
+		<number>DOI-10.1007/s10570-011-9571-6</number>
+		<number>DOI-10.1039/B713824E</number>
+		<number>DOI-10.1016/j.ceramint.2018.07.257</number>
+		<number>DOI-10.1039/c3ra42755b</number>
+		<number>DOI-10.1016/j.colsurfb.2016.06.050</number>
+		<number>DOI-10.1016/j.ijbiomac.2018.05.194</number>
+		<number>DOI-10.1039/c3tb20998a</number>
+		<number>DOI-10.1039/c2an36237f</number>
+		<number>DOI-10.1039/C3RA45861J</number>
+		<number>DOI-10.1039/C4RA06013J</number>
+		<number>DOI-10.1039/C6RA15293G</number>
+		<number>DOI-10.1039/C4NJ00080C</number>
+		<number>DOI-10.1039/C5NJ03322E</number>
+		<number>DOI-10.1039/C3CE42150C</number>
+		<number>DOI-10.1021/acs.cgd.5b01235</number>
+		<number>DOI-10.1039/c3ce41255e</number>
+		<number>DOI-10.1039/b400317a</number>
+		<number>DOI-10.1021/la0533866</number>
+		<number>DOI-10.1021/cg801360q</number>
+		<number>DOI-10.1039/C5TB01116G</number>
+		<number>DOI-10.1016/j.jiec.2016.12.002</number>
+		<number>DOI-10.1039/C4NJ01836B</number>
+		<number>DOI-10.1007/s10570-016-1062-3</number>
+		<number>DOI-10.1016/j.cej.2009.09.013</number>
+		<number>DOI-10.1021/acsami.8b03118</number>
+		<number>DOI-10.1039/c2ra22351a</number>
+	</reference_dois>
+</document>

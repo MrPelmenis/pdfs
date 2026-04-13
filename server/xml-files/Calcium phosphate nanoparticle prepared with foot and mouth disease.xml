@@ -1,0 +1,500 @@
+<document>
+	<file>./pdf-files/Calcium phosphate nanoparticle prepared with foot and mouth disease.pdf</file>
+	<title>Calcium phosphate nanoparticle prepared with foot and mouth disease virus P1-3CD gene construct protects mice and guinea pigs against the challenge virus</title>
+	<date>2009</date>
+	<doi_number>10.1016/j.vetmic.2009.05.004</doi_number>
+	<img_preview_path>./pdf-preview-images/Calcium phosphate nanoparticle prepared with foot and mouth disease.jpeg</img_preview_path>
+	<authors>
+		<author>Dechamma Hosur Joyappa</author>
+		<author>C. Ashok Kumar</author>
+		<author>N. Banumathi</author>
+		<author>Golla Rama Reddy</author>
+		<author>Veluvarthy V.S. Suryanarayana</author>
+	</authors>
+	<abstract>Calcium phosphate nanoparticles provide safe and easily manufactured vaccine adjuvant and delivery system for DNA vaccines. In the present study FMDV ''O'' P1-3CD DNA vaccine was encapsulated in calcium phosphate nanoparticles of size 50-100 nm diameters. The maximum loading and entrapment efficiency of nanoparticles were studied by spectrophotometer, as well as agarose gel electrophoresis. In vitro transfection efficiency of these calcium phosphate nanoparticles was found to be as good as commercial transfecting reagent lipofectamine. In vivo analysis of the calcium phosphate nanoparticle P1-3CD (CaPNP1-3CD) FMDV ''O'' vaccine in mice and guinea pigs could induce significant cell mediated and humoral immune response. Also, immunized mice and guinea pigs were protected against the challenge virus.</abstract>
+	<methods>
+		<method>
+			<heading>Preparation of FMDV P1-3CD calcium phosphate nanoparticles and characterization</heading>
+			<text>The basic method of preparation of pDNA loaded nanoparticles of calcium phosphate were similar to that reported (He et al., 2002) with reduced stirring time of 3 h.
+
+The plasmid DNA (pP1-3CD) 500 mg in 7.5 ml of 12.5 mM calcium chloride was mixed with 7.5 ml of 12.5 mM dibasic sodium phosphate and 10 mM sodium citrate slowly in dropwise to control the pH 7.2. The solution was stirred for 3 h when the particle size of less than 100 nm could be formed. The nanoparticles were pelleted at 800 Â g for 15 min and washed once with PBS (pH 7.2) and stored at 4 8C until use.</text>
+		</method>
+	</methods>
+	<full_text>Calcium phosphate has been used for over 30 years to deliver genetic material to mammalian cells. This method has additional advantage as an adjuvant over other transfection procedures such as viral vectors and dendrimers in respect of superior biocompatibility and reduced non-specific immune response (Su et al., 2000). However, as adjuvants for DNA vaccines these are to be further improved to achieve better gene delivery, depot effects, targeting of antigen presenting cells and activation of the desired type of immune response. The exact mechanisms of such delivery systems are not yet fully understood and need further investigations to develop more effective vaccines.
+
+Foot and mouth disease (FMD) is a highly contagious viral disease, which is endemic in Asia, Africa and South America (Parida et al., 2006). It is an economically significant disease of cattle, sheep, goats, pigs and cloven-hoofed wildlife species. It causes production losses, high mortality in young animals and is a major constraint to international trade in live animals and their products (Kitching et al., 2007). Conventional vaccines against FMD consist of chemically inactivated whole virus antigen combined with either an oil, or aluminium hydroxide and saponin adjuvant, depending on the intended target species (Doel, 2003). Although effective at preventing clinical signs of the disease, the current FMD vaccines, even with a potency of !3 PD50 may not induce sterile immunity, and depending on the level of challenge infection, virus may persist, giving rise to carrier animals (Doel et al., 1994).
+
+Alternate to conventional vaccine, DNA vaccines containing analogs of virus genes capable of expressing viral antigens in host cells may be the choice (Beard et al., 1999). However, naked DNA when used as vaccines in human trials needed substantially higher doses of DNA to induce protective immune response (MacGregor et al., 1998;Wang et al., 2001) which may be due to the ineffective delivery strategy or rapid degradation of the injected DNA.
+
+Therefore, safe and effective DNA delivery strategies and DNA protection methods are needed to overcome these limitations and enhance the potency of DNA vaccines. Besides other optimization strategies reviewed (Gurunathan et al., 2000), the use of nanoparticles as DNA delivery vehicles has emerged as a promising new approach to DNA vaccination (Ragusa et al., 2007). Particularly inorganic calcium phosphate nanoparticles have been developed as delivery systems as well as adjuvant for DNA vaccines (He et al., 2000(He et al., , 2002;;Bisht et al., 2005). In this study, we investigated whether a calcium phosphate nanoparticle which is also proven adjuvant (Su et al., 2000) could be used to deliver the DNA vaccine for FMD. The FMD virion is composed of four structural proteins, termed VP1, VP2, VP3 and VP4, which are encoded by the P1 gene (Domingo et al., 2002) and a serine protease encoded by 3C gene (Grubman and Baxt, 2004) is required to catalyze the cleavage of the polyprotein to generate capsid proteins (Saiz et al., 2002). The nonstructural protein 3D is a potent stimulator of cellular and humoral specific response (Foster et al., 1998). So all the structural and nonstructural genes P1, 2A, 3C and 3D which are required for FMD viral capsid assembly (Beard et al., 1999) from FMDV O-R2/75 was chosen as a candidate vaccine.
+
+The DNA was entrapped with calcium phosphate to produce nanoparticles which was used to induce cellular and humoral immunity in vivo. CaPNP1-3CD DNA vaccine injected mice and guinea pigs were challenge immunized to determine the protective efficacy of DNA/nanoparticle vaccine formulations in vivo.
+
+BHK-21 clone 13 cells at passage number 84 were cultured in Dulbecco's modified Eagle's medium (DMEM) supplemented with 10% heat inactivated fetal bovine serum (FBS). Cultures were incubated at 37 8C with 5% CO 2 . Escherichia coli DH5a cells were used for cloning and amplification of plasmids. Animal experiments were carried out as per the approved norms of the Animal Ethics Committee of the Institute. Guinea pigs bred and maintained at Animal Experiment Station, Indian Veterinary Research Institute; were used for protection studies. Albino Swiss mice were procured from Veterinary College Hebbal, Bangalore.
+
+FMDV O-R2/75 vaccine strain adapted to cell culture was titrated in 96-well cell culture plates and guinea pig adapted virus was passaged in guinea pig foot pads and used in the studies. Fifty percent endpoint was calculated by Reed-Muench method (1938) and expressed as TCID 50 or GPID 50 as the case may be.
+
+The pCDNA3.1+ (Invitrogen) plasmid encoding P1-3CD of FMDV ''O'' serotype under the CMV promoter and for in vitro transfection experiments the green fluorescent protein (GFP) encoding plasmid pHUGG (transfer vector carrying UTR-GFP under the HR promoter) was used. Both the plasmids were provided by Dr. V.V.S. Suryanarayana, FMD Research Lab, Indian Veterinary Research Institute. Plasmid DNA was maintained and purified from E. coli DH5a using Qiagen plasmid Maxi Kit (Qiagen) according to the manufacturer's instructions.
+
+The basic method of preparation of pDNA loaded nanoparticles of calcium phosphate were similar to that reported (He et al., 2002) with reduced stirring time of 3 h.
+
+The plasmid DNA (pP1-3CD) 500 mg in 7.5 ml of 12.5 mM calcium chloride was mixed with 7.5 ml of 12.5 mM dibasic sodium phosphate and 10 mM sodium citrate slowly in dropwise to control the pH 7.2. The solution was stirred for 3 h when the particle size of less than 100 nm could be formed. The nanoparticles were pelleted at 800 Â g for 15 min and washed once with PBS (pH 7.2) and stored at 4 8C until use.
+
+One drop (30 ml) of the aqueous dispersion of nanoparticles and one drop (30 ml) of 1% phosphotungstic acid were put on a formavar coated copper grid (1% solution of formavar was prepared in spectroscopic grade chloroform) and air dried in a vacuum desiccator. The dried grid was then examined under an electron microscope (Hitachi-800 TEM).
+
+The DNA loaded nanoparticles were washed repeatedly in sterile PBS (pH 7.2) by pelleting at 800 Â g for 5 min. Each wash was checked for the presence of DNA by agarose gel electrophoresis or spectrophotometrically. The nanoparticles were finally washed with 70% alcohol and air dried. Known quantity of (mg) nanoparticles was treated with 100 mM EDTA at room temperature for 30 min. The amount of DNA released from the nanoparticles was measured spectrophotometrically at 260 nm. The percentage efficiency of entrapment was then calculated from the amount of DNA originally added in the preparation (DNA O ) using the equation E % = DNA R /DNA O Â 100 where DNA R is the amount of DNA released (Bisht et al., 2005).
+
+In order to determine the maximum DNA loading capacity of calcium phosphate nanoparticles, different amounts of DNA (100-1000 mg) were added during the preparation of nanoparticles, keeping the total amount of calcium and phosphate ion concentrations constant. The nanoparticles dispersed in aqueous solution during the preparation were then subjected to agarose gel electrophoresis. The excess DNA remained as free DNA after saturation was visible as distinct band in the gel, which was also measured by spectrophotometer at 260 nm.
+
+The DNA entrapped nanoparticles were treated with 10 units of DNase (Sigma) for 1 h at 37 8C. After the reaction the sample was checked by agarose gel electrophoresis (Bisht et al., 2005).
+
+Baby Hamster Kidney (BHK-21) cells were grown in 6well plates using DMEM (Life Technologies) with 10% FBS. Cells were washed with OPTI-MEM (Life Technologies) and layered with 2 mg of CaPNHUGG-UTR-GFP DNA (prepared as above) in 500 ml of OPTI-MEM. Naked pHUGG-UTR-GFP DNA (2 mg) was transfected using lipofectamine 1:3 (Life Technologies). After 6 h of incubation at 37 8C the supernatant was replaced with DMEM with 5% FBS and continued to incubate. After 72 h cells were observed under fluorescent microscope (Olympus, Germany) at a magnification of 40Â and fluorescent foci were counted.
+
+Guinea pigs 6 months old were divided into six groups, each containing eight animals (n = 8): Group A, CaPNP1-3CD (50 mg); Group B, CaPNP1-3CD (100 mg); Group C, naked pDNA3.1-P1-3CD (100 mg); Group D, CaPNDNA3.1 (+) vector control (100 mg); Group E, conventional FMD vaccine (0.2 ml); and Group F, PBS. Guinea pigs were given single injection of conventional FMDV ''O'' R2/75 BHK-21 cell culture grown, inactivated with BEI and sepic oil adjuvanted vaccine into the quadriceps muscle of both hind legs by i/m route whereas, naked DNA was injected into the free fold skin of the back of the animal by i/d route and boosted on 28th days post-immunization (dpi). Nanoparticle was injected i/m and boosted on 28th dpi. Blood was collected on 0, 14, 28, and 34 dpi.
+
+Female mice 4-to 6-week old randomly distributed into four groups were given single injection by i/m route with Group A, CaPNP1-3CD (2 mg); Group B, conventional FMD vaccine (0.1 ml); Group C, CaPNDNA3.1 vector control (2 mg); Group D, PBS. Mice were challenged on 29th day with 100 TCID 50 FMDV O-R2/75 (100 ml) through i/peritoneal route. After 12 h blood was collected and sera were tested for virus titre.
+
+Detection of serum antibodies against FMDV ''O'' was performed by indirect ELISA using 96-well flat-bottomed plates (Nunc) coated with FMDV O-R2/75 vaccine strain in 0.1 M carbonate/bicarbonate buffer, pH 9.6, overnight at 4 8C. After blocking with 5% (SMP) skimmed milk powder-PBS, plates were incubated with 1/50 dilution of test sera in duplicate wells for 1 h at 37 8C. Rabbit anti-guinea pig IgG peroxidase conjugate (Sigma) at 1:5000 dilution was then added and incubated for 1 h at 37 8C, followed by the substrate (20 mM O-phenyl diamine, 0.01% hydrogen peroxide in phosphate/citrate buffer 0.1 M, pH 5.6). Plates were washed with PBS (pH 7.2) three times with interval of 5 min after each reaction. Absorbance of the color developed was determined at 492 nm and corrected for background with PBS control group sera.
+
+The antiserum was diluted in DMEM as 2-fold in a 96-well flat-bottomed tissue culture plates (Nunc, USA). Virus suspension at 100 TCID 50 in 50 ml was added to all antisera wells and the mixture was incubated for 1 h at 37 8C. BHK-21 cell suspension 50 ml (2 Â 10 6 ml À1 ) was added to each well and incubated for 72 h. Appropriate serum, virus and cell control were included in the test (Golding et al., 1976). The endpoint titres were calculated as the reciprocal of the serum dilution at which 50% of the cell monolayer showed CPE.
+
+Peripheral blood mononuclear cells (PBMCs) were prepared and T-cell proliferation was assayed as described (Gel'famov et al., 1991). Cells were plated at a concentration of 2 Â 10 5 ml À1 , 100 ml/well in RPMI-10% FCS, 14 mM HEPES, 50 mM 2-mercaptoethanol, 100 mg/ml streptomycin and 100 IU/ml penicillin. Phytohaemagglutinin (PHA) at a final concentration 10 mg/ml was used as a positive control of proliferation. Subsequently 100 ml/well of medium with recombinant P1 (10 mg/well) was added to triplicate wells and control cultures without antigens and mitogen were also included. After incubation of the cells (37 8C, 5% CO 2 ) for 12 h 0.5 mCi [ 3 H] thymidine was added and the cells were harvested 18 h later. The incorporation of radioactivity into the DNA was measured by liquid scintillation in a micro beta counter (LKB Pharmacia). Results were expressed as stimulation indices (SI), which is a ratio of mean count per minute (CPM) of stimulated culture and mean CPM of control culture. Proliferations that induced SI of &gt;2 were considered as positive.
+
+At 35 days post-immunization guinea pigs were challenged with 100 GPID 50 FMDV ''O'' by inoculating intra plantary in the left hind foot. The animals were observed for 7 days post-challenge for the appearance of primary (at the site of inoculation) and secondary lesions (on the other foot pads). Appearance of secondary vesicles on at least one of the non-inoculated feet was considered as unprotected.
+
+Mice at 29 days post-immunization were challenged with 100 ml of 100 TCID 50 FMDV ''O'' by intra-peritoneal route. Blood was collected 12 h post-challenge to detect virus and the observation was continued for 7 days.
+
+Virus was detected in the sera of mice after FMDV challenge as described (Xiaolan et al., 2006). Blood was withdrawn from intra-orbital route of mice 12 h after the challenge, serum was separated and the presence of virus in the sera was detected by incubating 10-fold dilutions of the serum with 2 Â 10 5 BHK-21 cells/well in 96-well tissue culture plates. After 72 h, the cytopathic effect on the monolayer cells was observed and the titres were calculated.
+
+RNA was extracted from 100 ml of serum sample with TRIZOL reagent (Invitrogen) according to the manufacturer's instructions. Cell culture FMDV ''O'' virus RNA was used as standard control. The RNA was precipitated and washed once with 80% ethanol. The pellet was suspended in RNase free water. The cDNA was synthesized using High capacity cDNA archive kit (Applied Biosystems). The reaction was carried out initially at 25 8C for 10 min followed by 2 h at 37 8C. The cDNA in 2 ml was used in real time assay for quantification in the reaction volume of 25 ml, consisting of 12.5 ml TaqMan mix (Applied Biosystems) containing probe (p) 5 0 GGATGCCCTTCAGGTACCCCGAGG3 0 OH, reporter dye FAM and 3 0 Quencher dye TAMRA. The upstream and downstream primers that flank the TaqMan probe site amplify 220 bp fragment from 5 0 UTR region. The sequences and location of the primers are given below:
+
+Forward primer (F1) position 811-830 = 5 0 GTCATGT-GTCATGTGTGCAACCCCAGC3 0 OH. Reverse primer (R1) position 1012-1031 = 5 0 GACCGG-AGGCCGGCGCCTTT3 0 OH. Reaction conditions were 50 8C for 2 min, 95 8C for 10 min followed by 40 cycles of 95 8C for 15 s and 60 8C for 1 min.
+
+Statistical analysis was performed using Student's t-test and one-way ANOVA, using paired two samples of mean using Graph pad Prism soft ware (Graph pad software, Inc.).
+
+The DNA loaded calcium phosphate nanoparticles were prepared by a direct precipitation method and formation of nanoparticles was confirmed by TEM studies (Fig. 1a). Majority of nanoparticles were of spherical morphology with a diameter of 50-100 nm. The DNA entrapment efficiency of prepared calcium phosphate nanoparticles was analyzed by dissolving the nanoparticles which was found to be 95% (Fig. 1b). The nanoparticles pellet after centrifugation could be easily re-dispersed in aqueous buffer. The maximum amount of DNA that could be loaded inside the nanoparticles was estimated to be 50 mg/mg of nanoparticle which was estimated spectrophotometrically and shown by gel electrophoresis (Fig. 1c).
+
+DNase protection assay, showed the entrapment of the DNA inside particle rather than on the surface. Upon incubation of the nanoparticles with DNase followed by electrophoresis it was observed that naked DNA was completely digested by the DNase (Fig. 1d, Lane 3) whereas, DNA encapsulated in the nanoparticles was intact which remained in the slot (Fig. 1d, Lane 2) without showing mobility under gel electrophoresis as they are dense particles.
+
+The transfection of the cells with the DNA in the form of nanoparticles or in free form was carried out with the fluorophor protein coding plasmid DNA CaPNHUGG-UTR-GFP. Commercial transfecting agent (lipofectamine) was used along with the naked pHUGG-UTR-GFP DNA for comparison. The efficiency of transfection of the nanoparticle entrapped DNA was same as that of liposomal commercial tranfecting agent (Fig. 2). For a given field, number of fluorescent foci (200-250) found in both the cases was same at a given 2 mg DNA concentration. Further, treatment of cells with CaPN did not significantly alter the cell morphology as detected by light microscopy.
+
+The ability of CaPN DNA vaccine to induce FMDV specific antibody response was studied in guinea pigs. The sera were collected and analyzed by a standard single dilution (1:50) ELISA. As shown in Fig. 3 at 14 dpi, animals in all groups except vector control (CaPNDNA3.1+) showed FMDV specific antibodies. However, no significant difference was observed between the groups immunized with naked and nanoparticle vaccine constructs (P &gt; 0.05). At 28 dpi animals injected with 50 mg nanoparticles showed Fig. 3. The antibody level of guinea pigs after immunization. Sera from all the animals were sampled at 0, 14, 28 and 34 dpi and tested for antibodies at 1:50 dilution. FMDV O-R2/75 vaccine strain was used as antigen in 1:5 dilutions. The result was obtained from average of five sera in each group. Mean AE SD of sample is shown. good increase in immune response whereas, 100 mg nanoparticle and naked DNA responses were greater at 28 dpi than the 50 mg nanoparticles at 14 dpi. After a booster immunization, an increase in antibody titres of animals injected with naked DNA was observed. Antibody titre of animals injected with 50 mg DNA nanoparticles was higher than the 100 mg DNA nanoparticles injected animals through out the period. Conventional vaccine group showed high antibody titre compared to all other groups.
+
+Sera samples were further evaluated in vitro by serum neutralization assay. As shown in Table 1, after a single immunization at 14-day negligible serum neutralizing antibodies were detected in all the groups. At 28 dpi detectable neutralizing antibodies were developed in the sera of animals immunized with 50 mg DNA CaPN, 100 mg DNA CaPN, naked DNA, and conventional vaccine. However, highest neutralizing antibody was observed in the sera of group immunized with conventional vaccine.
+
+Protection level in guinea pigs injected with 50 mg DNA CaPN and 100 mg of naked DNA was highest of 87.5%. Conventional vaccine group and 100 mg DNA CaPN showed 75.0% protection. The vector nanoparticle control group showed 12.5% protection. None of the animals were protected in the PBS control group.
+
+The cell mediated immune responses of the animals vaccinated with various vaccine formulations were studied by titrated thymidine incorporation. PBMCs were separated from the whole blood after the primary injection and lymphocyte proliferation assay was performed as described, using recombinant P1 protein and PHA as positive control (Fig. 4). P1 specific proliferation response was significantly higher in group immunized with 50 mg DNA nanoparticle, naked DNA and conventional vaccine group (P &lt; 0.001) compared to vector control group.
+
+Mice were immunized as described in methods and challenged with 100 TCID 50 of FMDV O-R2/75 viruses through intra-peritoneal route. Sera of mice immunized with nanoparticle vaccine were detected with 1.2 log 10 virus titre (Table 2). Whereas, vector nanoparticle injected mice control group had detectable level of 5.1 log 10 virus titre. Conventional vaccine had negligible 0.5 log 10 titre of virus and healthy control group was found with no virus. The quantity of viral RNA in each group was also assayed by real time qPCR. The CT values corresponding to CaPN and conventional vaccine showed 25 and 37 respectively whereas, the control group showed CT value of 8 which indicated high viral load in the serum. Protection level of 100% was observed in CaPN and conventional vaccine whereas, PBS control group all animals were healthy as they were not challenged and in vector control one animal survived out of six animals.
+
+Efficient DNA delivery into the immune cells is vital to the success of DNA vaccines. The present study was Boosted on 28th day except conventional vaccine. Blood collected on 0, 14th, 28th and 34th dpi. Animals were challenged with 100 GPID 50 FMDV O-R2/75 on 35th dpi. a SN titres were calculated as the reciprocal of the serum dilution at which 50% of the cell monolayer showed CPE. b Ratio of the number of protected animals to the total number challenged.
+
+Fig. 4. Lymphoproliferation assay results expressed by stimulation index (SI) in guinea pigs. At 28 dpi, PBMCs were prepared and adjusted to 2 Â 10 5 cells/ml from guinea pigs injected with CaPNP1-3CD, naked P1-3CD, conventional, vector control and PBS control groups. PBS control group cells were used for PHA stimulation. FMDV O-R2/75 recombinant P1 antigen was used to stimulate the cells. Stimulation indices (SI), which is a ratio of mean count per minute (CPM) of stimulated culture and mean CPM of control culture was calculated. The result is considered to be positive when SI &gt; 2. The SI value of each group (n = 3) was expressed as the mean AE standard error (S.E.). Significant at *P &lt; 0.05 and extremely significant at **P &lt; 0.01 when compared with the vector control groups using Student's t-test.
+
+carried out to produce calcium phosphate nanoparticles loaded with FMDV vaccine, followed by challenge experiment to determine the efficacy of the vaccine.
+
+The technique of co-precipitation of calcium phosphate with plasmid DNA remains attractive because of calcium phosphates biocompatibility, biodegradability, ease of handling and its known adsorption capacity for DNA (Wilson et al., 1995). The custom-made calcium phosphate nanoparticles are coated with DNA and the free end of DNA is exposed to endosomal enzymes leading to complete or partial degradation. Hence plasmid DNA encapsulated calcium phosphate nanoparticles could be a better choice. TEM images of the CaPN showed dense spherical morphology, with particle sizes of 50-100 nm, which depended on the time of stirring, with an increase in size with longer the duration of stirring. It was observed that more than 12 h stirring lead to larger particles formation which aggregated rapidly. Yang and Yang (1997) observed growth of the crystalline particles of size 50-100 nm, where the pH was varied between 6.48 and 10.01, but no clear trend in the particle morphology or size was found. We could achieve uniform morphology by controlling the pH between 7.2 and 7.5. Mixing DNA/CaCl 2 with phosphate containing buffer leads to a precipitation of the sparingly soluble calcium phosphate which incorporates DNA. Depending on the amount of DNA and stirring, precipitation is effectively prevented due to surface blocking; otherwise growth continues leading to larger particles (Welzel et al., 2004).
+
+The maximum amount of 50 mg of pDNA per mg of nanoparticles could be loaded which is higher than the reported methods (Bisht et al., 2005). The entrapment efficiency was found to be more than 95% with loss of 5% of the DNA which remains in the supernatant of the end product solution. The encapsulated DNA was checked for resistance against nuclease by subjecting to DNase treatment. We found while naked DNA was digested into nucleotides which moved out of the gel very quickly, the CaPN encapsulated DNA remained in the slot totally protected from DNase. The nanoparticles remain in the slot with some DNA move in the gel which is adsorbed on the surface of the nanoparticles. The results clearly demonstrated that the DNA was encapsulated in the rigid matrix of the calcium phosphate nanoparticles, which protected the DNA from the external DNase activity. It is envisaged that the dissolution of inorganic nanoparticles in the acidic endosomal compartment may lead to an osmotic imbalance and consequent disruption of the endosomal compartment so that DNA can come out in the cytosol. The calcium microprecipitates and other lysosome lytic agents facilitate endosomal release by their fusigenic and membranolytic activity (Haberland et al., 2000).  (2005) reported better efficiency of the CaPN compared to polyfect reagent with simple modification of the method of preparation. Olton et al. (2007) reported that controlled and regulated manner of mixing precursors would result in nanosized particles and yielded higher transfection efficiency. The method we adopted to produce the nanoparticles showed agglomeration of particles over the cells which may be due to presence of ions in the media.
+
+To investigate the use of CaPN as DNA vaccine delivery agent, genes coding for FMDV capsid precursor polypeptide P1, along with nonstructural proteins 3CD were used as target antigens in this study. The results clearly showed that DNA encapsulated with CaPN could elicit detectable FMDV specific ELISA antibodies, neutralizing antibodies and stimulated lymphocytes. CaPNP1-3CD developed ELISA titres were half that seen with the conventional vaccine. However, naked DNA showed low level of humoral response with single injection. After boosting antibody titre increased maximum in naked DNA indicating naked DNA is cleared quickly in the system after the injection. It has been reported that only 0.5% of original DNA injected remained in active form (Strain and Wyllie, 1984). Whereas, CaPN encapsulated DNA on 28th day showed two times the titre seen on 14th day and boosting had less significance for improving the antibody titre.
+
+Nanoparticle vaccine, though producing lower neutralizing antibody titre compared to conventional vaccine 29th day challenged with 100 TCID 50 FMDV O-R2/75 (100 ml) through i/peritoneal route. PBS control is the healthy control not been challenged. After 12 h blood was collected and sera were tested for virus titre. a Ratio of the number of dead animals to the total number challenged.
+
+protection level was 100% in mice and 87.5% in guinea pigs. Whereas, conventional vaccine despite producing highest cell mediated immune (CMI) as well as humoral immune response showed 100% protection in mice but 75.0% protection in guinea pigs. Correlation between T-cell response and protection has been reported for cattle (Hohlich et al., 2003). Also partial protection against FMDV has been shown in natural hosts in the absence of neutralizing antibodies after immunization with recombinant virus expressing the FMDV capsid precursor polyprotein (Sanz-Parra et al., 1999). Analysis of viral load in the sera after 12 h post-challenge mice has provided supporting data on the protective immune response elicited by the nanoparticles and conventional vaccine group. Naked DNA group on comparison with conventional and nanoparticle vaccine group produced lower humoral and CMI response. However, protection levels were as good as conventional vaccine group with booster immunization. Protective immune response with low level of neutralizing antibodies with DNA based vaccines was reported in mice and swine (Wong et al., 2000).
+
+As a first report we show that CaPN can be used as a DNA delivery agent for FMDV DNA vaccine. Based on above data, we further addressed specifically the use of 50 mg of DNA with CaPN induce better immune response than 100 mg of DNA CaPN. So use of DNA vaccine in nanoparticle form has added advantage of sparing DNA along with the good immune response. Further, DNA vaccines require boosting immunization compared to CaPN as boosting injection did not make significant difference in the titre value. However, further research required to study the quantity of antigen expressed, duration of antigen present in the animal to analyze the depot action of the CaPN. Further, evaluation of this vaccine in natural host system may be necessary to consider the technology a future scope.</full_text>
+	<references>
+		<reference>
+			<title>J. Biotechnol</title>
+			<authors>
+				<author>C Beard</author>
+				<author>G Ward</author>
+				<author>E Rieder</author>
+				<author>J Chinsangaram</author>
+				<author>M Grubman</author>
+				<author>P Mason</author>
+			</authors>
+			<date>1999</date>
+		</reference>
+		<reference>
+			<title>Int. J. Pharm</title>
+			<authors>
+				<author>S Bisht</author>
+				<author>G Bhakta</author>
+				<author>S Mitra</author>
+				<author>A Maitra</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>Virus Res</title>
+			<authors>
+				<author>T Doel</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>Vaccine</title>
+			<authors>
+				<author>T Doel</author>
+				<author>L Williams</author>
+				<author>P Barnett</author>
+			</authors>
+			<date>1994</date>
+		</reference>
+		<reference>
+			<title>Comp. Immunol. Microbiol. Infect. Dis</title>
+			<authors>
+				<author>E Domingo</author>
+				<author>E Baranowski</author>
+				<author>C Escarmis</author>
+				<author>F Sobrino</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>Vet. Quart</title>
+			<authors>
+				<author>M Foster</author>
+				<author>A Cook</author>
+				<author>L Cedillo</author>
+				<author>R</author>
+			</authors>
+			<date>1998</date>
+		</reference>
+		<reference>
+			<title>Bioorg. Khim</title>
+			<authors>
+				<author>V Gel'famov</author>
+				<author>L Grechaninova</author>
+				<author>E Kan</author>
+				<author>A Iarov</author>
+				<author>A Surovo</author>
+				<author>O Vol'pina</author>
+				<author>A Chepurkin</author>
+				<author>V Ivanov</author>
+			</authors>
+			<date>1991</date>
+		</reference>
+		<reference>
+			<title>Res. Vet. Sci</title>
+			<authors>
+				<author>S Golding</author>
+				<author>R Hedger</author>
+				<author>P Talbot</author>
+			</authors>
+			<date>1976</date>
+		</reference>
+		<reference>
+			<title>Annu. Rev. Immunol</title>
+			<authors>
+				<author>S Gurunathan</author>
+				<author>D Klinman</author>
+				<author>R Seder</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>Clin. Microbiol. Rev</title>
+			<authors>
+				<author>M Grubman</author>
+				<author>B Baxt</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Pharm. Res</title>
+			<authors>
+				<author>A Haberland</author>
+				<author>T Knaus</author>
+				<author>S Zaitsev</author>
+				<author>B Buchberger</author>
+				<author>A Lun</author>
+				<author>H Haller</author>
+				<author>M Bottger</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>Clin. Diagn. Lab. Immunol</title>
+			<authors>
+				<author>Q He</author>
+				<author>A Mitchell</author>
+				<author>S Johnson</author>
+				<author>C Bartak</author>
+				<author>T Morcol</author>
+				<author>S Bell</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>Clin. Diagn. Lab. Immunol</title>
+			<authors>
+				<author>Q He</author>
+				<author>A Mitchell</author>
+				<author>S Johnson</author>
+				<author>C Bartak</author>
+				<author>T Morcol</author>
+				<author>S Bell</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>J. Gen. Virol</title>
+			<authors>
+				<author>B Hohlich</author>
+				<author>K Wiesmuller</author>
+				<author>B Haas</author>
+				<author>W Gerner</author>
+				<author>R Correa</author>
+				<author>H Hehnen</author>
+				<author>T Schlapp</author>
+				<author>E Pfaff</author>
+				<author>A Saalmu ¨ller</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>Vaccine</title>
+			<authors>
+				<author>P Kitching</author>
+				<author>J Hammond</author>
+				<author>M Jeggo</author>
+				<author>B Charleston</author>
+				<author>P Paton</author>
+				<author>L Rodriguez</author>
+				<author>R Heckert</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>J. Infect. Dis</title>
+			<authors>
+				<author>R Macgregor</author>
+				<author>J Boyer</author>
+				<author>K Ugen</author>
+				<author>K Lacy</author>
+				<author>S Gluckman</author>
+				<author>M Bagarazzi</author>
+				<author>M Chattergoon</author>
+				<author>Y Baine</author>
+				<author>T Higgins</author>
+				<author>R Ciccarelli</author>
+				<author>L Coney</author>
+				<author>R Ginsberg</author>
+				<author>D Weiner</author>
+			</authors>
+			<date>1998</date>
+		</reference>
+		<reference>
+			<title>Biomaterials</title>
+			<authors>
+				<author>D Olton</author>
+				<author>J Li</author>
+				<author>M Wilson</author>
+				<author>T Rogers</author>
+				<author>J Close</author>
+				<author>L Huang</author>
+				<author>P Kumta</author>
+				<author>C Sfeir</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Vaccine</title>
+			<authors>
+				<author>S Parida</author>
+				<author>Y Oh</author>
+				<author>S Reid</author>
+				<author>S Cox</author>
+				<author>R Statham</author>
+				<author>M Mahapatra</author>
+				<author>J Anderson</author>
+				<author>P Barnett</author>
+				<author>B Charleston</author>
+				<author>D Paton</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>IEEE Trans. Nanobiosci</title>
+			<authors>
+				<author>A Ragusa</author>
+				<author>I Garcı ´a</author>
+				<author>S Penade ´s</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Am. J. Hyg</title>
+			<authors>
+				<author>L Reed</author>
+				<author>H Muench</author>
+			</authors>
+			<date>1938</date>
+		</reference>
+		<reference>
+			<title>Int. J. Pharm</title>
+			<authors>
+				<author>I Roy</author>
+				<author>S Mitra</author>
+				<author>A Maitra</author>
+				<author>S Mozumdar</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>Microbes Infect</title>
+			<authors>
+				<author>M Saiz</author>
+				<author>J Nunez</author>
+				<author>M Jimenez-Clavero</author>
+				<author>E Baranowski</author>
+				<author>F Sobrino</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>J. Gen. Virol</title>
+			<authors>
+				<author>A Sanz-Parra</author>
+				<author>B Vazquez</author>
+				<author>F Sobrino</author>
+				<author>S Cox</author>
+				<author>V Ley</author>
+				<author>J Salt</author>
+			</authors>
+			<date>1999</date>
+		</reference>
+		<reference>
+			<title>Biochem. J</title>
+			<authors>
+				<author>A Strain</author>
+				<author>A Wyllie</author>
+			</authors>
+			<date>1984</date>
+		</reference>
+		<reference>
+			<title>Vaccine</title>
+			<authors>
+				<author>S Wang</author>
+				<author>X Liu</author>
+				<author>K Fisher</author>
+				<author>G Jeffrey</author>
+				<author>F Smith</author>
+				<author>W Timothy</author>
+				<author>Tobery</author>
+				<author>B Jeffrey</author>
+				<author>K Robert</author>
+				<author>J Michael</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>Proc. Natl. Acad. Sci. U.S.A</title>
+			<authors>
+				<author>R Wang</author>
+				<author>J Epstein</author>
+				<author>F Baraceros</author>
+				<author>E Gorak</author>
+				<author>Y Charoenvit</author>
+				<author>D Carucci</author>
+				<author>R Hedstrom</author>
+				<author>N Rahardjo</author>
+				<author>T Gay</author>
+				<author>P Hobart</author>
+				<author>R Stout</author>
+				<author>T Jones</author>
+				<author>T Richie</author>
+				<author>S Parker</author>
+				<author>D Doolan</author>
+				<author>J Norman</author>
+				<author>S Hoffman</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Chem</title>
+			<authors>
+				<author>T Welzel</author>
+				<author>W Meyer-Zaika</author>
+				<author>M Epple</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Anal. Biochem</title>
+			<authors>
+				<author>S Wilson</author>
+				<author>F Liu</author>
+				<author>R Wilson</author>
+				<author>P Housley</author>
+			</authors>
+			<date>1995</date>
+		</reference>
+		<reference>
+			<title>Virology</title>
+			<authors>
+				<author>H Wong</author>
+				<author>S Cheng</author>
+				<author>E Chan</author>
+				<author>Z Sheng</author>
+				<author>W Yan</author>
+				<author>Z Zheng</author>
+				<author>Y Xie</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>Virus Genes</title>
+			<authors>
+				<author>Y Xiaolan</author>
+				<author>X Shaobo</author>
+				<author>F Liurong</author>
+				<author>J Yunbo</author>
+				<author>C Huanchun</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>Biomaterials</title>
+			<authors>
+				<author>Y Yang</author>
+				<author>J Yang</author>
+			</authors>
+			<date>1997</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1016/S0168-1656(99)00142-X</number>
+		<number>DOI-10.1016/j.ijpharm.2004.07.035</number>
+		<number>DOI-10.1016/S0168-1702(02)00261-7</number>
+		<number>DOI-10.1016/0264-410X(94)90262-3</number>
+		<number>DOI-10.1016/S0147-9571(02)00027-9</number>
+		<number>DOI-10.1080/01652176.1998.9694960</number>
+		<number>DOI-10.1016/S0034-5288(18)33445-3</number>
+		<number>DOI-10.1146/annurev.immunol.18.1.927</number>
+		<number>DOI-10.1128/CMR.17.2.465-493.2004</number>
+		<number>DOI-10.1023/A:1007581700996</number>
+		<number>DOI-10.1128/CDLI.7.6.899-903.2000</number>
+		<number>DOI-10.1099/vir.0.19366-0</number>
+		<number>DOI-10.1016/j.vaccine.2006.10.052</number>
+		<number>DOI-10.1086/515613</number>
+		<number>DOI-10.1016/j.biomaterials.2006.10.026</number>
+		<number>DOI-10.1016/j.vaccine.2005.08.108</number>
+		<number>DOI-10.1109/TNB.2007.908996</number>
+		<number>DOI-10.1016/S0378-5173(02)00452-0</number>
+		<number>DOI-10.1016/S1286-4579(02)01644-1</number>
+		<number>DOI-10.1099/0022-1317-80-3-671</number>
+		<number>DOI-10.1042/bj2180475</number>
+		<number>DOI-10.1016/S0264-410X(99)00391-6</number>
+		<number>DOI-10.1073/pnas.181123498</number>
+		<number>DOI-10.1039/b401644k</number>
+		<number>DOI-10.1006/abio.1995.1216</number>
+		<number>DOI-10.1006/viro.2000.0607</number>
+		<number>DOI-10.1007/s11262-005-0073-1</number>
+		<number>DOI-10.1016/S0142-9612(96)00120-2</number>
+	</reference_dois>
+</document>

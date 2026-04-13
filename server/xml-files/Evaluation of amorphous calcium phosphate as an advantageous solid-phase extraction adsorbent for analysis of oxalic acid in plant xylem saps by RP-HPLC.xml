@@ -1,0 +1,413 @@
+<document>
+	<file>./pdf-files/Evaluation of amorphous calcium phosphate as an advantageous solid-phase extraction adsorbent for analysis of oxalic acid in plant xylem saps by RP-HPLC.pdf</file>
+	<title>EVALUATION OF AMORPHOUS CALCIUM PHOSPHATE AS AN ADVANTAGEOUS SOLID-PHASE EXTRACTION ADSORBENT FOR ANALYSIS OF OXALIC ACID IN PLANT XYLEM SAPS BY RP-HPLC</title>
+	<date>2014</date>
+	<doi_number>10.1080/10826076.2013.853313</doi_number>
+	<img_preview_path>./pdf-preview-images/Evaluation of amorphous calcium phosphate as an advantageous solid-phase extraction adsorbent for analysis of oxalic acid in plant xylem saps by RP-HPLC.jpeg</img_preview_path>
+	<authors>
+		<author>Wei Wei</author>
+		<author>Huiting Huang</author>
+		<author>Jing Cui</author>
+		<author>Zhenggui Wei</author>
+	</authors>
+	<abstract>&amp; Amorphous calcium phosphate (ACP) possesses an ultrahigh specific surface area and, thus, has great potentials for the use as adsorbent material. We herein demonstrated the use of ACP as a novel solid-phase extraction adsorbent for selective adsorption of oxalic acid, so as to eliminate the interference from nitrate on oxalic acid in reversed phase high performance liquid chromatography (RP-HPLC). And the adsorbed oxalic acid could be eluted with diammonium phosphate. The optimum experimental conditions for the separation and determination of oxalic acid were studied. After the interference was eliminated, oxalic acid was determined by RP-HPLC at the optimum chromatographic conditions with an average recovery ranging between 96.1% and 102.4 %, and the relative standard deviations were less than 3.0%. The main advantage of ACP adsorbent was that it affords high adsorption capacity and selectivity for oxalic acid over a wide range of pH values. The proposed method was successfully applied to the analysis of oxalic acid in xylem saps of Indian mustard.</abstract>
+	<methods>
+		<method>
+			<heading>Preparation and Characterization of ACP</heading>
+			<text>The ACP adsorbent used in this study was synthesized according to the literature [14] with a little modification. However, a brief description is provided as follows: Appropriate amounts of Ca(NO 3 ) 2 Á 4H 2 O and PEG were dissolved in distilled water to form 0.10 mol=L PEG-Ca 2þ solution with PEG=Ca weight ratio of 1:1. (NH 4 ) 2 HPO 4 solution was added dropwise to the PEG-Ca 2þ solutions and the pH was held at 11 by NH 3 Á H 2 O. The precipitation reaction occurred at 5 C during stirring for 30 min. And then the precipitates were separated, washed repeatedly, and freeze-dried until there was no weight change. The obtained ACP was characterized and used as SPE adsorbent.
+
+The ACP sample was analyzed by Fourier transform infrared (FT-IR) spectroscopy (Tensor 27, Bruker, Germany) as KBr pellets to confirm the phase formation. The crystallinity and purity of the mineral phase were determined by powder X-ray diffraction (XRD) on a Rigaku diffractometer (Rigaku D=max-IIIB) with Cu Ka radiation (30 kV, 25 mA, k ¼ 1.5405 A ˚).</text>
+		</method>
+		<method>
+			<heading>Plant Material and Collection of Plant Xylem Sap Samples</heading>
+			<text>The choice of Indian mustard (Brassica juncea L.) was made because of its ability to exudate xylem fluid under slight negative pressure. Furthermore, it could be used for the phytoextraction of cadmium and zinc from contaminated soils. [15] Seeds of Indian mustard were germinated in the dark at 25 C in Petri dishes on wet filter paper for 5 d. The plants were cultivated hydroponically in a green house with supplementary light to provide a 16-hr photoperiod and with the temperature controlled at 20-25 C. Hoagland's nutrient solution was used, [7] which consists of
+
+. Nutrient solutions were adjusted to pH 6.0 with 1 mmol=L 2-(N-morpholino)-ethane sulfonic acid (MES) and 0.5 mmol=L NaOH. The hydroculture solutions were aerated continuously and replaced every 3 d to prevent nutrient depletion and pH change. Xylem saps were collected from 6-to 8-wk old plants, according to the method described by Morita et al. [16] The plants were cut with a sterilized razor blade just below the cotyledon internode, and then the decapitated stumps were fitted with a test tube (10 mL) maintaining negative pressure by means of a hand operated vacuum pump. During the suction procedure, the test tubes used to collect the saps were kept on ice. The saps were collected within 2 hr and then stored at À20 C after filtration on a 0.45-mm Millipore filter.</text>
+		</method>
+		<method>
+			<heading>Analytical Procedures</heading>
+			<text>The batch adsorption experiments of oxalic acid and nitrate on ACP were studied in detail to get the optimum separation conditions. Pretreatment experiments showed that nitric acid could not be adsorbed by ACP despite the pH, contact times, initial concentration of nitric acid, and the amount of ACP were taken into consideration (data not shown). Oxalic acid could be adsorbed quantitatively after 60 min contact with ACP at initial pH 5.5 (xylem sap is generally acidic, ranging between pH 5 and 6), and then oxalic acid could be desorbed quantitatively by 100 mmol=L (NH 4 ) 2 HPO 4 at pH 10. Finally, the eluent was determined by RP-HPLC at the optimum chromatographic conditions.
+
+The adsorption experiments of oxalic were carried out in centrifuge tube that contained 0.05 g ACP and 25 mL 3.0 mmol=L oxalic acid. The tubes were placed in a horizontal shaker set at 160 rpm, and after several hours, the tubes were centrifuge at 4000 rpm for 15 min and filtered through 0.45-mm membrane filters. The filtrates were used for RP-HPLC analyses, whereas the solid residues were analyzed by XRD and FT-IR in order to elucidate the adsorption mechanism of oxalic acid on ACP.
+
+The xylem sap samples were treated with the optimum separate conditions. First, the samples were appropriately diluted with deionized water, and 0.05 g ACP was added into the solution without any pH adjustment. The suspension was shaken by a horizontal shaker for 60 min and, then, the supernatant after centrifugation was poured off and the powders loaded with oxalic acid by deionized water for three times were washed. Then, the solid residue was shaken with 5 mL 100 mmol=L (NH 4 ) 2 HPO 4 for 60 min. The analyte in the eluent was determined by RP-HPLC at the optimum chromatographic conditions.</text>
+		</method>
+		<method>
+			<heading>Characterization of ACP Before and After Adsorption</heading>
+			<text>Figure 1 shows the FTIR spectra of the synthetic ACP before (A) and after (B) saturation with aqueous solution of oxalic acid. Figure 1A shows the FT-IR spectrum of the synthetic ACP sample. The absorption bands at 3441 and 793 cm À1 were ascribed to molecular water. The absorption band at 1427 cm À1 was assigned to a CH 2 stretching vibration, which was a group in the chain of PEG. It implied existence of PEG in ACP, consistent with previous work. [17] There were two obviously broad absorption peaks at 900-1100 cm À1 and 500-600 cm À1 in the FT-IR spectrum (see Figure 1A). These nonsplit peaks resulted from the isotropic structure of amorphous materials and were the characteristics of ACP, [18] confirmed by the XRD results. Moreover, the weak band at 1643 cm À1 belonged to the trace carbonate, which might come from the atmosphere carbon dioxide during the dissolving, stirring, and reaction processes.
+
+The XRD pattern of synthetic ACP is shown in Figure 2. It was noted that the ACP sample was completely amorphous with a characteristic halo whose maximum was located at about 0.30 nm. [19] This result was in good agreement with previous work. [20] The synthesized ACP was used as the adsorbent to separate oxalic acid from xylem sap samples.</text>
+		</method>
+		<method>
+			<heading>Precision and Recovery</heading>
+			<text>The precision was measured with the standard addition method that used xylem saps of Indian mustard that were added to a series of concentrations of oxalic acid standard solution, Each sample was injected three times. The relative standard deviations were less than 3.0%, and the recoveries of the oxalic acid added to xylem sap samples were between 96.1% and 102.4% (Table 2). As can be seen, this is a reliable method for the determination of oxalic acid in the xylem saps of Indian mustard.</text>
+		</method>
+	</methods>
+	<full_text>Low molecular weight organic acids containing one or more carboxyl and hydroxyl groups are widely distributed in many plants. Analysis of these organic acids has become increasingly important because they are involved in various physiological activities of plants. [1] Recently, reversed-phase high performance liquid chromatography (RP-HPLC) has been widely used for the determination of organic acids in plant samples such as tissues, leaves, roots, and xylem saps because of the simplicity, rapidity, and stability of the method. [2,3] However, the presence of small inorganic anions in xylem saps such as nitrate ions, which have significant UV absorbency at 210 nm, provides an unretained peak, which is large enough to mask the first-eluting oxalic acid. [4][5][6] Optimization of the separation, which took into consideration the type of eluent and organic modifier, flow rate, and column temperature, could not improve the separation of oxalic acid. [6] Therefore, an efficient pretreatment method to separation of the oxalic acid and eliminate the interference from nitrate is needed.
+
+In recent years, new efforts have been made to solve this problem. For example, various substances including nanosized hydroxyapatite, [7] nanosized lanthanum phosphate, [8] and rock phosphate [9] have been proposed and used as solid-phase extraction (SPE) adsorbents to separate oxalic acid and eliminate the interference from nitrate. The mechanism involved in the separation process was that oxalic acid could be absorbed selectively by adsorbent, and the retained oxalic acid was eluted and determined by RP-HPLC. However, none of these adsorbents were without limitations. On one hand, the adsorption of oxalic acid by nanosized hydroxyapatite, nanosized lanthanum phosphate, and rock phosphate could be achieved only at low pH (around 2.0), which would lead to the dissolution of adsorbents. On the other hand, the adsorption capacity and the selectivity of oxalic acid were relatively low due to the high crystallinity of these adsorbents. In order to overcome the drawbacks of the previous adsorbents and achieve excellent separation of oxalic acid and nitrate ions by solidphase extraction, the synthetic amorphous calcium phosphate (ACP) was used as SPE adsorbent, for eliminating the interference from nitrate on oxalic acid in RP-HPLC.
+
+ACP is an important intermediate phase during the biomineralization of apatite, and has been widely applied in tissue repair and regeneration due to its excellent bioactivity and biocompatibility. [10] In addition, ACP was reported to have high adsorption capacity for bovine serum albumin and bile acid. [11,12] However, as to our knowledge, the adsorption of low molecular weight organic acids, such as oxalic acid, by ACP has not been reported. Moreover, ACP is unique among all forms of calcium phosphates in that it lacks long-range, periodic atomic scale order of crystalline calcium phosphates. [13] In this view, ACP would exhibit greater surface area and adsorption property compared to the well crystallized phosphates, such as hydroxyapatite, lanthanum phosphate, and rock phosphate. Thus, ACP has great potential as a new SPE adsorbent for the separation of oxalic acid.
+
+The objective of this study is to evaluate the potential of ACP as an advantageous solid-phase extraction adsorbent for the elimination of interference from nitrate on oxalic acid in RP-HPLC and develop a simple and effective method for the determination of organic acids in plant xylem sap samples.
+
+Oxalic, malic, and citric acids were obtained from Sigma (St. Louis, MO, USA). Ca(NO 3 ) 2 Á 4H 2 O, (NH 4 ) 2 HPO 4 , polyethylene glycol 10000 (PEG), H 3 PO 4 , and NH 3 Á H 2 O were purchased from Nanjing Chemical Reagent Company (Nanjing, China). All the chemicals were of analytical grade. Water was purified by passage through a Compact Milli-RO and Milli-Q water system from Millipore (Milford, MA, USA), and was used for all solutions, dilution, and the mobile phase.
+
+Stock standard solutions were prepared by dissolving organic acids in Milli-Q water, these solutions remained stable for several weeks if kept refrigerated at 4 C. Working standard solutions were prepared daily by dilution of stock solutions with Milli-Q water. All solutions used were filtered through a 0.45-mm membrane filter from Millipore to remove any impurity.
+
+The ACP adsorbent used in this study was synthesized according to the literature [14] with a little modification. However, a brief description is provided as follows: Appropriate amounts of Ca(NO 3 ) 2 Á 4H 2 O and PEG were dissolved in distilled water to form 0.10 mol=L PEG-Ca 2þ solution with PEG=Ca weight ratio of 1:1. (NH 4 ) 2 HPO 4 solution was added dropwise to the PEG-Ca 2þ solutions and the pH was held at 11 by NH 3 Á H 2 O. The precipitation reaction occurred at 5 C during stirring for 30 min. And then the precipitates were separated, washed repeatedly, and freeze-dried until there was no weight change. The obtained ACP was characterized and used as SPE adsorbent.
+
+The ACP sample was analyzed by Fourier transform infrared (FT-IR) spectroscopy (Tensor 27, Bruker, Germany) as KBr pellets to confirm the phase formation. The crystallinity and purity of the mineral phase were determined by powder X-ray diffraction (XRD) on a Rigaku diffractometer (Rigaku D=max-IIIB) with Cu Ka radiation (30 kV, 25 mA, k ¼ 1.5405 A ˚).
+
+The choice of Indian mustard (Brassica juncea L.) was made because of its ability to exudate xylem fluid under slight negative pressure. Furthermore, it could be used for the phytoextraction of cadmium and zinc from contaminated soils. [15] Seeds of Indian mustard were germinated in the dark at 25 C in Petri dishes on wet filter paper for 5 d. The plants were cultivated hydroponically in a green house with supplementary light to provide a 16-hr photoperiod and with the temperature controlled at 20-25 C. Hoagland's nutrient solution was used, [7] which consists of
+
+. Nutrient solutions were adjusted to pH 6.0 with 1 mmol=L 2-(N-morpholino)-ethane sulfonic acid (MES) and 0.5 mmol=L NaOH. The hydroculture solutions were aerated continuously and replaced every 3 d to prevent nutrient depletion and pH change. Xylem saps were collected from 6-to 8-wk old plants, according to the method described by Morita et al. [16] The plants were cut with a sterilized razor blade just below the cotyledon internode, and then the decapitated stumps were fitted with a test tube (10 mL) maintaining negative pressure by means of a hand operated vacuum pump. During the suction procedure, the test tubes used to collect the saps were kept on ice. The saps were collected within 2 hr and then stored at À20 C after filtration on a 0.45-mm Millipore filter.
+
+The chromatographic analyses were carried out with a Shimadzu LC-20A HPLC system (Shimadzu, Japan) consisting of a binary LC-20AT HPLC pump, a Model 7725 injection valve with a 20 mL loop, and an SPD-20A UV-Vis detector. Data processing was performed with a HW-2000 chromatography workstation.
+
+Chromatographic separations were performed on a reversed-phase C 18 column (250 mm Â 4.6 mm, 5 mm, Shim-pack VP-ODS column). The mobile phase was 5.0 g=L (NH 4 ) 2 HPO 4 adjusted to pH 2.5 with H 3 PO 4 and filtered through a 0.45-mm Millipore filter (Milford, MA, USA). The separation was carried out by isocratic elution with a flow rate of 1.0 mL= min and the column temperature was maintained constant at 30 C. The UV detector was set at 210 nm with a sensitivity of 0.02 absorbance units, full scale. Quantitation was based on the peak area measurement.
+
+The batch adsorption experiments of oxalic acid and nitrate on ACP were studied in detail to get the optimum separation conditions. Pretreatment experiments showed that nitric acid could not be adsorbed by ACP despite the pH, contact times, initial concentration of nitric acid, and the amount of ACP were taken into consideration (data not shown). Oxalic acid could be adsorbed quantitatively after 60 min contact with ACP at initial pH 5.5 (xylem sap is generally acidic, ranging between pH 5 and 6), and then oxalic acid could be desorbed quantitatively by 100 mmol=L (NH 4 ) 2 HPO 4 at pH 10. Finally, the eluent was determined by RP-HPLC at the optimum chromatographic conditions.
+
+The adsorption experiments of oxalic were carried out in centrifuge tube that contained 0.05 g ACP and 25 mL 3.0 mmol=L oxalic acid. The tubes were placed in a horizontal shaker set at 160 rpm, and after several hours, the tubes were centrifuge at 4000 rpm for 15 min and filtered through 0.45-mm membrane filters. The filtrates were used for RP-HPLC analyses, whereas the solid residues were analyzed by XRD and FT-IR in order to elucidate the adsorption mechanism of oxalic acid on ACP.
+
+The xylem sap samples were treated with the optimum separate conditions. First, the samples were appropriately diluted with deionized water, and 0.05 g ACP was added into the solution without any pH adjustment. The suspension was shaken by a horizontal shaker for 60 min and, then, the supernatant after centrifugation was poured off and the powders loaded with oxalic acid by deionized water for three times were washed. Then, the solid residue was shaken with 5 mL 100 mmol=L (NH 4 ) 2 HPO 4 for 60 min. The analyte in the eluent was determined by RP-HPLC at the optimum chromatographic conditions.
+
+Figure 1 shows the FTIR spectra of the synthetic ACP before (A) and after (B) saturation with aqueous solution of oxalic acid. Figure 1A shows the FT-IR spectrum of the synthetic ACP sample. The absorption bands at 3441 and 793 cm À1 were ascribed to molecular water. The absorption band at 1427 cm À1 was assigned to a CH 2 stretching vibration, which was a group in the chain of PEG. It implied existence of PEG in ACP, consistent with previous work. [17] There were two obviously broad absorption peaks at 900-1100 cm À1 and 500-600 cm À1 in the FT-IR spectrum (see Figure 1A). These nonsplit peaks resulted from the isotropic structure of amorphous materials and were the characteristics of ACP, [18] confirmed by the XRD results. Moreover, the weak band at 1643 cm À1 belonged to the trace carbonate, which might come from the atmosphere carbon dioxide during the dissolving, stirring, and reaction processes.
+
+The XRD pattern of synthetic ACP is shown in Figure 2. It was noted that the ACP sample was completely amorphous with a characteristic halo whose maximum was located at about 0.30 nm. [19] This result was in good agreement with previous work. [20] The synthesized ACP was used as the adsorbent to separate oxalic acid from xylem sap samples.
+
+In this work, we focused on the development of an efficacious method to separate oxalic acid by solid-phase extraction with ACP. Therefore, the study of the adsorption and desorption behavior of oxalic acid on ACP was necessary.
+
+The influences of several parameters such as solution pH, contact time, the amount of ACP adsorbent, and the initial concentration of oxalic acid on the adsorption were studied and discussed. Figure 3A shows the effect of pH on the adsorption of oxalic acid by ACP. It was obvious that oxalic acid could be adsorbed by ACP quantitatively (&gt;98%) in the initial pH range of 2.0-8.0, and the adsorption percentage decreased significantly above pH 8.0. Thus, it was indicated that the adsorption of oxalic acid by ACP could be achieved over a wide range of pH values. In our previous work, the selective adsorption of oxalic acid by nanosized hydroxyapatite, [7] nanosized lanthanum phosphate, [8] and rock phosphate [9] could be only achieved in the pH range of 2.0-3.0, which led to problems as the pH of the xylem sap samples must be adjusted to about 2.0, and the adsorbents might partially dissolve under strong acidic conditions, which could retard the reproducibility of the analysis. Therefore, ACP was considered to be an advantageous solid-phase extraction adsorbent for oxalic acid. Figure 1B shows the FT-IR spectrum of ACP after treatment with oxalic acid solution.
+
+Compared to ACP (Figure 1A), it was obvious that the intensities of the main peaks of PO 3À 4 decreased and the peaks of oxalate appeared. The main antisymmetric carbonyl stretching band at 1618 cm À1 and the metal-carboxylate stretch appeared at 1323 and 1384 cm À1 , which were attributed to oxalate. [21] The peak at 516 cm À1 arose due to O-C-O in-plane bending, whereas an out-of-plane bending band of water appeared at 791 cm À1 . Moreover, the secondary absorption bands at 883 cm À1 and 663 cm À1 were also due to the coordination of oxalate with calcium. [22] FIGURE 3 Effect of pH and adsorbent weight on the adsorption of oxalic acid by ACP (oxalic acid concentration ¼ 3 mmol=L, contact time ¼ 60 min).
+
+Hence, the possible formation of crystalline calcium oxalate could be suggested. The adsorbent weight was varied from 0.01 to 0.08 g and equilibrated for 60 min. The results (Figure 3B) revealed that 0.05 g adsorbent was the optimum weight for the adsorption of oxalic acid.
+
+Figure 4 shows the effect of contact time and the initial concentration of oxalic acid on the adsorption of oxalic acid by ACP. The results revealed that oxalic acid could be adsorbed quantitatively by ACP within 60 min, and the initial concentration of oxalic acid less than 7 mmol=L could be adsorbed completely.
+
+The studies of desorption of oxalic acid from ACP are shown in Figure 5. Results showed that the 100 mmol=L (NH 4 ) 2 HPO 4 could elute most of the oxalic acid (Figure 5A) from ACP. Thus, the ACP loaded with oxalic acid was treated with 100 mmol=L (NH 4 ) 2 HPO 4 solution on a horizontal shaker. Figure 5B showed that the recovery of oxalic acid increased sharply above pH 7.0, and had a complete desorption at pH 10.0. Therefore, a pH of 10.0 was selected as the compromise condition.
+
+For identification of the organic acids in the xylem saps of Indian mustard, standard solutions of three organic acids were injected onto the HPLC column separately. Then, the organic acids in the xylem saps were identified by comparing the retention times and spectra against the known standard. The quantization of the acids was done by an external calibration method with freshly prepared mixed standard solutions of series of concentrations. Figure 6 shows the chromatogram of a mixed standard solution containing three organic acids (oxalic acid, malic acid, and citric acid), and the chromatogram of 5 mmol=L nitrate ions. It was noted that nitrate had significant UV absorbency at 210 nm, which was large enough to mask oxalic acid. Figure 7A shows the typical chromatogram of the xylem sap of Indian mustard. We could see that the determination of oxalic acid was impossible due to the presence of nitrate ions in high concentrations in xylem saps. In this study, oxalic acid and nitrate were separated by using ACP as adsorbents to extract oxalic acid selectively from xylem sap samples.
+
+Figure 7B shows the chromatogram of oxalic acid in the xylem saps of Indian mustard determined by RP-HPLC, after the interference of nitrate was eliminated by the proposed method.
+
+The column temperature was handled by thermostat in several different temperatures. The optimization of column temperature was 30 C.
+
+The phosphate buffer solution was used widely as the mobile phase for determining the organic acids. The concentration of the phosphate solution could affect the buffer capability, the forms of organic acids in the mobile phase, and the ions intensity; moreover, it affected the separation efficiency of the chromatographic column. [23][24][25] After several concentrations of (NH 4 ) 2 HPO 4 were tested, the best concentration was 50 mmol=L.
+
+The mobile phase pH and flow rate influence the separation of organic acids. Therefore, several mobile phase pHs (2.0-3.0) and flow rates (0.5-1.5 mL=min) were tested, and the pH 2.5 and 1.0 mL=min flow rate were obtained. Similarly, several wavelengths from 200 to 240 nm were tested, and the optimum wavelength for determination was 210 nm.
+
+After optimized separation conditions and chromatographic conditions were set, the following analytical characteristics were evaluated: calibration curves, precision, and recovery.
+
+Calibration curves were determined for eight different concentrations of standard solutions for the three organic acids (oxalic acid, malic acid, and citric acid) analyzed. Each calibration sample was injected in triplicate. Calibration curves for each acid were obtained by plotting concentration against peak area and applied to the least squares method. Table 1 shows the regression equation and correlation coefficients of calibration plots for three organic acids and the concentrations of three organic acids in xylem saps of Indian mustard; correlation coefficients (R 2 ) were above 0.99.
+
+The precision was measured with the standard addition method that used xylem saps of Indian mustard that were added to a series of concentrations of oxalic acid standard solution, Each sample was injected three times. The relative standard deviations were less than 3.0%, and the recoveries of the oxalic acid added to xylem sap samples were between 96.1% and 102.4% (Table 2). As can be seen, this is a reliable method for the determination of oxalic acid in the xylem saps of Indian mustard.
+
+Organic Acids in the xylem saps of Indian mustard have been determined according to the proposed steps at the optimized conditions and the analytical results are shown in Table 2. The results indicated that this is a reliable method for the separation and determination of organic acids in the xylem saps of Indian mustard.
+
+The analysis of oxalic acid in plant xylem saps by RP-HPLC is difficult due to the presence of high concentrations of nitrate ions, which have severe interference on the determination of oxalic acid. The proposed method based on SPE with ACP was successfully applied to avoid the interference from nitrate on oxalic aid in RP-HPLC. The ACP could selectively adsorb oxalic acid in xylem sap samples without further pH adjustment of the xylem saps, which was due to special properties of ACP. And then the adsorbed oxalic acid could be eluted quantitatively from ACP with 100 mmol=L (NH 4 ) 2 HPO 4 at pH 10.0. Recovery of oxalic acid was between 96.1% and 102.4%. The adsorption mechanism of oxalic acid on ACP was proven to be the coordination between oxalate and calcium by the results of FT-IR. Therefore, ACP could be used as an advantageous SPE adsorbent for elimination the interference from nitrate on oxalic acid in RP-HPLC, and the proposed method was simple and effective for determining oxalic acid in xylem saps of Indian mustard, which could also be adapted to other samples.
+
+W. Wei et al. Downloaded by [University of Otago] at 00:00 26 December 2014
+
+Downloaded by [University of Otago] at 00:00 26 December 2014</full_text>
+	<references>
+		<reference>
+			<title>J. Liq. Chrom. Rel. Technol</title>
+			<authors>
+				<author>J Ding</author>
+				<author>X Wang</author>
+				<author>T Zhang</author>
+				<author>Q Li</author>
+				<author>M Luo</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>J. Liq. Chrom. Rel. Technol</title>
+			<authors>
+				<author>Z Chen</author>
+				<author>M Adams</author>
+			</authors>
+			<date>1998</date>
+		</reference>
+		<reference>
+			<title>Biol. Trace Elem. Res</title>
+			<authors>
+				<author>H Zhang</author>
+				<author>Z Wei</author>
+				<author>H Zhao</author>
+				<author>H Yang</author>
+				<author>H Li</author>
+				<author>F Hu</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Plant Soil</title>
+			<authors>
+				<author>M Senden</author>
+				<author>A Vander Meer</author>
+				<author>J Limborgh</author>
+				<author>H Wolterbeek</author>
+				<author>Th</author>
+			</authors>
+			<date>1992</date>
+		</reference>
+		<reference>
+			<title>J. Microchem</title>
+			<authors>
+				<author>E Tata ´r</author>
+				<author>V Mihucz</author>
+				<author>B Kmethy</author>
+				<author>G Za ´ray</author>
+				<author>F Fodord</author>
+			</authors>
+			<date>1998</date>
+		</reference>
+		<reference>
+			<title>Chin. J. Anal. Chem</title>
+			<authors>
+				<author>L Yu</author>
+				<author>X Peng</author>
+				<author>C Yang</author>
+				<author>Y Liu</author>
+				<author>Y Fan</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>J. Liq. Chrom. Rel. Technol</title>
+			<authors>
+				<author>W Wei</author>
+				<author>R Sun</author>
+				<author>Z Wei</author>
+				<author>H Zhao</author>
+				<author>H Li</author>
+				<author>F Hu</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>J. Liq. Chrom. Rel. Technol</title>
+			<authors>
+				<author>M Xu</author>
+				<author>W Wei</author>
+				<author>Y Wang</author>
+				<author>X Wang</author>
+				<author>J Cui</author>
+				<author>Z Wei</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>J. Liq. Chrom. Rel. Technol</title>
+			<authors>
+				<author>L Ni</author>
+				<author>W Wei</author>
+				<author>Y Wang</author>
+				<author>J Cui</author>
+				<author>Z Wei</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Acta Biomater</title>
+			<authors>
+				<author>S Samavedi</author>
+				<author>A Whittington</author>
+				<author>A Goldstein</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>J. Lipid Res</title>
+			<authors>
+				<author>M Govers</author>
+				<author>D Termont</author>
+				<author>G Van Aken</author>
+				<author>R Van Der Meer</author>
+			</authors>
+			<date>1994</date>
+		</reference>
+		<reference>
+			<title>Int. J. Oral Maxillofac Implants</title>
+			<authors>
+				<author>Y Yang</author>
+				<author>D Dennison</author>
+				<author>J Ong</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>Chem. Central J</title>
+			<authors>
+				<author>J Zhao</author>
+				<author>Y Liu</author>
+				<author>W Sun</author>
+				<author>H Zhang</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Acta Biomater</title>
+			<authors>
+				<author>Y Li</author>
+				<author>W Weng</author>
+				<author>K Tam</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Planta</title>
+			<authors>
+				<author>K Gasic</author>
+				<author>S Korban</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Phytochemistry</title>
+			<authors>
+				<author>A Morita</author>
+				<author>H Horie</author>
+				<author>Y Fujii</author>
+				<author>S Takatsu</author>
+				<author>N Watanabe</author>
+				<author>A Yagi</author>
+				<author>H Yokota</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Sci: Mater. Med</title>
+			<authors>
+				<author>Y Li</author>
+				<author>W Weng</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Adv. Mater</title>
+			<authors>
+				<author>L Addadi</author>
+				<author>S Raz</author>
+				<author>S Weiner</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>Appl. Surf. Sci</title>
+			<authors>
+				<author>T Nonoyama</author>
+				<author>T Kinoshita</author>
+				<author>M Higuchi</author>
+				<author>K Nagata</author>
+				<author>M Tanaka</author>
+				<author>M Kamada</author>
+				<author>K Sato</author>
+				<author>K Kato</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>ACS Appl. Mater. Interfaces</title>
+			<authors>
+				<author>E Hwang</author>
+				<author>R Tatavarty</author>
+				<author>J Chung</author>
+				<author>M Gu</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Langmuir</title>
+			<authors>
+				<author>J Ouyang</author>
+				<author>D Li</author>
+				<author>B Tieke</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>J. Urol</title>
+			<authors>
+				<author>X Duan</author>
+				<author>M Qu</author>
+				<author>J Wang</author>
+				<author>J Trevathan</author>
+				<author>T Vrtiska</author>
+				<author>J Williams</author>
+				<author>A Krambeck</author>
+				<author>J Lieske</author>
+				<author>C Mccollough</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>J. Liq. Chrom. Rel. Technol</title>
+			<authors>
+				<author>N Parmar</author>
+				<author>N Singla</author>
+				<author>S Amin</author>
+				<author>K Kohli</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>J. Liq. Chrom. Rel. Technol</title>
+			<authors>
+				<author>D Norwood</author>
+				<author>D Jenke</author>
+				<author>C Manolescu</author>
+				<author>S Pennino</author>
+				<author>N Grinberg</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>J. Liq. Chrom. Rel. Technol</title>
+			<authors>
+				<author>L Rogers</author>
+				<author>K Crews</author>
+				<author>S Long</author>
+				<author>K Patterson</author>
+				<author>J Mccune</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title/>
+			<authors>
+				<author>W Wei</author>
+			</authors>
+			<date/>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1080/10826070500363050</number>
+		<number>DOI-10.1080/10826079808003589</number>
+		<number>DOI-10.1007/s12011-008-8224-6</number>
+		<number>DOI-10.1007/BF00010177</number>
+		<number>DOI-10.1006/mchj.1997.1559</number>
+		<number>DOI-10.1080/10826070802548705</number>
+		<number>DOI-10.1080/10826076.2011.627614</number>
+		<number>DOI-10.1080/10826076.2011.653852</number>
+		<number>DOI-10.1016/j.actbio.2013.06.014</number>
+		<number>DOI-10.1016/S0022-2275(20)39170-7</number>
+		<number>DOI-10.1186/1752-153X-5-40</number>
+		<number>DOI-10.1016/j.actbio.2006.07.003</number>
+		<number>DOI-10.1007/s00425-006-0421-y</number>
+		<number>DOI-10.1016/j.phytochem.2004.08.043</number>
+		<number>DOI-10.1007/s10856-007-3132-4</number>
+		<number>DOI-10.1002/adma.200300381</number>
+		<number>DOI-10.1016/j.apsusc.2011.12.009</number>
+		<number>DOI-10.1021/am302580p</number>
+		<number>DOI-10.1021/la0208777</number>
+		<number>DOI-10.1016/j.juro.2012.11.004</number>
+		<number>DOI-10.1080/10826076.2011.647191</number>
+		<number>DOI-10.1080/10826070902959497</number>
+		<number>DOI-10.1080/10826070903163057</number>
+	</reference_dois>
+</document>

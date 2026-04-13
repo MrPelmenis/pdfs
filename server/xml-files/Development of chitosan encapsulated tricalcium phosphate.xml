@@ -1,0 +1,477 @@
+<document>
+	<file>./pdf-files/Development of chitosan encapsulated tricalcium phosphate.pdf</file>
+	<title>Development of chitosan encapsulated tricalcium phosphate biocomposite for fluoride retention</title>
+	<date>2019</date>
+	<doi_number>10.1016/j.ijbiomac.2019.04.076</doi_number>
+	<img_preview_path>./pdf-preview-images/Development of chitosan encapsulated tricalcium phosphate.jpeg</img_preview_path>
+	<authors>
+		<author>Natrayasamy Viswanathan</author>
+		<author>Ilango Aswin Kumar</author>
+		<author>Sankaran Meenakshi</author>
+	</authors>
+	<abstract>The powder form of tricalcium phosphate (TCP) causes the significant pressure drop which limit its application under field conditions. To trounce such technological troubles and to enhance the defluoridation capacity (DC) of TCP, chitosan (CS) encapsulated TCP polymeric composite was prepared by dispersing TCP particles into chitosan polymeric matrix to produce tricalcium phosphate/chitosan (TCPCS) composite which could be made into any desirable form. The synthesized TCPCS composite possesses an enhanced DC of 1034 mgF -/kg than the individual components viz., TCP and chitosan which has got DC of 490 and 52 mgF -/kg respectively. The prepared adsorbents were characterized by FTIR, SEM and EDAX analysis. The various physico-chemical properties such as contact time, solution pH, co-anions and temperature were optimized to get maximum defluoridation. The equilibrium and kinetic experiments were conducted for TCPCS composite toward fluoride removal. The practical applicability of TCPCS composite was examined at field conditions.</abstract>
+	<methods>
+		<method>
+			<heading>Materials</heading>
+			<text>Chitosan (85% deacetylated) with an average molecular mass of 25 kDa was supplied by Pelican Biotech and Chemicals Labs, Kerala, India. glutaraldehyde (98.00%), glacial acetic acid (N99.00%) and Tricalcium phosphate (99.00%) was procured from Merck, India. The fluoride stock solution was prepared using double distilled (DD) water. All other chemicals were used in analytical grade.</text>
+		</method>
+		<method>
+			<heading>Synthesis of TCPCS composite</heading>
+			<text>About 20 g of TCP powder was immersed in 30 mL of DD water to make TCP slurry. Chitosan (CS) was dissolved in 2% of dilute acetic acid and added to TCP slurry followed by the mixture was stirred under mechanical shaker for 30 min. Then, about 5% of glutaraldehyde solution at a volume ratio 40: 1 of CS was added and stirred vigorously for 5 min. Then, the mixture was refrigerated at 4 °C upto 24 h to undergo the cross-link reaction. Further, the mixture was dried in hot air oven at 60 °C for 6 h to completely remove the solvent and to reduce the excess shrinkage [26]. Finally, the dried TCPCS composite was ground to fine powders of uniform size using ball mill (IKA, Germany) and utilized for fluoride adsorption studies.</text>
+		</method>
+		<method>
+			<heading>Fluoride sorption experiments</heading>
+			<text>The defluoridation experiments were carried out by batch equilibrium method. About 0.1 g of the adsorbent was added into 50 mL of sodium fluoride solution having the initial concentration of 10 mg/L. The contents were shaken using a mechanical shaker at a rotating speed of 200 rpm followed by the filtrate concentration was analyzed using Thermo Orion Benchtop Multiparameter kit. The various adsorption affecting parameters like contact time, pH, co-anions and temperature were optimized to get maximum DC. In kinetic studies, the effect of the different initial fluoride concentrations viz., 9, 11, 13 and 15 mg/L at 303, 313 and 323 K on its sorption rate was studied. The defluoridation capacity (DC) of the adsorbent was calculated by the Eq. ( 1) as follows
+
+where, C i is initial fluoride concentration (mg/L), C e is equilibrium fluoride concentration (mg/L), m is mass of the sorbent (g) and V is volume of the solution (L).</text>
+		</method>
+	</methods>
+	<full_text>The excess fluoride content in drinking water is mainly due to the fluoride bearing rocks/minerals and anthropogenic sources. Drinking water is the major source of fluoride intake. Fluoride has both beneficial and detrimental effects on human body depending on its concentration in water. Fluoride ion, within the tolerance limit (b1.5 mg/L) is an essential for the formation of bone, teeth and for the normal mineralization in hard tissues. The presence of excess fluoride (N1.5 mg/L) content leads to fluorosis. Since, fluorosis is an incurable and irreversible disease. Defluoridation is one of the best options to reduce the fluoride concentration in water.
+
+Researchers have turned their attention toward defluoridation and the various potential methods have been proposed viz., ion-exchange [1], precipitation [2], adsorption [3] and electro-coagulation [4] for fluoride removal. Among the techniques, adsorption seems to be effective because of its easy handling nature, effective removal efficiency and regeneration capability. The various prospective inorganic adsorbents namely activated alumina [5], synthetic metal oxide [6], hydroxyapatite [7], hydrotalcite [8], tricalcium phosphate [9], activated carbon [10], magnetic adsorbent [11], modified chitosan beads [12], zeolites [13], polymeric resins [3], metal loaded resins [14] and modified cellulose [15] were reported for the defluoridation of drinking water. In recent years, the inorganic materials have been utilized for adsorption study due to its selectivity and intercalation properties. These materials have been found to possess the better properties than the simple salt of metals. The selectivity may be enhanced by varying the composition of the materials.
+
+Tricalcium phosphate (TCP) is an inorganic material possesses an appreciable defluoridation capacity (DC) but it has brittleness, poor mechanical strength and create pressure drops during column studies. To evade such technology bottlenecks, polymeric composites were prepared by dispersing the inorganic materials in organic polymeric matrix to produce the usable products. Biosorption is an environmentally sound technique for minimizing the water pollution. The biopolymers like chitin, chitosan, cellulose, etc., have been extensively utilized for the removal of various toxic ions [16][17][18][19]. Chitosan (CS) is the deacetylation of chitin, possesses the unique properties like nontoxicity, biocompatibility, biodegradability and biofunctional. The amine groups of CS get easily protonated in the acid solution and attract the metal ions or anionic pollutants [20]. Recently, chitosan supported materials have been utilized for toxic fluoride removal [21][22][23][24][25]. Hence, chitosan was encapsulated with TCP to prepare TCPCS composite for defluoridation studies.
+
+The present investigation is aimed to utilize the advantages of both TCP and chitosan, by developing TCPCS composite for fluoride removal. Defluoridation experiments were carried out to optimize the various adsorption influencing parameters viz., contact time, solution pH, influence of co-anions and temperature for maximum defluoridation. The experimental data was fitted with various isotherms and kinetic models to find the best fit for the sorption system. The suitability of TCPCS composite at field conditions was also performed by collecting fluoride contaminated water in a nearby fluoride endemic village.
+
+Chitosan (85% deacetylated) with an average molecular mass of 25 kDa was supplied by Pelican Biotech and Chemicals Labs, Kerala, India. glutaraldehyde (98.00%), glacial acetic acid (N99.00%) and Tricalcium phosphate (99.00%) was procured from Merck, India. The fluoride stock solution was prepared using double distilled (DD) water. All other chemicals were used in analytical grade.
+
+About 20 g of TCP powder was immersed in 30 mL of DD water to make TCP slurry. Chitosan (CS) was dissolved in 2% of dilute acetic acid and added to TCP slurry followed by the mixture was stirred under mechanical shaker for 30 min. Then, about 5% of glutaraldehyde solution at a volume ratio 40: 1 of CS was added and stirred vigorously for 5 min. Then, the mixture was refrigerated at 4 °C upto 24 h to undergo the cross-link reaction. Further, the mixture was dried in hot air oven at 60 °C for 6 h to completely remove the solvent and to reduce the excess shrinkage [26]. Finally, the dried TCPCS composite was ground to fine powders of uniform size using ball mill (IKA, Germany) and utilized for fluoride adsorption studies.
+
+The defluoridation experiments were carried out by batch equilibrium method. About 0.1 g of the adsorbent was added into 50 mL of sodium fluoride solution having the initial concentration of 10 mg/L. The contents were shaken using a mechanical shaker at a rotating speed of 200 rpm followed by the filtrate concentration was analyzed using Thermo Orion Benchtop Multiparameter kit. The various adsorption affecting parameters like contact time, pH, co-anions and temperature were optimized to get maximum DC. In kinetic studies, the effect of the different initial fluoride concentrations viz., 9, 11, 13 and 15 mg/L at 303, 313 and 323 K on its sorption rate was studied. The defluoridation capacity (DC) of the adsorbent was calculated by the Eq. ( 1) as follows
+
+where, C i is initial fluoride concentration (mg/L), C e is equilibrium fluoride concentration (mg/L), m is mass of the sorbent (g) and V is volume of the solution (L).
+
+The concentration of fluoride was measured using Thermo Orion Benchtop Multiparameter kit (Model: VERSA STAR 92) with fluoride ion selective electrode (9609 BNWP) [27]. The solution pH was measured with the same instrument using pH electrode. All other water quality parameters were analyzed using standard methods [28]. The    pH at zero point of charge (pH zpc ) of the adsorbent was measured by pH drift method [29].
+
+The significant functional groups present in the prepared adsorbents were studied by Fourier transform infrared (FTIR) spectrometer with JASCO-460 plus model. The surface morphology of the composite was studied using scanning electron microscope (SEM) with Vega3 Tescan model. The energy dispersive X-ray analyzer (EDAX) with Bruker Nano GMBH model was used for the quantitative detection of elements in TCPCS composite and after fluoride adsorption. The surface area of the composite was studied by BET surface area analyzer with NOVA 1000 model.
+
+Computations were made using Microcal Origin (Version 15) software. The significance of the data trends for fitting the suitable model was attained using error bar plot, regression correlation coefficient (r), chi-square analysis and standard deviation (sd).
+
+The effect of contact time is the primary study in the adsorption system in which it offers the lowest time for the adsorbent to reach highest DC. The experiment was performed with six conical flasks having 50 mL of 10 mg/L of initial fluoride concentration and 0.1 g of the adsorbent with different contact time of 10-60 min at 303 K. It is evident from Fig. 1 that, DC of the adsorbents viz., CS, TCP and TCPCS composite reached saturation at 30 min. Among them, TCPCS composite possesses an enhanced DC of 1034 mgF -/kg than TCP and CS which has got DC of 490 and 52 mgF -/kg respectively. In addition, TCP also possess an appreciable DC. Hence, taking this concern further adsorption studies were focused to TCPCS composite and TCP with fixed contact time of 30 min.
+
+The solution pH is a significant parameter which affects the defluoridation at adsorbate-adsorbent interfaces. The sorption of fluoride ions onto the prepared adsorbents were studied at five different  initial pH levels viz., 3, 5, 7, 9 and 11 by keeping other parameters like contact time, dosage and initial fluoride concentration as constant at 303 K. The pH of the fluoride solution was adjusted by adding 0.1 M HCl/NaOH solution. Fig. 2 shows that DC of the sorbents was influenced by pH medium. The maximum DC of TCP and TCPCS composite was observed at acidic pH conditions whereas the minimum DC was observed at alkaline pH conditions.
+
+The pH zpc of TCPCS composite was found to be 6.60 (cf. Table 1). This result concludes that the adsorbent surface gets protonated if pH b pH zpc and hence it attracts the negatively charged fluoride ion by means of electrostatic attraction. However, if pH N pH zpc , the adsorbent surface gets negatively charged which results in the electrostatic repulsion of F -ions. In all the pH ranges studied, TCPCS composite found to possess higher DC than that of TCP. Therefore, further studies were focused on TCPCS composite. In addition, the solution pH after the fluoride adsorption with TCPCS composite tends to be neutral which shows the suitability of TCPCS composite in the wide range of pH environment.
+
+In addition to F -, the natural water also contains the other anions like Cl -, SO 4 2-, HCO 3
+
+-and NO 3 -ions which may often affects fluoride adsorption. To perform this study, the initial co-anions concentration were taken as 200 mg/L whereas the initial fluoride concentration was taken as 10 mg/L by keeping all other parameters such as contact time, pH and dosage as constants. From Fig. 3, it is evident that DC of TCPCS composite was slightly affected by the presence of Cl -, SO 4
+
+, NO 3 -and HCO 3 -ions; hence a reduction in DC was observed which shows the competing effect with F -ion during sorption process. The order of interfering anions for fluoride removal was found to be HCO 3
+
+ion present in the natural water may affect the fluoride adsorption because it has the similar ionic radius with that of fluoride. In addition, the normal water contains higher HCO 3 -concentration than fluoride.
+
+Hence, HCO 3 -readily occupies the reactive sites of TCPCS composite instead of fluoride in natural water.
+
+The significant functional groups present in CS, TCP and TCPCS composite were studied using FTIR analysis which is shown in Fig. 4. In FTIR spectra of CS, the symmetrical stretching bands of -OH and -NH 2 groups were observed at 3605 and 3151 cm -1 respectively. The asymmetric and symmetric frequency of C\ \H group was observed at 2929 and 2836 cm -1 . In addition, the stretching FTIR bands of carbonyl group of -CONHR and -NH 3
+
++ were appeared at 1650 and 1415 cm -1 respectively [30]. The comparison in FTIR spectra of CS with and without TCP powder has no identifiable difference. It was noticed that the corresponding FTIR bands of both CS and TCP were retained in FTIR spectra of TCPCS composite. Mainly, a sharp band at 1039 cm -1 represents the presence of PO 4 3-group of TCP in TCPCS composite. In addition, the FTIR bands at 1040, 961 and 601 cm -1 clearly indicates the presence of TCP [31]. The band at 3414 cm -1 indicates the presence of -OH groups in chitosan.
+
+The result concludes that the incorporation of TCP in CS gives TCPCS composite for fluoride adsorption. The characteristics of TCPCS composite are shown in Table 1.
+
+The surface morphology of TCPCS composite before and after fluoride adsorption was studied by SEM analysis which is shown in Fig. 5a and b respectively. SEM micrograph of TCPCS composite possess the uneven surface which is shown in Fig. 5a whereas SEM image of fluoride sorbed TCPCS composite show the changes in the surface which may confirm the fluoride adsorption (cf. Fig. 5b). The presence of significant elements of TCPCS composite before and after fluoride adsorption was studied by EDAX analysis. EDAX spectra of TCPCS composite confirm the presence of respective elements such as Ca, O and P in the composite (cf. Fig. 5c). The fluoride sorption has occurred on TCPCS composite which was confirmed by the presence of fluoride peak in EDAX spectra of fluoride adsorbed TCPCS composite (cf. Fig. 5d).
+
+The nature of the fluoride adsorption mechanism on TCPCS composite was studied by adsorption isotherms. To quantify the sorption capacity of TCPCS composite toward fluoride removal, the isotherms namely Freundlich [32] and Langmuir [33] have been investigated. The linear plot of log q e vs. log C e indicates the applicability of Freundlich isotherm. The values of 1/n and k F were calculated from the slope and the intercept of the plot are listed in Table 2a. The 1/n value lies between 0 and 1 whereas n value lies between in the range of 1 to 10 may indicate the favourable condition for fluoride adsorption.
+
+As the reaction temperature increases, k F value also increases which indicates the fluoride adsorption by TCPCS composite is endothermic in nature. A linear plot of C e /q e against C e gives Q°and b values from the slope and intercept respectively which is listed in Table 2a. The increasing Q°value at the temperature goes from 303 to 323 K may also confirms the endothermic nature of fluoride sorption. The results of chi-square analysis (χ 2 ) and regression coefficient (r) are also presented in Table 2a. As a result concludes that Langmuir isotherm has lower value of χ 2 and higher value of r compared to Freundlich isotherm and hence Langmuir isotherm model can be considered as best fitting isotherm for the fluoride sorption onto TCPCS composite.
+
+Thermodynamic parameters are associated with the fluoride adsorption by means of the standard free energy change (ΔG°), standard enthalpy change (ΔH°) and standard entropy change (ΔS°) which are calculated according to the method suggested by Khan and Singh [34].
+
+The calculated values of the various thermodynamic parameters are shown in Table 2b. The negative ΔG°value confirms the spontaneous nature of fluoride sorption. The positive ΔH°value indicates the fluoride sorption process is endothermic [35]. The positive ΔS°value shows the randomness at the solid/liquid interface during fluoride sorption which indicates that the process is irreversible.
+
+The kinetic models like reaction-based and diffusion-based models were studied to fit the experimental data for fluoride adsorption onto TCPCS composite. The commonly used pseudo-first-order [36] and pseudo-second-order [37] kinetic models were employed to elucidate the solid/liquid adsorption nature. The linear plot of log (q e -q t ) against t gives a straight line which indicates the applicability of the pseudofirst-order kinetic model and their rate constant (k ad ) and r values are presented in Table 3. The value of q e (1/slope), k (slope 2 /intercept) and h (1/intercept) of the pseudo-second-order kinetic equation can be plotted by t/q t vs t and the values of q e , k, h and r of the pseudosecond-order kinetic model were attained at 303, 313 and 323 K. The q e values increases with increase in temperature indicate the fluoride sorption is effective at high temperature. The higher r values for pseudo-second-order model than the pseudo-first-order indicates the applicability of the pseudo-second-order kinetic model toward fluoride adsorption.
+
+For a solid-liquid sorption process, the solute transfer is usually characterized either by particle diffusion [38] or by intraparticle diffusion [39] control. The straight line plots of ln (1-C t /C e ) vs. t and q t vs. t 0.5 indicates the applicability of particle and intraparticle diffusion models respectively. The k p , k i and r values at different temperatures viz., 303, 313 and 323 K of both models are illustrated in Table 3. The r value obtained for both particle and intraparticle diffusion models are almost comparable which suggest that the fluoride adsorption on TCPCS composite follows both particle and intraparticle diffusion models. The fitting sorption data of the kinetic models were further assessed by the values of standard deviation (sd). Lower value of sd shows the better fit to sorption data. The sd value of TCPCS composite for all the kinetic models are summarized in Table 3. Smaller sd values observed for pseudo-second-order and intraparticle diffusion models indicate that these two models are significant in defining the fluoride adsorption onto TCPCS composite.
+
+The feasible mechanism of fluoride sorption onto TCPCS composite was mainly governed by electrostatic attraction which is shown in Fig. 6. The positively charged Ca 2+ ions in the surface of TCPCS composite may attracts the negatively charged fluoride ions by means of electrostatic attraction and thus removes fluoride via chemisorption which was confirmed from EDAX spectra of the fluoride adsorbed TCPCS composite (cf. Fig. 5d). Moreover, the composite can be considered as hard acid because Ca 2+ ion is possessed by TCPCS composite. Hence they prefer to bind with hard base, highly electronegative and low polarisable fluoride ion in water [40].
+
+The suitability of TCPCS composite was also tested with the field water sample collected from the nearby fluoride-endemic area of Dindigul district, Tamilnadu. About 0.1 g of adsorbent was added into 50 mL of field water sample and are shaken using mechanical shaker at 30 min and the results are presented in Table 4. TCPCS composite  reduces the fluoride concentration of field water below the tolerance limit (b 1.5 mg/L). Moreover, there is a significant reduction in the levels of other water quality parameters in addition to fluoride was observed.
+
+The result indicates the suitability of the prepared TCPCS composite for defluoridation of the collected field water.
+
+This present study was focused to synthesize TCPCS composite for fluoride adsorption. The prepared TCPCS composite possesses an enhanced DC than TCP and chitosan. The fluoride adsorption onto TCPCS composite was influenced by solution pH. In natural water, the bicarbonate ion competes with fluoride adsorption. The characterization details of the prepared adsorbents were studied using FTIR, SEM and EDAX analysis. TCPCS composite follows Langmuir isotherm toward fluoride adsorption. The thermodynamic parameters result shows that the nature of fluoride sorption is spontaneous and endothermic. The rate of sorption follows pseudo-second-order kinetic model and fluoride sorption occurred through intraparticle diffusion pattern. The possible mechanism of fluoride removal using TCPCS composite was governed by electrostatic attraction. Field trial studies indicate that TCPCS composite could be used as a good defluoridating material.
+
+N. Viswanathan et al. / International Journal of Biological Macromolecules 133 (2019) 811-816</full_text>
+	<references>
+		<reference>
+			<title>J. Colloid Interface Sci</title>
+			<authors>
+				<author>S Meenakshi</author>
+				<author>N Viswanathan</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>React. Polym</title>
+			<authors>
+				<author>K Popat</author>
+				<author>P Anand</author>
+				<author>B Dasare</author>
+			</authors>
+			<date>1994</date>
+		</reference>
+		<reference>
+			<title>J. Chem. Eng. Data</title>
+			<authors>
+				<author>K Pandi</author>
+				<author>N Viswanathan</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>J. Chem. Technol. Biotechnol</title>
+			<authors>
+				<author>S Vasudevan</author>
+				<author>B Suresh Kannan</author>
+				<author>J Lakshmi</author>
+				<author>S Mohanraj</author>
+				<author>G Sozhan</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>J. Indian Chem. Soc</title>
+			<authors>
+				<author>G Karthikeyan</author>
+				<author>A Sundarraj</author>
+				<author>S Meenakshi</author>
+				<author>K Elango</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Ind. Eng. Chem. Res</title>
+			<authors>
+				<author>K Biswas</author>
+				<author>S Saha</author>
+				<author>U Ghosh</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>C Sundaram</author>
+				<author>N Viswanathan</author>
+				<author>S Meenakshi</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Appl. Clay Sci</title>
+			<authors>
+				<author>H Wang</author>
+				<author>J Chen</author>
+				<author>Y Cai</author>
+				<author>J Ji</author>
+				<author>L Liu</author>
+				<author>H Teng</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Ind. Eng. Chem</title>
+			<authors>
+				<author>C Boruff</author>
+			</authors>
+			<date>1934</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Health Sci. Eng</title>
+			<authors>
+				<author>G Karthikeyan</author>
+				<author>S Ilango</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>J. Water Process Engg</title>
+			<authors>
+				<author>A Goswami</author>
+				<author>M Purkait</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>J. Colloid Interface Sci</title>
+			<authors>
+				<author>N Viswanathan</author>
+				<author>S Meenakshi</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>J. Colloid Interface Sci</title>
+			<authors>
+				<author>M Onyango</author>
+				<author>Y Kojima</author>
+				<author>O Aoyi</author>
+				<author>E Bernardo</author>
+				<author>H Matsuda</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>J. Fluor. Chem</title>
+			<authors>
+				<author>N Viswanathan</author>
+				<author>S Meenakshi</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Carbohydr. Polym</title>
+			<authors>
+				<author>Y Zhao</author>
+				<author>X Li</author>
+				<author>L Liu</author>
+				<author>F Chen</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Ind. Eng. Chem. Res</title>
+			<authors>
+				<author>I Kumar</author>
+				<author>N Viswanathan</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>C Sundaram</author>
+				<author>N Viswanathan</author>
+				<author>S Meenakshi</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Int. J. Biol. Macromol</title>
+			<authors>
+				<author>R Jayakumar</author>
+				<author>M Rajkumar</author>
+				<author>H Freitas</author>
+				<author>N Selvamurugan</author>
+				<author>S Nair</author>
+				<author>T Furuike</author>
+				<author>H Tamura</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Carbohydr. Polym</title>
+			<authors>
+				<author>S Periyasamy</author>
+				<author>V Gopalakannan</author>
+				<author>N Viswanathan</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Carbohydr. Polym</title>
+			<authors>
+				<author>I Kumar</author>
+				<author>N Viswanathan</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>Int. J. Biol. Macromol</title>
+			<authors>
+				<author>K Pandi</author>
+				<author>S Periyasamy</author>
+				<author>N Viswanathan</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Int. J. Biol. Macromol</title>
+			<authors>
+				<author>N Viswanathan</author>
+				<author>K Pandi</author>
+				<author>S Meenakshi</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Carbohydr. Polym</title>
+			<authors>
+				<author>K Pandi</author>
+				<author>N Viswanathan</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Carbohydr. Polym</title>
+			<authors>
+				<author>M Gandhi</author>
+				<author>G Kousalya</author>
+				<author>N Viswanathan</author>
+				<author>S Meenakshi</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>N Viswanathan</author>
+				<author>S Meenakshi</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>J. Non-Cryst. Solids</title>
+			<authors>
+				<author>S Ding</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Fluoride Electrode Instruction Manual</title>
+			<authors/>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>Standard Methods for the Examination of Water and Waste Water</title>
+			<authors>
+				<author>Apha</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>Carbon</title>
+			<authors>
+				<author>M Lopez-Ramon</author>
+				<author>F Stoeckli</author>
+				<author>C Moreno-Castilla</author>
+				<author>F Carrasco-Marin</author>
+			</authors>
+			<date>1999</date>
+		</reference>
+		<reference>
+			<title>Int. J. Biol. Macromol</title>
+			<authors>
+				<author>I Kumar</author>
+				<author>C Jeyaprabha</author>
+				<author>S Meenakshi</author>
+				<author>N Viswanathan</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Colloids Surf</title>
+			<authors>
+				<author>R Niwas</author>
+				<author>U Gupta</author>
+				<author>A Khan</author>
+				<author>K Varshney</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>Z. Phys. Chem</title>
+			<authors>
+				<author>H Freundlich</author>
+			</authors>
+			<date>1906</date>
+		</reference>
+		<reference>
+			<title>J. Am. Chem. Soc</title>
+			<authors>
+				<author>I Langmuir</author>
+			</authors>
+			<date>1916</date>
+		</reference>
+		<reference>
+			<title>A</title>
+			<authors>
+				<author>A Khan</author>
+				<author>R Singh</author>
+			</authors>
+			<date>1987</date>
+		</reference>
+		<reference>
+			<title>Int. J. Biol. Macromol</title>
+			<authors>
+				<author>I Kumar</author>
+				<author>N Viswanathan</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>K. Sven. Vetenskapsakad. Handl</title>
+			<authors>
+				<author>S Lagergren</author>
+			</authors>
+			<date>1898</date>
+		</reference>
+		<reference>
+			<title>Water Res</title>
+			<authors>
+				<author>Y Ho</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>React. Polym</title>
+			<authors>
+				<author>M Chanda</author>
+				<author>K O'driscoll</author>
+				<author>G Rempel</author>
+			</authors>
+			<date>1983</date>
+		</reference>
+		<reference>
+			<title>J. Sanit. Eng. Div</title>
+			<authors>
+				<author>W Weber</author>
+				<author>J Morris</author>
+			</authors>
+			<date>1964</date>
+		</reference>
+		<reference>
+			<title>J. Am. Chem. Soc</title>
+			<authors>
+				<author>R Pearson</author>
+			</authors>
+			<date>1963</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1016/j.jcis.2006.12.032</number>
+		<number>DOI-10.1016/0923-1137(94)90107-4</number>
+		<number>DOI-10.1021/acs.jced.5b00727</number>
+		<number>DOI-10.1002/jctb.2534</number>
+		<number>DOI-10.1021/ie061401b</number>
+		<number>DOI-10.1016/j.jhazmat.2007.11.048</number>
+		<number>DOI-10.1016/j.clay.2006.08.005</number>
+		<number>DOI-10.1021/ie50289a016</number>
+		<number>DOI-10.1016/j.jwpe.2014.03.009</number>
+		<number>DOI-10.1016/j.jcis.2008.03.007</number>
+		<number>DOI-10.1016/j.jcis.2004.06.038</number>
+		<number>DOI-10.1016/j.jfluchem.2008.05.007</number>
+		<number>DOI-10.1016/j.carbpol.2007.07.038</number>
+		<number>DOI-10.1021/acs.iecr.8b01859</number>
+		<number>DOI-10.1016/j.jhazmat.2008.07.009</number>
+		<number>DOI-10.1016/j.ijbiomac.2008.10.010</number>
+		<number>DOI-10.1016/j.carbpol.2017.06.029</number>
+		<number>DOI-10.1016/j.carbpol.2017.11.087</number>
+		<number>DOI-10.1016/j.ijbiomac.2017.02.037</number>
+		<number>DOI-10.1016/j.ijbiomac.2014.06.010</number>
+		<number>DOI-10.1016/j.carbpol.2015.08.003</number>
+		<number>DOI-10.1016/j.carbpol.2010.08.079</number>
+		<number>DOI-10.1016/j.jhazmat.2010.01.067</number>
+		<number>DOI-10.1016/j.jnoncrysol.2007.04.020</number>
+		<number>DOI-10.1016/S0008-6223(98)00317-0</number>
+		<number>DOI-10.1016/j.ijbiomac.2019.02.106</number>
+		<number>DOI-10.1016/S0927-7757(99)00247-2</number>
+		<number>DOI-10.1021/ja02268a002</number>
+		<number>DOI-10.1016/0166-6622(87)80259-7</number>
+		<number>DOI-10.1016/j.ijbiomac.2017.02.100</number>
+		<number>DOI-10.1016/j.watres.2005.10.040</number>
+		<number>DOI-10.1061/JSEDAI.0000496</number>
+		<number>DOI-10.1021/ja00905a001</number>
+	</reference_dois>
+</document>

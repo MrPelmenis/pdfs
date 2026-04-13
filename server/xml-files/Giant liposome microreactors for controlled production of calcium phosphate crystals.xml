@@ -1,0 +1,220 @@
+<document>
+	<file>./pdf-files/Giant liposome microreactors for controlled production of calcium phosphate crystals.pdf</file>
+	<title>Giant Liposome Microreactors for Controlled Production of Calcium Phosphate Crystals</title>
+	<date>2004</date>
+	<doi_number>10.1021/la049862u</doi_number>
+	<img_preview_path>./pdf-preview-images/Giant liposome microreactors for controlled production of calcium phosphate crystals.jpeg</img_preview_path>
+	<authors>
+		<author>Marc Michel</author>
+		<author>Mathias Winterhalter</author>
+		<author>Laurent Darbois</author>
+		<author>Joseph Hemmerle</author>
+		<author>Jean Claude Voegel</author>
+		<author>Pierre Schaaf</author>
+		<author>Vincent Ball</author>
+	</authors>
+	<abstract>Calcium phosphates are among the most important biominerals in living organisms, where they play both a mechanical and a calcium storage role. Their growth in vivo is under strong biological control, and this process occurs in closed spaces. Our aim in this paper is to describe a microreactor system able to control the mineralization process within closed spaces. To this aim we produce giant liposomes containing calcium ions as active ions in the mineralization process, spermine as an activator of crystal growth, and alkaline phosphatase as a catalyst to convert phosphate esters into phosphates. These phosphate esters are provided in the form of p-nitrophenyl phosphate outside of the liposomes. It is demonstrated that these amphiphilic molecules are able to diffuse through the lipidic container and to be subsequently hydrolyzed under enzymatic catalysis into active phosphate species which interact with the already available calcium and spermine to produce calcium phosphates only in the interior of the liposomes. This opens the route to control the calcium phosphate particle size in biomimetic systems.</abstract>
+	<methods>
+		<method>
+			<heading>Experimental Details</heading>
+			<text>Solutions and Chemicals. Throughout this study we used 10 mM Tris (Gibco BRL) buffer at pH 7.4 with 0.15 M NaCl (Prolabo, France) and Ca 2+ cations from calcium chloride (Sigma, C-4901, lot 062K009) at a concentration of 12 mM unless stated differently. AP from porcine intestinal mucosa (Sigma, ref P-4002, lot 65F8195), PNP (Sigma, N-4645, lot 051K53185), and Triton X100 (Sigma, T-9284, lot 81K0225) were used without further purification. Spermine (Sigma, S-2876, lot 32K2600) was dissolved at a concentration of 1 × 10 -4 M in Tris-NaCl buffer already containing Ca 2+ ions at 12 mM. We added spermine to the calcium and alkaline phosphatase solutions because preliminary studies showed that this tetraamine favors the precipitation of calcium phosphates (see Supporting Information Figure 1).
+
+Giant Liposome Preparation. The giant liposomes were made following the reversed-phase evaporation method proposed by Moscho et al. 17 Briefly, the 1-palmitoyl-2-oleoyl-sn-glycero-3-phosphatidylcholine molecules (egg POPC, Lipoid GMBH, Ludwigshafen, Germany) were dissolved in chloroform at a concentration of 0.1 M. A 20 µL sample of this solution was added to 980 µL of chloroform and 200 µL of methanol. The aqueous phase (7 mL of Tris-NaCl buffer) was carefully added to the organic phase. The compounds to be incorporated into the vesicles (12 mM Ca 2+ , spermine at 10 -4 M, and AP) were added to the buffer solution. The organic solvent was removed by evaporation (using a Rotavapor), and the liposomes were formed in the aqueous phase. The giant liposomes obtained by the reversedphase evaporation method are multilamellar and very stable at ambient temperature. 18 Removal of Alkaline Phosphatase outside the Capsules. Our aim was to induce precipitation selectively in the internal volume of the liposomes. The nonencapsulated AP had thus to be eliminated after the liposome preparation. It was hydrolyzed by means of a mixture of proteolytic enzymes (Pronase) from Spretomyces griseus (Sigma, P-5147, lot 082K1047). To this aim, 5 mL of the liposome solution was added to a 5 mL buffer solution containing 2 mg‚mL -1 Pronase, leading to a final Pronase concentration of 1 mg‚mL -1 and a total lipid concentration of 1.5 × 10 -4 M. Pronase is often used to hydrolyze nonencapsulated enzymes, 19 but here we had to hydrolyze quantitatively all the nonencapsulated AP. Hence, the hydrolysis time had to be optimized to allow for a quantitative removal of all the nonencapsulated AP. To this aim, aliquots containing AP and Pronase were regularly withdrawn from the initial mixture and were assayed for their AP activity. The initial hydrolysis rate of PNP at a concentration of 6 × 10 -3 M into PN and P anions was then followed by optical spectroscopy (UV-2101 PC spectrophotometer, Shimadzu) at a wavelength of 405 nm. Moreover, to fully avoid some calcium leakage from the liposomes during their contact with PNP (which would lead to the production of calcium phosphates outside the liposomes), we added EDTA in excess (Sigma-Aldrich E9884-100G, batch 102K0173, final concentration of 12 mM) to the liposome-containing solution after the Pronase treatment. Owing to an average charge state between 2 and 3 at pH 7.4, the EDTA anion is not expected to be able to diffuse through the lipid barrier 20 and hence to reduce the free calcium concentration inside the liposomes.
+
+In some control experiments, aimed to check the absence of a total enzyme leakage from the giant liposomes after enzymatic digestion of the nonencapsulated AP by Pronase, we used AP that was labeled with FITC according to a standard protocol. 21 Figure 1. Schematic illustration of the microreactor preparation containing Ca 2+ cations, spermine (Sp), and enzyme ( ), the degradation of the nonencapsulated (1), the complexation of the nonencapsulated calcium ions (2), and the addition of PNP, which is able to diffuse through the lipidic barrier and to be hydrolyzed into phosphate. The increasing supersaturation of the calcium phosphate ions leads finally to the production of inorganic particles (IPs) inside the microreactor.
+
+After labeling, the free remaining FITC was separated from the AP-linked FITC using size exclusion chromatography (Sephadex G50 preequilibrated in the Tris-NaCl buffer in a 30 × 1 cm column). The fractions were collected in a 2 mL volume, and their FITC and protein contents were checked by measuring the absorbance at 485 and 205 nm, respectively (Shimadzu UV-2101 PC spectrophotometer). The giant liposomes containing encapsulated FITC-labeled AP were prepared by the same protocol as for the nonlabeled AP. The obtained suspension was submitted to Pronase digestion for 12 h and subsequently equilibrated by dialysis to remove the AP fragments smaller than the average pore size of the dialysis membrane (Spectrapor, molecular weight cutoff 10000 g‚mol -1 ). The obtained suspension was then observed by an inverted optical microscope (Nikkon Eclipse TE 200) equipped with a 10× and 40× dry objective and a green filter allowing emission of light around 530 nm.
+
+Production of Inorganic Particles and Their Characterization. To induce particle growth inside the liposomes, at time t ) 0, 1 mL of PNP solution was added to 1 mL of the liposome solution prepared from Tris buffer solutions containing 12 mM Ca 2+ , 0.5 mg‚mL -1 AP, and 1 × 10 -4 M spermine. EDTA was added to the liposome solution to complex all the calcium ions which were not encapsulated in the liposomes or which could incidently diffuse through the lipidic membrane. The solutions were then left at room temperature for 18 h before visualization by optical microscopy (Bioblock Scientific Motic B1 series). The reason for the use of a reaction time of 18 h will be discussed in the Results and Discussion. The inorganic particles obtained after reaction between the AP-spermine-and calcium-containing liposomes and PNP were characterized by means of FTIR spectroscopy in the KBr mode after their sedimentation (Bomem spectrometer, Hartmann &amp; Braun) and drying (at 70 °C for 2 days). The infrared spectra of the obtained particles were compared to spectra obtained from reference compounds such as hydroxyapatite (HAP), octacalcium phosphate (OCP), and brushite (DCPD). HAP was obtained from Biorad, whereas OCP and DCPD were a gift from Professor A. Bigi (University of Bologna, Italy). The particles obtained after 18 h of growth were also deposited onto a Millipore filter (0.2 µm pore diameter), rinsed with distilled water to remove the NaCl from the buffer, and dried in air. They were then observed by scanning electron microscopy (Hitachi 2300 S, operating with an accelerating voltage of 20 kV, after sputter-coating of a 20 nm thick goldpalladium layer). To this aim, the liposomes were deposited onto glass slides that were previously coated with a polyethylene imine layer (Polysciences, polyelectrolyte concentration of 1 mg‚mL -1 in distilled water, adsorption time of 5 min in distilled water, followed by an intensive water rinse to remove nonadsorbed and weakly bound polyethylene imine). The polyethylene imine adsorption before vesicle adhesion and a new water rinse to remove the sodium chloride from the Tris-NaCl buffer improved significantly the density of deposited material with respect to that on glass slides without a polyethylene imine layer. Moreover, the liposome suspension was analyzed by transmission electron microscopy and selected area electron diffraction. These experiments were carried out without any liposome staining. The liposomes were directly deposited onto carbonated Formvarcoated 300-mesh copper grids and intensively washed with distilled water. The transmission electron microscopy experiments were then performed under an acceleration voltage of 120 kV (Philips CM12) with a condenser diaphragm diameter of 50 µm. For the selected area electron diffraction, the condenser diaphragm diameter was reduced to 5 µm.</text>
+		</method>
+	</methods>
+	<full_text>Among all the known biominerals, calcium carbonates and calcium phosphates play a central role. 1 Calcium phosphates constitute the principal biogenic minerals found in mammals, where they provide increased mechanical properties and act as a calcium reservoir. 2 Their formation mechanism, investigated both in vitro and in vivo, is challenging from several points of view. First, calcium phosphates exist as different phases with various solubilities. 3 Hence, according to the Oswald-Gay Lussac rule, the most soluble forms often nucleate first and are then transformed into more stable ones. 2 The well-known transformation of octacalcium phosphate into hydroxyapatite in the presence of water and the inhibition of this transformation in the presence of sodium polyacrylate illustrate this concept. 4 Another and even more important aspect concerns the isolation of the biomacromolecules implied in the control of the biomineralization and the understanding of their mechanism of action. This understanding would help for the design of new functional composite materials. 5 From a fundamental point of view, one can distinguish two different kinds of mineralization processes in living organisms: biologically induced and biologically controlled processes. 2 The former lead to adventitious precipitations in close contact with the cell walls, whereas the latter lead to a high control of the particle size and of the spatial organization of the crystals, of their crystallographic orientation, and of their selfassembly in highly hierarchical structures such as those in bone and enamel. 6 The crucial components of these biologically controlled processes seem to be the presence 7 and the supramolecular organization 8 of specialized macromolecules of the extracellular matrix. Some confinment of the mineralization region can be provided by extracellular matrix vesicles. 9 Occasionaly, this confinement can be provided in the spaces between closely packed cells or inside the cells themselves. This second case of biomineralization processes needs the transport of ions or ion precursors through the extracellular matrix vesicle membrane.
+
+Vesicular structures acting as microreactors can be used to mimic in vitro such processes. Walde and co-workers investigated, for example, vesicles containing R-chimotrypsin which hydrolyzed selectively p-nitroanilide derivatives depending upon their permeability through the microreactor membrane. 10 Similarly, liposomes containing D-amino acid oxidase were prepared, and the rates of amino acid oxidation reactions depended upon the transport of the amino acids through the bilayer container. 11 The microreactor properties are thus entirely based on the compartimentalization and permeability properties of the microreactor system. 12 It is our goal to develop such microreactor systems able to produce calcium phosphate crystals under well-controlled conditions in confined spaces, introducing, for example, single proteins known to induce the formation of calcium phosphate crystals. This study constitutes a first step toward the design of † CNRS. microreactors that convert through enzymatic activity p-nitrophenyl phosphate (PNP) present outside the reactor into phosphate inside the container and subsequently to calcium phosphate crystals since Ca 2+ ions are already present in the liposomes. The concept of the reactor is summarized in Figure 1. We use giant liposomes made from 1-palmitoyl-2-oleoylsn-glycero-3-phosphocholine (POPC) as reactors containing alkaline phosphatase (AP) as the active enzyme encapsulated in the vesicles. We demonstrate that these liposomes allow diffusion of PNP through the container membrane whereas they are impermeable to the enzyme, to the doubly charged Ca 2+ cations, and to the phosphate anions. AP hydrolyzes p-nitrophenyl phosphate into p-nitrophenol (PN) and phosphate (P). PNP was selected as a phosphate precursor owing to its amphiphilic properties and its molecular weight, 12 which should allow a partitioning between the aqueous and the lipidic phase and hence diffusion across the membrane. To our knowledge, only very few studies have dealt with the coupling of transport through a membrane of a precursor molecule and its transformation into a species which should enter into the composition of inorganic particles. 13 Such processes are of considerable importance in biology, where the hydrolysis of adenosine triphosphates and other polyphosphates into phosphates produces phosphates which can be precipitated as calcium phosphates. The spontaneous diffusion of ions such as silver across a lipid bilayer to induce silver iodide precipitation inside the vesicles 14 and the calcium diffusion mediated by calcium transporters to induce calcium phosphate precipitation have been documented. 15 Our system constitutes a mimic of a true matrix vesicle since AP enters into the bone and cartilage mineralization process. 16
+
+Solutions and Chemicals. Throughout this study we used 10 mM Tris (Gibco BRL) buffer at pH 7.4 with 0.15 M NaCl (Prolabo, France) and Ca 2+ cations from calcium chloride (Sigma, C-4901, lot 062K009) at a concentration of 12 mM unless stated differently. AP from porcine intestinal mucosa (Sigma, ref P-4002, lot 65F8195), PNP (Sigma, N-4645, lot 051K53185), and Triton X100 (Sigma, T-9284, lot 81K0225) were used without further purification. Spermine (Sigma, S-2876, lot 32K2600) was dissolved at a concentration of 1 × 10 -4 M in Tris-NaCl buffer already containing Ca 2+ ions at 12 mM. We added spermine to the calcium and alkaline phosphatase solutions because preliminary studies showed that this tetraamine favors the precipitation of calcium phosphates (see Supporting Information Figure 1).
+
+Giant Liposome Preparation. The giant liposomes were made following the reversed-phase evaporation method proposed by Moscho et al. 17 Briefly, the 1-palmitoyl-2-oleoyl-sn-glycero-3-phosphatidylcholine molecules (egg POPC, Lipoid GMBH, Ludwigshafen, Germany) were dissolved in chloroform at a concentration of 0.1 M. A 20 µL sample of this solution was added to 980 µL of chloroform and 200 µL of methanol. The aqueous phase (7 mL of Tris-NaCl buffer) was carefully added to the organic phase. The compounds to be incorporated into the vesicles (12 mM Ca 2+ , spermine at 10 -4 M, and AP) were added to the buffer solution. The organic solvent was removed by evaporation (using a Rotavapor), and the liposomes were formed in the aqueous phase. The giant liposomes obtained by the reversedphase evaporation method are multilamellar and very stable at ambient temperature. 18 Removal of Alkaline Phosphatase outside the Capsules. Our aim was to induce precipitation selectively in the internal volume of the liposomes. The nonencapsulated AP had thus to be eliminated after the liposome preparation. It was hydrolyzed by means of a mixture of proteolytic enzymes (Pronase) from Spretomyces griseus (Sigma, P-5147, lot 082K1047). To this aim, 5 mL of the liposome solution was added to a 5 mL buffer solution containing 2 mg‚mL -1 Pronase, leading to a final Pronase concentration of 1 mg‚mL -1 and a total lipid concentration of 1.5 × 10 -4 M. Pronase is often used to hydrolyze nonencapsulated enzymes, 19 but here we had to hydrolyze quantitatively all the nonencapsulated AP. Hence, the hydrolysis time had to be optimized to allow for a quantitative removal of all the nonencapsulated AP. To this aim, aliquots containing AP and Pronase were regularly withdrawn from the initial mixture and were assayed for their AP activity. The initial hydrolysis rate of PNP at a concentration of 6 × 10 -3 M into PN and P anions was then followed by optical spectroscopy (UV-2101 PC spectrophotometer, Shimadzu) at a wavelength of 405 nm. Moreover, to fully avoid some calcium leakage from the liposomes during their contact with PNP (which would lead to the production of calcium phosphates outside the liposomes), we added EDTA in excess (Sigma-Aldrich E9884-100G, batch 102K0173, final concentration of 12 mM) to the liposome-containing solution after the Pronase treatment. Owing to an average charge state between 2 and 3 at pH 7.4, the EDTA anion is not expected to be able to diffuse through the lipid barrier 20 and hence to reduce the free calcium concentration inside the liposomes.
+
+In some control experiments, aimed to check the absence of a total enzyme leakage from the giant liposomes after enzymatic digestion of the nonencapsulated AP by Pronase, we used AP that was labeled with FITC according to a standard protocol. 21 Figure 1. Schematic illustration of the microreactor preparation containing Ca 2+ cations, spermine (Sp), and enzyme ( ), the degradation of the nonencapsulated (1), the complexation of the nonencapsulated calcium ions (2), and the addition of PNP, which is able to diffuse through the lipidic barrier and to be hydrolyzed into phosphate. The increasing supersaturation of the calcium phosphate ions leads finally to the production of inorganic particles (IPs) inside the microreactor.
+
+After labeling, the free remaining FITC was separated from the AP-linked FITC using size exclusion chromatography (Sephadex G50 preequilibrated in the Tris-NaCl buffer in a 30 × 1 cm column). The fractions were collected in a 2 mL volume, and their FITC and protein contents were checked by measuring the absorbance at 485 and 205 nm, respectively (Shimadzu UV-2101 PC spectrophotometer). The giant liposomes containing encapsulated FITC-labeled AP were prepared by the same protocol as for the nonlabeled AP. The obtained suspension was submitted to Pronase digestion for 12 h and subsequently equilibrated by dialysis to remove the AP fragments smaller than the average pore size of the dialysis membrane (Spectrapor, molecular weight cutoff 10000 g‚mol -1 ). The obtained suspension was then observed by an inverted optical microscope (Nikkon Eclipse TE 200) equipped with a 10× and 40× dry objective and a green filter allowing emission of light around 530 nm.
+
+Production of Inorganic Particles and Their Characterization. To induce particle growth inside the liposomes, at time t ) 0, 1 mL of PNP solution was added to 1 mL of the liposome solution prepared from Tris buffer solutions containing 12 mM Ca 2+ , 0.5 mg‚mL -1 AP, and 1 × 10 -4 M spermine. EDTA was added to the liposome solution to complex all the calcium ions which were not encapsulated in the liposomes or which could incidently diffuse through the lipidic membrane. The solutions were then left at room temperature for 18 h before visualization by optical microscopy (Bioblock Scientific Motic B1 series). The reason for the use of a reaction time of 18 h will be discussed in the Results and Discussion. The inorganic particles obtained after reaction between the AP-spermine-and calcium-containing liposomes and PNP were characterized by means of FTIR spectroscopy in the KBr mode after their sedimentation (Bomem spectrometer, Hartmann &amp; Braun) and drying (at 70 °C for 2 days). The infrared spectra of the obtained particles were compared to spectra obtained from reference compounds such as hydroxyapatite (HAP), octacalcium phosphate (OCP), and brushite (DCPD). HAP was obtained from Biorad, whereas OCP and DCPD were a gift from Professor A. Bigi (University of Bologna, Italy). The particles obtained after 18 h of growth were also deposited onto a Millipore filter (0.2 µm pore diameter), rinsed with distilled water to remove the NaCl from the buffer, and dried in air. They were then observed by scanning electron microscopy (Hitachi 2300 S, operating with an accelerating voltage of 20 kV, after sputter-coating of a 20 nm thick goldpalladium layer). To this aim, the liposomes were deposited onto glass slides that were previously coated with a polyethylene imine layer (Polysciences, polyelectrolyte concentration of 1 mg‚mL -1 in distilled water, adsorption time of 5 min in distilled water, followed by an intensive water rinse to remove nonadsorbed and weakly bound polyethylene imine). The polyethylene imine adsorption before vesicle adhesion and a new water rinse to remove the sodium chloride from the Tris-NaCl buffer improved significantly the density of deposited material with respect to that on glass slides without a polyethylene imine layer. Moreover, the liposome suspension was analyzed by transmission electron microscopy and selected area electron diffraction. These experiments were carried out without any liposome staining. The liposomes were directly deposited onto carbonated Formvarcoated 300-mesh copper grids and intensively washed with distilled water. The transmission electron microscopy experiments were then performed under an acceleration voltage of 120 kV (Philips CM12) with a condenser diaphragm diameter of 50 µm. For the selected area electron diffraction, the condenser diaphragm diameter was reduced to 5 µm.
+
+Preparation of Microreactors in an Enzyme-Free Environment. The giant liposomes were prepared in the presence of 12 mM Ca 2+ and 0.5 mg‚mL -1 AP as described previously. Figure 2 shows a typical image of the liposomes taken by optical microscopy. The diameters of the liposomes were on the order of a few micrometers but could not be determined precisely due to the diffraction patterns seen in optical microscopy. Moreover, the range of sizes of the obtained vesicles is reproducible from experiment to experiment.
+
+Once the liposomes were prepared, we had to inactivate all the nonencapsulated AP enzymes from the solution to avoid subsequent hydrolysis of PNP outside the reactors after the PNP addition to the solution. The nonencapsulated AP could not be separated from the encapsulated AP by means of gel permeation chromatography or dialysis, as is usually done with small unilamellar liposomes, because the giant liposomes stick in front of the column and cannot be eluted without a drastic size reduction. Hence, AP was inactivated by quantitative hydrolysis with the proteolytic &quot;Pronase&quot; enzyme mixture. The addition of Pronase at a final concentration of 1 mg‚mL -1 to a solution containg 0.5 mg‚mL -1 AP (without liposomes) leads to a progressive reduction of the AP activity. After about 11 h of incubation in the presence of Pronase, the AP activity can no longer be detected (Figure 3).
+
+To ensure that the liposomes were not disrupted during the reaction with Pronase, we prepared liposomes in the presence of FITC-labeled AP. After 12 h of contact with Pronase at 1 mg‚mL -1 , the mixture was dialyzed against buffer to eliminate the small hydrolysis products. In this case, fluorescence remains localized in the spherical containers in the presence of Pronase, indicating that at least part of the liposomes remain intact after their contact with Pronase (data not shown).  Characterization of the Liposomes as a Microreactor. To demonstrate that the liposomes containing AP constitute microreactors able to produce calcium phosphate crystals in the presence of the amphiphilic PNP phosphate precursor added outside the volume enclosed by the liposomes, we first show that PNP is both able to cross the liposome membrane and subsequently to react with the encapsulated AP, producing phosphate anions. To this aim, liposome suspensions were prepared in the presence of AP and of 12 mM Ca 2+ cations. This suspension was treated with 1 mg‚mL -1 Pronase for 11-12 h as described previously (Figure 3). After the quantitative hydrolysis of the nonencapsulated AP, PNP was added to the reaction mixture and the reaction of PNP with AP was immediately followed by UV spectroscopy at a wavelength of 405 nm. After a short transition time of about 30 s the absorbance of the solution increased linearly with time (Figure 4). This shows that AP retains its enzymatic activity inside the vesicle. These experiments were performed at different concentrations of AP (ranging from 0.125 to 0.5 mg‚mL -1 ) at a fixed concentration of PNP (6 mM). The slope of the UV absorbance line as a function of time is directly proportional to the enzyme concentration (see Table 1), whereas it is independent of the PNP concentration, in this PNP concentration range (Supporting Information Figure 2). This indicates that, in the linear regime, the PNP hydrolysis is performed under a great excess of PNP with respect to AP in the container. The nonzero initial UV absorbance is due to some light scattering originating from the phospholipid vesicles. Similar experiments were also performed by disrupting the same volume of a liposome-containing solution with Triton X100 after treatment with Pronase for 12 h. The encapsulated AP is thus released, and the addition of PNP leads to a linear increase of the UV absorbance with time without any transition time (Figure 4). These experiments were conducted in the presence and absence of Ca 2+ as well as in the presence and absence of spermine, and similar results were obtained in both cases, proving that the presence of calcium and spermine neither activates nor inhibits the encapsulated enzyme.
+
+The occurrence of a short transition time before a steadystate production of p-nitrophenol is due to the PNP diffusion through the lipidic bilayers. Moreover, for given AP and PNP concentrations, the steady-state reaction rates are equal, within experimental uncertainties, for the encapsulated enzymes and for the enzymes released by means of Triton X100 addition (Table 1). Since Triton X100, a nonionic detergent, is known for not altering the AP activity, this result shows that AP activity remains unchanged when present in the vesicles. Our results thus clearly demonstrate that the amphiphilic PNP substrate is able to diffuse through the lipidic membrane (probably composed of several bilayers) and subsequently to react with active enzyme molecules. This is in agreement with the recent results of Lawson et al., 22 who showed that methyl parathion is also able to diffuse through the membrane of chemically cross-linked phospholipids and to be hydrolyzed in PN in the presence of encapsulated phosphotriesterase. However, Bernheim-Grosswasser et al. 23 found that PNP was not able to cross the walls of multilamellar spherulites prepared under shear and containing also encapsulated AP. Whole enzymatic activity was only recovered after spherulite destruction by the addition of deoxycholic acid. 23 In our opinion, the difference between the observation of PNP diffusion through the lipidic walls in the present study and the absence of any observable diffusion in the former study should be assigned to differences in the preparation methods of the microcontainers.
+
+When a liposome solution prepared from a 12 mM Ca 2+ / 0.5 mg‚mL -1 AP solution and 10 -4 M spermine is left, after removal of the external AP, for 18 h in contact with PNP at a concentration of 6 mM, most of the liposomes contain opaque particles as observed under optical microscopy (Figure 5). No particles were found in the absence of a lipidic closed container. It is important to notice that the same experiment performed in the absence of spermine, the concentration of all the other reactants being held constant, did not lead to the appearance of such inorganic particles. This again suggests that spermine reacts as an activator either in the nucleation or in the particle growth process (see also Supporting Information Figure 1). Comparison between Figures 2 and5 reveals that the average size of the liposomes does not seem to be greatly modified by the presence of solid particles. Hence, we managed to build microreactors that induce growth of solid particles in the reactor container in the presence of an external substance (PNP) through an internal enzymatic activity. One can notice that no particle formation was observed for reaction times shorter than 16 h so that the crystals appeared between 16 and 18 h in the vesicles. On the other hand, in calcium-and phosphate-super-    0.009 0.058 0.069 AP, 0.5 mg‚mL -1 c 0.011 0.058 0.069 AP, 0.25 mg‚mL -1 c 0.005 0.028 AP, 0.125 mg‚mL -1 c 0.007 0.014 a Activity in the presence of 6 mM PNP (in absorbance units per minute). b Experiment performed in the absence of calcium ions. c The Ca 2+ concentration was 12 mM. saturated solutions at 6 mM in both species and with addition of spermine at 10 -4 M at time t ) 0, precipitation occurs after about 5 h (Supporting Information Figure 1). The difference in the characteristic times needed before observable precipitation in both types of experiments (in liposomes and in solution) might well be due to the fact that in the giant liposomes the initial phosphate concentration was equal to 0. Hence, the supersaturation increases with time as a consequence of PNP diffusion into the vesicles followed by its hydrolysis inside the vesicles. To evaluate the time needed to observe precipitation in solution, we performed an experiment in which PNP was added at an initial concentration of 6 mM to a calcium solution (at 12 mM) containing spermine at 1 mM and AP at 0.5 mg‚mL -1 . Hence, the concentrations of all species were the same as those corresponding to the experiment performed in the presence of the vesicles. The difference was that all the PNP molecules were in direct contact with the enzyme at time t ) 0. The occurrence of precipitation was followed by turbidimetry at a wavelength of 500 nm. The turbidity increased markedly after 15 h of PNP hydrolysis. This lag phase preceding the occurrence of precipitation is hence the minimal time needed to produce inorganic particles in the absence of the lipidic membrane separating the free PNP and the enzyme-and calcium-containing reservoir. In the presence of the vesicles, no observable precipitation was observed after 16 h of contact between the PNP solution and the vesicles containing calcium, spermine, and AP. This suggests that the limiting process for nucleation in the presence of vesicles is the PNP hydrolysis and not its diffusion into the vesicles and that the lipidic barrier does not significantly interfere with nucleation.
+
+Characterization of the Inorganic Particles. The nature of the particles shown in Figure 5 was first investigated by Fourier transform infrared spectroscopy in the transmission mode (Figure 6). The comparison between the infrared spectra of the dried liposomes containing particles and a dried solution containing &quot;empty&quot; liposomes (i.e., containing AP, spermine, and Ca 2+ ions, but in the absence of PNP) reveals the presence of several peaks characteristic of calcium phosphates in the 500-1200 cm -1 spectral region (Figure 6). The comparison of the results obtained in the present study with the tabulated positions of the vibrational bands of calcium phosphates (Table 2) [24][25] as well as with spectra carried with reference compounds (Figure 6A-C), strongly suggests that the particles contained in the liposomes are HAP. In addition the -OH libration band of HAP at around 630 cm -1 is visible even if it is relatively weak. This gives additional evidence for the presence of HAP. The presence of octacalcium phosphate can be excluded due to the absence of the characteristic peaks of this phase at 1120, 1103, 1077, and 648 cm -1 . Similarly, the infrared spectrum allows exclusion of the presence of significant amounts of other calcium phosphates such as dicalcium phosphate dihydrate. Note, however, that the infrared spectra of the inorganic particles were obtained after sedimentation, an extensive rinse with distilled water, and drying at 70 °C for 2 days. This might well modify the phase of the obtained calcium phosphates. Hence, by no means can we say that the inorganic particles obtained inside the vesicles, as shown in Figure 5, are made from hydroxyapatite. HAP is the product that is present after an extensive water rinse and drying.
+
+The assignment of the main peaks obtained in Figure 6 is given in Table 2.
+
+The particle characterization has been pushed further by scanning electron microscopy (Figure 7), transmission electron microscopy, and selected area electron diffraction (Figure 8). The SEM micrographs display the presence of platelet-like particles in the micrometer range, which is compatible with the size of the original vesicles (Figure 2). Some steps and edges are clearly visible on the particles displayed in Figure 7, which suggests that the obtained particles are crystalline. Platelets of such kind are also obtained in a solution containing calcium and phosphate ions (each at 6 mM) and spermine at 10 -4 M (Supporting Information Figure 4). In these free solution experiments, the obtained platelets are however much bigger than in the presence of the vesicles (Figure 7), which shows the effect of the giant vesicles in restricting the volume available for mineralization.   However, when the particles are analyzed in the selected area electron diffraction mode of the transmission electron microscope, only weak diffraction rings are visible (Figure 8). Three diffraction rings could be analyzed, and the corresponding d hkl spacings are equal to 3.7, 2.6, and 1.92 Å. They correspond possibly to the (111), (200), and ( 222) or (312) planes of HAP, respectively. These three d hkl spacings are close (with a maximal deviation of 5%) to values tabulated for HAP (JCPDS 9-432 file), but they are common to most of the orthophosphates.
+
+We noticed also a weakening of the ring intensity due to radiation damage during the exposition to the electron   beam, which was even apparent in scanning electron microscopy. This might have its origin in the fact that the grown crystallites are very small in size but also the long exposure time (1 min) needed to reach a large enough signal-to-noise ratio. Another important point concerns the absence of the strong 002, 211, 112, and 300 reflections of HAP. This might well be due to a direct effect of the lipidic container on the crystal growth process. Indeed, it is well-known that the inorganic particle morphology grown in contact with a lipidic film can be strongly influenced by the lipidic headgroups. 26 Hence, our SEM and selected area electron microscopy experiments do not allow the nature of the inorganic particles obtained inside the giant vesicles to be clearly established. These inorganic particles are clearly calcium phosphates as inferred from both the transmission infrared spectra (Figure 6D) and the diffraction rings of the selected area electron diffraction experiment. The infrared spectra are very close to those of HAP, but they were obtained after an extensive water rinse (which was necessary to remove the sodium chloride from the Tris-NaCl buffer) and oven drying. Hence, it might well be that this treatement induced some changes in the nature of the obtained phase.
+
+In this paper we demonstrate a microreactor concept containing an active enzyme, alkaline phosphatase, which is able to catalyze the hydrolysis of p-nitrophenyl phosphate into active phosphate ions which then interact with the calcium ions and spermine already present in the reservoir to form inorganic particles. The substrate has been shown to diffuse through the lipidic barrier of the giant liposomes before undergoing hydrolysis in the internal aqueous reservoir. The confinement of the enzymatic reaction to the internal cavity of the microreactor, as well as the hydrolysis of all nonencapsulated enzyme, allows the inorganic particles to grow only in restricted regions of the solution. The resulting inorganic particles are calcium phosphates, most probably HAP, as confirmed by FTIR spectroscopy with very low crystallinity as deduced from selected area electron diffraction experiments. The exact nature of the crystal phase could not be determined by selected area electron diffraction experiments due to the presence of only three diffraction rings, which moreover are common to most calcium phosphates. The presence of platelet-like, anisotropically shaped crystallites could well be related to the interaction of the spermine cations with the produced phosphate ions. Without spermine molecules (inside and outside the microreactor), no particle growth could be observed in the investigated time scale of about 20 h. This indicates the fundamental influence of this small tetraamine in the nucleation and/or crystal growth process of calcium phosphates.
+
+The next step in the confinement of the calcium phosphate production will consist in the immobilization of such a type of microreactor onto solid surfaces and in polyelectrolyte matrixes to create new bioactive surfaces with controlled biomineralization activity.
+
+(3) Nancollas, G. H. In vitro Studies of calcium Phosphate Crystallisation. In Biomineralization. Chemical and Biochemical Perspectives; Mann, S., Webb, J., Williams, R. J. P., Eds.; VCH: New York, 1989; pp 160-187. (4) (a) Nelson, D. G. A.; Barry, J. C. Anat. Rec. 1989, 224, 265. (b) Bigi, A.; Boanini, E.; Falini, G.; Panzavolta, S.; Roveri, N. J. Inorg. Biochem. 2000, 78, 227. (5) Mann, S. Nature 1988, 332, 119. (6) Weiner, S.; Traub, W. FASEB J. 1992, 6, 879. (7) Addadi, L.; Weiner, S. Proc. Natl. Acad. Sci. U.S.A. 1985, 82, 4110. (8) Addadi, L.; Moradian, J.; Shay, E.; Maroudas, N. G.; Weiner, S. Proc. Natl. Acad. U.S.A. 1987, 84, 2732. (9) Ali, S. Y.; Sajdera, S. W.; Anderson, H. C. Proc. Natl. Acad. Sci. U.S.A. 1970, 67, 1513. (10) Blocher, M.; Walde, P.; Dunn, I. J. Biotechnol. Bioeng. 1999, 62, 36. (11) Walde, P.; Ichikawa, S. Biomol. Eng. 2001, 18, 143. (12) Walde, P.; Marzetta, B. Biotechnol. Bioeng. 1998, 57, 216.
+
+Langmuir, Vol. 20, No. 15, 2004  Michel et al.
+
+Langmuir, Vol. 20, No. 15, 2004  Michel et al.
+
+Langmuir, Vol. 20, No. 15, 2004  Michel et al.</full_text>
+	<references>
+		<reference>
+			<title>H. Macromol. Rapid Commun</title>
+			<authors>
+				<author>A Antipov</author>
+				<author>D Shchukin</author>
+				<author>Y Fedutik</author>
+				<author>I Zanaveskina</author>
+				<author>V Klechkovskaya</author>
+				<author>G Sukhorukov</author>
+				<author>Mo ¨hwald</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>J. Chem. Soc., Dalton Trans</title>
+			<authors>
+				<author>S Mann</author>
+				<author>R Williams</author>
+			</authors>
+			<date>1983</date>
+		</reference>
+		<reference>
+			<title>J. Chem. Soc., Dalton Trans</title>
+			<authors>
+				<author>S Mann</author>
+				<author>R Williams</author>
+			</authors>
+			<date>1983</date>
+		</reference>
+		<reference>
+			<title>Nature</title>
+			<authors>
+				<author>S Mann</author>
+				<author>J Hannington</author>
+				<author>R Williams</author>
+			</authors>
+			<date>1986</date>
+		</reference>
+		<reference>
+			<title>Chem. Commun</title>
+			<authors>
+				<author>M Sauer</author>
+				<author>T Haefele</author>
+				<author>A Graff</author>
+				<author>C Nardin</author>
+				<author>W Meier</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>Biochim. Biophys. Acta</title>
+			<authors>
+				<author>D Ierardi</author>
+				<author>J Pizauro</author>
+				<author>P Ciancaglini</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>Int. J. Biochem. Cell Biol</title>
+			<authors>
+				<author>F Camolezi</author>
+				<author>K Daghastanli</author>
+				<author>P Magalha ˜es</author>
+				<author>J Pizauro</author>
+				<author>P Ciancaglini</author>
+			</authors>
+			<date>1091</date>
+		</reference>
+		<reference>
+			<title>Proc. Natl. Acad. Sci. U.S.A</title>
+			<authors>
+				<author>A Moscho</author>
+				<author>O Orwar</author>
+				<author>D Chiu</author>
+				<author>B Modi</author>
+				<author>R Zare</author>
+			</authors>
+			<date>1996</date>
+		</reference>
+		<reference>
+			<title/>
+			<authors>
+				<author>S Kulin</author>
+				<author>R Kishore</author>
+				<author>K Helmerson</author>
+				<author>L Locascio</author>
+				<author>Langmuir</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>Biotechnol. Bioeng</title>
+			<authors>
+				<author>M Nasseau</author>
+				<author>Y Boublik</author>
+				<author>W Meier</author>
+				<author>M Winterhalter</author>
+				<author>D Fournier</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>a practical approach</title>
+			<authors>
+				<author>R New</author>
+				<author>Liposomes</author>
+			</authors>
+			<date>1989</date>
+		</reference>
+		<reference>
+			<title>Bioconjugate Techniques</title>
+			<authors>
+				<author>G Hermanson</author>
+			</authors>
+			<date>1996</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1126/science.7008198</number>
+		<number>DOI-10.1002/ar.1092240217</number>
+		<number>DOI-10.1016/S0162-0134(00)00015-5</number>
+		<number>DOI-10.1038/332119a0</number>
+		<number>DOI-10.1096/fasebj.6.3.1740237</number>
+		<number>DOI-10.1073/pnas.82.12.4110</number>
+		<number>DOI-10.1073/pnas.84.9.2732</number>
+		<number>DOI-10.1073/pnas.67.3.1513</number>
+		<number>DOI-10.1002/(SICI)1097-0290(19990105)62:1&lt;36::AID-BIT5&gt;3.0.CO;2-U</number>
+		<number>DOI-10.1016/S1389-0344(01)00088-0</number>
+		<number>DOI-10.1002/(SICI)1097-0290(19980120)57:2&lt;216::AID-BIT10&gt;3.0.CO;2-E</number>
+		<number>DOI-10.1002/marc.200390041</number>
+		<number>DOI-10.1039/dt9830000311</number>
+		<number>DOI-10.1039/dt9830000771</number>
+		<number>DOI-10.1038/324565a0</number>
+		<number>DOI-10.1039/b107833j</number>
+		<number>DOI-10.1016/S0005-2736(02)00615-6</number>
+		<number>DOI-10.1016/S1357-2725(02)00029-8</number>
+		<number>DOI-10.1073/pnas.93.21.11443</number>
+		<number>DOI-10.1021/la0344433</number>
+		<number>DOI-10.1002/bit.10074</number>
+		<number>DOI-10.1021/la034434u</number>
+		<number>DOI-10.1063/1.480500</number>
+		<number>DOI-10.1002/jbm.10280</number>
+		<number>DOI-10.1038/334692a0</number>
+	</reference_dois>
+</document>

@@ -1,0 +1,769 @@
+<document>
+	<file>./pdf-files/Polydopamine-mediated synthesis of core-shell gold@calcium phosphate nanoparticles for enzyme immobilization.pdf</file>
+	<title>Polydopamine-mediated synthesis of core–shell gold@calcium phosphate nanoparticles for enzyme immobilization</title>
+	<date>2019</date>
+	<doi_number>10.1039/c9bm00283a</doi_number>
+	<img_preview_path>./pdf-preview-images/Polydopamine-mediated synthesis of core-shell gold@calcium phosphate nanoparticles for enzyme immobilization.jpeg</img_preview_path>
+	<authors>
+		<author>Di Li</author>
+		<author>Zheng Fang</author>
+		<author>Hongwei Duan</author>
+		<author>Li Liang</author>
+	</authors>
+	<abstract>Constructing calcium phosphate (CaP)–gold (Au) nanocomposites for enzyme immobilization to overcome the bottleneck of loss of enzyme activity upon immobilization.</abstract>
+	<methods>
+		<method>
+			<heading>Biomaterials Science Accepted Manuscript</heading>
+			<text>Here, we report a polydopamine (PDA)-based strategy that allows for the successful synthesis of uniform heterogeneous nanocomposites with PDA-coated gold nanoparticle (Au@PDA) core and CaP shell (Au@PDA@CaP) for enzyme immobilization. Deposition of PDA coating on the surface of materials provided a facile way for immobilizing enzymes and improving their stability. 16,17 More importantly, the PDA layer exhibits interesting characteristics to mediate the structural integration of nanoscale building blocks of distinct chemistry. First, dopamine undergoes self-polymerization under weakly basic conditions via successive oxidation, intramolecular cyclization, oligomerization and self-assembly, resulting in highly cross-linked PDA that can strongly adhere on virtually any colloidal substrates. 18,19 Second, the high density of catechol groups allow for chelating metallic precursors to initiate the nucleation of shell components on the PDA layer. Zhou et al. reported that PDA formed a robust conformal coating on nanoparticle substrates to direct the heterogeneous nucleation and growth of metal-organic frameworks shell. 20  finally, the CaP-GOx shell is formed around Au@PDA core by adding Ca 2+ into the mixture, affording exclusively the core-shell Au@PDA@CaP-GOx nanohybrids.</text>
+		</method>
+		<method>
+			<heading>Materials.</heading>
+			<text>Hydrogen tetrachloroaurate(III) (HAuCl 4 •3H 2 O), oleylamine (OAm), oleic acid (OA) and fluorescein isothiocyanate (FITC) were purchased from Sigma-Aldrich Co. (St. Louis, MO, USA). Glucose oxidase (GOx, EC 1.12.3.4), horseradish peroxidase (HRP, E.C. 1.11.1.7, RZ&gt;3) and 2,2''-azino-di-3-ethylbenzothiazoline sulfonic acid-6-diammonium salt (ABTS) were purchased from Sango Biotech Co.
+
+(Shanghai, China). Lipoic acid was obtained from J&amp;K Scientific Ltd. (Shanghai, China). Other reagents were analytical grade and obtained from SinoPharm CNCM Ltd. (Shanghai, China). Ultrapure water was obtained by using a Milli-Q water purification system (Millipore, Billerica, MA, USA).
+
+Synthesis of PDA-coated Au NPs. Au NPs were synthesized according to the method of Yu 21 with some modifications. Exactly 0.2 mmol HAuCl 4 was added into the mixture of OA (1 mL) and OAm (5 mL) under vigorous stirring and heated up to 130 o C for 15 min for Au NPs growth after degassed and refilled with N 2 . Au NPs were purified by ethanol precipitation, and then dissolved in 10 mL of hexane. Exactly 0.2 mmol of Au NPs in 10 mL hexane were mixed with 2 mL of 0.2 M lipoic acid in methanol (pH=9.0) for complete ligand exchange under vigorous stirring.
+
+After Au NPs were finally transferred into methanol phase, lipoic acid modified-Au NPs were collected by centrifuging at 5, 000×g for 5 min using a 5840 R centrifuge (Eppendorf Co. Ltd, Hamburg, Germany) and then re-dispersed in 18 mL of Tris-HCl buffer (0.05 M, pH 8.5). Exactly 0.2 mmol of dopamine was finally added and reacted for 18 h at room temperature to coat Au NPs. PDA-coated Au NPs were collected by centrifugation and stored in 2 mL of H 2 O at 4°C for further use.</text>
+		</method>
+		<method>
+			<heading>Biomaterials Science Accepted Manuscript</heading>
+			<text>Synthesis of Au@PDA@CaP-GOx and CaP-GOx hybrid nanostructures. For the synthesis of Au@PDA@CaP-GOx, 0.4 mg/mL GOx in Tris-HCl buffer (0.01 M, pH 8.5) was mixed with 0.25 μmol Au@PDA NPs and 100 μL of phosphate buffer solution (0.01 M, pH 7.4) under stirring for 3 min. Then 4 mL of 5 mM CaCl 2 in Tris-HCl buffer solution was added into the mixture at a speed of 6 drops per second and left to react at room temperature for 2.0 h. Nano-size and bulk-size CaP-GOx (N-CaP-GOx and B-CaP-GOx, respectively) were synthesized as controls. For the synthesis of N-CaP-GOx, 0.4 mg/mL GOx in Tris-HCl buffer (0.01 M, pH 8.5) was mixed with 100 μL of phosphate buffer solution (0.01 M, pH 7.4). Then 4 mL of 5 mM CaCl 2 in Tris-HCl buffer was added into the mixture at a speed of 6 drops per second. B-CaP-GOx was synthesized according to the method of Wang 2 with some modifications. In brief, 100 μL of 200 mM CaCl 2 aqueous solution was added into 5 mL of 3 mM phosphate buffer (pH 7.4) containing 0.4 mg/mL GOx, and then left to react at room temperature for 12 h. Au@PDA@CaP-GOx, N-CaP-GOx and B-CaP-GOx were purified by three repeated steps under centrifuging at 10, 000×g for 10 min and then dispersed in 0.5 mL ultrapure water. preparation of FITC-labeled GOx was adapted from a previously reported procedure. 22 A solution of FITC (10 mg/mL) in dimethyl sulfoxide (0.2 mL) was added dropwise to a 2 mL solution of GOx (10 mg/mL) in a carbonate buffer (50 mM, pH 9.0), and the mixture was stirred for 4 h at 25°C. A 50 mM NH 4 Cl aqueous solution (2 mL) was added to the resulting mixture to quench the reaction and then the solution was dialyzed against PBS (50 mM, pH 7.0) at 4°C for 48 h to remove the excess FITC.</text>
+		</method>
+		<method>
+			<heading>Biomaterials Science Accepted Manuscript</heading>
+			<text>Characterizations. UV-Vis absorption spectra were obtained by using a Shimadzu UV-1800 spectrophotometer (Shimadzu Corp, Kyoto, Japan). Morphology, particle size, and lattice fringes were analyzed on a JEM-2100 TEM (JEOL, Japan) with an accelerating voltage of 200 kV. Confocal laser scanning microscope images were acquired on a Zeiss LSM 710 confocal microscope (Leica, Heidelberg, Germany) with a 63×oil objective. Au NPs were dispersed in Tris-HCl buffer (0.01 M, pH 8.5) to determine -potential by using a Zetasizer Nano ZS particle analyzer (Brookhaven Instruments Ltd, New York, USA) with a He/Ne laser (λ = 633 nm). Powder X-ray diffraction (XRD) pattern was recorded on a Bruker AXS D8 X-ray diffractometer (Bruker, Germany) with Cu Kα (λ = 1.5406 Å) radiation at 40 kV and 20 mA.
+
+Immobilization rate and loading amount of GOx. The reaction mixture was centrifuged at 10, 000×g for 10 min to obtain the supernatant containing free GOx.
+
+The content of free GOx was determined by using Bradford assay. 23 Immobilization rate of GOx was defined as (T-F)/T×100%, where T and F stand for total amount of introduced GOx and the amount of free GOx in the supernatant, respectively. Loading amount of GOx (mg per g of support) was calculated as (T-F)/(W-T+F) ×1000, where W is total weight of enzyme-immobilized NPs after 24 h of oven drying at 50°C. 24 The immobilization efficiency (IE) was calculated as IE = 100 × (α i /α f ), where α i is the activity of the immobilized enzyme and α f is the activity of the feeding enzyme. 25 Activity assay. GOx assay was performed with the HRP-coupled reaction by using glucose and ABTS as the substrates under conditions where HRP and ABTS were not rate-limiting. 26 One unit of enzyme activity was defined as the amount of GOx required to oxidize 1 μmol glucose per min at 40°C. In detail, free GOx or immobilized GOx at the same protein content of 1 µg was added into 1 mL of phosphate buffer (0.01 M, pH 6.4) containing 10 mM glucose,10 mM ABTS and 2 µg HRP, and then the absorbance at 729 nm was immediately monitored on a UV-Vis spectrometer for 180 s. Change of the absorbance in 180 s was proportional to enzymatic activity.</text>
+		</method>
+		<method>
+			<heading>Biomaterials Science Accepted Manuscript</heading>
+			<text>Figure 5A shows immobilization rate of GOx during the growth of Au@PDA@CaP-GOx upon the addition of various amounts of Au@PDA. At 0 and 0.25 μmol Au@PDA NPs, the immobilization rate increased monotonously with growth time and reached the highest value of 30%, which was equivalent to the loading of GOx of 760 mg per gram of support. The loading amount of GOx on Au@PDA@CaP NPs was significantly higher than the previously-reported results on porous structures, such as 60 mg per gram of copper hydroxysulfate nanocrystals, 38 80 mg per gram of Cu 3 (PO 4 ) 2 nanoflowers. 39 The rate of GOx immobilization became slower upon further increasing the amounts of Au@PDA NPs, and the enzyme immobilization rates were saturated at 240 and 150 min at 0.5 and 1.0 μmol Au@PDA, respectively. Therefore, the optimized condition for GOx immobilization was 0.25 μmol Au@PDA NPs and growth time of 120 min. Meanwhile, a maximum immobilization efficiency of 31.41% could be achieved at this optimum (Figure 5B). According to the results above, the formation of Au@PDA@CaP-GOx should progress in two steps. At an early growth stage (40 min, step1, Figure S6A, Supporting Information), protein-containing ACP shell was formed around Au@PDA NPs. In the second step, more GOx molecules diffused into the structure of ACP and formed complexes with ACP NPs through the interactions of ionized carboxyl group and protonated amino group in protein with calcium ions and phosphate anions in ACP, respectively. 40,41 Loading of GOx became saturated after complete coordination of the protein molecules with Ca 2+ (Figure 5A). In contrast, well-defined core@shell NPs could not be formed when lipoic acid-stabilized Au NPs were used as core, with serious aggregation of the Au NPs (Figure S7, Supporting Information), confirming that the conformal coating of PDA enabled the successful preparation of Au@PDA@CaP-GOx NPs by improving the colloidal stability of Au core.</text>
+		</method>
+		<method>
+			<heading>Biomaterials Science Accepted Manuscript</heading>
+			<text>Reusability of immobilized enzyme is very important for practical industry applications. 48 The enzymatic activity of immobilized GOx was assayed in 9 cycles of reaction for glucose oxidation at 25°C (Figure 8). Au@PDA@CaP-GOx retained nearly 92% and 84% of its original activity after 5 and 9 cycles of reuse, respectively, while N-CaP-GOx retained approximately 84% and 69% of its initial activity.
+
+Notably, the residual activity was higher than that found for most previous reports, such as 80% for Burkholderia cepacia lipase (BCL)-Ca 3 (PO 4 ) 2 after 5 cycles of reuse, 49 55% for Ca 3 (PO 4 ) 2 -a-acetolactate decarboxylase (ALDC) over 6 cycled reactions. 50 Since both Au@PDA@CaP-GOx and N-CaP-GOx showed good long-term stability under storage at 25°C (Figure 7B), the loss of enzyme activity for the immobilized GOx during repeating use might be mainly attributed to the processes of washing and centrifugation.
+
+It is reported that the specific surface area of porous ACP decreased as the increase of particle size. 51 Since Au@PDA@CaP-GOx had smaller particle size and similar maximum amounts of GOx loading relative to N-CaP-GOx (Figure 1 and 5A), the ACP matrix of Au@PDA@CaP-GOx possessed larger surface area for distributing the same amount of enzyme molecules than that of N-CaP-GOx and the enzyme molecules were supposedly farther away from each other within the ACP matrix of Au@PDA@CaP-GOx. Therefore, there are two possible contributors for the better thermal and storage stability as well as reusability observed for Au@PDA@CaP-GOx relative to N-CaP-GOx (Figure 6B, 7 and 8). On the one hand, the proximity of enzymes on immobilization supports led to undesirable interactions between enzyme molecules, which was unfavorable for maintaining their structure or function during long-term storage and use. 52 On the other hand, enzyme could enhance the stability of ACP phase in extreme environment due to the interaction of the amino acids Glu and Asp in the enzyme with calcium phosphate. 53  CONCLUSION
+
+Well-dispersed Au@PDA@CaP core@shell NPs were constructed for GOx immobilization. Au@PDA@CaP-GOx had similar activity as free form of the enzyme and higher activity than nano-sized/bulk-sized CaP-immobilized GOx. In addition, Au@PDA@CaP-GOx nanobiocatalysts displayed higher thermal stability, enhanced storage stability and robust reusability in comparison with free and nanosized CaP-immobilized GOx. These results open an attractive way toward the synthesis of economical core@shell hybrid NPs as nanocarriers to enhance and stabilize enzyme activity for practical industry applications. Our strategy can be readily extended to other functional cores thanks to the universal adhesion of PDA on colloidal substrates. acid.
+
+ ASSOCIATED CONTENT</text>
+		</method>
+	</methods>
+	<full_text>hduan@ntu.edu.sg ABSTRACT: Considerable efforts have been made to develop reliable immobilization approaches to improve enzyme stability and reusability. However, relatively complicated preparation often leads to compromised enzyme activity. This study reports a facile method of retaining full enzymatic activity by immobilizing glucose oxidase (GOx) into core-shell nanoparticles with polydopamine (PDA) sandwiched between gold nanoparticle (Au NP) core and calcium phosphate (CaP) shell (Au@PDA@CaP). The strong adhesion of PDA on Au NPs and its metal chelating properties directed the preferential growth of the CaP shell on the Au NPs, leading to well-dispersed and uniform nanohybrids. Concurrent loading of GOx during the growth of CaP held the key to successful immobilization of GOx. As a result, Au@PDA@CaP-immobilized GOx had similar activity but better resistance against heating, long-term storage and repeated uses compared to free GOx. This work provides a green strategy for constructing nanobiocatalysts with high enzyme activity and stability.
+
+Glucose oxidase; Activity; Stability;
+
+Nanobiocatalysts with immobilized enzymes have gained much attention due to their excellent performance in stability/activity enhancement. 1,2 Recent advances in nanotechnology have led to the rapid growth of nanoscale carriers for effective immobilization of enzymes, since the catalytic activity of immobilized enzyme significantly relies on support materials. 3 Nanocarriers with large surface area and porous structure, such as metal-organic frameworks-based hollow composites, 4 core-shell magnetic organosilica nanoflowers 5 and mesoporous SiO 2 microparticles, 6 imparted minimized diffusional limitations, maximal surface area per unit mass and improvement of enzyme loading, and thereby increased enzyme activity.
+
+Among various kinds of nanocarriers, calcium phosphates [CaP, such as CaHPO 4 , Ca 2 P 2 O 7 , Ca 3 (PO 4 ) 2 and Ca 10 (PO 4 ) 6 (OH) 2 ]-based carriers were considered to be ideal inorganic materials for enzyme immobilization due to their properties of non-toxicity, mechanical and thermal stability, and high biocompatibility. 7 CaP-enzyme nanohybrids were previously used as catalysts for chemical reactions in environmental applications. For example, CaP-tyrosinase hybrids were constructed as high-performance biosensor in detecting phenolic compounds. 8 Physical adsorption and co-precipitation are two universal ways to load proteins into CaP nanoparticles (NPs). The loading efficiency for co-precipitation is much higher than that for physical adsorption. Flower-like CaP-enzyme nanohybrids were synthesized through the co-precipitation of CaP and α-amylase in an aqueous buffer solution; enzymatic activity of CaP-α-amylase nanoflowers was enhanced as a result of allosteric effect. 2 However, it has been challenging to synthesize high-quality CaP-based nanohybrids in large scale. For example, sol-gel routine was a cost-effective method to synthesize CaP products in large scale, but this method always resulted in the formation of irregular particles with polydispersed size distribution. 9 Therefore, it is necessary to develop a facile, reproducible synthetic strategy for fabricating well-dispersed CaP-based multifunctional NPs for enzyme immobilization.
+
+Au NPs have inherent enzyme-mimicking activities or can contribute to the catalytic activity of enzymes. For example, &quot;naked&quot; Au NPs without modification reportedly had glucose oxidase (GOx)-like activity. 10 Xiao et. al. assembled flavin adenine dinucleotide (FAD)-functionalized Au NP with apo-GOx and found that Au NP could act as an electrical relaying element between the FAD redox site of GOx and macroelectrode to increase the maximum turnover rate of GOx. 11 Additionally, Au NPs possess the advantages of low toxicity, easy surface modification and environment-sensitive optical properties. 12 CaP-Au nanocomposites may provide a versatile platform for various applications by combination of the biocompatibility of CaP with the electrical, optical and catalytic properties of Au NPs. Different strategies have been explored for the preparation of CaP-Au nanocomposites. Sobhana et al. reported the coating of CaP on gelatin-chitosan capped Au NPs. 13 Wang et al. functionalized Au NPs with mercapto-propyl-trimethyloxy-silane and deposited CaP around the modified Au NPs. 14 Wang's group described the synthesis of Au@carbon/CaP core@shell NPs with pH/NIR-responsive drug release property for simultaneous CT imaging and chemo-photothermal cancer therapy. 15 However, the majority of these works mainly gave rise to hybrid materials with many Au NPs dispersed in CaP rather than well-defined core@shell NPs with single-Au core. Furthermore, little work was done on application of CaP-Au nanocomposites in enzyme immobilization.
+
+Here, we report a polydopamine (PDA)-based strategy that allows for the successful synthesis of uniform heterogeneous nanocomposites with PDA-coated gold nanoparticle (Au@PDA) core and CaP shell (Au@PDA@CaP) for enzyme immobilization. Deposition of PDA coating on the surface of materials provided a facile way for immobilizing enzymes and improving their stability. 16,17 More importantly, the PDA layer exhibits interesting characteristics to mediate the structural integration of nanoscale building blocks of distinct chemistry. First, dopamine undergoes self-polymerization under weakly basic conditions via successive oxidation, intramolecular cyclization, oligomerization and self-assembly, resulting in highly cross-linked PDA that can strongly adhere on virtually any colloidal substrates. 18,19 Second, the high density of catechol groups allow for chelating metallic precursors to initiate the nucleation of shell components on the PDA layer. Zhou et al. reported that PDA formed a robust conformal coating on nanoparticle substrates to direct the heterogeneous nucleation and growth of metal-organic frameworks shell. 20  finally, the CaP-GOx shell is formed around Au@PDA core by adding Ca 2+ into the mixture, affording exclusively the core-shell Au@PDA@CaP-GOx nanohybrids.
+
+Hydrogen tetrachloroaurate(III) (HAuCl 4 •3H 2 O), oleylamine (OAm), oleic acid (OA) and fluorescein isothiocyanate (FITC) were purchased from Sigma-Aldrich Co. (St. Louis, MO, USA). Glucose oxidase (GOx, EC 1.12.3.4), horseradish peroxidase (HRP, E.C. 1.11.1.7, RZ&gt;3) and 2,2''-azino-di-3-ethylbenzothiazoline sulfonic acid-6-diammonium salt (ABTS) were purchased from Sango Biotech Co.
+
+(Shanghai, China). Lipoic acid was obtained from J&amp;K Scientific Ltd. (Shanghai, China). Other reagents were analytical grade and obtained from SinoPharm CNCM Ltd. (Shanghai, China). Ultrapure water was obtained by using a Milli-Q water purification system (Millipore, Billerica, MA, USA).
+
+Synthesis of PDA-coated Au NPs. Au NPs were synthesized according to the method of Yu 21 with some modifications. Exactly 0.2 mmol HAuCl 4 was added into the mixture of OA (1 mL) and OAm (5 mL) under vigorous stirring and heated up to 130 o C for 15 min for Au NPs growth after degassed and refilled with N 2 . Au NPs were purified by ethanol precipitation, and then dissolved in 10 mL of hexane. Exactly 0.2 mmol of Au NPs in 10 mL hexane were mixed with 2 mL of 0.2 M lipoic acid in methanol (pH=9.0) for complete ligand exchange under vigorous stirring.
+
+After Au NPs were finally transferred into methanol phase, lipoic acid modified-Au NPs were collected by centrifuging at 5, 000×g for 5 min using a 5840 R centrifuge (Eppendorf Co. Ltd, Hamburg, Germany) and then re-dispersed in 18 mL of Tris-HCl buffer (0.05 M, pH 8.5). Exactly 0.2 mmol of dopamine was finally added and reacted for 18 h at room temperature to coat Au NPs. PDA-coated Au NPs were collected by centrifugation and stored in 2 mL of H 2 O at 4°C for further use.
+
+Synthesis of Au@PDA@CaP-GOx and CaP-GOx hybrid nanostructures. For the synthesis of Au@PDA@CaP-GOx, 0.4 mg/mL GOx in Tris-HCl buffer (0.01 M, pH 8.5) was mixed with 0.25 μmol Au@PDA NPs and 100 μL of phosphate buffer solution (0.01 M, pH 7.4) under stirring for 3 min. Then 4 mL of 5 mM CaCl 2 in Tris-HCl buffer solution was added into the mixture at a speed of 6 drops per second and left to react at room temperature for 2.0 h. Nano-size and bulk-size CaP-GOx (N-CaP-GOx and B-CaP-GOx, respectively) were synthesized as controls. For the synthesis of N-CaP-GOx, 0.4 mg/mL GOx in Tris-HCl buffer (0.01 M, pH 8.5) was mixed with 100 μL of phosphate buffer solution (0.01 M, pH 7.4). Then 4 mL of 5 mM CaCl 2 in Tris-HCl buffer was added into the mixture at a speed of 6 drops per second. B-CaP-GOx was synthesized according to the method of Wang 2 with some modifications. In brief, 100 μL of 200 mM CaCl 2 aqueous solution was added into 5 mL of 3 mM phosphate buffer (pH 7.4) containing 0.4 mg/mL GOx, and then left to react at room temperature for 12 h. Au@PDA@CaP-GOx, N-CaP-GOx and B-CaP-GOx were purified by three repeated steps under centrifuging at 10, 000×g for 10 min and then dispersed in 0.5 mL ultrapure water. preparation of FITC-labeled GOx was adapted from a previously reported procedure. 22 A solution of FITC (10 mg/mL) in dimethyl sulfoxide (0.2 mL) was added dropwise to a 2 mL solution of GOx (10 mg/mL) in a carbonate buffer (50 mM, pH 9.0), and the mixture was stirred for 4 h at 25°C. A 50 mM NH 4 Cl aqueous solution (2 mL) was added to the resulting mixture to quench the reaction and then the solution was dialyzed against PBS (50 mM, pH 7.0) at 4°C for 48 h to remove the excess FITC.
+
+Characterizations. UV-Vis absorption spectra were obtained by using a Shimadzu UV-1800 spectrophotometer (Shimadzu Corp, Kyoto, Japan). Morphology, particle size, and lattice fringes were analyzed on a JEM-2100 TEM (JEOL, Japan) with an accelerating voltage of 200 kV. Confocal laser scanning microscope images were acquired on a Zeiss LSM 710 confocal microscope (Leica, Heidelberg, Germany) with a 63×oil objective. Au NPs were dispersed in Tris-HCl buffer (0.01 M, pH 8.5) to determine -potential by using a Zetasizer Nano ZS particle analyzer (Brookhaven Instruments Ltd, New York, USA) with a He/Ne laser (λ = 633 nm). Powder X-ray diffraction (XRD) pattern was recorded on a Bruker AXS D8 X-ray diffractometer (Bruker, Germany) with Cu Kα (λ = 1.5406 Å) radiation at 40 kV and 20 mA.
+
+Immobilization rate and loading amount of GOx. The reaction mixture was centrifuged at 10, 000×g for 10 min to obtain the supernatant containing free GOx.
+
+The content of free GOx was determined by using Bradford assay. 23 Immobilization rate of GOx was defined as (T-F)/T×100%, where T and F stand for total amount of introduced GOx and the amount of free GOx in the supernatant, respectively. Loading amount of GOx (mg per g of support) was calculated as (T-F)/(W-T+F) ×1000, where W is total weight of enzyme-immobilized NPs after 24 h of oven drying at 50°C. 24 The immobilization efficiency (IE) was calculated as IE = 100 × (α i /α f ), where α i is the activity of the immobilized enzyme and α f is the activity of the feeding enzyme. 25 Activity assay. GOx assay was performed with the HRP-coupled reaction by using glucose and ABTS as the substrates under conditions where HRP and ABTS were not rate-limiting. 26 One unit of enzyme activity was defined as the amount of GOx required to oxidize 1 μmol glucose per min at 40°C. In detail, free GOx or immobilized GOx at the same protein content of 1 µg was added into 1 mL of phosphate buffer (0.01 M, pH 6.4) containing 10 mM glucose,10 mM ABTS and 2 µg HRP, and then the absorbance at 729 nm was immediately monitored on a UV-Vis spectrometer for 180 s. Change of the absorbance in 180 s was proportional to enzymatic activity.
+
+GOx were determined by using different glucose concentrations of 2.5-500 mM. The kinetic constants K m and V max were calculated according to the Lineweaver-Burk plots. 27 Effect of pH and temperature on enzyme activity. The pH-dependence measurement was carried out at pH values ranging from 4.2 to 8.0. Acetate buffer at 10 mM was used for pH 4.2-5.4 and phosphate buffer at 10 mM for pH 5.8-8.0. At least three replicates of each sample were measured. The effect of temperature on the activity of free and immobilized GOx was determined over the range of 30-70°C. The maximal reaction rate was set as 100%.
+
+For stability test, activity of free and immobilized enzymes was measured during storage at 25 and 45°C for up to 30 days and 176 h, respectively. For reusability assay, 9 cycles of glucose oxidation were carried out at pH 6.4 and 25°C for 10 min. After each reaction period, the immobilized GOx was removed from the reaction medium and washed with phosphate buffer (0.01M, pH 6.4), and then resuspended in fresh glucose solution to start a new run. The activity of GOx was normalized to the initial value.
+
+Statistical Analysis. Data were presented as mean values ± standard deviations and analyzed for significant difference (p&lt;0.05) based on ANOVA analysis by using SPSS 20.0 package (IBM, Armonk, NY, USA).
+
+Synthesis and characterization of Au@PDA@CaP-GOx and CaP-GOx NPs.
+
+The morphological changes occurred in the consecutive synthesis steps from AuNPs to Au@PDA@CaP-GOx NPs were observed by transmission electron microscopy (TEM) imaging (Figure 1). Lipoic acid-stabilized Au NPs were highly dispersed and had a small size of about 10 nm (Figure 1A). After self-polymerization of dopamine on its surface, a PDA layer of lower contrast surrounding the Au NPs (Figure 1B) CaP-GOx layers with a thickness of about 40 nm were homogeneously deposited on the Au@PDA NPs, resulting in the formation of monodisperse Au@PDA@CaP-GOx NPs of less than 100 nm. The strong chelating power of residual catechol groups in PDA facilitated the rapid nucleation of CaP and co-deposition of GOx, leading to high yield of the well-defined core-shell nanohybrids. 20 HRTEM image of Au@PDA@CaP-GOx NPs in the inset of Figure . 1C shows that there were well-defined lattice fringes in Au core with a d-spacing of 0.235 nm, which is attributed to the (111) planes of Au, 28 whereas there was no lattice observed in CaP-GOx shell, indicating that CaP-GOx shell consisted of amorphous CaP (ACP) phase. A key feature of ACP nanocomposites was its intrinsic porosity that was useful for loading proteins, nucleic acids and drugs. 29 In the synthesis, the absence of Au@PDA core NPs resulted in formation of nano-sized CaP-GOx (N-CaP-GOx) with size of about 200 nm (Figure 1D and Figure S1B), which was larger than that of Au@PDA@CaP-GOx. It demonstrated that the addition of Au seeds could considerably reduce the size of N-CaP-GOx NPs. Moreover, TEM results show that both the CaP-GOx shells of Au@PDA@CaP-GOx and N-CaP-GOx NPs were relatively rough, which originated from the random packing of many small CaP NPs, 30 indicating the porous structure of Au@PDA@CaP-GOx and N-CaP-GOx NPs. 31 Furthermore, TEM image in Figure S2 (Supporting Information) shows that bulk-sized CaP-GOx (B-CaP-GOx) had a flower-like morphology and particle size of more than 1 µm, which were similar to those found for bulk Ca 3 (PO 4 ) 2 -BSA composites prepared by incubating BSA (100 µL, 1 mg/mL) and CaCl 2 solution (100 µL, 180 mM) with 900 µL of PBS buffer (10 mM, pH 7.4) at room temperature for 24 h. 32 UV-Vis absorption spectra show that localized surface plasmon resonance (LSPR) peak of Au NPs red-shifted from 520 to 530 nm upon the PDA capping (Figure 2A), since refractive index of PDA was higher than that of water. 20 LSPR of Au NPs was sensitive to its surrounding medium. 33 The deposition of CaP-GOx shell did not cause further changes in the LSPR peak. It is thus speculated that the capping of PDA layer shielded the influence on local dielectric function of the surrounding medium by the growth of CaP-GOx shell. XRD pattern of Au@PDA NPs showed the diffraction peaks at 2θ values of 38 o , 44 o and 64.5 o (Figure 2B), which were indexed to the (111), ( 200) and (220) lattice faces of Au face-centered cubic (FCC) structure, respectively. 34 The relative intensities of all diffraction peaks of Au structure dramatically reduced after the growth of CaP-GOx layer, which was in line with the formation of the CaP-GOx shell. Both the XRD patterns of Au@PDA@CaP-GOx and N-CaP-GOx NPs did not show any diffraction peaks of crystalline CaP but exhibited a broad peak of ACP (2θ=30°), 35  powders of Au@PDA@CaP-GOx had a wine color from Au@PDA NPs. The immobilization of GOx was further determined by confocal laser scan microscopy (CLSM) using fluorescein isothiocyanate (FITC)-labeled GOx. As shown in Figure 3, the high-intensity FITC color in the green channel confirmed the efficient GOx immobilization in Au@PDA@CaP-GOx and N-CaP-GOx NPs. 22 Mechanism of CaP shell growth. Figure 4 shows TEM images of Au@PDA@CaP-GOx prepared in presence of various concentration of Au NPs and fixed amounts of Ca 2+ . As the amount of Au NPs increased from 0.25 to 1.0 μmol, Au@PDA@CaP-GOx NPs transformed from a single-Au core to multiple-Au cores structure and the size of the core@shell NPs became less uniform. Furthermore, cross-linking of the core@shell NPs increased as the enhancement in addition amount of Au core NPs. PDA reportedly possessed a large amount of catechol groups, 36 which were able to initiate the nucleation of CaP. 37 However, higher concentration of Au core NPs made the nucleation sites too close to each other in the solution, leading to cross-linking of the core@shell NPs during CaP-GOx growth. The impact of adding sequence of the precursors, the concentration of Ca 2+ and reaction time were further investigated. When Ca 2+ , Au@PDA, GOx and PBS buffer were fed in various orders, uniform Au@PDA@CaP-GOx structure could only be formed under the feeding sequence of GOx, Au@PDA, PBS and Ca 2+ (Figure S4 Au@PDA NP. TEM image in Figure S5 (Supporting Information) shows that addition of 5 μmol Ca 2+ was insufficient for the growth of an integral CaP-GOx shell on Au@PDA NPs (20 µM, 12.5 mL), with small amounts of Au@PDA NPs capped by CaP-GOx. Each Au@PDA NP was coated by CaP-GOx layer when the amounts of Ca 2+ increased to 10 and 15 μmol. The thickness of CaP-GOx shell became more uniform when Ca 2+ was increased to 20 μmol. Majority of Au@PDA@CaP-GOx core@shell nanostructures were formed at the first 40 min of reaction and further growth had little influence on the shape and size of the Au@PDA@CaP-GOx NPs (Figure S6, Supporting Information), indicating fast growth of the CaP-GOx shell.
+
+Figure 5A shows immobilization rate of GOx during the growth of Au@PDA@CaP-GOx upon the addition of various amounts of Au@PDA. At 0 and 0.25 μmol Au@PDA NPs, the immobilization rate increased monotonously with growth time and reached the highest value of 30%, which was equivalent to the loading of GOx of 760 mg per gram of support. The loading amount of GOx on Au@PDA@CaP NPs was significantly higher than the previously-reported results on porous structures, such as 60 mg per gram of copper hydroxysulfate nanocrystals, 38 80 mg per gram of Cu 3 (PO 4 ) 2 nanoflowers. 39 The rate of GOx immobilization became slower upon further increasing the amounts of Au@PDA NPs, and the enzyme immobilization rates were saturated at 240 and 150 min at 0.5 and 1.0 μmol Au@PDA, respectively. Therefore, the optimized condition for GOx immobilization was 0.25 μmol Au@PDA NPs and growth time of 120 min. Meanwhile, a maximum immobilization efficiency of 31.41% could be achieved at this optimum (Figure 5B). According to the results above, the formation of Au@PDA@CaP-GOx should progress in two steps. At an early growth stage (40 min, step1, Figure S6A, Supporting Information), protein-containing ACP shell was formed around Au@PDA NPs. In the second step, more GOx molecules diffused into the structure of ACP and formed complexes with ACP NPs through the interactions of ionized carboxyl group and protonated amino group in protein with calcium ions and phosphate anions in ACP, respectively. 40,41 Loading of GOx became saturated after complete coordination of the protein molecules with Ca 2+ (Figure 5A). In contrast, well-defined core@shell NPs could not be formed when lipoic acid-stabilized Au NPs were used as core, with serious aggregation of the Au NPs (Figure S7, Supporting Information), confirming that the conformal coating of PDA enabled the successful preparation of Au@PDA@CaP-GOx NPs by improving the colloidal stability of Au core.
+
+Au@PDA@CaP-GOx was 39,314 U g -1 protein, which was nearly the same as that of free GOx (38,963 U g -1 protein). The specific activity of N-CaP-GOx and B-CaP-GOx (32,513 and 22,731 U g -1 protein) was approximately 83.45% and 58.34% of that of free GOx, respectively. The retention of enzyme activity here was higher than that (43%) of carboxyl esterase activity upon immobilization in ACP NPs. 42 Both lipoic acid-stabilized and PDA-coated Au NPs had no GOx-like activity (Figure S8, Supporting Information), because Au NPs became inactive upon the surface modification by lipoic acid. 10 All free and immobilized GOx followed plots were employed for calculation of the kinetic parameters (Figure S9B, Supporting Information) and the results were summarized in Table 1. The K m (Michaelis-Menten constant, 34.23 mM) and K cat (turnover number, 99.70 s -1 ) values of Au@PDA@CaP-GOx were similar with those of free GOx (34.22 mM and 98.01 s -1 ), indicating that the activity of GOx was maintained in Au@PDA@CaP-GOx nanohybrids. The high activity recovery might be due to that the porous ACP shell of Au@PDA@CaP-GOx NPs insignificantly affected the transport of the substrate to GOx 30 and could protect the enzyme from external biotoxic molecules. 4 Additionally, the K m and K cat values of N-CaP-GOx were close to those of free GOx and Au@PDA@CaP-GOx, indicating a similar affinity to substrates. However, compared to free GOx, B-CaP-GOx exhibited a sharp increase in the K m value and decreases in both the K cat and K cat /K m values, which was probably ascribed to the unfavorable structural changes of GOx upon immobilization 43,44 and the mass-transfer limitations in the solid bulk-sized CaP supports. 45 Therefore, the proposed method for preparing nano-sized immobilized enzymes (Au@PDA@CaP-GOx and N-CaP-GOx) could offer better protection for enzymes during composite construction than the co-precipitation approach for synthesizing bulk-sized immobilized enzymes (B-CaP-GOx).
+
+Effect of pH and temperature on enzyme activity. The effect of pH on the activity of free and immobilized GOx was investigated in the pH range of 4.2-8.0 at 40°C (Figure 6A). It was worth noting that Au@PDA@CaP-GOx had similar activity with free GOx in the whole pH range and significantly higher activity than N-CaP-GOx in pH range of 4.2-6.4. Since CaP frameworks readily fall apart under acidic conditions, 31 the higher activity for Au@PDA@CaP-GOx is indicative of the improved acid stability of ACP-typed CaP-GOx shell grown on the Au core. In addition, immobilization and release of enzyme had detrimental effect on enzyme integrity, 46 the lower catalytic activity of N-CaP-GOx than that of free GOx in acid environment might be ascribed to escape of enzyme from the collapsed N-CaP-GOx structures. All free and immobilized GOx had an optimum temperature of 40°C (Figure 6B). At higher temperatures, the immobilized enzymes showed better activity compared to free enzyme, suggesting the improved heat resistance of GOx upon immobilization, possibly due to the fact that conformational flexibility of enzyme was limited by immobilization. 47 Stability and reusability of immobilized GOx. Free and immobilized GOx were incubated in aqueous solution at 25 and 45°C. Free GOx retained 30% of its initial activity after incubation at 45°C for 180 h, while Au@PDA@CaP-GOx and N-CaP-GOx retained 60% and 45% of its original activity, respectively (Figure 7A). At 25°C for 30 days, Au@PDA@CaP-GOx and N-CaP-GOx showed approximately 2.3-fold and 1.8-fold higher residual activity than free GOx, respectively (Figure 7B). This improvement in enzyme stability was also observed for previously reported inorganic/enzyme nanohybrids, such as CaHPO 4 -α-amylase, 2 Cu 3 (PO 4 ) 2 •3H 2 O-GOx&amp;HRP 39 and ConA-GOx-CaHPO 4 nanoflowers. 45 In order to demonstrate the versatility of Au@PDA@CaP-based nanocomposite for improving enzyme stability, lactase was adopted as a second model enzyme. By using the PDA-mediated integration strategy, the lactase-containing core@shell nanocomposites (Au@PDA@CaP-lactase, Figure S10, Supporting Information) were also successfully constructed with enhanced enzyme stability (Figure S11, Supporting Information).
+
+Reusability of immobilized enzyme is very important for practical industry applications. 48 The enzymatic activity of immobilized GOx was assayed in 9 cycles of reaction for glucose oxidation at 25°C (Figure 8). Au@PDA@CaP-GOx retained nearly 92% and 84% of its original activity after 5 and 9 cycles of reuse, respectively, while N-CaP-GOx retained approximately 84% and 69% of its initial activity.
+
+Notably, the residual activity was higher than that found for most previous reports, such as 80% for Burkholderia cepacia lipase (BCL)-Ca 3 (PO 4 ) 2 after 5 cycles of reuse, 49 55% for Ca 3 (PO 4 ) 2 -a-acetolactate decarboxylase (ALDC) over 6 cycled reactions. 50 Since both Au@PDA@CaP-GOx and N-CaP-GOx showed good long-term stability under storage at 25°C (Figure 7B), the loss of enzyme activity for the immobilized GOx during repeating use might be mainly attributed to the processes of washing and centrifugation.
+
+It is reported that the specific surface area of porous ACP decreased as the increase of particle size. 51 Since Au@PDA@CaP-GOx had smaller particle size and similar maximum amounts of GOx loading relative to N-CaP-GOx (Figure 1 and 5A), the ACP matrix of Au@PDA@CaP-GOx possessed larger surface area for distributing the same amount of enzyme molecules than that of N-CaP-GOx and the enzyme molecules were supposedly farther away from each other within the ACP matrix of Au@PDA@CaP-GOx. Therefore, there are two possible contributors for the better thermal and storage stability as well as reusability observed for Au@PDA@CaP-GOx relative to N-CaP-GOx (Figure 6B, 7 and 8). On the one hand, the proximity of enzymes on immobilization supports led to undesirable interactions between enzyme molecules, which was unfavorable for maintaining their structure or function during long-term storage and use. 52 On the other hand, enzyme could enhance the stability of ACP phase in extreme environment due to the interaction of the amino acids Glu and Asp in the enzyme with calcium phosphate. 53  CONCLUSION
+
+Well-dispersed Au@PDA@CaP core@shell NPs were constructed for GOx immobilization. Au@PDA@CaP-GOx had similar activity as free form of the enzyme and higher activity than nano-sized/bulk-sized CaP-immobilized GOx. In addition, Au@PDA@CaP-GOx nanobiocatalysts displayed higher thermal stability, enhanced storage stability and robust reusability in comparison with free and nanosized CaP-immobilized GOx. These results open an attractive way toward the synthesis of economical core@shell hybrid NPs as nanocarriers to enhance and stabilize enzyme activity for practical industry applications. Our strategy can be readily extended to other functional cores thanks to the universal adhesion of PDA on colloidal substrates. acid.
+
+ ASSOCIATED CONTENT
+
+TEM images of Au@PDA@CaP-GOx, nano-sized and bulk-sized CaP-GOx, photographs of the lyophilized powders of immobilized enzymes, TEM images of Au@PDA@CaP-GOx with different adding sequences of the precursors, adding amounts of Ca 2+ and growth times, TEM image of the sample prepared by using lipoic acid-stabilized Au NPs as cores, effect of substrate concentration on reaction velocity of free and immobilized GOx, Lineweaver-Burk plots for free and immobilized enzymes, TEM image and long-term storage stability of Au@PDA@CaP-lactase.
+
+Scheme 1. Illustration of the synthesis of Au@polydopamine@calcium phosphate-glucose oxidase (Au@PDA@CaP-GOx) core@shell nanohybrids by using phosphate buffered saline (PBS, Na 2 HPO 4 and NaH 2 PO 4 ) as phosphate anion source.     Au@PDA@CaP-GOx at various amounts of Au@PDA NPs.
+
+ ABBREVIATIONS USED CaP, calcium phosphate; Au NPs, gold nanoparticles; GOx, glucose oxidase; PDA, polydopamine; ACP, amorphous calcium phosphate; Glu, glutamic acid; Asp, asparticBiomaterials Science Accepted Manuscript
+
+ ABBREVIATIONS USED CaP, calcium phosphate; Au NPs, gold nanoparticles; GOx, glucose oxidase; PDA, polydopamine; ACP, amorphous calcium phosphate; Glu, glutamic acid; Asp, aspartic
+
+ REFERENCES 1 J. Ge, J. Lei and R. N. Zare, Nature nanotechnology, 2012, 7, 428-432. 2 L. B. Wang, Y. C. Wang, R. He, A. Zhuang, X. Wang, J. Zeng and J. G. Hou,Biomaterials Science Accepted Manuscript
+
+ REFERENCES 1 J. Ge, J. Lei and R. N. Zare, Nature nanotechnology, 2012, 7, 428-432. 2 L. B. Wang, Y. C. Wang, R. He, A. Zhuang, X. Wang, J. Zeng and J. G. Hou,</full_text>
+	<references>
+		<reference>
+			<title>Journal of the American Chemical Society</title>
+			<authors/>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Biotech</title>
+			<authors>
+				<author>S Datta</author>
+				<author>L Christena</author>
+				<author>Y Rajaram</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Advanced Science</title>
+			<authors>
+				<author>Y Du</author>
+				<author>J Gao</author>
+				<author>L Zhou</author>
+				<author>L Ma</author>
+				<author>Y He</author>
+				<author>X Zheng</author>
+				<author>Z Huang</author>
+				<author>Y Jiang</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Chemical Engineering Journal</title>
+			<authors>
+				<author>J Gao</author>
+				<author>W Kong</author>
+				<author>L Zhou</author>
+				<author>Y He</author>
+				<author>L Ma</author>
+				<author>Y Wang</author>
+				<author>L Yin</author>
+				<author>Y Jiang</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Chemical Engineering Journal</title>
+			<authors>
+				<author>A Kumar</author>
+				<author>G Park</author>
+				<author>S Patel</author>
+				<author>S Kondaveeti</author>
+				<author>S Otari</author>
+				<author>M Anwar</author>
+				<author>V Kalia</author>
+				<author>Y Singh</author>
+				<author>S Kim</author>
+				<author>B Cho</author>
+				<author>J Sohn</author>
+				<author>D Kim</author>
+				<author>Y Kang</author>
+				<author>J Lee</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Chemical Society reviews</title>
+			<authors>
+				<author>C Qi</author>
+				<author>J Lin</author>
+				<author>L Fu</author>
+				<author>P Huang</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>Biosensors &amp; Bioelectronics</title>
+			<authors>
+				<author>L Sánchezpaniagua</author>
+				<author>F Tamimi</author>
+				<author>E Lópezcabarcos</author>
+				<author>B Lópezruiz</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Advances in Science &amp; Technology</title>
+			<authors>
+				<author>A Prichodko</author>
+				<author>V Jonauske</author>
+				<author>M Cepenko</author>
+				<author>A Beganskiene</author>
+				<author>A Kareiva</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Angewandte Chemie</title>
+			<authors>
+				<author>M Comotti</author>
+				<author>C Pina</author>
+				<author>R Matarrese</author>
+				<author>M Rossi</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Science</title>
+			<authors>
+				<author>X Yi</author>
+				<author>P Fernando</author>
+				<author>K Eugenii</author>
+				<author>J Hainfeld</author>
+				<author>W Itamar</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>Chem. Rev</title>
+			<authors>
+				<author>M Daniel</author>
+				<author>D Astruc</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Journal of Nanoparticle Research</title>
+			<authors>
+				<author>S Sobhana</author>
+				<author>J Sundaraseelan</author>
+				<author>S Sekar</author>
+				<author>T Sastry</author>
+				<author>A</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Journal of Non-Crystalline Solids</title>
+			<authors>
+				<author>C Wang</author>
+				<author>C Wang</author>
+				<author>J Wang</author>
+				<author>C Hung</author>
+				<author>W Li</author>
+				<author>W Chen</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Dalton Transactions</title>
+			<authors>
+				<author>H Wang</author>
+				<author>M Zhang</author>
+				<author>L Zhang</author>
+				<author>S Li</author>
+				<author>L Li</author>
+				<author>X Li</author>
+				<author>M Yu</author>
+				<author>Z Mou</author>
+				<author>T Wang</author>
+				<author>C Wang</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Applied biochemistry and biotechnology</title>
+			<authors>
+				<author>L Zhou</author>
+				<author>Y Jiang</author>
+				<author>L Ma</author>
+				<author>Y He</author>
+				<author>J Gao</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Biochemical Engineering Journal</title>
+			<authors>
+				<author>Y Jiang</author>
+				<author>J Zhai</author>
+				<author>L Zhou</author>
+				<author>Y He</author>
+				<author>L Ma</author>
+				<author>J Gao</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>Science</title>
+			<authors>
+				<author>H Lee</author>
+				<author>S Dellatore</author>
+				<author>W Miller</author>
+				<author>P Messersmith</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Biomater Sci</title>
+			<authors>
+				<author>H Messersmith</author>
+				<author>T Batul</author>
+				<author>A Tamanna</author>
+				<author>A Khaliq</author>
+				<author>Yu</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Acs Nano</title>
+			<authors>
+				<author>J Zhou</author>
+				<author>P Wang</author>
+				<author>C Wang</author>
+				<author>Y Goh</author>
+				<author>Z Fang</author>
+				<author>P Messersmith</author>
+				<author>H Duan</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Nano letters</title>
+			<authors>
+				<author>H Yu</author>
+				<author>M Chen</author>
+				<author>P Rice</author>
+				<author>S Wang</author>
+				<author>R White</author>
+				<author>S Sun</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>ACS applied materials &amp; interfaces</title>
+			<authors>
+				<author>Y Yang</author>
+				<author>R Zhang</author>
+				<author>B Zhou</author>
+				<author>J Song</author>
+				<author>P Su</author>
+				<author>Y Yang</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Analytical Biochemistry</title>
+			<authors>
+				<author>M Bradford</author>
+			</authors>
+			<date>1976</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Chem. A</title>
+			<authors>
+				<author>R Huang</author>
+				<author>S Wu</author>
+				<author>A Li</author>
+				<author>Z Li</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Biomaterials Science Biomaterials Science</title>
+			<authors>
+				<author>S Patel</author>
+				<author>S Choi</author>
+				<author>Y Kang</author>
+				<author>J Lee</author>
+			</authors>
+			<date>2016-04</date>
+		</reference>
+		<reference>
+			<title>Journal of agricultural and food chemistry</title>
+			<authors>
+				<author>H Ukeda</author>
+				<author>Y Fujita</author>
+				<author>M</author>
+				<author>M Sawamura</author>
+			</authors>
+			<date>1996</date>
+		</reference>
+		<reference>
+			<title>Journal of the American Chemical Society</title>
+			<authors>
+				<author>H Lineweaver</author>
+				<author>D Burk</author>
+			</authors>
+			<date>1934</date>
+		</reference>
+		<reference>
+			<title>Acs Nano</title>
+			<authors>
+				<author>L Ma</author>
+				<author>M Feldman</author>
+				<author>J Tam</author>
+				<author>A Paranjape</author>
+				<author>K Cheruku</author>
+				<author>T Larson</author>
+				<author>J Tam</author>
+				<author>D Ingram</author>
+				<author>V Paramita</author>
+				<author>J Villard</author>
+				<author>J Jenkins</author>
+				<author>T Wang</author>
+				<author>G Clarke</author>
+				<author>R Asmis</author>
+				<author>K Sokolov</author>
+				<author>B Chandrasekar</author>
+				<author>T Milner</author>
+				<author>K Johnston</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Acta biomaterialia</title>
+			<authors>
+				<author>K Lin</author>
+				<author>C Wu</author>
+				<author>J Chang</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Chemistry-A European Journal</title>
+			<authors>
+				<author>C Qi</author>
+				<author>Y Zhu</author>
+				<author>X Zhao</author>
+				<author>B Lu</author>
+				<author>Q Tang</author>
+				<author>J Zhao</author>
+				<author>F Chen</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Small</title>
+			<authors>
+				<author>L Li</author>
+				<author>L Zhang</author>
+				<author>T Wang</author>
+				<author>X Wu</author>
+				<author>H Ren</author>
+				<author>C Wang</author>
+				<author>Z Su</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Chemical communications</title>
+			<authors>
+				<author>Y Liu</author>
+				<author>Y Zhang</author>
+				<author>X Li</author>
+				<author>Q Yuan</author>
+				<author>H Liang</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Applied Physics A</title>
+			<authors>
+				<author>M Navas</author>
+				<author>R Soni</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Journal of colloid and interface science</title>
+			<authors>
+				<author>Y Sheng</author>
+				<author>J Xue</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Accounts of Chemical Research</title>
+			<authors>
+				<author>A Posner</author>
+				<author>F Betts</author>
+			</authors>
+			<date>1974</date>
+		</reference>
+		<reference>
+			<title>Advanced Materials</title>
+			<authors>
+				<author>J Zhou</author>
+				<author>B Duan</author>
+				<author>Z Fang</author>
+				<author>J Song</author>
+				<author>C Wang</author>
+				<author>P Messersmith</author>
+				<author>H Duan</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Biomaterials</title>
+			<authors>
+				<author>T Kokubo</author>
+				<author>H Kim</author>
+				<author>M Kawashita</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>Nanoscale</title>
+			<authors>
+				<author>Z Li</author>
+				<author>Y Ding</author>
+				<author>S Li</author>
+				<author>Y Jiang</author>
+				<author>Z Liu</author>
+				<author>J Ge</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Chemical communications</title>
+			<authors>
+				<author>Z Li</author>
+				<author>Y Zhang</author>
+				<author>Y Su</author>
+				<author>P Ouyang</author>
+				<author>J Ge</author>
+				<author>Z Liu</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Journal of Materials Chemistry</title>
+			<authors>
+				<author>N Ikawa</author>
+				<author>T Kimura</author>
+				<author>Y Oumi</author>
+				<author>T Sano</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Journal of agricultural and food chemistry</title>
+			<authors>
+				<author>F Liu</author>
+				<author>L Wang</author>
+				<author>R Wang</author>
+				<author>Z Chen</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Langmuir</title>
+			<authors>
+				<author>P Pandey</author>
+				<author>S Singh</author>
+				<author>S Arya</author>
+				<author>V Gupta</author>
+				<author>M Datta</author>
+				<author>S Singh</author>
+				<author>B Malhotra</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Nano Research</title>
+			<authors>
+				<author>Y Du</author>
+				<author>J Gao</author>
+				<author>H Liu</author>
+				<author>L Zhou</author>
+				<author>L Ma</author>
+				<author>Y He</author>
+				<author>Z Huang</author>
+				<author>Y Jiang</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>ACS applied materials &amp; interfaces</title>
+			<authors>
+				<author>S Patel</author>
+				<author>S Choi</author>
+				<author>Y Kang</author>
+				<author>J Lee</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Small</title>
+			<authors>
+				<author>R Ye</author>
+				<author>C Zhu</author>
+				<author>Y Song</author>
+				<author>Q Lu</author>
+				<author>X Ge</author>
+				<author>X Yang</author>
+				<author>M Zhu</author>
+				<author>D Du</author>
+				<author>H Li</author>
+				<author>Y Lin</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Bioconjugate chemistry</title>
+			<authors>
+				<author>J Mendez</author>
+				<author>A Monteagudo</author>
+				<author>K Griebenow</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Nanoscale</title>
+			<authors>
+				<author>J Sun</author>
+				<author>J Ge</author>
+				<author>W Liu</author>
+				<author>M Lan</author>
+				<author>H Zhang</author>
+				<author>P Wang</author>
+				<author>Y Wang</author>
+				<author>Z Niu</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Journal of agricultural and food chemistry</title>
+			<authors>
+				<author>S Hosseini</author>
+				<author>S Hosseini</author>
+				<author>N Zohreh</author>
+				<author>M Yaghoubi</author>
+				<author>A Pourjavadi</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>RSC Advances</title>
+			<authors>
+				<author>C Ke</author>
+				<author>Y Fan</author>
+				<author>Y Chen</author>
+				<author>L Xu</author>
+				<author>Y Yan</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Process Biochemistry</title>
+			<authors>
+				<author>F Zhao</author>
+				<author>Q Wang</author>
+				<author>J Dong</author>
+				<author>M Xian</author>
+				<author>J Yu</author>
+				<author>H Yin</author>
+				<author>Z Chang</author>
+				<author>X Mu</author>
+				<author>T Hou</author>
+				<author>J Wang</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Journal of Alloys &amp; Compounds</title>
+			<authors>
+				<author>J Vecstaudza</author>
+				<author>J Locs</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Enzyme and microbial technology</title>
+			<authors>
+				<author>F Laura</author>
+				<author>G Sara</author>
+				<author>L Nerea</author>
+				<author>C Beatriz</author>
+				<author>J Jose</author>
+				<author>F Roberto</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Archives of Biochemistry &amp; Biophysics</title>
+			<authors>
+				<author>J Termine</author>
+				<author>R Peckauskas</author>
+				<author>A Posner</author>
+			</authors>
+			<date>1970-04-17</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1038/nnano.2012.80</number>
+		<number>DOI-10.1021/ja3120136</number>
+		<number>DOI-10.1002/advs.201801684</number>
+		<number>DOI-10.1016/j.cej.2016.10.021</number>
+		<number>DOI-10.1016/j.cej.2018.11.052</number>
+		<number>DOI-10.1039/C6CS00746E</number>
+		<number>DOI-10.1016/j.bios.2009.01.002</number>
+		<number>DOI-10.4028/www.scientific.net/AST.91.13</number>
+		<number>DOI-10.1002/anie.200460446</number>
+		<number>DOI-10.1126/science.1080664</number>
+		<number>DOI-10.1021/cr030698+</number>
+		<number>DOI-10.1007/s11051-008-9385-0</number>
+		<number>DOI-10.1016/j.jnoncrysol.2009.12.024</number>
+		<number>DOI-10.1039/C7DT02274C</number>
+		<number>DOI-10.1007/s12010-014-1324-1</number>
+		<number>DOI-10.1016/j.bej.2018.01.028</number>
+		<number>DOI-10.1126/science.1147241</number>
+		<number>DOI-10.1039/C7BM00187H</number>
+		<number>DOI-10.1021/acsnano.5b01138</number>
+		<number>DOI-10.1021/nl047955q</number>
+		<number>DOI-10.1021/acsami.7b08553</number>
+		<number>DOI-10.1016/0003-2697(76)90527-3</number>
+		<number>DOI-10.1039/C3TA14323F</number>
+		<number>DOI-10.1039/C6NR00346J</number>
+		<number>DOI-10.1021/jf960261l</number>
+		<number>DOI-10.1021/ja01318a036</number>
+		<number>DOI-10.1021/nn900440e</number>
+		<number>DOI-10.1016/j.actbio.2014.06.017</number>
+		<number>DOI-10.1002/chem.201202829</number>
+		<number>DOI-10.1002/smll.201403517</number>
+		<number>DOI-10.1039/C6CC10319G</number>
+		<number>DOI-10.1007/s00339-014-8460-x</number>
+		<number>DOI-10.1016/j.jcis.2012.01.034</number>
+		<number>DOI-10.1021/ar50092a003</number>
+		<number>DOI-10.1002/adma.201303032</number>
+		<number>DOI-10.1016/S0142-9612(03)00044-9</number>
+		<number>DOI-10.1039/C6NR06115J</number>
+		<number>DOI-10.1039/C4CC05478D</number>
+		<number>DOI-10.1039/b815154g</number>
+		<number>DOI-10.1021/jf401868z</number>
+		<number>DOI-10.1021/la062901c</number>
+		<number>DOI-10.1007/s12274-018-2027-7</number>
+		<number>DOI-10.1021/acsami.6b05165</number>
+		<number>DOI-10.1002/smll.201600273</number>
+		<number>DOI-10.1021/bc200301a</number>
+		<number>DOI-10.1039/C3NR04425D</number>
+		<number>DOI-10.1021/acs.jafc.7b03922</number>
+		<number>DOI-10.1039/C6RA01564F</number>
+		<number>DOI-10.1016/j.procbio.2017.03.026</number>
+		<number>DOI-10.1016/j.jallcom.2017.01.038</number>
+		<number>DOI-10.1016/j.enzmictec.2016.12.002</number>
+		<number>DOI-10.1016/0003-9861(70)90072-X</number>
+	</reference_dois>
+</document>

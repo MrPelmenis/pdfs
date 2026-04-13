@@ -17,9 +17,8 @@ def extract_paper_data(pdf_path: str, config_path: str = "./parser/config.json")
     _, status, rsp = client.process_pdf(
         "processFulltextDocument",
         pdf_path,
-        generateIDs=True,
-        consolidate_header=False,
-        consolidate_citations=False,
+        consolidate_header=1,
+        consolidate_citations=1,
         include_raw_citations=False,
         include_raw_affiliations=False,
         tei_coordinates=False,
@@ -31,6 +30,12 @@ def extract_paper_data(pdf_path: str, config_path: str = "./parser/config.json")
 
     root = ET.fromstring(rsp)
     ns = {"tei": "http://www.tei-c.org/ns/1.0"}
+
+    # DOI (from GROBID header)
+    doi = None
+    doi_el = root.find(".//tei:sourceDesc//tei:idno[@type='DOI']", ns)
+    if doi_el is not None and doi_el.text:
+        doi = doi_el.text.strip().lower()
 
     # Title
     title_el = root.find(".//tei:fileDesc//tei:titleStmt//tei:title", ns)
@@ -123,6 +128,7 @@ def extract_paper_data(pdf_path: str, config_path: str = "./parser/config.json")
         "file": pdf_path,
         "title": title,
         "date": pub_date,
+        "doi": doi,
         "authors": authors,
         "abstract": abstract,
         "full_text": full_text,

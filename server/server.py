@@ -3,18 +3,20 @@ import requests
 from flask import Flask, request, jsonify, send_from_directory, make_response
 from flask_cors import CORS
 from dotenv import load_dotenv
+import sys
+import json
+
 from concurrent.futures import ThreadPoolExecutor
 background_executor = ThreadPoolExecutor(max_workers=10)
 
+from graph_db import init_db, upsert_paper, build_document_graph, build_author_graph
+init_db()
+
 from pdfToImage import generate_preview
 from parser import extract_paper_data
-from doisFromPdf import extract_doi_metadata
+from doisFromPdf import extract_doi_metadata, get_crossref_metadata
 from xml_builder import build_xml, save_xml, upload_xml, is_bad_parse, extract_fallback_text
 
-import sys
-from contextlib import contextmanager
-
-import json
 
 load_dotenv()
 
@@ -33,6 +35,18 @@ os.makedirs(PDF_DIR,      exist_ok=True)
 os.makedirs(PREVIEW_DIR,  exist_ok=True)
 os.makedirs(os.path.dirname(XML_OUT_PATH) if os.path.dirname(XML_OUT_PATH) else ".", exist_ok=True)
 
+@app.route("/api/graph/documents")
+def graph_documents():
+    year_from  = request.args.get("year_from",  type=int)
+    year_to    = request.args.get("year_to",    type=int)
+    linked_only = request.args.get("linked_only", "false").lower() == "true"
+    return jsonify(build_document_graph(year_from, year_to, linked_only))
+
+
+@app.route("/api/graph/authors")
+def graph_authors():
+    return jsonify(build_author_graph())
+
 def process_file_background(filename, save_path):
     try:
         image_path  = generate_preview(save_path, PREVIEW_DIR)
@@ -41,17 +55,37 @@ def process_file_background(filename, save_path):
         if is_bad_parse(grobid_info):
             fallback_text = extract_fallback_text(save_path)
             grobid_info = {
-                "file":      f"./pdf-files/{filename}",
-                "full_text": fallback_text,
-                "title":     os.path.splitext(filename)[0],
-                "authors":   [],
-                "abstract":  "",
-                "methods":   [],
+                "file":       f"./pdf-files/{filename}",
+                "full_text":  fallback_text,
+                "title":      os.path.splitext(filename)[0],
+                "authors":    [],
+                "abstract":   "",
+                "methods":    [],
                 "references": [],
+                "doi":        None,
             }
-            doi_info = None
+
+        doi      = grobid_info.get("doi")
+        doi_info = None
+
+        if doi:
+            doi_info = get_crossref_metadata(doi)
+
+        if not doi_info:
+            doi_info = extract_doi_metadata(save_path, title=grobid_info.get("title"))
+
+        if doi_info and doi_info.get("doi"):
+            upsert_paper(
+                doi            = doi_info.get("doi"),
+                title          = doi_info.get("title") or grobid_info.get("title"),
+                year           = doi_info.get("year"),
+                citation_count = doi_info.get("citation_count"),
+                filename       = filename,
+                authors        = doi_info.get("authors") or grobid_info.get("authors", []),
+                references     = doi_info.get("references", []),
+            )
         else:
-            doi_info = extract_doi_metadata(save_path)
+            print(f"INFO: [{filename[:10]}] No DOI found, skipping graph upsert.")
 
         xml_string = build_xml(doi_info, grobid_info, image_path)
         final_xml_name = f"{XML_OUT_PATH}/{os.path.splitext(filename)[0]}.xml"
@@ -66,6 +100,7 @@ def process_file_background(filename, save_path):
 
     except Exception as e:
         print(f"FATAL: [{filename}] {str(e)}")
+
 
 
 @app.route("/upload", methods=["POST"])
@@ -109,7 +144,7 @@ def clean_filename(file_path):
 
 
 def do_search(query):
-    fullQ = f"<query>{query}*</query><relevance>decending</relevance>"
+    fullQ = f"<query>{query}*</query><relevance>descending</relevance>"
     resp = requests.post(
         CP_URL + "/api/databases/pdfs/search/json",
         data=fullQ,

@@ -1,0 +1,457 @@
+<document>
+	<file>./pdf-files/Size controlled fabrication of enzyme encapsulated amorphous calcium phosphate nanoparticle and its intracellular biosensing application.pdf</file>
+	<title>Size controlled fabrication of enzyme encapsulated amorphous calcium phosphate nanoparticle and its intracellular biosensing application</title>
+	<date>2021</date>
+	<doi_number>10.1016/j.colsurfb.2021.111638</doi_number>
+	<img_preview_path>./pdf-preview-images/Size controlled fabrication of enzyme encapsulated amorphous calcium phosphate nanoparticle and its intracellular biosensing application.jpeg</img_preview_path>
+	<authors>
+		<author>Ying Luo</author>
+		<author>Jiaqian Zhao</author>
+		<author>Xinran Zhang</author>
+		<author>Chengcheng Wang</author>
+		<author>Tongyu Wang</author>
+		<author>Min Jiang</author>
+		<author>Qin Zhu</author>
+		<author>Tian Xie</author>
+		<author>Dajing Chen</author>
+	</authors>
+	<abstract>Inorganic-enzyme composites have been widely used for applications in catalysis and analytical science. Amorphous calcium phosphate, as a biocompatible material, can form open hydrated structure to encapsulate and protect enzymes. So far, there have been few progress on size-adjustable amorphous calcium phosphate nanoparticles since the diameter controllability is limited by its natural aggregation characteristics. By coprecipitation and nano-channel extrusion, we developed enzyme-loaded amorphous calcium phosphate nanoparticles with adjustable diameters. These enzyme-loaded particles showed high thermal and chemical stability as well as biocompatibility. The nano-sized enzyme-loaded particles can further expand their application fields and be used as intracellular enzyme probes. Delivering glucose oxidase enzyme by amorphous calcium phosphate nanoparticles enables fluorescent monitoring of glucose levels in living cells, which can be used to study the metabolism rates of cancer cells and normal cells. The nano-channel extrusion method can also be used as a template to encapsulate different kinds of enzymes to expand catalysis and biosensing applications.</abstract>
+	<methods>
+		<method>
+			<heading>Synthesis of ACP-GOx NPs</heading>
+			<text>Enzyme-loaded ACP composites were fabricated through coprecipitation process of inorganic salt and protein (Scheme 1). Briefly, 1 mg GOx was dissolved in 4 mL Tris-HCl buffer (pH = 7.5) containing 50 mM CaCl 2 and 50 mM MgCl 2 . After 30 min of stirring, 0.9 M Na 2 HPO 4 was added to the buffer solution to initiate precipitation. ACP-GOx composites were formed by incubating the mixed solution at room temperature for 1 h. Supernatant and precipitation were separated by centrifugation at 7000 rpm for 5 min. The precipitation was washed with ultrapure water for three times to remove unloaded GOx. ACP-GOx composites were extruded with an Avanti mini-extruder for twenty times to form ACP-GOx NPs. Polycarbonate membranes of different pore sizes (100, 200, 400 nm) were used in extrusion to prepare ACP-GOx NPs with different particle sizes.</text>
+		</method>
+		<method>
+			<heading>Fabrication and material characterizations</heading>
+			<text>Amorphous calcium phosphate (ACP) is an intermediate product formed in the process of preparing hydroxyapatite by wet chemical synthesis method. ACP has the advantages of large specific surface area Scheme 1. Size controlled fabrication procedure of ACP-GOx NPs.</text>
+		</method>
+	</methods>
+	<full_text>The applications of enzymes in chemical and biological areas are usually restricted by severe deactivation under harsh conditions such as high temperatures [1], organic solvents [2], pH extremes [3], and protease interactions. Enzyme immobilization strategies including physical adsorption, covalent binding, cross-linking and entrapment are widely used to enhance enzyme stability [4]. Recently, due to their large surface area, effective enzyme loading as well as high adsorption and stability, nanocarriers have been used as efficient supporting materials for enzyme immobilization [5,6]. Compared with other enzyme carrier materials like polymer, metal and silica, calcium phosphate is highly biocompatible and essentially nontoxic [7,8]. Protein can be captured by calcium phosphate aggregations in the process of growth, thus forming an enzyme entrapment configuration which is different from surface adsorption [9,10]. However, biomedical applications of calcium phosphate were mainly focused on bone substitutes [11], dental implants [12], orthopedic reconstruction and drug delivery [13,14]. Much less effort has been devoted to the precise fabrication of enzyme nanocarrier based on calcium phosphate matrix.
+
+Amorphous calcium phosphate (ACP) is a common inorganic biomaterial, which is an amorphous intermediate phase of calcium phosphate found during the synthesis of hydroxyapatite by wet chemical method [15]. Importantly, it can be used as an ideal material for carrying enzymes due to its hydrated structures [16,17], which can facilitate the incorporation of substances and maintain enzyme activity in harsh environments [9]. Generally, ACP structures and composites are prepared via protein/polymer-assisted method [18,19], dry-mechanochemical method [20], or microwave-assisted hydrothermal method [21]. In these methods, proteins or drugs are immobilized on the skeleton structure by adsorption after the formation of ACP [22]. However, these methods do not apply to the enzyme loading due to the chemical solvent or continuous high temperature involved in these synthesis processes. In addition, during the initial formation of amorphous calcium phosphate, ACP spheres are prone to occur aggregation into micrometer clusters [19]. Enzyme loading can further affect the particle size and morphology of ACP due to the interaction between proteins [23,24]. Hence, it is difficult for ACP to accurately control the morphology and expand its application in the nano-enzyme area. It is crucial to explore a new approach to precisely control the morphology of enzyme-loaded ACP while maintaining high activity.
+
+In this paper, we developed an efficient method for preparing enzyme-encapsulated amorphous calcium phosphate nanoparticles (ACP NPs) by co-precipitation and nano-channel extrusion. This method can achieve feasible regulation of nanoparticle size and maintain high stability of enzyme. By using Glucose Oxidase (GOx) as an example, we integrated the enzyme into ACP NPs and made it more stable than free enzymes. With controlled particle diameter, the amorphous calcium phosphate and Glucose Oxidase composites nanoparticles (ACP-GOx NPs) not only demonstrated the feasibility of glucose detection in solution but were also used as an intracellular probe to monitor the metabolism of cancer cells. More importantly, it can be used as a universal method to immobilize different enzymes and proteins in the ACP framework. Overall, this method can precisely regulate the particle size so that the enzyme-loaded ACP NPs can be used for nano-catalysis, biosensing and drug delivery applications.
+
+Enzyme-loaded ACP composites were fabricated through coprecipitation process of inorganic salt and protein (Scheme 1). Briefly, 1 mg GOx was dissolved in 4 mL Tris-HCl buffer (pH = 7.5) containing 50 mM CaCl 2 and 50 mM MgCl 2 . After 30 min of stirring, 0.9 M Na 2 HPO 4 was added to the buffer solution to initiate precipitation. ACP-GOx composites were formed by incubating the mixed solution at room temperature for 1 h. Supernatant and precipitation were separated by centrifugation at 7000 rpm for 5 min. The precipitation was washed with ultrapure water for three times to remove unloaded GOx. ACP-GOx composites were extruded with an Avanti mini-extruder for twenty times to form ACP-GOx NPs. Polycarbonate membranes of different pore sizes (100, 200, 400 nm) were used in extrusion to prepare ACP-GOx NPs with different particle sizes.
+
+The amount of enzyme encapsulated in ACP was determined by the difference of protein concentration in the supernatant before and after co-precipitation. The activity of enzyme in ACP-GOx NPs was measured by using glucose as the substrate in PBS solution (pH = 7.4). 50 μL of ACP-GOx NPs or free GOx of the same amount of enzyme was added to PBS containing 100 mM glucose, 2.5 mg/mL ABTS and 0.05 mg/mL horseradish peroxidase (HRP). After 10 min reacting, the peak of absorbance at 418 nm was measured by a microplate reader.
+
+Thermal stability: ACP-GOx NPs or free GOx was incubated at different temperatures (25 ℃-65 ℃) for 10 min, the remained activity was examined by enzyme activity assay. In thermal deactivation test, ACP-GOx NPs or Free GOx incubated at 60 ℃ were collected at every 10 min to measure the residual enzymatic activities. Stability in organic solvent: ACP-GOx NPs and Free GOx were exposed to 70 % DMF aqueous solution at 30℃. The remained activity was examined by enzyme activity assay after 30 min exposure. Storage stability: The ACP-GOx NPs were dispersed and stored in 25 • C PBS. The residual enzyme activity was measured every three days via the enzyme activity assay.
+
+The in-vitro detection of glucose using ACP-GOx NPs was performed according to the following steps: 0.1 mL ACP-GOx NPs dispersion (0.52 μg/mL) was added into 1.2 mL glucose solution (0-10.24 mM) with HRP (6 μg/mL) and ABTS (0.05 mg/mL). The absorbance at 350-450 nm was recorded by Ultraviolet-visible Spectrophotometer after 20 min reaction.
+
+Normal hepatic cell L02, hepatic cancer cell SNU354 and lung cancer cell H1299 were cultured with standard RPMI 1640 medium containing 10 % (v/v) fetal bovine serum (FBS). Three types of cells (9000 cells/ well) were added in a 96-well plate. After 24 h culture in the incubator, 20 μL ACP NPs (0.1 mg/mL) were added into ACP-GOx NPs group and 20 μL ACP-GOx NPs (0.1 mg/mL) were added into ACP-GOx NPs group. 20 μL sterile water were added in the negative control group, while the positive control group was added with 20 μL positive control drug (Rosup). Cell culture medium was removed after 1 h incubating followed with three times PBS washing. Then, 100 μL H 2 DCFDA (5 μM) fluorescence probe was added into each well and incubated for 30 min. Cell images were taken by fluorescent microscope with excitation/ emission at 485/535 nm.
+
+See support information for detailed experimental procedures of cell culture, cellular uptake of ACP-GOx NPs, intracellular glucose detection in different cell culture media and fabrication of ACP-HRP NPs.
+
+Amorphous calcium phosphate (ACP) is an intermediate product formed in the process of preparing hydroxyapatite by wet chemical synthesis method. ACP has the advantages of large specific surface area Scheme 1. Size controlled fabrication procedure of ACP-GOx NPs.
+
+and nano-sized channels for the loading of proteins, genes and drugs. However, ACP as a precursor phase can easily be transformed into crystalline form (hydroxyapatite) spontaneously. In this paper, we used MgCl 2 as a stabilizer to prevent this transformation and kept particles in the amorphous state to facilitate the enzyme-loading applications. Amorphous cluster aggregation is a crucial step in the biomineralization process of calcium phosphate [25][26][27]. With the addition of enzymes, ACP is more likely to occur aggregation and form irregular clusters in micrometer size. ACP-GOx formed large clusters and only a few particles remained at the nanometer scale after co-precipitation and centrifugation as shown in Fig. S1.
+
+We utilized the plasticity of amorphous calcium phosphate to prepare nanoparticles with adjustable diameter. The hardness of amorphous calcium phosphate is less than half of the nanocrystalline form [28]. Specifically, co-precipitated ACP-GOx composites were extruded through polycarbonate (PC) membranes with different pore sizes (100, 200 and 400 nm) to produce nano-sized particles. The fabrication procedure of nano-extrusion assisted biomineralized ACP-enzyme nanospheres are depicted in Scheme 1. The TEM images in Fig. 1 A-C showed that the resulted protein-mineral composites were dispersive nanospheres with size distributions in a controllable range. ACP-GOx NPs of different particle sizes (average diameter: 382, 221 and 113 nm) could be fabricated by extrusion through PC nano-channels with various diameter (400, 200 and 100 nm). All the above results showed that co-precipitation and size-controlled extrusion could rapidly fabricate dispersed ACP-GOx NPs of different sizes. In Fig. S2, the protein loading efficiency was measured by the Bradford method. The protein content in the supernatant after the precipitation was only 3% of the original enzyme solution, indicating that co-precipitate can efficiently capture enzyme from the solution.
+
+Energy-dispersive spectrum (EDS) mapping (Fig. 2A&amp;B) confirmed the distribution of elements from both ACP and GOx in nanosphere. The spectrum diagram showed that the particles not only contain calcium (Ca), phosphorus (P) and magnesium (Mg) as the skeleton, but also included carbon (C), nitrogen (N) and oxygen (O) that indicate the presence of proteins (GOx). Fig. 2C showed the Fourier Transform Infrared Spectrometer (FTIR) analysis in order to characterize the ACP-GOx functional groups. The characteristic peaks at 1656 (C--O vibration in GOx) and 1038 and 572 cm -1 (ν 3 and ν 4 PO -vibration of PO 4 3-in ACP) showed that composite structure was formed [29]. Amorphous calcium phosphate as a mineral phase with continuous random meshes could effectively immobilize enzymes without cross-linking agents [30]. In X-ray diffraction (XRD), the crystalline structure was generally characterized by sharp diffraction peaks, whereas amorphous phase generated broad X-ray scattering peak. As shown in Fig. 2D, ACP-GOx NPs had a broad peak around 30 degree, indicating that MgCl 2 as a stabilizer effectively prevented the crystalline transformation to hydroxyapatite during co-precipitation and multiple extrusions. The thermogravimetric (TG) analysis curve in Fig. 2E displayed the mass loss against constant temperature increase from 50 • C to 650 • C. The loosely and strongly bonded water in the ACP-GOx NPs corresponded to the weight loss between 50 • C-190 • C. The mass loss after 430 • C can be attributed to the decomposition of protein and carbonate in ACP structures. The remaining content of inorganic component was calculated as ~67.50 %. The result is constant with other researches that amorphous calcium phosphate contains bound water (10~20 wt %) formed by the Ca 9 (PO 4 ) 6 clusters, which provided open hydrated structures that allow incorporation of proteins and other substances [31].
+
+The ACP-GOx NPs maintained the enzyme structural stability by providing a rigid ACP matrix against thermal denaturation. According to TG analysis result in Fig. 2C, ACP-GOx NPs have 19.2 % bound water in the composites, which enhance the heat tolerance of encapsulated enzyme. In Fig. 3A, the thermal stability of free GOx and ACP-GOx NPs was evaluated in the temperature range of 25 • C-65 • C. Both free GOx and ACP-GOx NPs were relatively stable in the environment below 45 • C. The free GOx started to lose 30 % activity at 45 • C while the activity of ACP-GOx NPs remained over 90 %. At 60 • C, residual enzyme activity of free GOx had fallen to less than 50 %, while ACP-GOx NPs were able to maintain 80 % activity. To further explore the heat-resistant time of ACP-GOx NPs, the free GOx and ACP-GOx NPs were incubated at 60 • C for one hour, and the enzyme activity was measured every 10 min (Fig. 3B). Under the continuous heating, the activity of the free GOx decreased significantly at the first 10 min and almost dropped to 0% after one hour of heating. In contrast, the enzyme activity of ACP-GOx NPs showed a relatively gentle decline, retained at 50 % after 60 min.
+
+Organic solvents will significantly affect the stability of ACP-GOx NPs since polar solvent can interact with the active site of enzyme and unfold the protein structure. ACP has been acting as an encapsulating framework to protect enzyme active center from protein configuration changes in denaturing organic solvent. As shown in Fig. 3C, free GOx enzyme activity decreased by 92 % after 30 min exposure to DMF, while the enzyme activity of ACP-GOx NPs remained above 60 %. In storage stability test, ACP-GOx NPs were stored in 25 • C aqueous environment, the residual enzyme activity was measured every three days. As shown in Fig. 3D, the activity of ACP-GOx NPs remained more than 80 % after 12 days of storage, which can be attributed to the ACP structure encapsulation to retain enzyme folding structure. ACP and other amorphous mineral are highly stable template tightly bonds abundant water molecules around the entrapped proteins to stabilize the  conformation of the enclosed protein. A similar increase in enzyme stability was also observed in ACP-HRP NPs (Fig. 6), indicating that ACP NPs can be used as a universal enzyme encapsulating carrier.
+
+As the stability and activity of ACP-GOx NPs were verified, we further explored the in-vitro and in-vivo biosensing applications of ACP-GOx NPs. For the in-vitro test, ACP-GOx NPs could be used to measure glucose concentrations via chromogenic reaction with HRP and ABTS. Upon reaction with hydrogen peroxide and HRP, ABTS yields a green end-product, which can be observed with naked eyes and accurately measured by UV-vis spectrometry (UV-vis). Fig. 4A showed the absorbance at 360-470 nm detected by UV-vis after 20 min reaction. The absorption peak at 418 nm elevated gradually following the increasing of glucose concentration, suggesting that ACP-GOx NPs exhibited feasibility for glucose measurement. As showed in Fig. 4B, a linear relationship (R 2 = 0.99145) between UV-vis absorbance and the glucose concentration range from 1 to 10 mM was obtained.
+
+Due to the diameter tunability of ACP-GOx NPs, it can be used in conventional glucose solution measurement as well as intracellular metabolism detection. We co-cultured ACP-GOx NPs with cells to explore the cellular uptake of nanoparticles. Fluorescent labelled ACP-GOx NPs were incubated with H1299 cells for 4 h and observed with a laser scanning confocal microscope. As shown in Fig. 5A, red fluorescent spots were observed located around DAPI stained cell nucleus (blue), indicating that H1299 cells could uptake 100 nm diameter ACP-GOx NPs. The images of cells with 200 and 400 nm particles did not show the aggregation of fluorescent dots around the nucleus (Fig. S4). The experimental result of the cellular integration of ACP-GOx NPs indicated that these nanoparticles under a certain diameter can realize the intracellular application. ACP cytotoxicity results were showed in Fig. S5, proved that calcium phosphate particle is a biocompatible material for in-vivo applications.
+
+Cancer cells grow and divide in an uncontrolled manner due to their altered cellular signaling pathways. Therefore, glucose intake and consumption in rapidly proliferating cancer cells are much higher than normal cells. Monitoring cancer cell metabolism could provide valuable information for applications including drug screening and cell therapy. We utilized ACP-GOx NPs with DCFH dye as an intracellular probe to monitor the glucose concentration in different types of cell. In this experiment, three types of cell (L02, SNU-354 and H1299) having different metabolism rate were chose as sensing targets. Each type of cell was divided into three groups (Control group, ACP NPs group and ACP-GOx NPs group) with the same culture medium. After cell uptook ACP-GOx NPs, the intracellular glucose diffused into the ACP composites to interact with GOx, the generated H 2 O 2 further oxidized DCFH to produce highly fluorescent DCF. Tumor cells (SNU-354 and H1299) metabolized glucose at elevated rates compared to the normal cells (L02), leading to higher DCF fluorescence intensities as shown in Fig. 5B. Blank templates without enzyme (ACP NPs) were added into the groups of normal cells and tumor cells as well. The fluorescence intensity of the ACP NPs group was almost the same as that of the control group, indicating the ACP template itself was a highly biocompatible material would not trigger the increase of intracellular reactive oxygen species (ROS). The intracellular glucose concentrations of the three different cell types were also measured by a conventional cell lysis method. The concentration of H1299 cells was the highest, and the concentrations of normal cells L02 was the lowest. In Fig. 5C, the intracellular glucose concentration obtained by cell lysis can establish a linear relationship with the ACP-GOx NPs fluorescence intensity, which proves that ACP-GOx NPs can be used as a non-destructive intracellular glucose detection probe. In order to verify the stability of the enzyme entrapped in ACP, GOx-ACP was soaked in water for two hours, and then centrifuged to extract the supernatant. The enzyme activity in the supernatant showed that the content of free enzyme desorbed from ACP is extremely low (Fig. S6). Moreover, the free enzymes as the intracellular glucose detection probe do not achieve the same effect as ACP-GOx NPs, which may be related to the protective effect of ACP (Fig. S7).
+
+To further investigate the in-vivo application of ACP-GOx NPs, we used three cell culture mediums with distinct glucose concentrations to culture three types of cells (L02, SNU-354 and H1299). DCFH fluorescence probe was utilized with ACP-GOx NPs again to measure intracellular glucose level. As shown in Fig. S3, the relative order of fluorescence intensity of three cell lines was consistent in each culture medium. The intensity in two kinds of cancer cells (SNU-354 and H1299) was stronger than that of normal cell L02 because tumor cells uptake more glucose than normal cells. The result was constant with the glucose metabolism rate of different types of cell. For the same cell line, cells in a culture medium with a higher glucose concentration have higher fluorescence intensity. The total amount of glucose uptake by cells was not only related to the number of transporters on the cell membrane but also affected by the local microenvironment. Inspired by this result, anti-cancer strategies can not only induce tumor apoptosis by inhibiting the transport process, but also retard tumor growth by regulating the tumor microenvironment.
+
+In order to further explore that amorphous calcium phosphate can be used as a universal template for enzyme encapsulation, GOx was replaced by HRP in enzyme activity tests. ACP-HRP NPs were obtained through nano-channel membrane extrusion similar to ACP-GOx NPs fabrication. The thermal stability of enzyme encapsulated in ACP was evaluated by comparing the residual activity of free enzymes and ACP-HRP NPs after incubating in PBS solution under different temperatures from 25 to 65 • C. In Fig. 6 A, ACP-HRP NPs retained notably higher activity than the free HRP in all temperature ranges. More importantly, in Fig. 6B, free-HRP and ACP-HRP NPs were incubated for different periods at 60 • C simultaneously to compare the changes of the two. The relative enzyme activity of ACP-HRP NPs was much higher than the Free HRP at different time points. After one hour incubation at 60 • C, ACP-HRP NPs maintained over 75 % of their original activities while free enzyme lost over 80 % of their original activities.
+
+To examine the tolerance to organic solvent, ACP-HRP NPs and free HRP were incubated in DMF. Fig. 6C showed that the relative enzyme activity of ACP-HRP NPs maintained at 78 %, which was about 8.7 times that of free HRP. In the 12-day storage stability test, the enzyme activity of ACP-HRP NPs maintained over 80 % throughout the process (Fig. S8). Similar to the application of ACP-GOx NPs, ACP-HRP NPs can also be used for detecting H 2 O 2 in solutions at micromolar concentrations (Fig. 6D). HRP catalyzes hydrogen peroxide to produce hydroxyl free radicals, which have a strong cytotoxic effect, thus the ACP-HRP NPs could be further used as a chemodynamic therapy for anti-cancer  applications. All the above results showed that amorphous calcium phosphate could act as a multifunctional co-precipitation template to immobilize various enzymes and prevent conformational changes to the encapsulated protein.
+
+In conclusion, ACP-enzyme NPs with different diameters were fabricated by co-precipitation and nano-channel extrusion. The prepared ACP-enzyme NPs not only enhance the stability of the encapsulated enzyme, but also retain particle dispersion to expand in-vivo applications. By incorporation of GOx, the concentration of glucose solution as well as the level of intracellular glucose can be measured. The fluorescence response of ACP-GOx with DCFH can be used to monitor the glucose uptake of cells in order to further study the metabolism of tumor cells and normal cells. More importantly, this method can not only be applied to immobilize glucose oxidase but also as a template to encapsulate other enzymes to obtain higher stability and broader applications. The method reported in this paper could be a promising strategy to expand the use of amorphous calcium phosphate in biomedical and biosensing areas.</full_text>
+	<references>
+		<reference>
+			<title>Chem. Sci</title>
+			<authors>
+				<author>J Navarro-Sánchez</author>
+				<author>N Almora-Barrios</author>
+				<author>B Lerma-Berlanga</author>
+				<author>J Ruiz-Pernía</author>
+				<author>V Lorenz-Fonfria</author>
+				<author>I Tuñón</author>
+				<author>C Martí-Gastaldo</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Macromolecules</title>
+			<authors>
+				<author>F Ishizuka</author>
+				<author>R Chapman</author>
+				<author>R Kuchel</author>
+				<author>M Coureault</author>
+				<author>P Zetterlund</author>
+				<author>M Stenzel</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>Biol. Res</title>
+			<authors>
+				<author>M Cabrera</author>
+				<author>J Blamey</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>Appl. Sci. Converg. Technol</title>
+			<authors>
+				<author>H Nguyen</author>
+				<author>M Kim</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Phytother. Res</title>
+			<authors>
+				<author>Z Cui</author>
+				<author>Z Liu</author>
+				<author>J Zeng</author>
+				<author>L Chen</author>
+				<author>Q Wu</author>
+				<author>J Mo</author>
+				<author>G Zhang</author>
+				<author>L Song</author>
+				<author>W Xu</author>
+				<author>S Zhang</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Nature</title>
+			<authors>
+				<author>R Valiev</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>Adv. Mater</title>
+			<authors>
+				<author>B Yang</author>
+				<author>Y Chen</author>
+				<author>J Shi</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>biology and medicine, Materials</title>
+			<authors>
+				<author>S Dorozhkin</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Chem. Commun</title>
+			<authors>
+				<author>Y Yang</author>
+				<author>G Wang</author>
+				<author>G Zhu</author>
+				<author>X Xu</author>
+				<author>H Pan</author>
+				<author>R Tang</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>J. Colloid Interface Sci</title>
+			<authors>
+				<author>X.-Y Zhao</author>
+				<author>Y.-J Zhu</author>
+				<author>J Zhao</author>
+				<author>B.-Q Lu</author>
+				<author>F Chen</author>
+				<author>C Qi</author>
+				<author>J Wu</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Chem. Mater</title>
+			<authors>
+				<author>M Gutiérrez</author>
+				<author>M Jobbágy</author>
+				<author>M Ferrer</author>
+				<author>F Del Monte</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Sch. J. Dent. Sci</title>
+			<authors>
+				<author>H Mehdi</author>
+				<author>R Hind</author>
+				<author>C Hakima</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>ACS Nano</title>
+			<authors>
+				<author>W Chen</author>
+				<author>G Wang</author>
+				<author>B Yung</author>
+				<author>G Liu</author>
+				<author>Z Qian</author>
+				<author>X Chen</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>J. Colloid Interface Sci</title>
+			<authors>
+				<author>G.-J Ding</author>
+				<author>Y.-J Zhu</author>
+				<author>C Qi</author>
+				<author>B.-Q Lu</author>
+				<author>J Wu</author>
+				<author>F Chen</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Nanomaterials</title>
+			<authors>
+				<author>R Sun</author>
+				<author>M Åhlén</author>
+				<author>C.-W Tai</author>
+				<author>É Bajnóczi</author>
+				<author>F De Kleijne</author>
+				<author>N Ferraz</author>
+				<author>I Persson</author>
+				<author>M Strømme</author>
+				<author>O Cheung</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Journal of the Chemical Society, J. Chem. Soc. Dalton Trans</title>
+			<authors>
+				<author>Y Levi-Kalisman</author>
+				<author>S Raz</author>
+				<author>S Weiner</author>
+				<author>L Addadi</author>
+				<author>I Sagi</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>J. Am. Chem. Soc</title>
+			<authors>
+				<author>E Pouget</author>
+				<author>P Bomans</author>
+				<author>A Dey</author>
+				<author>P Frederik</author>
+				<author>G De With</author>
+				<author>N Sommerdijk</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Aust. Dent. J</title>
+			<authors>
+				<author>D Gurunathan</author>
+				<author>S Somasundaram</author>
+				<author>S Kumar</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Cryst. Growth Des</title>
+			<authors>
+				<author>Q Zhang</author>
+				<author>Y Jiang</author>
+				<author>B.-D Gou</author>
+				<author>J Huang</author>
+				<author>Y.-X Gao</author>
+				<author>J.-T Zhao</author>
+				<author>L Zheng</author>
+				<author>Y.-D Zhao</author>
+				<author>T.-L Zhang</author>
+				<author>K Wang</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>J. Biomed. Mater. Res. Part B: Appl. Biomater</title>
+			<authors>
+				<author>T Yu</author>
+				<author>J Ye</author>
+				<author>Y Wang</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Chem. B</title>
+			<authors>
+				<author>F Chen</author>
+				<author>P Huang</author>
+				<author>C Qi</author>
+				<author>B.-Q Lu</author>
+				<author>X.-Y Zhao</author>
+				<author>C Li</author>
+				<author>J Wu</author>
+				<author>D.-X Cui</author>
+				<author>Y.-J Zhu</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>C Qi</author>
+				<author>F Chen</author>
+				<author>J Wu</author>
+				<author>Y.-J Zhu</author>
+				<author>C.-N Hao</author>
+				<author>J.-L Duan</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>ACS Appl. Mater. Interfaces</title>
+			<authors>
+				<author>E Hwang</author>
+				<author>R Tatavarty</author>
+				<author>J Chung</author>
+				<author>M Gu</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>J. Colloid Interface Sci</title>
+			<authors>
+				<author>E Colaço</author>
+				<author>D Brouri</author>
+				<author>C Méthivier</author>
+				<author>L Valentin</author>
+				<author>F Oudet</author>
+				<author>K Kirat</author>
+				<author>C Guibert</author>
+				<author>J Landoulsi</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Proc. Natl. Acad. Sci</title>
+			<authors>
+				<author>Y Gong</author>
+				<author>C Killian</author>
+				<author>I Olson</author>
+				<author>N Appathurai</author>
+				<author>A Amasino</author>
+				<author>M Martin</author>
+				<author>L Holt</author>
+				<author>F Wilt</author>
+				<author>P Gilbert</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Proc. Natl. Acad. Sci</title>
+			<authors>
+				<author>S Boonrungsiman</author>
+				<author>E Gentleman</author>
+				<author>R Carzaniga</author>
+				<author>N Evans</author>
+				<author>D Mccomb</author>
+				<author>A Porter</author>
+				<author>M Stevens</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Angew. Chemie Int. Ed</title>
+			<authors>
+				<author>J Cartwright</author>
+				<author>A Checa</author>
+				<author>J Gale</author>
+				<author>D Gebauer</author>
+				<author>C Sainz-Díaz</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Phys. Solid State</title>
+			<authors>
+				<author>V Ievlev</author>
+				<author>A Kostyuchenko</author>
+				<author>B Darinskii</author>
+				<author>S Barinov</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>ACS Nano</title>
+			<authors>
+				<author>L.-H Fu</author>
+				<author>Y.-R Hu</author>
+				<author>C Qi</author>
+				<author>T He</author>
+				<author>S Jiang</author>
+				<author>C Jiang</author>
+				<author>J He</author>
+				<author>J Qu</author>
+				<author>J Lin</author>
+				<author>P Huang</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Acta Mater</title>
+			<authors>
+				<author>C.-Y Lee</author>
+				<author>Z Stachurski</author>
+				<author>T Welberry</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Acta Biomater</title>
+			<authors>
+				<author>S Dorozhkin</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1021/acs.macromol.7b02377</number>
+		<number>DOI-10.1186/s40659-018-0186-3</number>
+		<number>DOI-10.5757/ASCT.2017.26.6.157</number>
+		<number>DOI-10.1002/ptr.6352</number>
+		<number>DOI-10.1038/419887a</number>
+		<number>DOI-10.1002/adma.201901778</number>
+		<number>DOI-10.3390/ma2041975</number>
+		<number>DOI-10.1039/C5CC01420D</number>
+		<number>DOI-10.1016/j.jcis.2013.10.034</number>
+		<number>DOI-10.1021/cm7020164</number>
+		<number>DOI-10.1021/acsnano.7b01809</number>
+		<number>DOI-10.1016/j.jcis.2014.12.004</number>
+		<number>DOI-10.3390/nano10010020</number>
+		<number>DOI-10.1039/b003242p</number>
+		<number>DOI-10.1021/ja102439r</number>
+		<number>DOI-10.1111/adj.12006</number>
+		<number>DOI-10.1021/cg5018505</number>
+		<number>DOI-10.1002/jbm.b.31343</number>
+		<number>DOI-10.1039/C4TB01193G</number>
+		<number>DOI-10.1039/C6RA00775A</number>
+		<number>DOI-10.1021/am302580p</number>
+		<number>DOI-10.1016/j.jcis.2019.12.097</number>
+		<number>DOI-10.1073/pnas.1118085109</number>
+		<number>DOI-10.1073/pnas.1208916109</number>
+		<number>DOI-10.1002/anie.201203125</number>
+		<number>DOI-10.1134/S1063783414020127</number>
+		<number>DOI-10.1021/acsnano.9b05836</number>
+		<number>DOI-10.1016/j.actamat.2009.09.040</number>
+		<number>DOI-10.1016/j.actbio.2010.06.031</number>
+	</reference_dois>
+</document>

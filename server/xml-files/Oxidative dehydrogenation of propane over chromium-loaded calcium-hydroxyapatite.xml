@@ -1,0 +1,853 @@
+<document>
+	<file>./pdf-files/Oxidative dehydrogenation of propane over chromium-loaded calcium-hydroxyapatite.pdf</file>
+	<title>Oxidative dehydrogenation of propane over chromium-loaded calcium-hydroxyapatite</title>
+	<date>2009</date>
+	<doi_number>10.1016/j.apcata.2009.01.005</doi_number>
+	<img_preview_path>./pdf-preview-images/Oxidative dehydrogenation of propane over chromium-loaded calcium-hydroxyapatite.jpeg</img_preview_path>
+	<authors>
+		<author>Charifa Boucetta</author>
+		<author>Mohamed Kacimi</author>
+		<author>Alain Ensuque</author>
+		<author>Jean-Yves Piquemal</author>
+		<author>François Bozon-Verduraz</author>
+		<author>Mahfoud Ziyad</author>
+	</authors>
+	<abstract/>
+	<methods>
+		<method>
+			<heading>Synthesis of CaHAp and Cr(x)/CaHAp</heading>
+			<text>The method carried out for the synthesis of calcium-hydroxyapatite is derived from the experimental protocol described by Santos et al. [25]. It was chosen because it allows the synthesis of large quantities of apatite without altering its structural feature. It consists of mixing, in stoichiometric proportions, a titrated solution of H 3 PO 4 (0.6 M) with the corresponding amount of Ca(OH) 2 dissolved in decarbonated water until a 2 M Ca 2+ concentration is reached. The resulting mixture was maintained at 85 8C under stirring for 48 h, then filtered, washed with hot water and dried at 80 8C before a final calcination under dry air in a rotating furnace at 500 8C.
+
+Chromium-loaded calcium-hydroxyapatite was prepared utilizing the exchange properties of apatite [22][23][24]26]. A known quantity of CaHAp was introduced in 80 mL of demineralised and boiled water containing Cr(NO 3 ) 3 Á9H 2 O at a concentration varying from 10 À3 to 10 À1 mol dm À3 . The mixture was stirred for 24 h, then filtered and washed with boiled water. The recovered solid was dried at 120 8C and calcined successively at 450 and 550 8C in a rotating furnace flushed with air (60 cm 3 min À1 ). The prepared samples are labelled Cr(x)/CaHAp, where x is the chromium content (wt.%).</text>
+		</method>
+		<method>
+			<heading>Characterization techniques</heading>
+			<text>Chemical analysis was carried out at the central service of analysis (CNRST-Rabat and CNRS, Solaize, France) by inductive coupling plasma-atomic emission spectroscopy (ICP-AES).
+
+X-ray diffraction patterns were obtained with a Siemens D5000 high-resolution diffractometer using Ni-filtered Cu-Ka radiation. The data were collected at room temperature with a 0.028 step size in 2u, from 2u = 208 to 808. The crystalline phases were identified by comparison with ICSD reference files.
+
+The BET surface area of the samples evacuated at 300 8C was determined by equilibrium adsorption and desorption isotherms of N 2 at 77 K with a Coulter Omnisorp 100 CX apparatus.FTIR transmission spectra were recorded between 400 and 4000 cm À1 at room temperature on a PerkinElmer 1600 spectrometer using self-supporting KBr disks. This technique, very sensitive to the presence of carbonates and pyrophosphates, was used to provide information about the apatite purity.The laser Raman spectra were recorded on a DILOR XY micro-spectrometer using the 514.2 nm excitation line of an Argon Spectra Physics laser. The data were collected with a JOBIN-YVON 1024 Â 256 CCD matrix as multichannel detector.
+
+UV-vis-NIR diffuse reflectance spectra were recorded at room temperature between 190 and 2500 nm on a Varian Cary 5E spectrometer equipped with a double monochromator and an integrating sphere coated with polytetrafluoroethylene (PTFE). PTFE was also used as a reference.
+
+X-ray photoelectron spectra were recorded on a VG Scientific ESCALAB 200A spectrometer utilizing a non-monochromatized Mg Ka radiation (1253.6 eV). The spectra were digitized, summed, smoothed and reconstructed using Gauss-Lorentzian components. In order to minimize charge effects, the measurements were carried out on thin pellets placed on an indium plaque. The carbon C1s peak at 285 eV was used as reference.
+
+Temperature programmed reduction experiments were performed with an apparatus equipped with a thermal conductivity detector and a U-shaped quartz reactor operated at atmospheric pressure. The sample (10-50 mg) was first pretreated with oxygen (5 vol.% O 2 in He) at 673 K for 30 min, evacuated under an argon flow at 673 K and cooled to room temperature. It was then contacted with 5 vol.% H 2 /Ar gas mixture (40 cm 3 min À1 ) before increasing the temperature up to 973 K (heating rate of 10 K min À1 ).
+
+Electron Paramagnetic Resonance (EPR) studies were performed at room temperature and 77 K on a Varian E9 spectrometer in X band using a microwave frequency of 9.15 GHz and a microwave power of 10 mW. The spectra were calibrated with DPPH.</text>
+		</method>
+	</methods>
+	<full_text>Processes manufacturing alkenes by alkanes dehydrogenation in the absence of oxygen have been developed and commercialized for over 60 years. The reaction is endothermic and has thermodynamic limitations which can be overcome by operating at high temperatures. However, the process consumes a lot of energy. It also limits the alkenes selectivity and favours carbon deposition on the active sites [1]. The addition of O 2 (or N 2 O) to the reaction mixture allows performing exothermic oxidative dehydrogenations (ODHs). The process has no thermodynamic limitations and prevents the growth of carbonaceous deposits over the catalyst [2]. Besides oxidative dehydrogenation, the reaction between oxygen and hydrocarbons over appropriate catalysts might produce oxygenated compounds [3][4][5][6][7][8][9]. However, in the case of ethane and propane ODH, the conversions and the yields claimed in the literature are not high enough for industrial applications.
+
+In the last years, several reviews and articles were published on alkanes ODH [2][3][4][5][6][7][8][9]. The most investigated catalysts are supported or unsupported V , V-Mg, Mo, Co, Bi, Sb, Cr, Sn, Pt, Pd oxides. The limiting step of the reaction is commonly believed to be the abstraction of hydrogen from the adsorbed alkane by mechanisms of Mars-van Krevelen type [1,5,10,11]. However, in the case of propane ODH, there are still unanswered questions concerning the activation step and the factors governing the alkene selectivity [4].
+
+Chromium oxide based catalysts have been extensively investigated, especially the well known Philips catalyst (Cr/SiO 2 ) which was first designed for polymerisation. Philips catalyst exhibits a moderate activity and selectivity in ethane and propane dehydrogenation. It also partially loses its activity by carbon deposition [12]. ODH of propane over supported CrO x catalysts has involved various supports: alumina, silica in various forms, titania, magnesia, niobia, zirconia [13][14][15][16]. A conversion of around 16% with a selectivity of 54% at 450 8C was claimed by Jibril over Cr 2 O 3 / Al 2 O 3 [16]. Cherian et al. [15] showed that Cr 2 O 3 /Nb 2 O 5 is more selective than Cr 2 O 3 /Al 2 O 3 and Cr 2 O 3 /TiO 2 and they identified various chromium species on the supports. The stability of these species was related to the strength of their interactions with the A B S T R A C T Chromium-loaded hydroxyapatite catalysts Cr(x)/CaHAp (0.1 x 3.7 wt.% Cr) were prepared by ionexchange and characterized by several techniques including FTIR, Raman, XPS, UV-vis-NIR spectroscopies, EPR, DRX and TPR. After calcination in air, several isolated chromium species were identified: (i) surface Cr 3+ ions in distorted octahedral symmetry, (ii) bulk octahedral Cr 3+ ions, (iii) octahedral Cr 5+ ions in low concentration and (iv) Cr 6+ ions. Cr 6+ ions present as monochromates are predominant only at very low loadings (x 0.1 wt.% Cr) whereas, at higher Cr amounts (up to 3.7 wt.% Cr), Cr 3+ species are preponderant. The majority of Cr 3+ ions are located on the apatite surface; they do not form Cr 2 O 3 crystallites but isolated Cr 3+ -O-Ca 2+ or Cr 3+ -O-Cr 3+ entities at the highest Cr amounts.
+
+The Cr(x)/CaHAp catalysts were tested in propane oxidative dehydrogenation in the 300-550 8C temperature range. The Cr 6+ centres initially present on the catalysts may initiate the cracking of propane because of their acidity and improve the conversion; however, as they are reduced by the reaction mixture, the propane conversion decreases upon running at 550 8C. Cr 2+ ions are also formed upon running. Isolated Cr 3+ species are believed to be responsible for the propylene formation (propylene yield around 7% at 550 8C). This limitation of performance is ascribed to the decrease of the basicity induced by the fixation of Cr 3+ which counterbalances the positive effect of chromium on oxygen reactivity. The proposed mechanism involves the contribution of oxygen vacancies or Cr 2+ species.
+
+ß 2009 Elsevier B.V. All rights reserved.
+
+carrier, which involves the acid-base properties of the solid. The role played by each species in the catalytic dehydrogenation of the C 2 -C 3 alkanes is not yet completely understood [15]. It is often accepted that, in the case of propane ODH, the active centres are ''Cr 3+ clusters'', generally resulting from the reduction of higher oxidation states (Cr 5+ and Cr 6+ ). However, the discrimination between the roles of these species in the catalytic activity is still controversial.
+
+The catalytic performance of Cr/TiO 2 and Co/TiO 2 catalysts in ethane ODH was shown to be enhanced by the addition of phosphorus [17]. The observed improvements were attributed to the modification of the acid-base properties of the catalysts and to the increase of their stability [18]. Aaddane et al. [19] showed that the propane ODH is very efficient over Mg-Co-PO 4 which shows structural similarities with Mg-VO 4 . Phosphates belonging to V-P-O family were also tested in the mild oxidation of propane. Globally, they convert around 15% of propane into propene, acroleine, ethylene, acrylic and acetic acids [20].
+
+Phosphates with apatite-like structure are widely used in biomedical engineering and in many other fields including heterogeneous catalysis. When loaded with nickel or palladium, calcium-hydroxyapatite Ca 10 (PO 4 ) 6 (OH) 2 , in short CaHAp, exhibits good activity in methane dry reforming and in the direct synthesis of methyl isobutyl ketone (MIBK) [21][22][23]. In ethane ODH, cobalt exchanged (Co 2+ /Ca 2+ ) hydroxyapatite showed an ethylene yield of 22% at 550 8C. This good performance was attributed to isolated Co 2+ sites on the apatite surface and to lattice oxygen mobility induced by cobalt incorporation in the phosphate network. It must be noted that the performance of CaHAp as a carrier is essentially due to its ion-exchange and adjustable acid-base properties [24].
+
+This prompted us to study the catalytic behaviour of chromiumloaded calcium-hydroxyapatite (Cr(x)/CaHAp) in propane ODH, which has not been investigated up to now. The present work focuses on samples synthesized by the cation-exchange method, expected (i) to favour the formation of isolated chromium species and to prevent the formation of bulk chromium oxide, (ii) to throw some light on the nature of interactions of chromium with apatite which is still a matter of debate (surface exchange or incorporation of Cr n+ in the apatite lattice). It involves the characterization by spectroscopic techniques (IR, Raman, UV-vis-NIR, EPR, XPS), DRX and temperature programmed reduction (H 2 -TPR). Special attention is given to the understanding of the role of Cr speciation in the propane ODH and to the synergetic effects of the carrier.
+
+The method carried out for the synthesis of calcium-hydroxyapatite is derived from the experimental protocol described by Santos et al. [25]. It was chosen because it allows the synthesis of large quantities of apatite without altering its structural feature. It consists of mixing, in stoichiometric proportions, a titrated solution of H 3 PO 4 (0.6 M) with the corresponding amount of Ca(OH) 2 dissolved in decarbonated water until a 2 M Ca 2+ concentration is reached. The resulting mixture was maintained at 85 8C under stirring for 48 h, then filtered, washed with hot water and dried at 80 8C before a final calcination under dry air in a rotating furnace at 500 8C.
+
+Chromium-loaded calcium-hydroxyapatite was prepared utilizing the exchange properties of apatite [22][23][24]26]. A known quantity of CaHAp was introduced in 80 mL of demineralised and boiled water containing Cr(NO 3 ) 3 Á9H 2 O at a concentration varying from 10 À3 to 10 À1 mol dm À3 . The mixture was stirred for 24 h, then filtered and washed with boiled water. The recovered solid was dried at 120 8C and calcined successively at 450 and 550 8C in a rotating furnace flushed with air (60 cm 3 min À1 ). The prepared samples are labelled Cr(x)/CaHAp, where x is the chromium content (wt.%).
+
+Chemical analysis was carried out at the central service of analysis (CNRST-Rabat and CNRS, Solaize, France) by inductive coupling plasma-atomic emission spectroscopy (ICP-AES).
+
+X-ray diffraction patterns were obtained with a Siemens D5000 high-resolution diffractometer using Ni-filtered Cu-Ka radiation. The data were collected at room temperature with a 0.028 step size in 2u, from 2u = 208 to 808. The crystalline phases were identified by comparison with ICSD reference files.
+
+The BET surface area of the samples evacuated at 300 8C was determined by equilibrium adsorption and desorption isotherms of N 2 at 77 K with a Coulter Omnisorp 100 CX apparatus.FTIR transmission spectra were recorded between 400 and 4000 cm À1 at room temperature on a PerkinElmer 1600 spectrometer using self-supporting KBr disks. This technique, very sensitive to the presence of carbonates and pyrophosphates, was used to provide information about the apatite purity.The laser Raman spectra were recorded on a DILOR XY micro-spectrometer using the 514.2 nm excitation line of an Argon Spectra Physics laser. The data were collected with a JOBIN-YVON 1024 Â 256 CCD matrix as multichannel detector.
+
+UV-vis-NIR diffuse reflectance spectra were recorded at room temperature between 190 and 2500 nm on a Varian Cary 5E spectrometer equipped with a double monochromator and an integrating sphere coated with polytetrafluoroethylene (PTFE). PTFE was also used as a reference.
+
+X-ray photoelectron spectra were recorded on a VG Scientific ESCALAB 200A spectrometer utilizing a non-monochromatized Mg Ka radiation (1253.6 eV). The spectra were digitized, summed, smoothed and reconstructed using Gauss-Lorentzian components. In order to minimize charge effects, the measurements were carried out on thin pellets placed on an indium plaque. The carbon C1s peak at 285 eV was used as reference.
+
+Temperature programmed reduction experiments were performed with an apparatus equipped with a thermal conductivity detector and a U-shaped quartz reactor operated at atmospheric pressure. The sample (10-50 mg) was first pretreated with oxygen (5 vol.% O 2 in He) at 673 K for 30 min, evacuated under an argon flow at 673 K and cooled to room temperature. It was then contacted with 5 vol.% H 2 /Ar gas mixture (40 cm 3 min À1 ) before increasing the temperature up to 973 K (heating rate of 10 K min À1 ).
+
+Electron Paramagnetic Resonance (EPR) studies were performed at room temperature and 77 K on a Varian E9 spectrometer in X band using a microwave frequency of 9.15 GHz and a microwave power of 10 mW. The spectra were calibrated with DPPH.
+
+Propane oxidative dehydrogenation tests were carried out in a U-shaped quartz fixed bed continuous flow micro-reactor operated at atmospheric pressure. The catalyst (40 mg), sieved at a particle size of 125-180 mm, was placed in the reactor between two quartz wool plugs. The standard reaction mixture is constituted of 6 vol.% of propane, 3 vol.% of oxygen and 91 vol.% of nitrogen at a total flow rate of 60 cm 3 min À1 . The catalyst is heated under pure nitrogen up to the selected reaction temperature; then the feeding mixture is introduced into the reactor. Products analyses were performed using a FID detector for hydrocarbons and a catharometer for CO x . The carbon balance was close to AE5% in all the catalytic tests performed. The turnover frequency is related either to the total Cr content: TOF (total Cr) = (molar flow rate) Â (conversion)/mol of Cr, or to the Cr 6+ content deduced from the TPR experiments: TOF (Cr 6+ ) = (molar flow rate) Â (conversion)/mol of Cr 6+ (Section 3.5).
+
+Table 1 shows that the synthesized apatites are Ca deficient (Ca/ P % 1.50 instead of 1.67) and that their specific surface areas decrease slightly by increasing the Cr loading. When increasing the initial Cr amount in the solution, the Ca atomic ratio diminishes linearly and the Cr atomic ratio increases (Fig. 1A) which indicates that Ca 2+ ions are substituted by chromium ions in CaHAp. The Cr/ Ca exchange ratio depends upon the nature of chromium species in the solution, which in turn depends on chromium concentration and pH. Typically, to get the Cr(2.9)/CaHAp sample, 0.5 g of calcined CaHAp was introduced in 80 mL of 4.2 Â 10 À3 M solution of Cr(NO 3 ) 3 Á9H 2 O. The pH of the initial chromium solution is 3.0, so it contains exclusively Cr(H 2 O) 6 3+ species characterized by n 1 and n 2 d-d transitions at 415 and 580 nm (see below Section 3.4). After contact with CaHAp, the pH raises to 4.8. This indicates that monohydroxo species Cr(H 2 O) 5 (OH) 2+ (pK a value = 4.3) are present in this solution. The formation of polymers by condensation is very slow [27] and can be excluded. This conclusion is consistent with the red shift of the n 2 and n 1 d-d transitions towards low energy (593 and 425 nm) as OH is a weaker ligand than H 2 O. In a previous work on chromium-doped calcium-hydroxyapatite, Wakamura et al. found a Ca/Cr exchange ratio equal to one [26] and explained it by an anion exchange between [H 2 PO 4 ] À and [Cr(OH) 4 ] À , but the latter species appear only at pH &gt; 8.8. Therefore, in the present work the Cr/Ca exchange ratio can be ascribed to the exchange of Cr(H 2 O) 5 (OH) 2+ and Cr(H 2 O) 6
+
+3+ with Ca 2+ . According to Fig. 1B, which displays the (Cr/Ca) XPS ratio versus the (Cr/Ca) bulk ratio, the majority of Cr ions are located on the surface, even after the calcination procedure at 500 8C; hence the incorporation in the apatite lattice should concern a very small amount of Cr, which explains that the lattice suffers a very slight contraction (see Table 2) in spite of the difference in the ionic radii of Ca 2+ (99 pm) and Cr 3+ (69 pm). Grisafe et al. have synthesized apatites containing pentavalent chromium partially substituting phosphorus by using solid-state techniques at high temperature. Obviously such exchange is most likely irrelevant in the experimental conditions used in the present work or at least in very limited amount [28].
+
+The XRD patterns of Cr(x)/CaHAp (for 0.1 x 3.7) are similar to that of pure calcium-hydroxyapatite (JPCDS no. 00-024-0033) and no peak of crystalline chromia was detected in the diffractograms. Table 2 compares the lattice parameters of CaHAp and Cr(3.7)/CaHAp and shows that both a and c parameters decrease very slightly upon chromium addition. Concomitantly, the volume of the lattice undergoes a small contraction which seems to indicate some minor incorporation of chromium into the CaHAp framework, which is expected as indicated above. Although
+
+No significant difference is detected between the FTIR spectra of pure CaHAp (Fig. 2, spectrum a) and Cr loaded CaHAp (Fig. 2, spectra b and c). The two bands at 3580 and 635 cm À1 are assigned to the stretching and bending modes of OH groups, respectively. The presence of (PO 4 ) 3À is attested by (i) the P-O stretching modes appearing at 1095, 1030 cm À1 (n 3 ) and 965 cm À1 (n 1 ), (ii) the O-P-O bending modes observed at 605, 565 cm À1 (n 4 ) and 475 cm À1 (n 2 ) [29]. Besides those typical bands of CaHAp, two bands at 1640 cm À1 and around 3435 cm À1 are due to adsorbed molecular water, whereas two small peaks at 1415 and 1450 cm À1 indicate the presence of carbonates impurities. In addition, the shoulder at 875 cm À1 is assigned to (HPO 4 ) 2À groups formed upon reaction of some surface (PO 4 ) 3À with water.
+
+The introduction of Cr in the samples (Fig. 2, spectra b and c) leads to the decrease of the intensity of the band at 3580 cm À1 , assigned to the stretching vibrations of structural OH groups located in apatite tunnels. This intensity decrease may be ascribed to the dehydroxylation which might accompany the calcination procedure and the formation, at high loadings, of different chromium species [30,31].
+
+The Raman spectra of CaHAp and Cr(x)/CaHAp (not shown) are identical, presenting only one band at 962 cm À1 ascribed to the n 1 (PO 4 ) band [32], without any signal related to Cr 2 O 3 , even at the highest Cr content.
+
+To our knowledge, no UV-vis study of the CrO x /CaHAp system has been published, in opposition to chromium-loaded alumina, silica, silica-alumina, zeolites, alumino-phosphates [14, 30,31,[33][34][35][36]. The nature and the stability of the chromium species present on these catalysts, generally prepared by impregnation, depend on the features of the support (in particular its acido-basic properties) and on the chromium content. Chromium is present in several species belonging to oxidation states Cr 2+ (d 4 configuration), Cr 3+ (d 3 ), Cr 5+ (d 1 ) and Cr 6+ (d 0 ). For samples prepared by calcination in air, the chromium speciation can be described by: (i) tetrahedral monochromates and polychromates (Cr 6+ , d 0 ), which display three O 2À ! Cr 6+ charge transfers (CT) bands around 230-250, 340-370 and 450 nm, (ii) Cr 3+ in octahedral oxygen environment characterized by three spin-allowed d-d transitions n 3 ( 4 A 2g ! 4 T 1g (P), n 2 ( 4 A 2g ! 4 T 1g ) and n 1 ( 4 A 2g ! 4 T 2g ) located around 280-310 (often masked by charge transfer transitions), 430-450 and 600-650 nm, respectively. In addition, another band appearing around 680-720 nm is sometimes assigned to a spin forbidden d-d transition [36].
+
+The spectrum of CaHAp (Fig. After introduction of chromium and calcination in air (Fig. 3), several new bands appear in the UV-vis range around 645 nm (with a shoulder at 690 nm), 370 nm (with shoulder near 440 nm) and 265-270 nm. The bands at 265, 370 and 440 nm suggest the  presence of Cr 6+ ions in tetrahedral symmetry, probably monochromate [30,31,[33][34][35]. The band centred on 645 nm is associated with the d-d transition 4 A 2g (F) ! 4 T 2g (n 1 ) of Cr 3+ ions in a pseudooctahedral environment. For the shoulder around 690 nm several assignments may be proposed: (i) the 4 A 2g ! 2 T 2g , 2 E g spin forbidden d-d transitions of this species, (ii) a supplementary spin allowed d-d transition arising from Cr 3+ ions in D 4h or C 4v symmetry (degeneracy lift of the 4 T 1g (F) level), (iii) the 2 T 2g ! 2 E g transition of Cr 5+ ions (d 1 ) in octahedral chromyl species resulting from the oxidation of Cr 3+ ions. The Cr 5+ ions are known to substitute phosphorus in the (PO 4 ) groups of the CaHAp lattice as in Ca 10 (PO 4 ) 6-x (CrO 4 ) x F 2 (0 x 6). The band at 690 nm could therefore, be assigned to a ligand field transition of chromium species involving both Cr 3+ and Cr 5+ . Fig. 4 compares the spectra of the same sample (x = 3.7) before calcination, after calcination and after propane ODH test. Before calcination in air, only Cr 3+ ions are present but the band positions (440 and 620 nm) attest the presence of hydroxoaquocomplexes [Cr(H 2 O) 5 (OH)] 2+ (red shift of n 1 and n 2 , see above Section 3.1).
+
+After calcination (spectrum b), Cr 6+ species appear (O 2À ! Cr 6+ charge transfers at 265 and 370 nm) but Cr 3+ species are still present (d-d transitions at 450 and 650 nm), suggesting that some exchanged Cr 3+ ions are incorporated in the apatite matrix, without oxidation upon calcination. After working in propane ODH (spectrum c), the Cr 6+ species disappear, the Cr 3+ d-d bands remain whereas a shoulder emerging around 850 nm confirms the presence of Cr 2+ species [30]. Finally, if the calcination is operated under pure N 2 , no Cr 6+ species are formed (spectrum not shown). Let us also note that the changes of Cr oxidation state modify the colour of the samples. The fresh uncalcined (dried at 120 8C) samples are green. After calcination at 500 8C in air, the chromiumpoorest sample (x = 0.10 wt.%) moves to yellow (formation of Cr 6+ species) whereas the chromium-richest samples are still green. To sum up, after calcination in air, chromium ions are fixed on apatite as isolated species (monochromate), excluding the presence of chromium oxides (Cr 2 O 3 , CrO 3 ). At low Cr content, Cr 6+ species are preponderant and Cr 3+ entities become predominant upon increasing the Cr content. After running, only Cr 3+ and Cr 2+ species were detected.
+
+The temperature programmed reduction of CaHAp does not show any H 2 consumption, confirming that the apatite is stable over the presently investigated range of temperatures (200-700 8C). The profiles of the TPR diagrams of the Cr(x)/CaHAp samples depend on the chromium content (Fig. 5). Below 2 wt.% Cr, the diagrams contain only one peak (I) whose maximum temperature shifts from 434 to 323 8C as the Cr content is increased (Fig. 5, curves a-d). The reduction of these Cr 6+ ions into Cr 3+ ions may occur according to a reaction of the following type: Cr 6+ + 3/2H 2 + 3HO À ! Cr 3+ + 3H 2 O. For x = 2.2 wt.%, a second peak (II) appears around 520 8C (Fig. 5, curve c), which shifts to 470 8C for x = 3.7 (curve d). The presence of this peak involves less reducible species than the previous ones. As Cr 2+ is present on catalysts after running (see Section 3.4) the reduction of Cr 3+ into Cr 2+ may be envisaged, as previously proposed by Jimenez-Lopez for Zr-and La-doped silica [14]. The reduction of polychromates to Cr 3+ is less probable because they are more reducible than monochromate [37]. In addition, the formation of polychromates is not expected by using the exchange method. Table 3 displays the peaks positions, the H 2 uptakes corresponding to these peaks, the H/Cr total and the Cr 6+ /Cr total ratios. The determination of Cr 6+ is based on the H 2 uptake corresponding to peak (I), because peak (II) may correspond to the Cr 3+ /Cr 2+ reduction. The variations of the H/ Cr and Cr 6+ /(Cr) total ratios confirm that upon increasing the Cr loading, the percentage of Cr 3+ ions in the samples increases (decrease of the H/Cr ratio from 2.9 to 0.17). At low Cr concentrations (x &lt; 0.5 wt.%) the chromium is mainly in the Cr 6+ oxidation state and before the reduction, the samples are yellow. After the TPR experiments, they become dark green. In addition, TPR experiments performed on samples calcined under oxygenfree N 2 do not lead to any H 2 consumption, confirming that Cr is exclusively in the Cr 3+ (and Cr 2+ ) oxidation states. In the same way, TPR experiments carried out on samples that underwent propane ODH tests (Section 3.9) showed no hydrogen uptake, suggesting that the reaction mixture (C 3 H 6 /N 2 /O 2 ) already reduced all the Cr species to Cr 3+ (and Cr 2+ ). On the other hand, a series of TPO  experiments showed that the reduced samples surprisingly do not consume any oxygen up to 600 8C. Hence the oxidability of exchanged Cr 3+ ions seems limited to the lowest Cr content, i.e. the apatite ability to generate isolated chromate is limited. In opposition, the impregnation procedure, often used for preparing chromia-alumina catalysts, should favour the formation of Cr 2 O 3 .
+
+Table 4 lists typical XPS data of bulk reference compounds of chromium and of alumina-supported chromium catalysts [38][39][40][41][42][43]. In Cr 3+ and Cr 6+ bulk reference compounds, the binding energies (BE) of Cr2p 3/2 lie in the 576.4-578.3 and 578.8-580.3 eV ranges, respectively, whereas the spin-orbit coupling DE is higher for the former (9.7-9.9 eV) than for the latter (9.0-9.3 eV). The differences existing between the DE values can be explained in terms of the exchange interactions between the 2p electrons and the unpaired 3d electrons.
+
+Table 5 reports the data collected with Cr(x)/CaHAp samples for x = 0.1, 0.6, 1.8 and 3.7 wt.%. The decomposition of the Cr2p 3/2 and Cr2p 1/2 peaks (not possible for x = 0.1) leads to maxima in the 576.8-577.6 and the 578.9-579.6 eV ranges, respectively (Fig. 6). These values, in agreement with the data reported in Table 4, confirm the presence of Cr 3+ and Cr 6+ species on the apatite surface. The Cr 6+ species, predominant at the lowest Cr content (x = 0.10) become minor upon increasing the Cr content (Table 5, Cr 6+ /Cr total ratio). This tendency is also observed in the data obtained from TPR but the values are somewhat different because of uncertainties in the decomposition process. In the experimental conditions used, the photo-reduction of chromate species induced by X-ray flux during data recording does not have a significant effect on the signal associated with Cr 3+ ions [42].
+
+Previous EPR investigations of chromium catalysts have concerned different oxide supports (silica, silica-alumina, titania, zirconia, mordenite, AlPO-5) [17,[44][45][46][47][48] and involved generally the impregnation procedure, which favours the genesis of Cr 2 O 3 . To our knowledge, no study has been devoted to chromium-loaded CaHAp.
+
+The EPR spectra of Cr(x)/CaHAp are presented in Fig. 7. For x = 0.1, the spectrum displays: (i) a well resolved hyperfine structure (see the inset), denoted g, ascribed to isolated Cr 5+ ions in octahedral coordination, (ii) a low intensity broad signal around 1190 G (denoted d) attributed to dispersed Cr 3+ ions in distorted octahedral coordination. Upon increasing the Cr content, appears a broad isotropic signal (often denoted b) at g % 0 and DH = 1150 G, assigned either to interacting Cr 3+ -O-Cr 3+ species or to isolated octahedral Cr 3+ [44]. Hence, the Cr(x)/CaHAp samples contain several paramagnetic chromium species: isolated octahedral and distorted Cr 3+ species together with Cr 5+ ions in low concentration.
+
+Upon calcination in air, exchanged Cr 3+ species suffer significant modifications. XPS data show that the majority of chromium ions are located on the apatite surface, which explains the presence of distorted octahedral Cr 3+ (d phase). Some Cr 3+ ions are oxidized into Cr 6+ , mainly as chromate (UV-vis), but isolated Cr 5+ ions (g phase) are also present (EPR). The Cr 6+ species are predominant only at the lowest Cr content (0.10 wt.%), whereas Cr 3+ ions are preponderant at higher Cr loadings. The Cr 3+ species appear as Cr 3+ -O-Ca 2+ or as Cr 3+ -O-Cr 3+ at higher Cr content (EPR). As discussed below (Section 3.9), the latter is expected to be less active than the former because his basicity is lower. It must also be stressed that, in opposition with supported chromium  [40] Cr(III) 576.6 CrPO 4 [41] Cr(III) 578.3 9.6 K 2 CrO 4 [39] Cr(VI) 579.7 9.3 K 2 CrO 4 [40] Cr(VI) 579.1 K 2 CrO 4 [41] Cr(VI) 580.2 9.1 K 2 Cr 2 O 7 [39] Cr(VI) 579.4 9.3 K 2 Cr 2 O 7 [40] Cr(VI) 579.3 K 2 Cr 2 O 7 [41] Cr(VI) 579.9 9.2 CrO 3 [40] Cr(VI) 579.9 CrO 3 [41] Cr(VI) 580.3 9.1 Alumina-supported chromia [40] Cr(III) 576. 6
+
+Dehydrogenation of light alkanes on CrO x -based catalysts has involved various supports: alumina, silica in various forms, titania, zirconia, zirconium phosphate, niobia. Dehydrogenation studies without oxygen have been more frequent [8,13,31,40,48,49] than oxidative dehydrogenation [14- 16,33,35] but no study has appeared on the CrO x -apatite system.
+
+The catalytic activity of Cr(x)/CaHAp in propane ODH was measured in the 300-550 8C range. The reaction produces mainly propylene, carbon oxides, small amounts of ethylene and methane.
+
+The variation of propane conversion versus time on stream over Cr(3.7)/CaHAp is displayed at 450, 500 and 550 8C (Fig. 8). The decrease of conversion recorded is more important at high temperature (20% at 550 8C) and a quasi-stationary state is reached after about 100 min. The propylene selectivity also decreases versus time on stream at 450 and 500 8C but no deactivation is recorded at 550 8C (Fig. 9A). Nevertheless the propylene yield also decreases on running at any temperature (Fig. 9B).
+
+Let us now examine the influence of chromium content on propane conversion at different temperatures and at stationary state (Fig. 10). The propane conversion first increases with the Cr loading and reaches a maximum for x around 1.25-1.50 wt.%, then it decreases slightly and remains constant. The conversion maximum increases with the reaction temperature. The propylene yield also increases with the Cr content up to about 1 wt.% Cr and then it becomes quasi-stationary (around 7% at 550 8C, not shown).
+
+Fig. 11A and B describes the influence of chromium content on the TOF at different temperatures and at stationary state. The TOF calculated from total Cr (see Section 2.3) decreases markedly with the chromium content (Fig. 11A), indicating that the Cr ions fixed at low Cr content are much more active. On the other hand, the TOF (Cr 6+ ) (Fig. 11B), passes through a maximum for Cr (wt.%) #1.4-1.6, with the highest values recorded at high temperature (500-550 8C). However the Cr 6+ content is the initial one. As reported above (Section 3.4, Fig. 4, spectrum c), UV-vis spectra show that the Cr 6+ ions are reduced by the reaction mixture, generating Cr 3+ and Cr 2+ species. Hence the Cr 3+ sites generated are more active. However, this tendency is weakened at higher Cr loading, which can be explained by the formation of less basic Cr 3+ -O-Cr 3+ entities (see below).
+
+As cited above, the propane conversion at stationary state increases with temperature and reaches 18% at 550 8C for x ! 1.8 wt.% Cr (Fig. 10). The samples containing lower chromium loadings (x 0.6) are less active although their TOF is higher (Fig. 11A). The influence of the reaction temperature on the propylene selectivity is also related to the Cr loading (Fig. 12).
+
+For x 0.6, the selectivity is very poor and increases slightly with temperature. On the other hand, for x ! 1.2, it amounts to about 90% at 300 8C, but decreases sharply upon increasing the temperature, reaching a minimum around 400-450 8C before increasing slightly up to 550 8C. The conversion-selectivity diagrams (Fig. 13) show that the performance of the catalysts depends on the Cr content mainly at low conversion. For conversion &gt; 16%, the performance is less different but the best one is recorded for x ! 2.9 wt.% (selectivity near 40%, propylene yield 7%).
+
+Let us now compare the influence of the pretreatment (N 2 or O 2 ) on the catalytic performance of the same catalyst (Fig. 14). On the sample calcined in N 2 , which contains only Cr 3+ species (Section 3.4), the propane conversion is about 20% lower than on the  catalysts pretreated with oxygen (which contains both Cr 6+ and Cr 3+ ) but no deactivation occurs, especially at 550 8C. Hence, the presence of initial Cr 6+ enhances the conversion and favours the deactivation. The acidity of these Cr 6+ centres, which should initiate the cracking of propane (methane and ethylene are detected as products) should improve the conversion. However,    the conversion decreases on running because the Cr 6+ species are reduced by the reaction mixture.
+
+The propylene selectivity may be related to the basicity of the Cr 3+ /apatite system which favours the breaking of C-H bond of propane and the formation of propylene. As previously proposed [24] the oxidative dehydrogenation abilities of transition metal ions (TMI) supported on calcium-hydroxyapatite are related to the basic features of CaHAp which promotes hydrogen abstraction, the TMI favouring the reactivity of bridging oxygens.
+
+It is well accepted that, in ODH of light alkanes, the selectivity decreases when the conversion increases. This is verified for x ! 1.8 but the Cr-poorest catalysts (x 1.2) do not obey this rule. As at low temperature the reaction mixture cannot reduce the Cr 6+ ions, the selectivity is low on chromium-poor samples (Cr 6+ -rich) and high on chromium-rich samples (Cr 3+ -rich). Increasing the reaction temperature promotes the performance of chromium-poorest sample. Concerning the drop of propylene selectivity with temperature on high Cr loadings (Fig. 12), it may be associated with the marked decrease of basicity induced by the substitution of Ca 2+ by numerous Cr 3+ , generating [Cr 3+ -O-Cr 3+ ] sites. As Cr 3+ is more acid than Ca 2+ , the decrease of basicity overcompensate the positive effect of chromium on oxygen reactivity for the chromium-richest samples.
+
+The role of Cr 6+ species in the ODH of isobutane over chromiaalumina has been claimed by several authors. Hakuli et al. [48] have proposed that the active sites are Cr 3+ sites resulting from Cr 6+ reduction under dehydrogenation conditions. Weckhuysen and Schoonheydt [49] showed by in situ DRS that there is a semiquantitative relationship between the catalytic activity in isobutane ODH and the amount of Cr 3+ formed by reduction of Cr 6+ ions.
+
+The Cr 6+ sites initially present on the catalysts may be considered as the active sites but their role is limited to the beginning of the time on stream as they are reduced by the reaction mixture. Furthermore, since the Cr 3+ ions cannot be oxidized in the reaction temperature range (500-550 8C), a conventional Cr 6+ /Cr 3+ redox mechanism of Mars and van Krevelen type cannot be considered for propane ODH. However, the Cr 3+ species are believed to be responsible for the propylene formation. It is proposed that in Cr 3+ -O-Ca 2+ entities, the presence of Cr 3+ favours the release of the neighbour lattice oxygen, labelled as O 0 . According to the formalism developed by Kro ¨ger [50], the formation of propylene may proceed as follows:
+
+where V 0 is a neutral oxygen vacancy (containing two electrons). The vacancy is then replenished according to:
+
+The propylene production may also involve the formation of Cr 2+ ions instead of neutral oxygen vacancy:
+
+where V 0 2+ represents an oxygen vacancy containing no electrons.
+
+This vacancy is then replenished according to:
+
+The mechanism described by Eqs. (1) and (2) involves oxygen vacancies whereas Eqs. ( 3) and (4) imply a Cr 3+ /Cr 2+ redox mechanism.
+
+In chromium-loaded hydroxyapatite catalysts prepared by cation exchange and calcination in air, chromium ions are present as isolated species, mainly as Cr 6+ (monochromates) and Cr 3+ . The Cr 6+ sites initially present may be considered as active sites in propane ODH but their role is limited to the beginning of running because they are reduced by the reaction mixture. Isolated Cr 3+ species are predominant (except at very low Cr content) at stationary state but Cr 2+ species are also present. It is proposed that, in Cr 3+ -O-Ca 2+ entities, the presence of Cr 3+ favours the release of the neighbour lattice oxygen, leaving either an oxygen vacancy or a Cr 2+ species. The Cr 3+ -O-Cr 3+ species, generated at higher Cr content, are considered as less active because they are less basic than Cr 3+ -O-Ca 2+ . The production of propylene requires hydrogen abstraction from propane and oxygen lability. The former is favoured by the basicity of apatite and the latter by the presence of Cr 3+ . However, the decrease of the basicity induced by the fixation of Cr 3+ counterbalances the positive effect of chromium on oxygen reactivity, which limits the performance (about 7% propylene yield at 550 8C).
+
+* (10 À5 mol g À1 ).</full_text>
+	<references>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>S Airaksinen</author>
+				<author>M Ban ˜ares</author>
+				<author>A Krause</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>Stud. Surf. Sci. Catal</title>
+			<authors>
+				<author>S Airaksinen</author>
+				<author>J Kanervo</author>
+				<author>A Krause</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>Top. Catal</title>
+			<authors>
+				<author>S Fuchs</author>
+				<author>L Leveles</author>
+				<author>K Seshan</author>
+				<author>L Lefferts</author>
+				<author>A Lemonidou</author>
+				<author>J Lercher</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>M Chaar</author>
+				<author>D Patel</author>
+				<author>H Kung</author>
+			</authors>
+			<date>1988</date>
+		</reference>
+		<reference>
+			<title>Catal. Today</title>
+			<authors>
+				<author>M Ban ˜ares</author>
+			</authors>
+			<date>1999</date>
+		</reference>
+		<reference>
+			<title>Adv. Catal</title>
+			<authors>
+				<author>H Kung</author>
+			</authors>
+			<date>1994</date>
+		</reference>
+		<reference>
+			<title>Appl. Catal. A</title>
+			<authors>
+				<author>E Mamedov</author>
+				<author>V Corte ´s-Corbera ´n</author>
+			</authors>
+			<date>1995</date>
+		</reference>
+		<reference>
+			<title>Appl. Catal. A</title>
+			<authors>
+				<author>M Bettahar</author>
+				<author>G Costentin</author>
+				<author>L Savary</author>
+				<author>J Lavalley</author>
+			</authors>
+			<date>1996</date>
+		</reference>
+		<reference>
+			<title>Appl. Catal. A</title>
+			<authors>
+				<author>M Bhasin</author>
+				<author>J Mccain</author>
+				<author>B Vora</author>
+				<author>T Imai</author>
+				<author>P Pujado</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>Curr. Top. Catal</title>
+			<authors>
+				<author>H Dai</author>
+				<author>C Au</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>Appl. Catal. A</title>
+			<authors>
+				<author>A Klisinska</author>
+				<author>K Samson</author>
+				<author>I Gressel</author>
+				<author>B Grzybowska</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>R Singh</author>
+				<author>M Ban ˜ares</author>
+				<author>G Deo</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>K Fujdala</author>
+				<author>T Tilley</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>J. Mol. Catal. A: Chem</title>
+			<authors>
+				<author>C Nenu</author>
+				<author>P Bodart</author>
+				<author>B Weckhuysen</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>S Rossi</author>
+				<author>G Ferraris</author>
+				<author>S Fremiotti</author>
+				<author>E Garrone</author>
+				<author>G Ghiotti</author>
+				<author>M Campa</author>
+				<author>V Indovina</author>
+			</authors>
+			<date>1994</date>
+		</reference>
+		<reference>
+			<title>Langmuir</title>
+			<authors>
+				<author>A Jime ´nez-Lo ´pez</author>
+				<author>E Rodriguez-Castello ´n</author>
+				<author>J Santamaria-Gonzalez</author>
+				<author>P Braos-Garcia</author>
+				<author>E Felici</author>
+				<author>F Marmottini</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>Appl. Catal. A</title>
+			<authors>
+				<author>A Jime ´nez-Lo ´pez</author>
+				<author>E Rodriguez-Castello ´n</author>
+				<author>P Maireles-Torres</author>
+				<author>L Diaz</author>
+				<author>J</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>Catal. Lett</title>
+			<authors>
+				<author>Y Liu</author>
+				<author>W Feng</author>
+				<author>L Wang</author>
+				<author>Y Cao</author>
+				<author>W Dai</author>
+				<author>H He</author>
+				<author>K Fan</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>M Cherian</author>
+				<author>M Someswara</author>
+				<author>A Rao</author>
+				<author>I Hirt</author>
+				<author>G Wachs</author>
+				<author>Deo</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>Catal. Today</title>
+			<authors>
+				<author>M Cherian</author>
+				<author>M Someswara</author>
+				<author>G Rao</author>
+				<author>Deo</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>Appl. Catal. A</title>
+			<authors>
+				<author>B Jibril</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Catal. Lett</title>
+			<authors>
+				<author>J El-Idrissi</author>
+				<author>M Kacimi</author>
+				<author>F Bozon-Verduraz</author>
+				<author>M Ziyad</author>
+			</authors>
+			<date>1998</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>Y Brik</author>
+				<author>M Kacimi</author>
+				<author>M Ziyad</author>
+				<author>F Bozon-Verduraz</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>Catal. Lett</title>
+			<authors>
+				<author>A Aaddane</author>
+				<author>M Kacimi</author>
+				<author>M Ziyad</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>J. Mol. Catal. A: Chem</title>
+			<authors>
+				<author>G Landi</author>
+				<author>L Lisi</author>
+				<author>G Russo</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>N Cheikhi</author>
+				<author>M Kacimi</author>
+				<author>M Rouimi</author>
+				<author>M Ziyad</author>
+				<author>L Liotta</author>
+				<author>G Pantaleo</author>
+				<author>G Deganello</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>Appl. Catal. A</title>
+			<authors>
+				<author>Z Boukha</author>
+				<author>M Kacimi</author>
+				<author>M Pereira</author>
+				<author>J Faria</author>
+				<author>J Figueiredo</author>
+				<author>M Ziyad</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>J. Mol. Catal. A: Chem</title>
+			<authors>
+				<author>Z Boukha</author>
+				<author>M Kacimi</author>
+				<author>M Ziyad</author>
+				<author>A Ensuque</author>
+				<author>F Bozon-Verduraz</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>K El-Kabouss</author>
+				<author>M Kacimi</author>
+				<author>M Ziyad</author>
+				<author>S Ammar</author>
+				<author>F Bozon-Verduraz</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Chem</title>
+			<authors>
+				<author>K Kabouss</author>
+				<author>M Kacimi</author>
+				<author>M Ziyad</author>
+				<author>S Ammar</author>
+				<author>A Ensuque</author>
+				<author>J.-Y Piquemal</author>
+				<author>F Bozon-Verduraz</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>Mater. Res</title>
+			<authors>
+				<author>M Santos</author>
+				<author>M Oliveira</author>
+				<author>L Palhares De Freitas Souza</author>
+				<author>H Mansur</author>
+				<author>W Vasconcelos</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Colloids Surf. A</title>
+			<authors>
+				<author>M Wakamura</author>
+				<author>K Kandori</author>
+				<author>T Ishikawa</author>
+			</authors>
+			<date>1998</date>
+		</reference>
+		<reference>
+			<title>Inorg. Chem</title>
+			<authors>
+				<author>H Stu</author>
+				<author>L Spiccia</author>
+				<author>F Rotzinger</author>
+				<author>W Marty</author>
+			</authors>
+			<date>1989</date>
+		</reference>
+		<reference>
+			<title>J. Colloid Interface Sci</title>
+			<authors>
+				<author>K Agashe</author>
+				<author>J Regalbuto</author>
+			</authors>
+			<date>1997</date>
+		</reference>
+		<reference>
+			<title>Metal Oxide Chemistry and Synthesis</title>
+			<authors>
+				<author>J Jolivet</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>J. Solid State Chem</title>
+			<authors>
+				<author>D Grisafe</author>
+				<author>F Hummel</author>
+			</authors>
+			<date>1970</date>
+		</reference>
+		<reference>
+			<title>Appl. Catal. A</title>
+			<authors>
+				<author>A Crosman</author>
+				<author>G Gelbard</author>
+				<author>G Poncelet</author>
+				<author>V Parvulescu</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Chem. Rev</title>
+			<authors>
+				<author>B Weckhuysen</author>
+				<author>I Wachs</author>
+				<author>R Schoonheydt</author>
+			</authors>
+			<date>1996</date>
+		</reference>
+		<reference>
+			<title>J. Chem. Soc. Faraday Trans</title>
+			<authors>
+				<author>B Weckhuysen</author>
+				<author>A Bensalem</author>
+				<author>R Schoonheydt</author>
+			</authors>
+			<date>1998</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>R Puurunen</author>
+				<author>B Weckhuysen</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>J. Phys. Chem. B</title>
+			<authors>
+				<author>A Beale</author>
+				<author>D Grandjean</author>
+				<author>J Kornatowski</author>
+				<author>P Glatzel</author>
+				<author>F De Groot</author>
+				<author>B Weckhuysen</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>J. Phys. Chem. Solids</title>
+			<authors>
+				<author>C Silva</author>
+				<author>A Sombra</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>K Takehira</author>
+				<author>Y Ohishi</author>
+				<author>T Shishido</author>
+				<author>T Kawabata</author>
+				<author>K Takaki</author>
+				<author>Q Zhang</author>
+				<author>Y Wang</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>J. Mol. Catal. A</title>
+			<authors>
+				<author>S Khaddar-Zine</author>
+				<author>A Ghorbel</author>
+				<author>C Naccache</author>
+			</authors>
+			<date>1999</date>
+		</reference>
+		<reference>
+			<title>Appl. Catal. A</title>
+			<authors>
+				<author>G Neri</author>
+				<author>A Pistone</author>
+				<author>S Rossi</author>
+				<author>E Rombi</author>
+				<author>C Milone</author>
+				<author>S Galvagno</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Spectrochim. Acta, Part A</title>
+			<authors>
+				<author>A Navas</author>
+				<author>B Reddy</author>
+				<author>F Nieto</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Appl. Catal</title>
+			<authors>
+				<author>M Zaki</author>
+				<author>N Fouad</author>
+				<author>J Leyrer</author>
+				<author>H Kno ¨zinger</author>
+			</authors>
+			<date>1986</date>
+		</reference>
+		<reference>
+			<title>Thermochim. Acta</title>
+			<authors>
+				<author>M Zaki</author>
+				<author>N Fouad</author>
+				<author>G Bond</author>
+				<author>S Tahir</author>
+			</authors>
+			<date>1996</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>W Gru ¨nert</author>
+				<author>E Shpiro</author>
+				<author>R Feldhaus</author>
+				<author>K Anders</author>
+				<author>G Antoshin</author>
+				<author>K Minachev</author>
+			</authors>
+			<date>1986</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>B Grzybowska</author>
+				<author>J Sloczynski</author>
+				<author>R Grabowski</author>
+				<author>K Wcislo</author>
+				<author>A Kozlowska</author>
+				<author>J Stoch</author>
+				<author>J Zielinski</author>
+			</authors>
+			<date>1998</date>
+		</reference>
+		<reference>
+			<title>Surf. Interface Anal</title>
+			<authors>
+				<author>E Desimoni</author>
+				<author>C Malitesta</author>
+				<author>P Zambonin</author>
+				<author>J Rivie `re</author>
+			</authors>
+			<date>1988</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>F Cavani</author>
+				<author>M Koutyrev</author>
+				<author>F Trifiro</author>
+				<author>´</author>
+				<author>A Bartolini</author>
+				<author>D Ghisletti</author>
+				<author>R Iezzi</author>
+				<author>A Santucci</author>
+				<author>G Del</author>
+				<author>Piero</author>
+			</authors>
+			<date>1996</date>
+		</reference>
+		<reference>
+			<title>Bull. Chem. Soc. Jpn</title>
+			<authors>
+				<author>Y Okamoto</author>
+				<author>M Fujii</author>
+				<author>T Imanaka</author>
+				<author>S Teranishi</author>
+			</authors>
+			<date>1976</date>
+		</reference>
+		<reference>
+			<title>Appl. Surf. Sci</title>
+			<authors>
+				<author>J Sainio</author>
+				<author>M Aronniemi</author>
+				<author>O Pakarinen</author>
+				<author>K Kauraala</author>
+				<author>S Airaksinen</author>
+				<author>O Krause</author>
+				<author>J Lahtinen</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>Appl. Catal. A</title>
+			<authors>
+				<author>A Rahman</author>
+				<author>M Mohamed</author>
+				<author>M Ahmed</author>
+				<author>A Aitani</author>
+			</authors>
+			<date>1995</date>
+		</reference>
+		<reference>
+			<title>J. Chem. Soc. Faraday Trans</title>
+			<authors>
+				<author>B Weckhuysen</author>
+				<author>R Schoonheydt</author>
+				<author>F Mabbs</author>
+				<author>D Collison</author>
+			</authors>
+			<date>1996</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>K Ko ¨hler</author>
+				<author>C Schla ¨pfer</author>
+				<author>A Zelewsky</author>
+				<author>J Nickl</author>
+				<author>J Engweiler</author>
+				<author>A Baı ¨ker</author>
+			</authors>
+			<date>1993</date>
+		</reference>
+		<reference>
+			<title>J. Phys. Chem. Solids</title>
+			<authors>
+				<author>R De Biasi</author>
+				<author>M Grillo</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>A Cimino</author>
+				<author>D Cordischi</author>
+				<author>S Rossi</author>
+				<author>G Ferrraris</author>
+				<author>D Gazzoli</author>
+				<author>V Indovina</author>
+				<author>G Minelli</author>
+				<author>M Occhiuzi</author>
+				<author>M Valigi</author>
+			</authors>
+			<date>1991</date>
+		</reference>
+		<reference>
+			<title>J. Catal</title>
+			<authors>
+				<author>A Hakuli</author>
+				<author>M Harlin</author>
+				<author>L Backman</author>
+				<author>A Krause</author>
+			</authors>
+			<date>1999</date>
+		</reference>
+		<reference>
+			<title>Appl. Catal. A</title>
+			<authors>
+				<author>A Hakuli</author>
+				<author>A Kyto ¨kivi</author>
+				<author>A Krause</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>Catal. Today</title>
+			<authors>
+				<author>B Weckhuysen</author>
+				<author>R Schoonheydt</author>
+			</authors>
+			<date>1999</date>
+		</reference>
+		<reference>
+			<title>Chemistry of Imperfect Crystals</title>
+			<authors>
+				<author>F Kro ¨ger</author>
+			</authors>
+			<date>1964</date>
+		</reference>
+		<reference>
+			<title>Transition Metal Oxides</title>
+			<authors>
+				<author>P Cox</author>
+			</authors>
+			<date>1995</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1016/j.jcat.2005.01.005</number>
+		<number>DOI-10.1016/S0167-2991(01)80296-2</number>
+		<number>DOI-10.1023/A:1016662101839</number>
+		<number>DOI-10.1016/0021-9517(88)90226-6</number>
+		<number>DOI-10.1016/S0920-5861(99)00053-X</number>
+		<number>DOI-10.1016/S0360-0564(08)60655-0</number>
+		<number>DOI-10.1016/0926-860X(95)00056-9</number>
+		<number>DOI-10.1016/0926-860X(96)00138-X</number>
+		<number>DOI-10.1016/S0926-860X(01)00816-X</number>
+		<number>DOI-10.1016/j.apcata.2006.04.028</number>
+		<number>DOI-10.1016/j.jcat.2005.05.010</number>
+		<number>DOI-10.1016/S0021-9517(03)00141-6</number>
+		<number>DOI-10.1016/j.molcata.2006.12.037</number>
+		<number>DOI-10.1006/jcat.1994.1183</number>
+		<number>DOI-10.1021/la991321v</number>
+		<number>DOI-10.1016/S0926-860X(01)00656-1</number>
+		<number>DOI-10.1007/s10562-005-9622-4</number>
+		<number>DOI-10.1016/S0021-9517(02)93759-0</number>
+		<number>DOI-10.1016/S0920-5861(02)00306-1</number>
+		<number>DOI-10.1016/j.apcata.2003.12.054</number>
+		<number>DOI-10.1023/A:1019025600050</number>
+		<number>DOI-10.1006/jcat.2001.3262</number>
+		<number>DOI-10.1023/A:1009018101539</number>
+		<number>DOI-10.1016/j.molcata.2005.06.018</number>
+		<number>DOI-10.1016/j.jcat.2005.03.016</number>
+		<number>DOI-10.1016/j.apcata.2006.10.029</number>
+		<number>DOI-10.1016/j.molcata.2007.01.048</number>
+		<number>DOI-10.1016/j.jcat.2004.05.007</number>
+		<number>DOI-10.1039/B602514E</number>
+		<number>DOI-10.1590/S1516-14392004000400017</number>
+		<number>DOI-10.1016/S0927-7757(98)00486-5</number>
+		<number>DOI-10.1021/ic00300a015</number>
+		<number>DOI-10.1006/jcis.1996.4493</number>
+		<number>DOI-10.1016/0022-4596(70)90065-4</number>
+		<number>DOI-10.1016/j.apcata.2003.12.021</number>
+		<number>DOI-10.1021/cr940044o</number>
+		<number>DOI-10.1039/a801710g</number>
+		<number>DOI-10.1006/jcat.2002.3686</number>
+		<number>DOI-10.1021/jp0531006</number>
+		<number>DOI-10.1016/j.jpcs.2003.10.071</number>
+		<number>DOI-10.1016/j.jcat.2004.03.014</number>
+		<number>DOI-10.1016/S1381-1169(99)00204-6</number>
+		<number>DOI-10.1016/j.apcata.2003.10.002</number>
+		<number>DOI-10.1016/j.saa.2003.11.024</number>
+		<number>DOI-10.1016/S0166-9834(00)81368-8</number>
+		<number>DOI-10.1016/0040-6031(96)02874-2</number>
+		<number>DOI-10.1016/0021-9517(86)90079-5</number>
+		<number>DOI-10.1006/jcat.1998.2203</number>
+		<number>DOI-10.1002/sia.740130210</number>
+		<number>DOI-10.1006/jcat.1996.0023</number>
+		<number>DOI-10.1246/bcsj.49.859</number>
+		<number>DOI-10.1016/j.apsusc.2005.02.029</number>
+		<number>DOI-10.1016/0926-860X(94)00204-5</number>
+		<number>DOI-10.1039/ft9969202431</number>
+		<number>DOI-10.1006/jcat.1993.1266</number>
+		<number>DOI-10.1016/j.jpcs.2005.08.089</number>
+		<number>DOI-10.1016/0021-9517(91)90197-C</number>
+		<number>DOI-10.1006/jcat.1999.2468</number>
+		<number>DOI-10.1016/S0926-860X(99)00310-5</number>
+		<number>DOI-10.1016/S0920-5861(99)00047-4</number>
+	</reference_dois>
+</document>

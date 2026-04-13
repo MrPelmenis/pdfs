@@ -1,15 +1,19 @@
 PEDOFIILI TODO 2:
-
-Pasmucinaat servera kodu lai nav fake zinas + mos silencot zinas no piem pdf2doi
-
 Ja var atrast no bildes:
 imge/image anotaion lai var grobid dabuut info no bildes + mekleesaan
-
 So autoru DOI nummuri..
 
+front end lai pasaka ka ""processing in background might take a while""
+
+CHART:
+kraasa peec vecuma
+izmeers ir basltoties uz citaitons (log vai sqrt)
+autorus var dabuut no DOI
+slideri vecumam
+forma nav aplis bet rounded rectangle :|
+
+autoriem mafijas izdomaat
 
 
-references charts savstarpejos linkus
-+
-tas pats ar autoriem, autori katram rakstam mafijas kip
-
+atrast dooi preciizaak
+skatities ko genereja klaudija

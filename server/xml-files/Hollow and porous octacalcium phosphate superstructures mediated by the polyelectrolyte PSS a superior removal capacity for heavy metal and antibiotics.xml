@@ -1,0 +1,789 @@
+<document>
+	<file>./pdf-files/Hollow and porous octacalcium phosphate superstructures mediated by the polyelectrolyte PSS a superior removal capacity for heavy metal and antibiotics.pdf</file>
+	<title>Hollow and porous octacalcium phosphate superstructures mediated by the polyelectrolyte PSS: a superior removal capacity for heavy metal and antibiotics</title>
+	<date>2020</date>
+	<doi_number>10.1007/s10853-020-04539-0</doi_number>
+	<img_preview_path>./pdf-preview-images/Hollow and porous octacalcium phosphate superstructures mediated by the polyelectrolyte PSS a superior removal capacity for heavy metal and antibiotics.jpeg</img_preview_path>
+	<authors>
+		<author>Jianhua Zhu</author>
+		<author>Jiacai Shu</author>
+		<author>Xiaojun Yue</author>
+		<author>Yiping Su</author>
+	</authors>
+	<abstract>We report an efficient method for synthesis of hollow and porous octacalcium phosphate (OCP) superstructures composed of ultrathin nanosheets controlled by the negatively charged polyelectrolyte of poly(sodium 4-styrene sulfonate). They possess high specific surface areas, regulated pore structure and surface property, facilitating high adsorption of various pollutants, such as Cu(II), Cd(II) and tetracycline (TC), with the maximum adsorption capacities of 135.69, 147.28 and 52.63 mg g -1 , respectively. Strikingly, the hollow OCP superstructures exhibit superhigh Pb(II) adsorption capacity of 1868.6 mg g -1 owing to the well matching between crystal lattices before and after the ion exchange process. The kinetic and isotherm processes fit well with the pseudo-second-order model and the Langmuir model, respectively. The results demonstrated that the adsorption of heavy metal ions mainly attributes to the cation exchange and that the adsorption of TC is caused by the formation of TC-Ca complexion. The mineral-based adsorbents prepared via the biomimetic approach may have a very broad application for water pollution treatment.</abstract>
+	<methods>
+		<method>
+			<heading>Experimental Preparation of OCP and OCP/PSS</heading>
+			<text>Both samples were prepared via a gas diffusion procedure at room temperature (22 ± 1 °C) [32]. Typically, 1 mg PSS was added into the NaH 2 PO 4 aqueous solution (5 mL, 30 mM). Then, above solution was added into 5 mL CaCl 2 aqueous solution (40 mM). The mixed solution was covered with Parafilm containing three-needle holes and placed in a closed desiccator containing a 20 mL ammonium hydroxide vial covered with Parafilm with a hole. After 6 h, white precipitates were centrifuged at 6000 rpm, washed several times by distilled water and freeze-dried for further characterization.</text>
+		</method>
+		<method>
+			<heading>Adsorption experiments</heading>
+			<text>Cd(II),Cu(II), Pb(II) and TC were employed as the target pollutants for the adsorption experiments. One hundred-milliliter stoppered conical flasks were used to perform the batch adsorption experiments. In a typical test, 25 mg adsorbents were added to each flask containing 100 mL of Cd(II), Cu(II), Pb(II) and TC aqueous solutions with different concentrations. The flasks were shaken in a reciprocating air bath oscillator with a light shelter at 200 rpm. Before mixing with the adsorbents, the pH values of the heavy metal ions solution were adjusted using 0.1 M HCl or 0.1 M NaOH. The concentrations of pollutants were analyzed by ICP-OES and UV-Vis spectrometer. The recorded characteristic absorption peak at 358 nm was evaluated by the Beer's law. The absorbance versus concentration graphs were plotted via calibrated by the defined TC concentrations (Fig. S1, ESI ), and unknown concentration was calculated from the corresponding equations. All adsorption experiments were carried out at 25 °C, and all tests were performed in triplicate.</text>
+		</method>
+		<method>
+			<heading>Electronic supplementary material:</heading>
+			<text>The online version of this article (https://doi.org/10.1007/s108 53-020-04539-0) contains supplementary material, which is available to authorized users.</text>
+		</method>
+	</methods>
+	<full_text>Pollutants, such as heavy metal ions and antibiotic contaminants, even in a relatively low concentration in the environments are serious threats to the human health and ecosystem due to its toxic to organisms and possible accumulation in the food cycle [1]. According to the national Comprehensive Sewage Discharge Standards, as the first type of pollutants, the maximum allowable emission concentrations of Cd 2?  and Pb 2? are 0.1 and 1 mg L -1 , respectively. As the second type of pollutants, the maximum allowable Cu 2? emission concentration is divided into three standards, the first standard is 0.5 mg L -1 ; the secondary standard is 1 mg L -1 ; the tertiary standard is 2 mg L -1 . The maximum allowable drainage of tetracycline in the pharmaceutical industry's pharmaceutical raw materials is 1900 m 3 t -1 . Thus, it is urgently required to effectively remove these pollutants from the ecology environment. Up to now, various methods including ion exchange [2], coprecipitation [3], evaporation [4], oxidation [5] and biological treatment [6], electrolysis [7], ultrafiltration [8], reverse osmosis [9] and adsorption [10] have been proposed to remove these pollutants. Among them, the adsorption technique is the extensively adopted because of its high cost-effectiveness, easy accessibility and scale-up synthesis.
+
+Over the past decades, various adsorbents have been developed including hydrogels [11], clays [12], MOFs [13], carbon-based materials [14] and biosorbents [15]. Materials with high specific surface areas, large porous volume and abundant functional groups are always appreciated. However, many adsorbents cannot be widely applied because of the low adsorption capacities, expensive or complicated synthetic procedure. Yet, mineral-based adsorbents are preferred owing to their low environment loading, low cost and easy batch product [16]. Thus, many efforts have recently been made to develop these adsorbents with high pollutant removal efficiency and abundant resources. The newly developed Fe-and MnO 2 -based adsorbents were demonstrated to have good cleanup of Pb(II) [17]. Amorphous calcium carbonates were also reported to have ultrafast adsorption on heavy metal ions and even radioactive metal ion due to its high solubility and excellent dispersiblity [18,19]. In the previous research, we reported nanosheet-structured BaCO 3 microspheres presented superior adsorption capacity for Cr(VI) removal [20].
+
+Recently, calcium phosphates (CaPs) have been extensively studied as excellent adsorbents to remove heavy metal ion and organic pollutants [21]. They were important biomaterials [22] applied to many fields including tissue engineering [23], drug delivery [24] and contaminant removal [25]. Among different CaPs, octacalcium phosphate (OCP) has the fascinating layered microstructures containing an alternating apatite layer and a hydrated layer [26]. It is usually used for the bone repair due to the more resorbable and higher osteoinduction than hydroxyapatite (HAP) and b-tricalcium phosphate [27]. Comparatively speaking, reports on the pollutant removal by OCP had scarcely been demonstrated [28]. Considering the layered microstructures similar to many 2D adsorbents such as graphene oxide nanosheets [29], Ti 3 C 2 T x (T = OH or F) [30] and layered double hydroxides [31], OCP may have high adsorption performance.
+
+Herein, we present a biomimetic strategy to synthesize hollow and porous OCP superstructures (denoted as OCP/PSS) mediated by the negatively charged polyelectrolyte of PSS. They were composed of intertwined ultrathin nanosheets with regulated pore structure and surface property, providing more active adsorption sites for high adsorption. The adsorption kinetics and capacity in relation to the effect of factors, such as initial solution pH, adsorbent dosage and initial concentrations on their adsorption performance were investigated. Compared with other adsorbents, hollow OCP/PSS microspheres displayed outstanding adsorption toward Pb(II) with the maximum adsorption capacity of 1868.6 mg g -1 . This work provides an attracting and high efficiency application of OCP-based adsorbents in environmental cleanup via a low-cost, fast and easy scale-up synthetic procedure.
+
+Both samples were prepared via a gas diffusion procedure at room temperature (22 ± 1 °C) [32]. Typically, 1 mg PSS was added into the NaH 2 PO 4 aqueous solution (5 mL, 30 mM). Then, above solution was added into 5 mL CaCl 2 aqueous solution (40 mM). The mixed solution was covered with Parafilm containing three-needle holes and placed in a closed desiccator containing a 20 mL ammonium hydroxide vial covered with Parafilm with a hole. After 6 h, white precipitates were centrifuged at 6000 rpm, washed several times by distilled water and freeze-dried for further characterization.
+
+Cd(II),Cu(II), Pb(II) and TC were employed as the target pollutants for the adsorption experiments. One hundred-milliliter stoppered conical flasks were used to perform the batch adsorption experiments. In a typical test, 25 mg adsorbents were added to each flask containing 100 mL of Cd(II), Cu(II), Pb(II) and TC aqueous solutions with different concentrations. The flasks were shaken in a reciprocating air bath oscillator with a light shelter at 200 rpm. Before mixing with the adsorbents, the pH values of the heavy metal ions solution were adjusted using 0.1 M HCl or 0.1 M NaOH. The concentrations of pollutants were analyzed by ICP-OES and UV-Vis spectrometer. The recorded characteristic absorption peak at 358 nm was evaluated by the Beer's law. The absorbance versus concentration graphs were plotted via calibrated by the defined TC concentrations (Fig. S1, ESI ), and unknown concentration was calculated from the corresponding equations. All adsorption experiments were carried out at 25 °C, and all tests were performed in triplicate.
+
+The OCP superstructures prepared in the gas diffusion procedure are typical flowerlike microspheres about 3-5 lm in diameters (Fig. 1a and b and insets). TEM images show that pure OCP microspheres comprise ultrathin nanosheets about 2 lm in length and 13 nm in thickness (Fig. 1b), which tend to grow into blade-shaped nanobelts (Fig. 1a). The corresponding SAED result exhibits a typical single pattern of octacalcium phosphate, elongated along the c-axis (inset in Fig. 1b). FESEM images reveal that OCP/PSS microspheres are built up of curved and intertwined nanosheets with smaller mean length (Fig. 1c and the inset), with respect to those of pure OCP. The composed nanosheets about 20 nm in thickness also exhibit the typical SAED pattern attributable to octacalcium phosphate. Interestingly, the hollow cavities about 2 lm in size were observed in the OCP/PSS superstructures (Figs. 1d andS2,  ESI ).
+
+XRD patterns (Fig. 2a) further confirm that both samples are octacalcium phosphate hydrate (Ca 8- H 2 (PO 4 ) 6 Á5H 2 O, JCPDS PDF#26-1056). The characteristic peaks of standard OCP at 4.72°shift left to about 4.60°for both samples (inset in Fig. 1a), indicating the bigger interplanar spacings. Further, small peaks at 4.0 were also observed, which were attributed to the diffusion of NH 4
+
+? ions into the interlayer of OCP. NH 4
+
+? ions have the larger ionic radius of 1.43 A ˚compared with Na ? (1.02 A ˚) [33], which will lead to the expansion of the crystal lattice [34].
+
+The Raman spectra of pure OCP and OCP/PSS are shown in Fig. 2b. The characteristic sharp shoulder peaks at 973 cm -1 are associated with the v 1 stretch of PO 4
+
+3-groups in the apatite layer of OCP crystals [35].
+
+The bands at 590 and 437 cm -1 belong to v 4 and v 2 bending vibration modes of PO 4 3-bend, respectively.
+
+The bands at 1011 cm -1 are attributable to the HPO 4 2-groups in the hydrated layer of OCP crystals.
+
+In the spectrum of OCP/PSS, new signals appear in the products. The vibration of C-H bonds in the methylene groups is observed at 1606 cm -1 . And stretching vibration of -SO 3 -groups appears at 1144 cm -1 . New peaks at 795 and 642 cm -1 attributed to the stretching and bending vibration of the C-S bond are also present. These new peaks evidently suggest the presence of PSS in the OCP/PSS superstructures [36].
+
+The nitrogen adsorption-desorption isotherms of both samples were performed to determine the specific surface areas and pore size distribution by the Brunauer-Emmett-Teller (BET) and Barrett-Joyner-Halenda (BJH) methods, respectively (Fig. 2c,d). At the low relative pressure range (\ 0.2), the N 2 isotherms of both products display moderate adsorption due to the presence of micropores, which can be categorized as type II as per the latest IUPAC classification [37], while the isotherms in the relative high-pressure range of 0.4-1.0 show typical H4 hysteresis loop associated with the hollow chamber and mesoporous walls assembled by the nanosheets. Pure OCP microspheres exhibit typical mesopores with diameters centered at about 2.57 nm (inset in Fig. 2c). Their BET specific surface area is ca. 105.7 m 2 g -1 . Notably, the OCP/PSS microspheres have much higher BET specific surface area of 168.7 m 2 g -1 . They also have more abundant (inset in Fig. 2d) micropores (* 1.46 nm) and mesopores (* 4.7 and 6.1 nm). Their micropore concentrations were also higher than those of pure OCP as indicated by the steeper rise of the adsorption thread in low relative pressure region (\ 0.2). The high BET surface area, abundant pores and ultrathin structures of OCP adsorbents are beneficial for ion adsorption, diffusion and exchange.
+
+TG-DSC analysis was conducted to determine the thermal stability of samples (Fig. S3, ESI ). The first mass loss below 143 °C attributes to the release of surface adsorbed water, which is higher in pure OCP (21.6 wt%) than that of OCP/PSS (3.7%). This may be caused by the PSS molecules attached to the surface of OCP nanosheets, occupying the space of surface water. The second mass loss about 1.8% (OCP) and 2% (OCP/PSS) in the range of 143-186 °C is mainly attributable to collapsing HPO 4 -OH layer structure of OCP [38]. The final weight loss at 400-600 °C is relevant to the phase transformation from OCP to HAP. During this stage, PSS molecules in OCP/PSS begin to decompose. From the TG-DSC analysis, it can be calculated that about 1.2 wt% PSS was introduced OCP samples. Although the PSS contains very little, it can exert effective influence on the morphology and pore structures of OCP/PSS.
+
+The pH curves displayed that the pH values of mineral solution increased gradually due to the diffusion of more NH 3 gas (Fig. S4,ESI ). In the first 6 h, the pH always kept below 7.0, which might be favorable for the growth of OCP. It was reported that high pH condition would lead to the reaction between OH -and H 2 PO 4 -in the layered OCP, promoting the collapse of layered structure and the phase transformation into HAP [26]. Therefore, only products in the first 6 h were recovered in our experiments.
+
+Next, with the intention to elucidate the growth mechanism, the time-dependent experiments were performed. The crystallization of pristine OCP without PSS was similar as the reported literature (Fig. S5a-d, ESI ) [39]. The early formed phase was typical dicalcium phosphate dihydrate (Brushite, DCPD, JCPDS No. 11-0293) as confirmed by XRD patterns (Fig. S6a,ESI ). This unstable phase with relatively high solubility (-logk sp = 6.59) had the tendency to transform into the more stable phase. After 2.5 h, small agglomerates consisted of nanosheets gradually came into being on the DCPD microplates (Fig. S5b,ESI ). Their number and size increased over time (Fig. S5c,ESI ). XRD patterns revealed that the decrease in the DCPD density was concomitant with the appearance of OCP reflective peaks (Fig. S6b,c,ESI ). After 6 h, flowerlike OCP microspheres could form (Fig. S5d, ESI ) with the complete disappearance of DCPD (Fig. S6d,ESI ).
+
+When PSS was introduced into the mineral solution, the crystallization would undergo in a different pathway. The initially formed products were spherical particles with diameters about 100-200 nm (Figs. S5e and S7a, ESI ). The corresponding SAED pattern confirmed that they were amorphous (inset in Fig. S7a,ESI ). EDS analysis revealed that the Ca/P ratio of spheres was about 1.1 (Fig. S7b-e, ESI ). Considering the pH condition, we speculated that these spheres were amorphous calcium hydrogen phosphate (ACHP) [40]. The FT-IR spectrum (Fig. S8a(i), ESI ) shows that typical asymmetric stretch vibration of P-O (in PO 4 ) is split into shoulder peaks at 1044 and 951 cm -1 owing to the presence of HPO 4
+
+2-. The m 4 bands relevant to the O-P-O bending vibration appear at 557 cm -1 . All these indicate the presence of ACHP in the early mineral solution [41]. However, as DCPD microplates always occurred shortly after the formation of spheres, the typical broad peaks corresponding to ACHP were not easy to observe (Fig. S8b(i), ESI ). These amorphous spheres would rapidly transform into OCP superstructure (* 2 lm) after 2.5 h (Fig. S5f,ESI ). During this process, the amorphous phase was consumed according to the Ostwald process, which develops into hollow cavity as shown in some broken superstructures (Fig. S5g, ESI ). FT-IR and XRD measurements both confirmed that coexistence of OCP and DCPD phase (Fig. S8a(ii) and (ii), ESI ) in this stage. Next, the hollow microspheres could continuously grow at the consumption of unstable DCPD microplates after the AHCP was exhausted (Fig. S5g,h,ESI ). Finally, hollow OCP superstructures could be produced as evidenced by the XRD and FTIR spectra (Fig. S8a,b,ESI ).
+
+It has established that the growth of OCP in the supersaturated solution was via a nonclassical particles-mediated growth pathway [35]. Our TEM analysis revealed that the early formed OCP sheets had fluctuant boundary of some bulge (Fig. S9,ESI ). But they became flat and smooth in the final products as the dissolution-recrystallization process might happen. Further observation indicated that the growing fronts of OCP sheets were attached with many small nanoparticles (NPs) (Fig. S9b,c, ESI ), which might be produced via the disassociation of metastable intermediates such as ACHP or DCPD. The attached NPs could adjust their position and fused into OCP sheets, resembling those processes confirmed by in situ AMF measurement [42]. This particle-mediated process had the advantage to greatly improve the growth rate of OCP [43].
+
+In comparison with the growth process of pure OCP, the OCP/PSS superstructures benefited greatly from the PSS, which promoted the production of AHCP templates and simultaneously delayed the formation of DCPD microplates in the early mineralization stage. But the inhibiting effect of PSS was not so powerful as polyaspartic (PAsp) [44] and polyacrylic (PAA) [40], which could completely inhibit the formation of DCPD. In our experiments, DCPD microplates still could be produced, which could further improve the development of OCP/PSS.
+
+Further, experiments revealed that more precipitates could be obtained when more PSS was introduced into the mineral solution at the same time (inset in Fig. S4,ESI ). It was evident that PSS could accelerate the mineralization process. Although OCP superstructures could evolve from different intermediates of DCPD and AHCP, they might cause quite different growth rates. Comparatively speaking, DCPD was more stable than AHCP and had more tendency to dissociate into small NPs for the subsequent particles-mediated nonclassical crystallization process.
+
+Both pure OCP and OCP/PSS architectures were applied as pollutant adsorbents. The equilibrium adsorption experiments were carried out by mixing the prepared samples with metal ions (Cd 2? , Cu 2? and Pb 2? ) or antibiotics (TC) aqueous solutions at different concentrations for more than 3 h at 298 k.
+
+At low pH value (\ 4.0), the competitive adsorption between the heavy metal ions and protons will occur, which leads to a significant decrease in removal efficiency. Meanwhile, the low pH condition will lead to the acidolysis of pure OCP and OCP/PSS structures. On the other hand, the high pH case ([ 6.0) is also disadvantageous because of the formation of the insoluble heavy metal hydroxides [45]. The pH-dependent experiments showed that the adsorption capacities of Cu(II) and TC maintained a high level when pH values changed from 4.0 to 8.0 (Fig. S10, ESI ). To avoid possible interference, the optimal pH ranges of pollutant removal were kept from 4.0 to 6.0.
+
+Unless mentioned otherwise, all adsorption experiments were carried out at pH = 5.5.
+
+The effect of the adsorbent dose was evaluated by adding different amounts of OCP/PSS (Fig. S11,ESI ). It was evident that 0.05 g L -1 of OCP/PSS dosage was not enough for effectively removing Cu(II) from solution ([Cu 2? ] 0 = 20 ppm). With increasing the amount of adsorbent (C 0.25 g L -1 ), the adsorption capacity improved drastically (up to 95% removal efficiency). Although larger adsorbent dosage favored the higher adsorption, it would lower the utilization rate. Therefore, the optimal adsorbent dose for Cu(II) was chosen 0.25 g L -1 . Similar experiments were performed; the optimal adsorbent dose for Cd(II), Pb(II) and TC was all chosen at 0.25 g L -1 in the appropriate concentrations of pollutants.
+
+The adsorption isotherms were analyzed to elucidate the interactions between the OCP/PSS and pollutants at equilibrium and to estimate the maximum adsorption capacity. As displayed in Fig. 3, the adsorption uptake increased initially and then tends to reach a plateau stage at higher concentrations. Different adsorption isotherms were analyzed by the Langmuir and Freundlich models (Figs. S12-S14, ESI ). When OCP/PSS adsorbents were used to adsorb heavy metals, the adsorption data could be better described by the Langmuir model, suggesting a typical monomolecular layer adsorption. The maximum adsorption capacity (q max ) values for Cu(II), Cd(II), Pb(II) according to Langmuir model are 128.53, 147.28 and 1868.6 mg g -1 (Table S1, ESI ), respectively. In particular, OCP/PSS has 40% higher q max than those of pure OCP (Table 1).
+
+For the case of TC, the fittings of the equilibrium adsorption data to Langmuir and Freundlich model were both satisfactory, and Freundlich model yields a somewhat better fit. This implies that the adsorption of TC takes place on a heterogeneous surface probably attributed to the various active sites on OCP nanosheets with different affinities to TC molecules. Thus, the overall absorption performance of TC is dominated as a physical adsorption process [46]. The q max value for TC using Langmuir model is 52.63 mg g -1 (Table S1, ESI ).
+
+The thermodynamic characteristics of adsorption processes were also researched as they could provide intensive information about the inherent energetic changes. Gibbs free energy (DG°), enthalpy (DH°) and entropy (DS°) were calculated by the following equations:
+
+where K a (mL g -1 ) is equal to the product bq max [Eq. ( 4  S4.
+
+During the adsorption process of heavy metal ions, the positive values of DS°manifest increased randomness at the solid-solution interface. Meanwhile, the negative values of DG°and the positive amount of DH°at different temperatures indicate the adsorption process is a spontaneous and endothermic adsorption reaction process. However, the negative values of DG°, DH°and DS°mean that the adsorption process of TC is a spontaneous and exothermic adsorption reaction where the randomness decreases.
+
+The kinetics investigation was carried out to evaluation the removal rate of pollutants (Fig. 4a,b). The sorption kinetics exhibits a rapid deceasing of Cu(II) within the first 10 min and a subsequent slow decreasing stage until reaching equilibrium. All pollutants reach equilibrium adsorption capacity within 60 min. For the case of Pb(II), the [Pb 2? ] 0 was high due to the excellent adsorption capacity. To avoid the large sampling errors before equilibrium adsorption, the best initial concentration of Pb(II) was chosen at 500 mg L -1 [47]. The adsorption kinetics curve shows that the concentrations of Pb(II) drop from 500 to 70 mg L -1 within 30 min, implying a rapid removal rate.
+
+Taken Cu(II) as an example to assess the effect of initial concentrations, the adsorption capacity in a low initial concentration (10 ppm) will increase rapidly to 39.1 mg g -1 with the removal efficiency of 95.2% in 25 min as the adsorbent does not reach saturated adsorption. When the concentration increases to 20 ppm or even higher 40 ppm, it will take longer time to reach equilibrium adsorption. And the adsorption capacity after 40 min can increase to higher values of 74 and 126 mg g -1 , respectively. But the removal percentages decrease to 92.5% and 78.8%.
+
+The sorption kinetics of pure OCP and OCP/PSS was also compared, and the kinetics data were fitted by pseudo-second-order diffusion kinetic model (Table S2, ESI ). The rate constant of pure OCP (k 2 = 2.75*10 -3 ) was larger than that of OCP/PSS (k 2 = 1.71*10 -3 ), implying that pure OCP has faster adsorption rate. However, pure OCP has lower adsorption capacity than OCP/PSS. Within the first 60 min, they exhibit average uptake rate of 1.17 and 2.08 mg g -1 min -1 (inset in Fig. 4d) using 40 mg L -1 Cu(II) solution, respectively, indicating that prolonged reaction time could not further enhance adsorption capacity for heavy metals.
+
+To further characterize the adsorption process, the pseudo-first-order and pseudo-second-order equations are used to fit the batch experimental data (Fig. 5a,b,e,f,g,h,j,k). The corresponding fitting parameters are listed in Table S3 (ESI ). All data were well fitted by the pseudo-second-order equation. The OCP/PSS exhibited rate constants of 0.00573, 0.00272, 0.00039 and 0.00471 g mg -1 min -1 for the adsorption of Cu(II), Cd(II), Pb(II) and TC, respectively. Further, kinetic studies were carried out at lower or higher initial concentrations (e.g., 10 and 40 mg L -1 ) (Figs. S15, S16, ESI ), which can be well described by the pseudo-second-order equation. The best fit to the pseudo-second-order kinetics indicates that the adsorption mechanism depends on the adsorbate and adsorbent, and the rate-limiting step is chemisorption involving valence forces through sharing or exchange of electrons. The kinetic data are further studied with intraparticle diffusion to determine the controlling influencing the adsorption process (Fig. 5c, f, i andl). The plots show multilinear regions without passing through the origin of the coordinates, implying that the adsorption rates were not controlled by intraparticles diffusion process, but a multistep adsorption process. The curves can be divided into three steps. The first rapid adsorption step is beneficial from the fast diffusion of adsorbates and abundant external surface adsorption sites. The second step can be caused by the slow diffusion of adsorbates into the pores and the adsorption by the interior surface as almost all external surface of OCP/PSS is covered by adsorbates. In the last stage, the ion exchange or complexation will happen with a much longer time.
+
+The concentrations of released Ca 2? after removal of pollutants were characterized by ICP-OES (Fig. S19, ESI ). It showed that a small quantity of Ca 2? (9.3 mg L -1 ) was released after the adsorption of TC. For heavy metal ions of Cu(II) and Cd(II), the released concentrations of Ca 2? are equivalent to those of adsorbed metals, which further confirmed the Langmuir adsorption modes. In the case of removing Pb(II), the amount of released Ca 2? is much lower than that of Pb(II), which may attribute to the different ratios of Ca/P between the new phase and OCP.
+
+XRD measurements (Fig. S18b, ESI ) further confirm that Pb-OCP/PSS is a new phase of Ca 2.5 Pb 7.5 (OH) 2 (PO 4 ) 6 . But Cu-OCP/PSS and Cd-OCP/PSS only contain partial hydroxyapatite after adsorption (Fig. S18a,ESI ). The stability of all adsorbents after adsorption was evaluated with different eluants under various pH conditions. It showed that Ca 2.5 Pb 7.5 (OH) 2 (PO 4 ) 6 (Fig. S18b, ESI ) has high stability. When treated by with different eluents, the leakage of Pb and Ca was almost negligible (Table S6, ESI ). Cu-OCP/PSS, Cd-OCP/PSS and TC-OCP/PSS were dried at 250 °C. XRD patterns confirm that the adsorbents were completely transformed into HAP (Fig. S20a, ESI ). The heavy metal ions could be effectively immobilized in the HAP. When treated by the eluants, a negligible leaking of Cu and Ca could
+
+Figure 5 Kinetics fitting curves for the adsorption of Cd(II), Cu(II), Pb(II) and TC onto OCP/PSS using a, d, g, j pseudo-firstorder, b, e, h, k pseudo-second-order, and c, f, i, l intra-particle diffusion equations, respectively.
+
+[Cu 2? ] 0 = 20 mg L -1 , [Cd 2? ] 0 = 20 mg L -1 , [Pb 2? ] 0 = 500 mg L -1 and [TC] 0 = 10 mg L -1 , pH = 5.5.
+
+be detected over the whole pH range from 3.34 to 12.81 (Table S5, ESI ). As for TC-OCP/PSS, TC would gradually carbonize into harmless substance. The color of samples evolved from yellow to brown (inset in Fig. S20b,ESI ).
+
+The interaction mechanisms between pollutants and adsorbents were further investigated by zeta potential, XPS and XRD characterizations. Under the influence of the negative charged PSS, the zeta potentials of all OCP/PSS samples are below -10 eV at various pH values, while those of pure OCP are around zero. There may exist strong electrostatic interactions between SO 3 -groups in OCP/PSS and metal ions, as well as function groups of -NH 3 ? and -NH 2 ? in TC. This could possibly be the reason that OCP/PSS has higher adsorption capacity than pure OCP. Considering the ultrahigh adsorption efficiency for Pb(II), other factors need to be exploited.
+
+It was demonstrated that the ionic radii and hydrated ionic radii of metal ions have greatly influence on the metal affinity sequence in the absorption process [48]. Metal ions with larger hydrated radii have higher swelling pressure in the adsorbent, which will decrease the metal affinity. In the current case, Pb(II) (4.01 A ˚) with the smallest hydrated ionic radii shows the highest adsorption capacity (q max = 1868.6 mg g -1 ). However, when Cu(II) (4.19 A ˚) and Cd(II) (4.26 A ˚) were compared, their adsorption capacity (Cu(II)q max- = 135.69 mg g -1 , Cd (II)q max = 147.28 mg g -1 ) showed the opposite result. This manifests that the adsorption differences among Pb(II), Cu(II) and Cd(II) are not original from the different hydrated radii.
+
+XPS analysis was further performed to characterize the OCP/PSS before and after the adsorption. The peaks of Cu 2p, Cd 3d and Pb 4f (Fig. 6a-c) were detected in corresponding adsorbents, confirming the effective adsorption of heavy metal ions. After the adsorption of metal ions, the relative intensities of Ca 2p peaks were deceased, and the corresponding peaks shifted to higher binding energies, implying the ion exchange between Ca 2? and metal ions [2]. The binding energy differences of Ca 2p 1/2 and Ca 2p 3/2 before and after adsorption of Cu(II), Cd(II) and Pb(II) were calculated. For Pb(II), the binding energy differences of Ca 2p were the smallest after the adsorption (0.01 and 0.09 eV), indicating the slight changes of chemical environments after the ion exchange.
+
+Meanwhile, the high-resolution XPS P 2p spectra were deconvoluted into two peaks after Pb(II) adsorption corresponding to the PO4 in OCP and a new phase bearing Pb. After the adsorption, all intensities of P 2p peaks deceased accordingly and their peaks shifted to higher binding energies caused by the ion exchanges (Figs. 6g-i, 7c). For instance, the binding energy of P 2p shifted from 133.34 eV (pristine OCP/PSS) to 133.67 eV (Cu-OCP/PSS), which can be assigned to the formation of new phosphates containing Cu [49].
+
+For the case of Pb(II), there was the smallest binding energy difference in P 2p before and after adsorption (0.14 eV). That meant smaller change in electronic rearrangement around active site PO 4 3after adsorption, which might result in the easiest ion exchange between Ca(II) and Pb(II). Simultaneously, this process will cause the least mismatching in crystal lattice. Thus, the adsorption differences among Cu(II), Cd(II) and Pb(II) were mainly caused by the different degrees of matching in crystal lattice among metal bearing precipitate and OCP. The least mismatching in crystal lattices of OCP and Ca 2.5 Pb 7.5 (OH) 2 (PO 4 ) 6 (Fig. S18b, ESI ) will lead to the smallest binding energy difference around active site of PO 4  3-, which in turn promotes the complete ionexchange process.
+
+In the case of TC, after the adsorption of metal ions, the relative intensities of Ca 2p peaks did not show obvious change (Fig. 7b). That indicates that the ion exchange did not take place during the adsorption process. The peaks of binding energies corresponding to Ca 2p and P 2p shifted to higher binding energies after the adsorption, which might be caused by the partly phase transition of OCP (Fig. 7b,c). As for O 1s spectra in (Fig. 7a), three peaks located at 532.51, 531.18 and 530.81 eV were corresponded to 34% of H 2 O, 51% of hydroxyl groups on OCP/PSS surface (e.g., : CaOH) and 15% of metallic oxide (M-O), respectively. In the TC-OCP/PSS, the area ratio of hydroxyl groups reduced from 51 to 44%, indicating that hydroxyl groups played an important role in TC adsorption, and the area ratio of H 2 O reduced from 34 to 22%, which might be caused by the destruction of the hydration layer of the crystal structure in the process of TC adsorption. Correspondingly, the increased ratio of M-O from 15% at 530.81 eV to 34% at 530.89 eV was assigned to the formation of Ca-O between : CaOH and TC. These results clearly demonstrate that the sorption of TC mainly relied on ion complex reactions.
+
+The stability of hollow OCP/PSS adsorbents was also evaluated. They were dried and kept in a closed bottle at ambient conditions (* 20 °C) for three months. XRD pattern showed no observable changes (data not shown). When they were used for Pb(II) removal, the adsorption capacity could still reach 1850 mg g -1 .
+
+Compared with other mineral-based adsorbents (Table 1), the pure OCP and hollow OCP/PSS superstructures show superior adsorption capacity for heavy metal ions and TC. Especially for the adsorption of Pb(II), our synthesized OCP achieved an overwhelming performance than other reported adsorbents.
+
+Recently, we synthesized porous microspheres composed HAP nanosheets by the microwave-assisted methods [60]. Their adsorption capacity of Pb(II) was only up to 210.5 mg g -1 . Other reported hollow HAP microspheres obtained in a hydrothermal method [21] only exhibit a low Pb(II) removal capacity of 99.79 mg g -1 . Wang et al. [47] demonstrated the esterified HAP NPs with high Pb(II) adsorption capacity of 2397.2 mg g -1 . As their prepared adsorbents were very small in size (* 100 nm), they would be very difficult to recover from waste water after pollutant removal. However, our synthesized OCP/PSS superstructures have the size of 3-5 lm, which were very convenient to separate via the natural sedimentation process. Moreover, our biomimetic procedure is a low-energy method, which has potential for batch production and wide application.
+
+The similar OCP adsorbent, e.g., flowerlike microspheres comprising of thick blades (* 75 nm in thickness), was also synthesized for comparison (Fig. S21, ESI ). Their q max of Pb(II) only reached 1081 mg g -1 . Compared with ultrathin OCP nanosheets, the thicker blades may lead to inefficient ion exchanges as metal ions are not easy to diffuse into the interior.
+
+The ultrathin nanosheets of OCP/PSS were further characterized by HRTEM. Their lattice fringes are not easy to obtain as they tend to become polycrystallinity rapidly under the bombardment combatant of electron beams (Fig. S2,ESI ). Moreover, some amorphous nanodomains can also be observed. All these manifest that the ultrathin nanosheets are not well crystallized as they grow via the particle-mediated pathway in the ambient condition. Although these defects are disadvantage as crystals, they may be favorable factors for superior adsorption and subsequent ion exchange as they provide more active sites. Considering the excellent adsorption capacity, the easily large-scale production and the low-energy consumption, our biomimetically produced OCP adsorbents have great potential for the wide application for water treatment.
+
+Briefly, the hollow and porous OCP superstructures have been synthesized under the regulation of PSS in a simple and rapid biomimetic mineralization approach. They were produced by using the ACHP templates in the particle-mediated nonclassical crystallization process. The resultant architectures were composed of ultrathin nanosheets with regulated pore structures and surface property, which provided abundant active sites for the fast diffuse, complexation and ion exchanges with pollutants. Therefore, they can serve as excellent adsorbents for heavy metal ions and organic antibiotics. Especially, the adsorption of Pb(II) was superhigh with q max- = 1868.6 mg g -1 mainly due to the well lattice matching between OCP/PSS and Pb-OCP/PSS. Our biomimetic approach to synthesis of mineral-based adsorbents shows promising applications for treatment with different pollutants.
+
+The online version of this article (https://doi.org/10.1007/s108 53-020-04539-0) contains supplementary material, which is available to authorized users.
+
+Figure 7 High-resolution XPS spectra of O 1s, Ca 2p and P 2p for different OCP/PSS samples before and after the adsorption of TC. The sample after adsorption of TC is denoted as TC-OCP/PSS.</full_text>
+	<references>
+		<reference>
+			<title>Environ Sci Technol</title>
+			<authors>
+				<author>J Luo</author>
+				<author>M Sun</author>
+				<author>C Ritt</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Environ Sci Nano</title>
+			<authors>
+				<author>X Liu</author>
+				<author>K Song</author>
+				<author>W Liu</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Environ Sci Technol</title>
+			<authors>
+				<author>W Xiong</author>
+				<author>Y Tang</author>
+				<author>C Shao</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>J Colloid Interface Sci</title>
+			<authors>
+				<author>C Liu</author>
+				<author>C Cai</author>
+				<author>F Ma</author>
+				<author>X Zhao</author>
+				<author>H Ahmad</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Chem Eng J</title>
+			<authors>
+				<author>D Zhi</author>
+				<author>J Wang</author>
+				<author>Y Zhou</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Water Res</title>
+			<authors>
+				<author>Z Liu</author>
+				<author>K Lompe</author>
+				<author>M Mohseni</author>
+				<author>Be ´rube ´pr</author>
+				<author>´s Sauve</author>
+				<author>B Barbeau</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Water Res</title>
+			<authors>
+				<author>T Yin</author>
+				<author>Y Wu</author>
+				<author>P Shi</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Environ Sci Technol</title>
+			<authors>
+				<author>S Pan</author>
+				<author>J Li</author>
+				<author>O Noonan</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>J Chem Technol Biotechnol</title>
+			<authors>
+				<author>B Chen</author>
+				<author>D Chen</author>
+				<author>X Zhao</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Mater Lett</title>
+			<authors>
+				<author>H Guo</author>
+				<author>X Zhang</author>
+				<author>C Kang</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Chem Eng J</title>
+			<authors>
+				<author>Y Kim</author>
+				<author>Y Kim</author>
+				<author>S Kim</author>
+				<author>D Harbottle</author>
+				<author>Lee Jw</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Chem Eng J</title>
+			<authors>
+				<author>D Ding</author>
+				<author>Z Lei</author>
+				<author>Y Yang</author>
+				<author>Z Zhang</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>J Am Chem Soc</title>
+			<authors>
+				<author>Y Chen</author>
+				<author>F Chen</author>
+				<author>S Zhang</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Environ Sci Technol</title>
+			<authors>
+				<author>Y Sun</author>
+				<author>Z Wu</author>
+				<author>X Wang</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Sci Total Environ</title>
+			<authors>
+				<author>M Hassan</author>
+				<author>R Naidu</author>
+				<author>J Du</author>
+				<author>Y Liu</author>
+				<author>F Qi</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>J Mater Sci</title>
+			<authors>
+				<author>T Pasinszki</author>
+				<author>M Krebsz</author>
+				<author>D Chand</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Chem Eng J</title>
+			<authors>
+				<author>Y Li</author>
+				<author>R Zhao</author>
+				<author>S Chao</author>
+				<author>B Sun</author>
+				<author>C Wang</author>
+				<author>X Li</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>ACS Sustain Chem Eng</title>
+			<authors>
+				<author>Z Lei</author>
+				<author>S Sun</author>
+				<author>P Wu</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>J Phys Chem C</title>
+			<authors>
+				<author>G-B Cai</author>
+				<author>G-X Zhao</author>
+				<author>X-K Wang</author>
+				<author>S-H Yu</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>J Mater Sci</title>
+			<authors>
+				<author>Y Su</author>
+				<author>M Cui</author>
+				<author>J Zhu</author>
+				<author>Y Wu</author>
+				<author>Y Wei</author>
+				<author>S Bian</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>J Phys Chem C</title>
+			<authors>
+				<author>S-D Jiang</author>
+				<author>Q-Z Yao</author>
+				<author>G-T Zhou</author>
+				<author>S-Q Fu</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Adv Func Mater</title>
+			<authors>
+				<author>K Jiao</author>
+				<author>L-N Niu</author>
+				<author>C-F Ma</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Adv Sci (Weinh)</title>
+			<authors>
+				<author>S Yao</author>
+				<author>X Lin</author>
+				<author>Y Xu</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>J Mater Chem B</title>
+			<authors>
+				<author>J Wei</author>
+				<author>J Shi</author>
+				<author>Q Wu</author>
+				<author>L Yang</author>
+				<author>S Cao</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Colloids Surf, A</title>
+			<authors>
+				<author>C Li</author>
+				<author>X Ge</author>
+				<author>Y Li</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>J Am Chem Soc</title>
+			<authors>
+				<author>Y Tseng</author>
+				<author>C Mou</author>
+				<author>J Chan</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>J Mater Chem B</title>
+			<authors>
+				<author>A Sugawara</author>
+				<author>K Asaoka</author>
+				<author>S-J Ding</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Appl Sci</title>
+			<authors>
+				<author>A Elyahyaoui</author>
+				<author>K Ellouzi</author>
+				<author>Al Zabadi</author>
+				<author>H</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>ACS Appl Mater Interfaces</title>
+			<authors>
+				<author>C Madadrang</author>
+				<author>H Kim</author>
+				<author>G Gao</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>ACS Appl Mater Interfaces</title>
+			<authors>
+				<author>Y Ying</author>
+				<author>Y Liu</author>
+				<author>X Wang</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Chem Soc Rev</title>
+			<authors>
+				<author>Y Chen</author>
+				<author>C Tan</author>
+				<author>H Zhang</author>
+				<author>L Wang</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Chem Commun (Camb)</title>
+			<authors>
+				<author>J Zhu</author>
+				<author>S Yu</author>
+				<author>A Xu</author>
+				<author>H Colfen</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Dalton Trans</title>
+			<authors>
+				<author>Y Sugiura</author>
+				<author>Y Makita</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Cryst Growth Des</title>
+			<authors>
+				<author>Y Sugiura</author>
+				<author>Y Saito</author>
+				<author>T Endo</author>
+				<author>Y Makita</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>J Mater Chem B</title>
+			<authors>
+				<author>H Shi</author>
+				<author>F He</author>
+				<author>J Ye</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Polymers</title>
+			<authors>
+				<author>I Sandoval-Olvera</author>
+				<author>Gonza ´lez-Mun ˜oz</author>
+				<author>P Dı ´az Dr</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Pure Appl Chem</title>
+			<authors>
+				<author>M Thommes</author>
+				<author>K Kaneko</author>
+				<author>A Neimark</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>J Ceram Soc Jpn</title>
+			<authors>
+				<author>Y Sugiura</author>
+				<author>K Onuma</author>
+				<author>A Yamazaki</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>CrystEngComm</title>
+			<authors>
+				<author>H Shi</author>
+				<author>J Zhang</author>
+				<author>X Ye</author>
+				<author>T Wu</author>
+				<author>T Yu</author>
+				<author>J Ye</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Cryst Growth Des</title>
+			<authors>
+				<author>N Wada</author>
+				<author>N Horiuchi</author>
+				<author>M Nishio</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Cryst Growth Des</title>
+			<authors>
+				<author>B-Q Lu</author>
+				<author>N Garcia</author>
+				<author>D Chevrier</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>CrystEngComm</title>
+			<authors>
+				<author>M Li</author>
+				<author>L Wang</author>
+				<author>C Putnis</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>Cryst Growth Des</title>
+			<authors>
+				<author>S Wu</author>
+				<author>M Yu</author>
+				<author>M Li</author>
+				<author>L Wang</author>
+				<author>C Putnis</author>
+				<author>A Putnis</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Angewandte Chemie International Edition</title>
+			<authors>
+				<author>A Bigi</author>
+				<author>E Boanini</author>
+				<author>D Walsh</author>
+				<author>S Mann</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>Dalton Trans</title>
+			<authors>
+				<author>R Sitko</author>
+				<author>E Turek</author>
+				<author>B Zawisza</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Chem Eng J</title>
+			<authors>
+				<author>V Vimonses</author>
+				<author>S Lei</author>
+				<author>Jin Chow</author>
+				<author>Cwk Saint</author>
+				<author>C</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Langmuir</title>
+			<authors>
+				<author>M Wang</author>
+				<author>K Zhang</author>
+				<author>M Wu</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Geochem J</title>
+			<authors>
+				<author>S Chen</author>
+				<author>Y Ma</author>
+				<author>L Chen</author>
+				<author>K Xian</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Carbon</title>
+			<authors>
+				<author>A Puziy</author>
+				<author>O Poddubnaya</author>
+				<author>R Socha</author>
+				<author>J Gurgul</author>
+				<author>M Wisniewski</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>J Colloid Interface Sci</title>
+			<authors>
+				<author>M Kalavathy</author>
+				<author>T Karthikeyan</author>
+				<author>S Rajgopal</author>
+				<author>L Miranda</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>J Hazard Mater</title>
+			<authors>
+				<author>Y Hang</author>
+				<author>Y Si</author>
+				<author>Q Zhou</author>
+				<author>H Yin</author>
+				<author>A Wang</author>
+				<author>A Cao</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Chem Eng J</title>
+			<authors>
+				<author>K-W Jung</author>
+				<author>Lee Sy</author>
+				<author>J-W Choi</author>
+				<author>Y Lee</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>D Nu ´n ˜ez</author>
+				<author>J Serrano</author>
+				<author>A Mancisidor</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Environ Sci Pollut Res</title>
+			<authors>
+				<author>Y Li</author>
+				<author>Z Yang</author>
+				<author>Y Chen</author>
+				<author>L Huang</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>J Hazard Mater</title>
+			<authors>
+				<author>M Mouflih</author>
+				<author>A Aklil</author>
+				<author>S Sebti</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>Environ Sci Pollut Res</title>
+			<authors>
+				<author>Z Li</author>
+				<author>Z Pan</author>
+				<author>Y Wang</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Front Chem</title>
+			<authors>
+				<author>N Wahab</author>
+				<author>M Saeed</author>
+				<author>Ibrahim</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Appl Clay Sci</title>
+			<authors>
+				<author>R Srivastava</author>
+				<author>S Fujita</author>
+				<author>M Arai</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>J Colloid Interface Sci</title>
+			<authors>
+				<author>Y Zhao</author>
+				<author>J Geng</author>
+				<author>X Wang</author>
+				<author>X Gu</author>
+				<author>S Gao</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Environ Sci Pollut Res Int</title>
+			<authors>
+				<author>Y Su</author>
+				<author>J Wang</author>
+				<author>S Li</author>
+				<author>J Zhu</author>
+				<author>W Liu</author>
+				<author>Z Zhang</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1021/acs.est.8b07027</number>
+		<number>DOI-10.1039/c8en01173g</number>
+		<number>DOI-10.1021/acs.est.7b02985</number>
+		<number>DOI-10.1016/j.jcis.2019.10.055</number>
+		<number>DOI-10.1016/j.cej.2019.123149</number>
+		<number>DOI-10.1016/j.watres.2019.115148</number>
+		<number>DOI-10.1016/j.watres.2019.115144</number>
+		<number>DOI-10.1021/acs.est.6b05295</number>
+		<number>DOI-10.1002/jctb.6291</number>
+		<number>DOI-10.1016/j.matlet.2019.06.059</number>
+		<number>DOI-10.1016/j.cej.2016.10.136</number>
+		<number>DOI-10.1016/j.cej.2013.09.075</number>
+		<number>DOI-10.1021/jacs.7b10265</number>
+		<number>DOI-10.1021/acs.est.6b00058</number>
+		<number>DOI-10.1016/j.scitotenv.2019.134893</number>
+		<number>DOI-10.1007/s10853-019-04032-3</number>
+		<number>DOI-10.1016/j.cej.2018.03.044</number>
+		<number>DOI-10.1021/acssuschemeng.7b00313</number>
+		<number>DOI-10.1021/jp103464p</number>
+		<number>DOI-10.1007/s10853-017-1861-4</number>
+		<number>DOI-10.1021/jp211648x</number>
+		<number>DOI-10.1002/adfm.201602207</number>
+		<number>DOI-10.1002/advs.201900683</number>
+		<number>DOI-10.1039/c5tb01268f</number>
+		<number>DOI-10.1016/j.colsurfa.2015.02.041</number>
+		<number>DOI-10.1021/ja060336u</number>
+		<number>DOI-10.1039/c2tb00061j</number>
+		<number>DOI-10.3390/app7030222</number>
+		<number>DOI-10.1021/am201645g</number>
+		<number>DOI-10.1021/am5074722</number>
+		<number>DOI-10.1039/c4cs00300d</number>
+		<number>DOI-10.1039/b817048g</number>
+		<number>DOI-10.1039/c8dt04697b</number>
+		<number>DOI-10.1021/acs.cgd.9b00656</number>
+		<number>DOI-10.1039/c5tb02247a</number>
+		<number>DOI-10.3390/polym11101689</number>
+		<number>DOI-10.1515/pac-2014-1117</number>
+		<number>DOI-10.2109/jcersj2.16169</number>
+		<number>DOI-10.1039/c9ce00677j</number>
+		<number>DOI-10.1021/acs.cgd.6b01453</number>
+		<number>DOI-10.1021/acs.cgd.9b00274</number>
+		<number>DOI-10.1039/c7ce02100c</number>
+		<number>DOI-10.1021/acs.cgd.7b00129</number>
+		<number>DOI-10.1002/1521-3773(20020617)41:123.0.CO;2-G</number>
+		<number>DOI-10.1039/c3dt33097d</number>
+		<number>DOI-10.1016/j.cej.2008.09.009</number>
+		<number>DOI-10.1021/acs.langmuir.9b02373</number>
+		<number>DOI-10.2343/geochemj.1.0065</number>
+		<number>DOI-10.1016/j.carbon.2008.09.010</number>
+		<number>DOI-10.1016/j.jcis.2005.05.087</number>
+		<number>DOI-10.1016/j.jhazmat.2019.120789</number>
+		<number>DOI-10.1016/j.cej.2019.03.102</number>
+		<number>DOI-10.1039/c9ra04198b</number>
+		<number>DOI-10.1007/s11356-019-05081-6</number>
+		<number>DOI-10.1016/j.jhazmat.2004.12.005</number>
+		<number>DOI-10.1007/s11356-019-04447-0</number>
+		<number>DOI-10.3389/fchem.2019.00654</number>
+		<number>DOI-10.1016/j.clay.2008.06.015</number>
+		<number>DOI-10.1016/j.jcis.2011.05.051</number>
+		<number>DOI-10.1007/s11356-019-06160-4</number>
+	</reference_dois>
+</document>

@@ -1,0 +1,1187 @@
+<document>
+	<file>./pdf-files/Immobilization of radioactive corrosion products by cold sintering of pure hydroxyapatite.pdf</file>
+	<title>Immobilization of radioactive corrosion products by cold sintering of pure hydroxyapatite</title>
+	<date>2019</date>
+	<doi_number>10.1016/j.jhazmat.2019.04.038</doi_number>
+	<img_preview_path>./pdf-preview-images/Immobilization of radioactive corrosion products by cold sintering of pure hydroxyapatite.jpeg</img_preview_path>
+	<authors>
+		<author>Muhmood ul Hassan</author>
+		<author>Sajid Iqbal</author>
+		<author>Jong-Il Yun</author>
+		<author>Ho Jin Ryu</author>
+	</authors>
+	<abstract>An efficient method for the consolidation of cobalt (Co(II)) adsorbed calcium hydroxyapatite was investigated to develop a simplified route for decontamination of the coolant system of nuclear power plants and direct immobilization of as-spent adsorbent. Calcium hydroxyapatite nano-powder synthesized by a wet precipitation method was used as an adsorbent and 94% Co(II) surrogate removal from simulated water was measured. The asspent adsorbent was sintered at 200 °C, a temperature significantly lower than conventional sintering temperatures (900-1300 °C) for hydroxyapatite, under a uniaxial pressure of 500 MPa for 10 min. The relative density after the cold sintering was &gt; 97% and sintered samples displayed good compressive strength (175 MPa). The normalized leaching rate of the Co(II) was measured as per ASTM-C1285 standard and found to be 2.5 × 10 -5 g/m 2 /day. ANSI/ANS-16.1 test procedure was used to analyze the leachability of the sintered matrices and the measured leaching index value was 6.5. Thus, the use of pure calcium hydroxyapatite nanopowder as adsorbent and its cold sintering offers a mean by which radioactive waste form can be processed in an environment friendly manner. by neutron irradiation through (n, p) &amp; (n, γ) reactions. Radioactive ionic-corrosion-products which mainly include 58 Co, 60 Co, 51 Cr, 64 Cu, 54 Mn, and 59 Fe, can be deposited onto primary coolant system walls and pipes in the form of inner and outer oxide layers. These deposits can also appear on fuel bundles inside the reactor core and can have detrimental effects on the thermal efficiency of the fuel rods [1-3]. Among</abstract>
+	<methods>
+		<method>
+			<heading>Adsorbent material preparation</heading>
+			<text>A wet precipitation method was used for the synthesis of amorphous nano-HAp at 30 °C [59,63]. (NH 4 ) 2 HPO 4 (Alfa Aesar) and Ca (NO 3 ) 2 •4H 2 O (Alfa Aesar) solutions were prepared using 100 ml of deionized water (DIW) for each reactant, with the Ca(NO 3 ) 2 •4H 2 O solution mixed dropwise with the (NH 4 ) 2 HPO 4 solution under 200 rpm for 60 min. The pH of the reaction was continuously monitored and was maintained at 10.5. A concentrated ammonia solution was used and added dropwise to the reaction vessel to adjust the pH throughout the reaction. After 12 h, the suspension was filtered and then thoroughly washed and dried overnight at a temperature of 110 °C using a vacuum oven.</text>
+		</method>
+		<method>
+			<heading>Adsorption procedures</heading>
+			<text>The detailed adsorption study regarding the removal of cobalt ions from aqueous solution by using HAp has been carried out by Smičiklas et al. [13]. During the absorption procedure, the optimal solid-to-liquid ratio (S:L ratio) was obtained for the maximum removal of cobalt by varying the adsorbent amount from 0.2 to 0.5 g at a constant pH (6) and using 1 mM of cobalt in 100 ml of solution. The adsorbent-liquid contact time was set to 24 h (sorption equilibrium time) with a constant stirring speed of 150 rpm at 25 °C. At the sorption equilibrium time (24 h), the supernatant was separated from the solid using a 0.45 μm syringe filter after centrifugation at 3200 rpm for 10 min. The obtained adsorbent slurry was then dried overnight at 110 °C in a vacuum oven. The ICP-OES technique was used to measure the concentration of metal ions in the dried adsorbent and the supernatant. Eq. ( 1) was used to calculate the percent removal (% R) of metal ions,
+
+where C 1 and C 2 are the initial and final metal ion concentrations in mM, respectively.</text>
+		</method>
+	</methods>
+	<full_text>The primary coolant system of a nuclear power plant consists of a number of structural and mechanical parts, all of which undergo corrosion. The release of ionic-corrosion-products occurs inside the primary coolant during normal operation, and these products are activated all other activated metal ions, 60 Co is a major long-term source of radiation in the nuclear power plants due to its high gamma energy level (E γ : 1.17 MeV and 1.33 MeV) and relatively long half-life (5.23 years). 60 Co generates major radiation safety problems and poses a hindrance to routine maintenance work [4]. On the other hand, cobalt as a heavy metal is also known to be a major contributor to environmental pollution arising from industrial waste associated with mining, metallurgy and paint [5]. A number of chemical and physical techniques have been assessed with regard to the removal of metal ions from aqueous systems, with adsorption as a cost-effective and efficient technique [6]. The materials which have been investigated for the adsorptive removal of heavy metal ions ((Pb(II), Co(II), Ni(II) and Cr(III,VI)) include zeolites, chitosan, clay, silica, activated carbon, activated alumina and calcium hydroxyapatite [7][8][9][10][11][12][13][14][15][16]. Table 1 shows a comparison of different materials used for adsorption and removal of Co(II) from its aqueous solutions.
+
+Calcium hydroxyapatite (Ca 10 (PO 4 ) 6 (OH) 2 ; HAp) belongs to the apatite group of phosphate-based ceramics. HAp has good ion exchange ability at its different ionic positions, and a number of anions and cations can be substituted inside its crystal structure [27][28][29][30][31]. HAp has shown very high removal efficiency for heavy metal ions such as Cu(II), Co(II), Pb(II), Sb(III), Cd(II), and Zn(II) through sorption methods (either by surface complexation, ion exchange or the precipitation of HAp to metal phosphates) [32][33][34][35][36][37][38][39][40][41]. HAp has the ability to accommodate multiple radionuclides in its crystal structure and also possess good resistance against radioactive damage caused by the decay of incorporated radioisotopes [28]. It also has a low solubility product value ranging from 56.8 to 117 with a solubility constant (K s ) of 10 -88 [42][43][44]. Furthermore, its natural abundance and easy synthesis also make HAp favored for such applications [13,[45][46][47][48]. Based on these unique properties, the use of HAp for the removal and adsorption of contaminants from aqueous systems has been investigated by a number of researchers [6,13,30,32,49].
+
+The use of synthetic HAp and Fe 3 O 4 -HAp composite to adsorb and remove radioactive contaminants (Ni, Cr, Cu, Co) from the nuclear power plant primary coolant system and contaminated water of effluent treatment plants have been reported recently [50,51]. After adsorption and removal of radioactive contaminants, conditioning of as-spent adsorbent is one of the main steps to realize meaningful reductions in the radioactive waste volumes. Several treatment and conditioning approaches have been extensively studied which include cementation, vitrification, and in some cases sintering [52,53]. Although the conventional waste immobilization techniques fulfill the regulatory requirements, there are many challenging issues in terms of high processing temperature, long processing times, chemical durability, swelling and low waste loading capacities, which need further research and development of advanced waste forms to enhance the efficiency and long-term integrity. Moreover, the direct conditioning of used HAp and as-spent adsorbents such as mentioned in Table 1 has received less attention. Additional binders like cement or glass are used to prepare monolith waste forms that may produce secondary waste and additional cost.
+
+Conventionally, HAp is sintered at temperatures ranging from 900 to 1300 °C in a pressureless air environment. The aim of high-temperature sintering is to produce a dense monolith; however, high grain growth and dehydroxylation of HAp into other phases were reported as major drawbacks [54][55][56]. High-temperature processing (≥ 500 °C) of HAp has been reported to form the other calcium and phosphate phases, such as tri-calcium phosphates and calcium oxide, which degrades the structural integrity of the sintered matrices and increases the dissolution rate. Moreover, high-temperature sintering is not feasible for the processing of HAp-based radioactive waste matrices hosting adsorbed/ substituted ions of volatile radionuclides such as 129 I [56][57][58]. Recently, low temperature sintering of pure and substituted-HAp was reported at or above 250 °C with the application of various sintering techniques such as spark plasma sintering and microwave sintering [54,56,57,[59][60][61]. Most of these sintering techniques require sophisticated equipment or long processing times (120 min) as well as high temperatures.
+
+Cold sintering is a low temperature (≤200 °C) pressure assisted consolidation process and has been used for the sintering of different ceramics and ceramic composites [62]. Suriya et al. [51] reported the cold sintering of as-spent Fe 3 O 4 -HAp nanocomposite adsorbent after the adsorption of ionic corrosion metal products. However, low-temperature direct sintering of the pure HAp based as-spent adsorbent has not been investigated. The low-temperature direct sintering of an as-spent HAp adsorbent has the potential to reduce the secondary waste volume and to reduce associated energy requirements. This method can also simplify the waste processing steps and make the process environmentally-friendly by eliminating the need for additional chemicals and processing steps.
+
+In this study, we investigated the direct consolidation of a Co(II)adsorbed as-spent HAp adsorbent (Co-HAp) using cold sintering for the first time. The cold sintering of Co-HAp at 200 °C was carried out under a uniaxial pressure of 500 MPa with a holding time of 10 min. Dynamic leaching test-Accelerated Leaching Test (ALT) in addition to static leaching test-Product Consistency Test (7-days PCT) was also conducted to investigate the durability of the cold-sintered matrix and to provide a comprehensive data for future studies.
+
+A wet precipitation method was used for the synthesis of amorphous nano-HAp at 30 °C [59,63]. (NH 4 ) 2 HPO 4 (Alfa Aesar) and Ca (NO 3 ) 2 •4H 2 O (Alfa Aesar) solutions were prepared using 100 ml of deionized water (DIW) for each reactant, with the Ca(NO 3 ) 2 •4H 2 O solution mixed dropwise with the (NH 4 ) 2 HPO 4 solution under 200 rpm for 60 min. The pH of the reaction was continuously monitored and was maintained at 10.5. A concentrated ammonia solution was used and added dropwise to the reaction vessel to adjust the pH throughout the reaction. After 12 h, the suspension was filtered and then thoroughly washed and dried overnight at a temperature of 110 °C using a vacuum oven.
+
+The detailed adsorption study regarding the removal of cobalt ions from aqueous solution by using HAp has been carried out by Smičiklas et al. [13]. During the absorption procedure, the optimal solid-to-liquid ratio (S:L ratio) was obtained for the maximum removal of cobalt by varying the adsorbent amount from 0.2 to 0.5 g at a constant pH (6) and using 1 mM of cobalt in 100 ml of solution. The adsorbent-liquid contact time was set to 24 h (sorption equilibrium time) with a constant stirring speed of 150 rpm at 25 °C. At the sorption equilibrium time (24 h), the supernatant was separated from the solid using a 0.45 μm syringe filter after centrifugation at 3200 rpm for 10 min. The obtained adsorbent slurry was then dried overnight at 110 °C in a vacuum oven. The ICP-OES technique was used to measure the concentration of metal ions in the dried adsorbent and the supernatant. Eq. ( 1) was used to calculate the percent removal (% R) of metal ions,
+
+where C 1 and C 2 are the initial and final metal ion concentrations in mM, respectively.
+
+Figs.
+
+1 &amp; 2 describe the experimental arrangement used for the adsorption and cold sintering (consolidation) of the as-spent adsorbent (Co-HAp). Co-HAp powder which had been vacuum dried overnight (110 °C) was sintered by applying the optimized sintering conditions (200 °C, 10 min, 500 MPa) [64]. These cold-sintering conditions were optimized based on the obtained sintered relative density, microhardness and compressive strength of sintered pure HAp samples. In the sintering process, approximately 1.20 g of Co-HAp was used for the preparation of each sample. A specially designed and modified steel mold with an internal diameter of 10 mm was used in the sintering process (Fig. 2). The temperature was automatically controlled by inserting a temperature sensor into a hole in the upper punch of the steel mold. This arrangement facilitated the temperature measurements from the core of the steel mold (1 mm from the surface of the sample) (Fig. 2). A 0.5 kW heating jacket of (Samsung heater) was used as the heating source and a TCP-200 digital temperature controller was used as an effective means of temperature control.
+
+Chemical durability of the cold sintered waste matrix was carried out using two well established leaching tests; Accelerated Leaching Test (ALT-90) and Product Consistency Test (PCT). These tests provide information about the diffusive and dissolution leaching behaviours of the waste matrix which could help in understanding the leaching mechanism in repository environment.
+
+The American Nuclear Society (ANS) standards committee (ANSI/ ANS 16.1) has devised protocols for leaching tests especially for lowlevel radioactive waste forms in order to investigate the behaviour of waste matrix under dynamic conditions [65]. According to the ANSI standards, demineralized water was used at room temperature for the immersion of the sintered matrix of Co-HAp. An adequate volume of the leachate was taken to provide a surface area of 10 ± 0.2 cm 2 . The leachate samples were taken and renewed at the following intervals: i 2, 7 and the 24 h. from the initiation of the test ii Daily sampling and renewal for 4 days iii Then at 14, 28 at 43 days to extend the entire test over 90 days Eq. ( 2) was used to assess the effective diffusivity of each radionuclide
+
+Where
+
+T = Mean time of the leaching interval (day) D = Effective diffusivity (cm 2 /s) A o = Total Concentration of the radionuclide in the matrix at the beginning of the leach test.
+
+a n = Activity of the given radionuclide during leach interval n V = Volume of the specimen (cm 3 ) S = Geometric surface area of the specimen as calculated from measured dimensions (cm 2 )
+
+t n = Duration of the nth leaching interval (days)
+
+PCT is a 7-days chemical durability test carried out as per ASTM-C1285 under static conditions [66][67][68][69][70][71]. 1 g of each sintered crushed sample was immersed in 10 ml of ASTM-type I water and then placed in an air-tight autoclave at 90 ± 2 °C for seven days under a static condition. Eq. ( 3) was used to calculate the normalized leaching rate (NLR i ) of the ith element.
+
+Here, the following definitions hold:  The morphology of the adsorbent was investigated by the Titan cubed G2 60-300 (FEI company) transmission electron microscopy (TEM). Helium pycnometer (AccuPyc II 1340) and Archimedes' method were used to measure bulk densities of the starting powder and the cold sintered pure HAp and Co-HAp samples. All cold sintered samples were boiled in deionized water (DIW) for 30 min at 100 °C before the density measurements in order to ensure the complete removal of air from open and connected pores.
+
+Scanning electron microscopy SEM (Hitachi S4800) was used for the morphological and microstructure characterization of the Co-HAp before and after the sintering step. Fractured surfaces of the samples were examined to analyze the microstructure after sintering. The distribution of the adsorbed Co(II) inside the sintered matrix was revealed by energy dispersive spectroscopy (EDS) through area mapping carried out using an Octane Elite EDAX detector installed onto an SU5000 SEM device (Hitachi).
+
+Specific surface areas (SSA) of the synthesized-dried adsorbent and cold sintered-crushed samples were measured by Brunauer-Emmett-Teller (BET) method using TriStar II 3020 V1.03 system. Inductively Coupled Plasma-Optical Emission Spectroscopy (ICP-OES) analyses was used for elemental analysis of the samples at different stages of the experiment.
+
+The volumetric reduction was measured by recording the change in the volume of a sample when pressed at 100 MPa at room temperature for 30 s and then sintered under the optimized cold sintering conditions (200 °C, 10 min, 500 MPa).
+
+The micro-hardness of the sintered samples was measured by 402MVD, Wolpert Wilson Instruments. Expert Hardness 2007 V2.0 was used to process the test readings received online from the testing apparatus. The micro-hardness tests were carried out at room temperature, and all indents were made for a constant load of 200 g.f for 10 s. An average value of ten indents was taken a representative value of the micro-hardness of each sample.
+
+A universal testing machine (UTS INSTRON 5583, U.S.A) was used to measure the compressive strength of the cold-sintered pellets. The test was conducted at room temperature, and one sample having a length-to-diameter ratio (L/D) of 1.24 was compressed with a cross-head speed of 0.4 mm/min and a maximum load capacity of 150 kN.
+
+The synthesized adsorbent (HAp) was phase pure having low crystallinity and a Ca/P ratio of 1.64 as confirmed by the XRD (Fig. S2) and ICP-OES analyses, respectively. The HAp adsorbent used in this study consisted of nano-crystalline grains with an amorphous phase (Fig. S1) having measured specific surface area of 112.35 m 2 /g and bulk density of 2.94 g/cm 3 . It is a widely investigated fact that HAp nanoparticles produced through a wet precipitation process have both crystalline and amorphous phases. Generally, the wet precipitated HAp nano crystals are covered with an amorphous phase which is comprised of mobile ionic species (e.g. Ca 2+ , HPO 4
+
+) and adsorbed H 2 O [72][73][74][75][76][77]. Detailed characterization of the dried HAp, used as adsorbent in this experiment, revealed the same characteristic morphology (Fig. S1-S4). The highest level of Co(II) ion adsorption could be achieved due to the nanocrystalline/amorphous microstructure of the synthesized Hap [45,78].
+
+The use of calcium hydroxyapatite as an adsorbent for the removal of different heavy metal ions from their solutions has been studied thoroughly, and the effects of the solid/liquid contact time, pH and the metal ion concentrations have also been investigated in detail [6,13,[78][79][80]. It is important to optimize the pH for the practical applications and to obtain the maximum uptake of metal ions from aqueous solutions. Therefore, batch experiments were conducted to investigate the maximum uptake at pH ranging from 2 to 7. It can be observed in Fig. 3 that the adsorption capacity increased with an increase of the pH to 6, after which slight increase in the uptake was observed (i.e., beyond pH 6). It is interesting to note that a sharp increase in the uptake occurred from pH 2 to 3, after which the slope decreased. This stemmed from the competition of H + ions for the same available binding site of the adsorbent. In addition, the stability of the HAp structure might also be compromised under acidic conditions. The optimum selected pH value was 6 in the subsequent experiments to avoid competition of the H + ions at a lower pH and the formation of cobalt precipitation species at higher pH values [13].
+
+We optimized the adsorbent amount required for the maximum removal of Co(II) and found that 0.4 g of HAp provides 93.8 ± 0.2% removal of 1 mM Co(II) from 100 ml of an aqueous solution. Fig. 4 shows the effect of the adsorbent amount on the percentage removal (% R) of metal ions from a solution. In this study, the contact time of 24 h was used as adsorption equilibrium time [15,78]. Table 2 shows a comparison of the results here with typical Co(II) adsorption studies and other reported results. Nanocrystalline/amorphous microstructure of the used synthesized HAp provided high level of Co(II) ion adsorption [45,78].
+
+The purpose of this study was to investigate the single-step coldsintering process of an as-spent adsorbent (HAp with adsorbed simulated radioactive waste) and its durability for long-term disposal in a deep geological repository. Cold-sintering is a low-temperature sintering technique. It has a very short processing time and has no effect on the stoichiometry of the starting material. Thus, the physical and chemical properties of the sintered matrix are not compromised. The matrices can be processed to obtain the highest degree of densification without significant grain growth, leading to improved hardness and greater physical durability. Hassan et al. [64] investigated that synthesized hydroxyapatite with low crystallinity and higher amorphous ratio can be cold sintered to achieve high density. Diffraction patterns of the as-dried Co-HAp powder are shown in Fig. 5. The dried Co-HAp powder has unresolved broad peaks with low crystallinity and with no additional phases except calcium hydroxyapatite based on ICDD card No. 009-0432. XRD patterns (Fig. 5) show that physical properties of the HAp after Co(II) adsorption are the same as of the dried HAp. The presence of amorphous or hydrated phase is a pre-requisite for cold sintering of HAp as discussed by Hassan et al. [64]. Based on the physical properties of the adsorbent the dried Co-HAp was cold sintered using pre-optimized cold sintering conditions (200 °C, 500 MPa, 10 min) [64].
+
+After sintering at 200 °C, the intensity of the HAp peaks increased slightly (Fig. 5). However, the increase in the crystallinity was minor and the peaks remained unresolved and broad, indicating that the sintered Co-HAp has a nano-grain structure with low crystallinity. There were no signs of decomposition or dehydroxylation of the HAp at 200 °C, as this temperature is much lower than the reported decomposition temperature range of 800-1400 °C [82][83][84][85].
+
+The cold sintered pellets showed a relative volumetric reduction of 48% in comparison to those pressed at room temperature under 100 MPa and 30 s. A maximum relative sintered density of 97% (bulk measured density = 2.94 g/cm 3 , The bulk density of the Co-HAp was assumed to be equal to the bulk density of the HAp based on the fact that the adsorbed amount of Co(II) is very low as compared to that of HAp as a pure adsorbent) has been achieved at 200 °C. High densification of Co-HAp is facilitated by its amorphous phase, which is present along with the crystallized phase (Fig. 5) (Figs. S1-S4). Under high pressure, the agglomerates formed by the nano-crystals may break and slide to achieve close packing [86]. During this process of sliding and packing, the amorphous phase may re-arrange to fill in the gaps and pores. This re-arrangement of amorphous phase can occur as a result of the difference in the pressure gradient, which has a higher value at grain-grain contact points and a lower value at pores and gaps [87,88]. Thus, a fully densified cold-sintered matrix having nanocrystals co-existing with the glassy phase is obtained by using inherent physical property of the wet precipitated nano crystals i.e. amorphous layer (Fig. 6). The low temperature sintering of calcium hydroxyapatite was    also investigated by our group, and it showed the independence of sintering from the synthesis, drying and storage conditions of the starting material [64]. The measured average grain size of 200 °C sintered HAp was 48 nm and 49.30 nm in case of the Co-HAp which showed that there was no effect of cobalt adsorption on cold sintering of Co-HAp.
+
+A high density level, good micro-hardness and compressive strength are the important physical parameters to consider when verifying the sintering of a matrix. Classically, HAp ceramics are brittle and have low fracture resistance values. Thus, in order to qualify as a waste matrix candidate, the sintered body should exhibit acceptable compressive strength (≥3.45 MPa) [67,89]. A maximum micro-hardness value of 2.1 ± 0.2 GPa was obtained at a sintering temperature of 200 °C. The obtained hardness can be justified based on the microstructure of the sintered matrix. The sintered matrix is composed of nano-grains less than 100 nm in size. Wang et al. showed that a grain size of less than 140 nm has a significant effect on the strength of the sintered HAp matrix [63]. Fig. 7 shows a SEM image of the fractured surface of the sintered matrix, clearly depicting the nano-grain morphology of the sintered matrix. The zig-zag shape of the crack present on the fractured surface (Fig. 7-A) indicates that crack propagation is along the grain boundaries. Branching of the crack is also evident in the image, which distributes the energy of the crack tip to avoid brittle fracturing, though cracks in ceramics usually propagate very quickly. This phenomenon can be attributed to the nano-sized grains and the very good bonding amongst them. The presence of cobalt in the sintered matrices is also evident from the EDS-elemental area mapping results (Fig. 7-C) of the sintered samples. These results clearly show the homogenized distribution of the adsorbed cobalt in the sintered matrix.
+
+The compressive strength is a key parameter to ensure the reliability of a waste form during different stages of waste handling which included transportation, storage and final disposal. The consolidated matrix should demonstrate adequate compressive strength to ensure stable performance during waste handling processes. The samples sintered at 200 °C showed a compressive strength for Co-HAp (175 MPa) similar to high temperature sintered Co-Hap [50]. The comparable value of the compressive strength can be attributed to the high densification and the lowest level of porosity. It can be seen in the SEM images (Fig. 7-A) that the sintered matrix has no areas of open porosity. The achieved compressive strength of 175 MPa is beyond the compressive strength of Portland cement (3.4 MPa) and other consolidation matrices used for the immobilization of radioactive waste (e.g., vitrified glass -34.5 MPa) [90]. The reported compressive strength is significantly higher than the regulatory requirements (≥3.45 MPa) of the USA and Russia for a waste matrix to qualify for use as an immobilization matrix [65].
+
+The normalized leaching rates (NLRi) of the adsorbed cobalt and stability of the host matrix were measured by a standard PCT test. BET specific surface area of the samples used for PCT was 31 m 2 /g. Table 3 shows the calculated normalized leaching rates of different components of the sintered matrix along with the data from other studies. The calculated NLRi values are better than the release limit of 0.3 g/m 2 /day set by the Department of Energy (DOE) of the USA for types of phosphate glass [91]. These results demonstrate that HAp has good  adsorption affinity for Co(II) and that the adsorbed ions were effectively retained within the matrix under the harsh conditions. The good NLRi value (2.5 × 10 -5 g/m 2 /day) for Co(II) may be due to the availability of multiple binding sites and higher sintered density. A slight increase in the pH from 5.5 ± 0.1 to 6.7 ± 0.1 was observed after the PCT test; this may be due to leaching of PO 4
+
+3-ions from the matrix. The PO 4
+
+3ions consume protons to transform to HPO 4 2-and H 2 PO 4 -species [45].
+
+The normalized leaching rates of different constituents (B, Na, Si) of several types of glass vary from 3.7 × 10 -2 to 1.1 g/m 2 /day for B, 4.9 × 10 -2 to 7.6 × 10 -1 g/m 2 /day for Na, while for Si these values are 3.3 × 10 -2 to 2.4 ⨯10 -1 g/m 2 /day [71]. For a glass composite material, the normalized leaching rates reportedly ranged from 6.4 × 10 -6 to 9.1 × 10 -4 g/m 2 /day [95]. Wagh et al. [67] reported normalized leaching rate values of 6.3 × 10 -3 to 1.8 × 10 -3 g/m 2 /day for phosphate-based ceramics. According to Sajid et al. [50] the normalized leaching rate of adsorbed and immobilized cobalt from 1150 °C sintered calcium hydroxyapatite was 4.4 × 10 -6 g/m 2 /day. Based on these aforementioned results, it may be seen that the normalized leaching rates of the cold sintered Co-HAp matrix are promising and well below the release limits of a waste matrix defined by 10 CFR Part 60.113 (10 -5 parts per year ≈ 10 -3 g/m 2 /day) [96].
+
+An accelerated leaching test was conducted to assess the long-term stability of the immobilized matrix. It is well known that leaching can occur through several mechanisms, such as diffusion, ion exchange, dissolution, surface effects and corrosion; however, diffusion is considered as the dominant mechanism [97]. Therefore, the leaching indices for immobilized matrices are calculated through an assessment of the effective diffusivity (Eq. ( 2)). The leachability indices (L =log (D)) of the cold-sintered samples were calculated to catalog their immobilization performance. These are plotted in Fig. 8, in which slightly greater diffusivity was observed for the first sampling interval due to the leaching of loosely bound particles from the powder surface. Similar trend has been reported in literature for the first sampling periods [98]. SEM images of the samples surfaces before and after leaching are shown in Fig. 9. A very slight dissolution of the upper surface is visible in the images, however, the surface did not become rough and maintained its shine (inset). The erosion of grain boundaries can be seen which is mainly due to the high exchangeability and mobile nature of the constituents of the amorphous phase present at grain boundaries. Generally, the grain boundary phases contribute in the reduction of mechanical and chemical durability of ceramic waste forms even after high temperature processing [99]. After one day of leaching, the effective diffusivity (blue line) and leachability index (black line) achieved stable values, with no significant leaching differences observed even at a cumulative leaching time of 90 days. It is also important to note that the matrix has leachability indices which exceed 6.5 for Co(II) overall leaching intervals, indicating that the solidified matrix fulfills the waste acceptance criteria and can be considered capable of immobilizing radioactive waste [100][101][102].
+
+Here, we demonstrated a non-conventional cold sintering process of Co(II) adsorbed HAp which operates at a low temperature of 200 °C under a uniaxial pressure of 500 MPa A relative sintered density of 97% was achieved after a very short sintering time of 10 min. The sintered matrix showed good micro-hardness (2.1 ± 0.2 GPa) and a compressive strength of 175 MPa. The normalized leaching rates for all of the constituents of the sintered matrix were in the range of 1.5-3.2 × 10 -5 g/m 2 /day. The sintered matrix had a leaching index 6.5 which is higher than the set limit (6) of a waste matrix to be considered as suitable for an immobilization matrix. The study results suggest the stand-alone use of hydroxyapatite as adsorbent as well as waste matrix. Moreover, this technique does not produce any secondary waste as no organic binders or additional treatments are necessary. Thus, based on the results here and the use of a simple methodology, cold sintering technique for the immobilization of radioactive waste adsorbed calcium hydroxyapatite is efficient, economical, and environment friendly in comparison to high temperature sintering.
+
+This study is supported by the NRF grant funded by the MSIT (NRF-2015R1A5A1037627, NRF-2018M2B2A9065746, and NRF-2016R1A5A1013919), Republic of Korea.
+
+The calculated normalized leaching rate (NLRi) of each element from Co-HAp matrix along with data from other studies.
+
+a Specific Surface Area.</full_text>
+	<references>
+		<reference>
+			<title>J. Nucl. Mater</title>
+			<authors>
+				<author>J Yeon</author>
+				<author>Y Jung</author>
+				<author>S Pyun</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>J. Nucl. Mater</title>
+			<authors>
+				<author>G Hirschberg</author>
+				<author>P Baradlai</author>
+				<author>K Varga</author>
+				<author>G Myburg</author>
+				<author>J Schunk</author>
+				<author>P Tilky</author>
+				<author>P Stoddart</author>
+			</authors>
+			<date>1999</date>
+		</reference>
+		<reference>
+			<title>J. Nucl. Mater</title>
+			<authors>
+				<author>K Varga</author>
+				<author>G Hirschberg</author>
+				<author>Z Németh</author>
+				<author>G Myburg</author>
+				<author>J Schunk</author>
+				<author>P Tilky</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>Prog. Nucl. Energy</title>
+			<authors>
+				<author>C Lin</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Desalination</title>
+			<authors>
+				<author>H Ghassabzadeh</author>
+				<author>M Torab-Mostaedi</author>
+				<author>A Mohaddespour</author>
+				<author>M Maragheh</author>
+				<author>S Ahmadi</author>
+				<author>P Zaheri</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>J. Taiwan Inst. Chem. Eng</title>
+			<authors>
+				<author>N Gupta</author>
+				<author>A Kushwaha</author>
+				<author>M Chattopadhyaya</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Int. J. Miner. Process</title>
+			<authors>
+				<author>T Motsi</author>
+				<author>N Rowson</author>
+				<author>M Simmons</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>A Paulino</author>
+				<author>M Guilherme</author>
+				<author>A Reis</author>
+				<author>E Tambourgi</author>
+				<author>J Nozaki</author>
+				<author>E Muniz</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Appl. Clay Sci</title>
+			<authors>
+				<author>S Abu-Eishah</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>J Aguado</author>
+				<author>J Arsuaga</author>
+				<author>A Arencibia</author>
+				<author>M Lindo</author>
+				<author>V Gascón</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>M Zaini</author>
+				<author>Y Amano</author>
+				<author>M Machida</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Bioresour. Technol</title>
+			<authors>
+				<author>N Bishnoi</author>
+				<author>M Bajaj</author>
+				<author>N Sharma</author>
+				<author>A Gupta</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Water Res</title>
+			<authors>
+				<author>I Smičiklas</author>
+				<author>S Dimović</author>
+				<author>I Plećaš</author>
+				<author>M Mitrić</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Manage</title>
+			<authors>
+				<author>H Xu</author>
+				<author>L Yang</author>
+				<author>P Wang</author>
+				<author>Y Liu</author>
+				<author>M Peng</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>J. Saudi Chem. Soc</title>
+			<authors>
+				<author>I Mobasherpour</author>
+				<author>E Salahi</author>
+				<author>M Pazouki</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>A Corami</author>
+				<author>S Mignardi</author>
+				<author>V Ferrini</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Sep. Sci. Technol</title>
+			<authors>
+				<author>M Hughes</author>
+				<author>E Rosenberg</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>E Repo</author>
+				<author>T Kurniawan</author>
+				<author>J Warchol</author>
+				<author>M Sillanpää</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Microporous Mesoporous Mater</title>
+			<authors>
+				<author>S Iqbal</author>
+				<author>J Yun</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Appl. Clay Sci</title>
+			<authors>
+				<author>D Manohar</author>
+				<author>B Noeline</author>
+				<author>T Anirudhan</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>Water Res</title>
+			<authors>
+				<author>Ö Yavuz</author>
+				<author>Y Altunkaynak</author>
+				<author>F Güzel</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>J. Colloid Interface Sci</title>
+			<authors>
+				<author>E Erdem</author>
+				<author>N Karapinar</author>
+				<author>R Donat</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>A Ahmadpour</author>
+				<author>M Tahmasbi</author>
+				<author>T Bastami</author>
+				<author>J Besharati</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>K Krishnan</author>
+				<author>T Anirudhan</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Process Biochem</title>
+			<authors>
+				<author>I Suhasini</author>
+				<author>G Sriram</author>
+				<author>S Asolekar</author>
+				<author>G Sureshkumar</author>
+			</authors>
+			<date>1999</date>
+		</reference>
+		<reference>
+			<title>Biochem. Eng. J</title>
+			<authors>
+				<author>A Bhatnagar</author>
+				<author>A Minocha</author>
+				<author>M Sillanpää</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Stud. Inorg. Chem</title>
+			<authors>
+				<author>J Elliot</author>
+			</authors>
+			<date>1989</date>
+		</reference>
+		<reference>
+			<title>Front. Earth Sci</title>
+			<authors>
+				<author>J Wang</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Radionuclide Incorporation and Long Term Performance of Apatite Waste Forms</title>
+			<authors>
+				<author>J Wang</author>
+				<author>J Lian</author>
+				<author>F Gao</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Chem</title>
+			<authors>
+				<author>L Campayo</author>
+				<author>A Grandjean</author>
+				<author>A Coulon</author>
+				<author>R Delorme</author>
+				<author>D Vantelon</author>
+				<author>D Laurencin</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>J. Biomed. Mater. Res. Part B Appl. Biomater</title>
+			<authors>
+				<author>J Ratnayake</author>
+				<author>M Mucalo</author>
+				<author>G Dias</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>J. Chem. Soc. Faraday Trans. Phys. Chem. Condens. Phases</title>
+			<authors>
+				<author>T Suzuki</author>
+				<author>T Hatsushika</author>
+				<author>Y Hayakawa</author>
+			</authors>
+			<date>1981</date>
+		</reference>
+		<reference>
+			<title>Adv. Mater. Res</title>
+			<authors>
+				<author>Z Liu</author>
+				<author>G Zhang</author>
+				<author>Z Hu</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Environ. Sci. Technol</title>
+			<authors>
+				<author>Q Ma</author>
+				<author>S Traina</author>
+				<author>T Logan</author>
+				<author>J Ryan</author>
+			</authors>
+			<date>1994</date>
+		</reference>
+		<reference>
+			<title>J. Chem. Eng. Jpn</title>
+			<authors>
+				<author>Y Takeuchi</author>
+				<author>H Arai</author>
+			</authors>
+			<date>1990</date>
+		</reference>
+		<reference>
+			<title>Environ. Sci. Technol</title>
+			<authors>
+				<author>Y Xu</author>
+				<author>F Schwartz</author>
+				<author>S Traina</author>
+			</authors>
+			<date>1994</date>
+		</reference>
+		<reference>
+			<title>Environ. Sci. Technol</title>
+			<authors>
+				<author>A Leyva</author>
+				<author>J Marrero</author>
+				<author>P Smichowski</author>
+				<author>D Cicerone</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Manage</title>
+			<authors>
+				<author>J Gómez Del Rıó</author>
+				<author>P Morando</author>
+				<author>D Cicerone</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Environ. Sci. Technol</title>
+			<authors>
+				<author>M Peld</author>
+				<author>K Tõnsuaadu</author>
+				<author>V Bender</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>J. Solid State Chem</title>
+			<authors>
+				<author>J Jeanjean</author>
+				<author>U Vincent</author>
+				<author>M Fedoroff</author>
+			</authors>
+			<date>1994</date>
+		</reference>
+		<reference>
+			<title>Water Res</title>
+			<authors>
+				<author>E Vega</author>
+				<author>J Pedregosa</author>
+				<author>G Narda</author>
+				<author>P Morando</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>Thermochemical properties of phosphates</title>
+			<authors>
+				<author>P Vieillard</author>
+				<author>Y Tardy</author>
+			</authors>
+			<date>1984</date>
+		</reference>
+		<reference>
+			<title>J. Nucl. Mater</title>
+			<authors>
+				<author>A Coulon</author>
+				<author>A Grandjean</author>
+				<author>D Laurencin</author>
+				<author>P Jollivet</author>
+				<author>S Rossignol</author>
+				<author>L Campayo</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Sci. Mater. Med</title>
+			<authors>
+				<author>E Ferna´ndez</author>
+				<author>F Gil</author>
+				<author>M Ginebra</author>
+				<author>F Driessens</author>
+				<author>J Planell</author>
+				<author>S Best</author>
+			</authors>
+			<date>1999</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>J Oliva</author>
+				<author>J De Pablo</author>
+				<author>J.-L Cortina</author>
+				<author>J Cama</author>
+				<author>C Ayora</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Sci. Total Environ</title>
+			<authors>
+				<author>A Dybowska</author>
+				<author>D Manning</author>
+				<author>M Collins</author>
+				<author>T Wess</author>
+				<author>S Woodgate</author>
+				<author>E Valsami-Jones</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Interim Report: 100-NR-2 Apatite Treatability</title>
+			<authors>
+				<author>U Doe</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Constr. Build. Mater</title>
+			<authors>
+				<author>W Xia</author>
+				<author>Y Feng</author>
+				<author>F Jin</author>
+				<author>L Zhang</author>
+				<author>Y Du</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Environ. Sci. Technol</title>
+			<authors>
+				<author>S Handley-Sidhu</author>
+				<author>J Hriljac</author>
+				<author>M Cuthbert</author>
+				<author>J Renshaw</author>
+				<author>R Pattrick</author>
+				<author>J Charnock</author>
+				<author>B Stolpe</author>
+				<author>J Lead</author>
+				<author>S Baker</author>
+				<author>L Macaskie</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>J. Nucl. Mater</title>
+			<authors>
+				<author>S Iqbal</author>
+				<author>M Hassan</author>
+				<author>H Ryu</author>
+				<author>J Yun</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>J. Nucl. Mater</title>
+			<authors>
+				<author>S Venkatesan</author>
+				<author>M Hassan</author>
+				<author>H Ryu</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Handbook of Advanced Radioactive Waste Conditioning Technologies</title>
+			<authors>
+				<author>M Ojovan</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Treatment and Conditioning of Radioactive Solid Wastes</title>
+			<authors/>
+			<date>1992</date>
+		</reference>
+		<reference>
+			<title>Acta Biomater</title>
+			<authors>
+				<author>E Champion</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Ceram. Int</title>
+			<authors>
+				<author>G Muralithran</author>
+				<author>S Ramesh</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>Acta Biomater</title>
+			<authors>
+				<author>D Grossin</author>
+				<author>S Rollin-Martinet</author>
+				<author>C Estournès</author>
+				<author>F Rossignol</author>
+				<author>E Champion</author>
+				<author>C Combes</author>
+				<author>C Rey</author>
+				<author>C Geoffroy</author>
+				<author>C Drouet</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>J. Eur. Ceram. Soc</title>
+			<authors>
+				<author>A Coulon</author>
+				<author>D Laurencin</author>
+				<author>A Grandjean</author>
+				<author>S Gallet</author>
+				<author>L Minier</author>
+				<author>S Rossignol</author>
+				<author>L Campayo</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>J. Eur. Ceram. Soc</title>
+			<authors>
+				<author>C Ortali</author>
+				<author>I Julien</author>
+				<author>M Vandenhende</author>
+				<author>C Drouet</author>
+				<author>E Champion</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>Scr. Mater</title>
+			<authors>
+				<author>J Wang</author>
+				<author>L Shaw</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Mater. Sci. Eng. C</title>
+			<authors>
+				<author>A Chanda</author>
+				<author>S Dasgupta</author>
+				<author>S Bose</author>
+				<author>A Bandyopadhyay</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>J. Am. Ceram. Soc</title>
+			<authors>
+				<author>M Lukić</author>
+				<author>S Škapin</author>
+				<author>S Marković</author>
+				<author>D Uskoković</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Res</title>
+			<authors>
+				<author>J Maria</author>
+				<author>X Kang</author>
+				<author>R Floyd</author>
+				<author>E Dickey</author>
+				<author>H Guo</author>
+				<author>J Guo</author>
+				<author>A Baker</author>
+				<author>S Funihashi</author>
+				<author>C Randall</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Adv. Mater</title>
+			<authors>
+				<author>J Wang</author>
+				<author>L Shaw</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>The American Ceramic Society</title>
+			<authors>
+				<author>M Hassan</author>
+				<author>H Ryu</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>ANSI/ANS-16.1: Measurement of the Leachability of Solidified Low-Level Radioactive Wastes by a Short-Term Test Procedure</title>
+			<authors/>
+			<date>1986</date>
+		</reference>
+		<reference>
+			<title>Standard Test Methods for Determining Chemical Durability of Nuclear, Hazardous, and Mixed Waste Glasses and Multiphase Glass Ceramics: The Product Consistency Test (PCT) 1 15</title>
+			<authors>
+				<author>Astm C</author>
+			</authors>
+			<date>1285</date>
+		</reference>
+		<reference>
+			<title>Chem. Bond. Phosphate Ceram. Elsevier</title>
+			<authors>
+				<author>A Wagh</author>
+				<author>A Wagh</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>A Wagh</author>
+				<author>S Sayenko</author>
+				<author>V Shkuropatenko</author>
+				<author>R Tarasov</author>
+				<author>M Dykiy</author>
+				<author>Y Svitlychniy</author>
+				<author>V Virych</author>
+				<author>Y Ulybkina</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Project Title: Radionuclide Incorporation and Long Term Performance of Apatite Waste Forms 11-3105</title>
+			<authors>
+				<author>K Gray</author>
+				<author>F Poc</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>J. Nucl. Mater</title>
+			<authors>
+				<author>S Vinokurov</author>
+				<author>Y Kulyako</author>
+				<author>O Slyuntchev</author>
+				<author>S Rovny</author>
+				<author>B Myasoedov</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>PNNL-13452: Vitrification and Product Testing of C-104 and AZ-102 Pretreated Sludge Mixed With Flowsheet Quantities of Secondary Wastes</title>
+			<authors>
+				<author>U Doe</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>Mater. Sci. Eng. C</title>
+			<authors>
+				<author>C Rey</author>
+				<author>C Combes</author>
+				<author>C Drouet</author>
+				<author>H Sfihi</author>
+				<author>A Barroug</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Nat. Mater</title>
+			<authors>
+				<author>Y Wang</author>
+				<author>S Von Euw</author>
+				<author>F Fernandes</author>
+				<author>S Cassaignon</author>
+				<author>M Selmane</author>
+				<author>G Laurent</author>
+				<author>G Pehau-Arnaudet</author>
+				<author>C Coelho</author>
+				<author>L Bonhomme-Coury</author>
+				<author>M Giraud-Guille</author>
+				<author>F Babonneau</author>
+				<author>T Azaïs</author>
+				<author>N Nassif</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Magn. Reson. Chem</title>
+			<authors>
+				<author>C Jäger</author>
+				<author>T Welzel</author>
+				<author>W Meyer-Zaika</author>
+				<author>M Epple</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Sci. Mater. Med</title>
+			<authors>
+				<author>E Bouyer</author>
+				<author>F Gitzhofer</author>
+				<author>M Boulos</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Sci. Mater. Med</title>
+			<authors>
+				<author>N Vandecandelaere</author>
+				<author>C Rey</author>
+				<author>C Drouet</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Sci. Mater. Med</title>
+			<authors>
+				<author>G Celotti</author>
+				<author>A Tampieri</author>
+				<author>S Sprio</author>
+				<author>E Landi</author>
+				<author>L Bertinetti</author>
+				<author>G Martra</author>
+				<author>C Ducati</author>
+				<author>G Celotti</author>
+				<author>A Tampieri</author>
+				<author>S Sprio</author>
+				<author>E Landi</author>
+				<author>L Bertinetti</author>
+				<author>G Martra</author>
+				<author>C Ducati</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>Sci. Rep</title>
+			<authors>
+				<author>S Handley-Sidhu</author>
+				<author>T Mullan</author>
+				<author>Q Grail</author>
+				<author>M Albadarneh</author>
+				<author>T Ohnuki</author>
+				<author>L Macaskie</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>I Smičiklas</author>
+				<author>A Onjia</author>
+				<author>S Raičević</author>
+				<author>Đ Janaćković</author>
+				<author>M Mitrić</author>
+				<author>S Raičevi</author>
+				<author>Ð Janakovi</author>
+				<author>M Mitri</author>
+				<author>S Raičević</author>
+				<author>Đ Janaćković</author>
+				<author>M Mitrić</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Can. J. Chem. Eng</title>
+			<authors>
+				<author>N Nassar</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Desalination</title>
+			<authors>
+				<author>X Pan</author>
+				<author>J Wang</author>
+				<author>D Zhang</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>J. Funct. Biomater</title>
+			<authors>
+				<author>M Prakasam</author>
+				<author>J Locs</author>
+				<author>K Salma-Ancane</author>
+				<author>D Loca</author>
+				<author>A Largeteau</author>
+				<author>L Berzina-Cimdina</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Ceram. Int</title>
+			<authors>
+				<author>A Karimzadeh</author>
+				<author>M Ayatollahi</author>
+				<author>A Bushroa</author>
+				<author>M Herliansyah</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>IEEE 3rd Int. Conf. Nano/Molecular Med. Eng</title>
+			<authors>
+				<author>Chunyan Wang</author>
+				<author>R Quan</author>
+				<author>H Wang</author>
+				<author>Xicheng Wei</author>
+				<author>Zhijun Zhao</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Biomaterials</title>
+			<authors>
+				<author>A Ruys</author>
+				<author>M Wei</author>
+				<author>C Sorrell</author>
+				<author>M Dickson</author>
+				<author>A Brandwood</author>
+				<author>B Milthorpe</author>
+			</authors>
+			<date>1995</date>
+		</reference>
+		<reference>
+			<title>Sci. Rep</title>
+			<authors>
+				<author>A Kocjan</author>
+				<author>M Logar</author>
+				<author>Z Shen</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>J. Geophys. Res. Solid Earth</title>
+			<authors>
+				<author>E Gundersen</author>
+				<author>F Renard</author>
+				<author>D Dysthe</author>
+				<author>K Bjørlykke</author>
+				<author>B Jamtveit</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>Research in Earth Physics: Phase Report No. 2: Adsorption and Friction Behavior of Minerals in Vacuum, Waterways Experiment Station</title>
+			<authors>
+				<author>L Bromwell</author>
+			</authors>
+			<date>1965</date>
+		</reference>
+		<reference>
+			<title>PNNL-20632, Waste Acceptance Testing of Secondary Waste Forms: Cast Stone</title>
+			<authors>
+				<author>U Doe</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Radioactive Waste Soidification, Radioactive Waste Management for Nuclear Power Reactors and Other Facilities</title>
+			<authors>
+				<author>M Brownstein</author>
+			</authors>
+			<date>1991</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Sci</title>
+			<authors>
+				<author>I Donald</author>
+				<author>B Metcalfe</author>
+				<author>R Taylor</author>
+			</authors>
+			<date>1997</date>
+		</reference>
+		<reference>
+			<title>MRS Proc</title>
+			<authors>
+				<author>H Haworth</author>
+				<author>D Wronkiewicz</author>
+				<author>D Day</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>MRS Proc</title>
+			<authors>
+				<author>K Mogus-Milankovic</author>
+				<author>D Furic</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>J. Non. Cryst. Solids</title>
+			<authors>
+				<author>L Ghussn</author>
+				<author>M Prado</author>
+				<author>D Russo</author>
+				<author>J Martinelli</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>J. Pak. Mater. Soc</title>
+			<authors>
+				<author>M Ojovan</author>
+				<author>J Juoi</author>
+				<author>W Lee</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Waste Forms Technology and Performance: Final Report</title>
+			<authors/>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Nucl. Chem. Waste Manag</title>
+			<authors>
+				<author>J Stone</author>
+			</authors>
+			<date>1981</date>
+		</reference>
+		<reference>
+			<title>J. Nucl. Mater</title>
+			<authors>
+				<author>S Chong</author>
+				<author>J Peterson</author>
+				<author>B Riley</author>
+				<author>D Tabada</author>
+				<author>D Wall</author>
+				<author>C Corkhill</author>
+				<author>J Mccloy</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>J. Am. Ceram. Soc</title>
+			<authors>
+				<author>Z Dong</author>
+				<author>T White</author>
+				<author>B Wei</author>
+				<author>K Laursen</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>Int. J. Environ. Eng. Sci</title>
+			<authors>
+				<author>R Rahman</author>
+				<author>A El Kamash</author>
+				<author>H Ali</author>
+				<author>Y Hung</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Waste Manag</title>
+			<authors>
+				<author>A Guerrero</author>
+				<author>S Goi</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Eng</title>
+			<authors>
+				<author>M Raouf</author>
+				<author>H Nowier</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1016/j.jnucmat.2006.03.017</number>
+		<number>DOI-10.1016/S0022-3115(98)00656-4</number>
+		<number>DOI-10.1016/S0022-3115(01)00658-4</number>
+		<number>DOI-10.1016/j.pnucene.2008.05.005</number>
+		<number>DOI-10.1016/j.desal.2010.05.028</number>
+		<number>DOI-10.1016/j.minpro.2009.02.005</number>
+		<number>DOI-10.1016/j.jhazmat.2006.12.059</number>
+		<number>DOI-10.1016/j.clay.2008.02.003</number>
+		<number>DOI-10.1016/j.jhazmat.2008.06.080</number>
+		<number>DOI-10.1016/j.jhazmat.2010.04.069</number>
+		<number>DOI-10.1016/S0960-8524(03)00204-9</number>
+		<number>DOI-10.1016/j.watres.2006.04.031</number>
+		<number>DOI-10.1016/j.jenvman.2006.12.011</number>
+		<number>DOI-10.1016/j.jscs.2010.06.003</number>
+		<number>DOI-10.1016/j.jhazmat.2006.12.003</number>
+		<number>DOI-10.1080/01496390601070141</number>
+		<number>DOI-10.1016/j.jhazmat.2009.06.111</number>
+		<number>DOI-10.1016/j.micromeso.2017.04.028</number>
+		<number>DOI-10.1016/j.clay.2005.08.008</number>
+		<number>DOI-10.1016/S0043-1354(02)00409-8</number>
+		<number>DOI-10.1016/j.jcis.2004.08.028</number>
+		<number>DOI-10.1016/j.jhazmat.2008.11.103</number>
+		<number>DOI-10.1016/j.cej.2007.04.029</number>
+		<number>DOI-10.1016/S0032-9592(98)00090-9</number>
+		<number>DOI-10.1016/j.bej.2009.10.005</number>
+		<number>DOI-10.3389/feart.2015.00020</number>
+		<number>DOI-10.1039/c1jm14157k</number>
+		<number>DOI-10.1002/jbm.b.33651</number>
+		<number>DOI-10.4028/www.scientific.net/AMR.415-417.1662</number>
+		<number>DOI-10.1021/es00056a007</number>
+		<number>DOI-10.1252/jcej.23.75</number>
+		<number>DOI-10.1021/es00057a015</number>
+		<number>DOI-10.1021/es0009929</number>
+		<number>DOI-10.1016/j.jenvman.2004.02.004</number>
+		<number>DOI-10.1021/es049831l</number>
+		<number>DOI-10.1006/jssc.1994.1010</number>
+		<number>DOI-10.1016/S0043-1354(02)00565-1</number>
+		<number>DOI-10.1016/j.jnucmat.2016.10.047</number>
+		<number>DOI-10.1023/A:1008937507714</number>
+		<number>DOI-10.1016/j.jhazmat.2011.07.104</number>
+		<number>DOI-10.1016/j.scitotenv.2008.12.053</number>
+		<number>DOI-10.1016/j.conbuildmat.2017.08.149</number>
+		<number>DOI-10.1021/es500734n</number>
+		<number>DOI-10.1016/j.jnucmat.2018.05.016</number>
+		<number>DOI-10.1016/j.jnucmat.2018.11.026</number>
+		<number>DOI-10.1016/j.actbio.2012.11.029</number>
+		<number>DOI-10.1016/S0272-8842(99)00046-2</number>
+		<number>DOI-10.1016/j.actbio.2009.08.021</number>
+		<number>DOI-10.1016/j.jeurceramsoc.2016.02.041</number>
+		<number>DOI-10.1016/j.jeurceramsoc.2017.11.051</number>
+		<number>DOI-10.1016/j.scriptamat.2010.06.002</number>
+		<number>DOI-10.1016/j.msec.2008.09.008</number>
+		<number>DOI-10.1111/j.1551-2916.2012.05376.x</number>
+		<number>DOI-10.1002/adma.200602333</number>
+		<number>DOI-10.1016/j.jhazmat.2015.09.049</number>
+		<number>DOI-10.1016/j.jnucmat.2008.09.053</number>
+		<number>DOI-10.1016/j.msec.2006.05.015</number>
+		<number>DOI-10.1038/nmat3787</number>
+		<number>DOI-10.1002/mrc.1774</number>
+		<number>DOI-10.1023/A:1008918110156</number>
+		<number>DOI-10.1007/s10856-012-4719-y</number>
+		<number>DOI-10.1007/s10856-006-0534-7</number>
+		<number>DOI-10.1038/srep23361</number>
+		<number>DOI-10.1016/j.jhazmat.2007.07.056</number>
+		<number>DOI-10.1002/cjce.20613</number>
+		<number>DOI-10.1016/j.desal.2009.01.027</number>
+		<number>DOI-10.3390/jfb6041099</number>
+		<number>DOI-10.1016/j.ceramint.2014.01.131</number>
+		<number>DOI-10.1109/NANOMED.2009.5559116</number>
+		<number>DOI-10.1016/0142-9612(95)98859-C</number>
+		<number>DOI-10.1038/s41598-017-02760-7</number>
+		<number>DOI-10.1029/2001JB000287</number>
+		<number>DOI-10.1023/A:1018646507438</number>
+		<number>DOI-10.1557/PROC-757-II3.22</number>
+		<number>DOI-10.1557/PROC-663-153</number>
+		<number>DOI-10.1016/j.jnoncrysol.2006.02.105</number>
+		<number>DOI-10.1016/0191-815X(81)90026-7</number>
+		<number>DOI-10.1016/j.jnucmat.2018.03.033</number>
+		<number>DOI-10.1111/j.1151-2916.2002.tb00489.x</number>
+		<number>DOI-10.1016/S0956-053X(02)00054-5</number>
+		<number>DOI-10.1061/(ASCE)0733-9372(2004)130:5(499)</number>
+	</reference_dois>
+</document>

@@ -5,9 +5,6 @@ import FileRow from "./FileRow";
 
 const UPLOAD_URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/upload`;
 
-//piedod dievs par šo failu
-
-
 export default function UploadPage() {
   const { fileQueue, setFileQueue, updateFile, clearQueue } = useUploadStore();
   const inputRef = useRef(null);
@@ -29,23 +26,26 @@ export default function UploadPage() {
       ...pdfs.map(f =>    ({ name: f.name, status: STATUS.WAITING, message: "" })),
     ]);
 
-    for (const file of pdfs) {
-      updateFile(file.name, { status: STATUS.UPLOADING, message: "" });
-      try {
-        const form = new FormData();
-        form.append("file", file);
-        const res = await fetch(UPLOAD_URL, { method: "POST", body: form });
-        if (res.ok) {
-          updateFile(file.name, { status: STATUS.SUCCESS, message: "Uploaded successfully" });
-        } else {
-          const body = await res.json().catch(() => ({}));
-          updateFile(file.name, { status: STATUS.ERROR, message: body.error || `Server error ${res.status}` });
-        }
-      } catch {
-        updateFile(file.name, { status: STATUS.ERROR, message: "Network error" });
-      }
+    // Replace the for loop in uploadFiles()
+    await Promise.all(
+        pdfs.map(async (file) => {
+            updateFile(file.name, { status: STATUS.UPLOADING, message: "" });
+            try {
+                const form = new FormData();
+                form.append("file", file);
+                const res = await fetch(UPLOAD_URL, { method: "POST", body: form });
+                if (res.ok) {
+                    updateFile(file.name, { status: STATUS.SUCCESS, message: "Uploaded successfully" });
+                } else {
+                    const body = await res.json().catch(() => ({}));
+                    updateFile(file.name, { status: STATUS.ERROR, message: body.error || `Server error ${res.status}` });
+                }
+            } catch {
+                updateFile(file.name, { status: STATUS.ERROR, message: "Network error" });
+            }
+        })
+    );
     }
-  }
 
   return (
     <main style={{

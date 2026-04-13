@@ -1,0 +1,1051 @@
+<document>
+	<file>./pdf-files/nanomaterials-15-00621.pdf</file>
+	<title>Citrate-Stabilized Amorphous Calcium Phosphate Nanoparticles as an Effective Adsorbent for Defluorination</title>
+	<date>2025</date>
+	<doi_number>10.3390/nano15080621</doi_number>
+	<img_preview_path>./pdf-preview-images/nanomaterials-15-00621.jpeg</img_preview_path>
+	<authors>
+		<author>Ruojiao Su</author>
+		<author>Miaomiao Wang</author>
+		<author>Yuwei Jiang</author>
+		<author>Shuang Zhang</author>
+		<author>Junjun Tan</author>
+	</authors>
+	<abstract>Amorphous calcium phosphate (ACP), one of the most important calcium–phosphorus compounds, is widely used in dentistry, orthopedics, and medicine, but is rarely reported for fluoride removal from water. In view of this, sodium citrate-stabilized amorphous calcium phosphate (Cit-ACP) and Cit-ACP calcinated at different temperatures were successfully prepared for fluoride removal. The results showed that the adsorption data of the Cit-ACP sample could be well described by the Langmuir model, and the adsorption kinetic followed the pseudo-second-order model. The maximum adsorption capacity was 27.48 mg/g at pH 7.0 when the fluoride concentration is 100 mg/L. The thermodynamic parameters suggested that the adsorption of fluoride was a spontaneous endothermic process. The XRD, XPS, and Zeta potential analysis of the Cit-ACP sample before and after fluoride removal revealed that, owing to the core–shell structure of the Cit-ACP nanoparticles, the fluoride ions in solution and the calcium ions in shell layer of the Cit-ACP nanoparticles co-promoted the transformation of the core of the Cit-ACP nanoparticles into fluorapatite. Given the simplicity of its preparation and effectiveness of its fluoride removal properties, Cit-ACP would be a potentially economical, efficient, and biocompatible adsorbent for fluoride removal.</abstract>
+	<methods>
+		<method>
+			<heading>Materials</heading>
+			<text>Calcium chloride dihydrate (CaCl 2 •2H 2 O, purity ≥ 99.0%), sodium phosphate tribasic dodecahydrate (Na 3 PO 4 •12H 2 O, purity ≥ 98.0%), sodium citrate tribasic dihydrate (C 6 H 5 Na 3 O 7 •2H 2 O, purity ≥ 99.0%), sodium fluoride (NaF, purity ≥ 97.0%), and sodium hydroxide (NaOH, purity ≥ 97.0%) were purchased from Shanghai Aladdin Reagent Co., Ltd. (Shanghai, China) All chemicals were used as received without further purification. Deionized water was used throughout the study.</text>
+		</method>
+		<method>
+			<heading>Preparation of Adsorbent</heading>
+			<text>In a typical synthesis, an aqueous solution of sodium citrate (0.02 mol, 30 g H 2 O) was slowly added to an aqueous solution of calcium chloride (0.02 mol, 30 g H 2 O) with continuous stirring for 30 min. Then, an aqueous solution of sodium phosphate (0.012 mol, 40 g H 2 O) was slowly added to the mixture with vigorous stirring for 60 min. Afterwards, the resulting product was purified by a two-round centrifugation-wash process with deionized water. Finally, the precipitate was freeze-dried, and the resulting powder was used as an adsorbent, labeled as sample Cit-ACP-25. In order to compare the adsorption properties, the sample Cit-ACP-25 was subjected to a two-hour calcination process at 200, 400, and 600 • C. The resulting adsorbents were labeled as sample Cit-ACP-200, Cit-ACP-400, and Cit-ACP-600, respectively. The preparation process is shown schematically in Figure S1.</text>
+		</method>
+		<method>
+			<heading>Batch Adsorption Experiments</heading>
+			<text>In order to evaluate the adsorption performance of the prepared adsorbent on fluoride ions in water, adsorption experiments were carried out. The sodium fluoride stock solution was obtained by dissolving 4.421 g of sodium fluoride in 1000 mL of deionized water, at which the concentration of fluoride ions was 2000 mg/L. The test solutions with different fluoride ion concentrations required for the experiments were obtained by diluting the sodium fluoride stock solution.
+
+The adsorption isotherm was measured at a pH of 7.0 and an adsorbent addition of 1 g/L. A total of 30 mg of adsorbent was added to a polyethylene centrifuge tube containing 30 mL of a specific concentration of sodium fluoride test solution (5 to 100 mg/L) and then the flasks were shaken at 100 rpm in a shaker at three different temperatures, viz., 25, 35, and 45 • C for 24 h to reach adsorption equilibrium. After the completion of adsorption, the solution was centrifuged at 8000 rpm for 5 min and its supernatant was used by a fluoride ion selective electrode (PF-2-01, Leici, Shanghai, China) for the determination of fluoride ion concentration. The relationship between the fluoride ion standard solution concentration and the electrode potential values is shown in Figure S2.
+
+All measurements were carried out at 25 • C and the adsorption capacity (q e , mg/g) was calculated according to the following equation [45]:
+
+where C 0 and C e are the initial and final equilibrium concentrations (mg/L) of fluoride in solution, respectively; V is the volume of sodium fluoride test solution (L); and m is the mass of adsorbent added (g).
+
+In the kinetic experiments, a series of polyethylene centrifuge tubes containing sodium fluoride test solution (10 mg/L fluoride ion concentration) were added with 30 mg of adsorbent and quickly placed in a constant temperature shaker at 100 rpm and 25 • C. When a specific contact time was reached, one of the centrifuge tubes was quickly removed for centrifugation and the fluoride ion concentration of the test solution after adsorption was measured.
+
+The effect of the initial pH of sodium fluoride test solution on the adsorption performance of the adsorbent was carried out by changing the initial pH of the sodium fluoride test solution using 0.1 M hydrochloric acid and 0.1 M NaOH, and the pH adjustment range was from 3 to 11. In this experiment, the initial fluoride concentration was 10 mg/L, the adsorption temperature was 25 • C, adsorption time was 24 h, and the adsorbent addition was 1 g/L.
+
+The effect of co-existing ions on the adsorption performance of the adsorbent was carried out by adding different types (chloride, phosphate, sulfate, and bicarbonate ions) and different concentrations (0.3 mM, 0.6 mM, 1.2 mM, 2.4 mM) of co-existing ions to the sodium fluoride test solution. In this experiment, the initial fluoride concentration was 10 mg/L and the adsorbent dose was 1 g/L.
+
+The experimental data were fitted using the Langmuir and Freundlich model with the model equation shown below [46]:
+
+ln
+
+where q e is the adsorption capacity at adsorption equilibrium in mg/g; C e is the equilibrium concentration of fluoride ions in mg/L; q m is the maximum adsorption capacity of the adsorbent for fluoride ions in mg/g; K L is the Langmuir's constant of the adsorption process in L/mg; K F is the Freundlich's constant of the adsorption process; and 1/n is the adsorption strength.
+
+The equations for each of the two kinetic models are as follows [47]: ln(q eq t ) = ln q ek 1 t (4)
+
+where q t is the adsorption capacity of fluoride ion at any time t; q e is the adsorption capacity of fluoride ions at the time of reaching adsorption equilibrium, in mg/g; k 1 is the rate constant for the pseudo-first-order reaction in min -1 ; k 1 is the rate constant for the pseudofirst-order reaction in min -1 ; and k 2 is the rate constant for the pseudo-second-order reaction in g/(mg•min).
+
+2.4. Characterization 2.4.1. Wide-Angle X-Ray Diffraction (XRD)
+
+Powder X-ray diffraction was performed in Bragg-Brentano geometry with an Empyrean nano-X-ray diffractometer (Panalytical, Almelo, The Netherlands) equipped with a Cu Kα radiation (0.15406 nm) source. Scans were performed from 10 • to 80 • with a scan rate of 6 • /min.</text>
+		</method>
+		<method>
+			<heading>Characterization of Adsorbents</heading>
+			<text>The characteristics of adsorbents, such as particle size, specific surface area, crystallinity, and other relevant information, are useful in understanding the adsorption behavior of adsorbents. Figure 1 shows the XRD patterns of the prepared samples. The XRD patterns of both samples Cit-ACP-25 and Cit-ACP-200 do not have typical characteristic diffraction peaks, indicating that the samples are amorphous calcium phosphate. The XRD patterns of the samples Cit-ACP-400 and Cit-ACP-600 display the following diffraction peaks at 26.0 • , 32.1 • , 34.1 • , 39.9 • , 46.8 • , 49.6 • , 53.3 • , and 64.1 • which are correlated to the (h k l) indices (0 0 2), (2 1 1), (2 0 2), (3 1 0), (2 2 2), (2 1 3), (0 0 4), and (3 0 4) planes, respectively. All reflections are characteristics of the hexagonal phase of HA according to the standard data (JCPDS No. 09-0432) [48] and reported studies [49].
+
+size distribution was determined using the Barett-Joyner-Halenda (BJH) method from the desorption branch of the isotherm by an ommishop 100CX surface area analyzer (Coulter Inc., Brea, CA, USA).</text>
+		</method>
+		<method>
+			<heading>Characterization of Adsorbents</heading>
+			<text>The characteristics of adsorbents, such as particle size, specific surface area, crystallinity, and other relevant information, are useful in understanding the adsorption behavior of adsorbents. Figure 1 shows the XRD patterns of the prepared samples. The XRD patterns of both samples Cit-ACP-25 and Cit-ACP-200 do not have typical characteristic diffraction peaks, indicating that the samples are amorphous calcium phosphate. The XRD patterns of the samples Cit-ACP-400 and Cit-ACP-600 display the following diffraction peaks at 26.0°, 32.1°, 34.1°, 39.9°, 46.8°, 49.6°, 53.3°, and 64.1° which are correlated to the (h k l) indices (0 0 2), (2 1 1), (2 0 2), (3 1 0), (2 2 2), (2 1 3), (0 0 4), and (3 0 4) planes, respectively. All reflections are characteristics of the hexagonal phase of HA according to the standard data (JCPDS No. 09-0432) [48] and reported studies [49]. In addition, as the sintering temperature was increased from 400 to 600 °C, the profiles of the diffraction peaks of the samples became more and more complete and sharp, indicating that the increase in the sintering temperature not only transformed the samples from amorphous calcium phosphate to crystallized hydroxyapatite but also increased the crystallinity of the product.
+
+Figure 2 are SEM images of the prepared samples. When not sintered, sample Cit-ACP-25 presents as spherical particles with an average diameter around 33 nm. When the sintering temperature was increased to 400 °C, the morphology of the sample particles did not change significantly, but the size increased slightly, e.g., 50 nm (Cit-ACP-200) or 26 nm (Cit-ACP-400). When the sintering temperature is 600 °C, the morphology of the sample particles changes from spherical to rod-like, and the size of the particles increases dramatically, with an average length of 1.2 µm and an average diameter of 311 nm.
+
+The average crystallite size of the synthesized nanoparticles was estimated using the Scherrer equation: In addition, as the sintering temperature was increased from 400 to 600 • C, the profiles of the diffraction peaks of the samples became more and more complete and sharp, indicating that the increase in the sintering temperature not only transformed the samples from amorphous calcium phosphate to crystallized hydroxyapatite but also increased the crystallinity of the product.
+
+Figure 2 are SEM images of the prepared samples. When not sintered, sample Cit-ACP-25 presents as spherical particles with an average diameter around 33 nm. When the sintering temperature was increased to 400 • C, the morphology of the sample particles did not change significantly, but the size increased slightly, e.g., 50 nm (Cit-ACP-200) or 26 nm (Cit-ACP-400). When the sintering temperature is 600 • C, the morphology of the sample particles changes from spherical to rod-like, and the size of the particles increases dramatically, with an average length of 1.2 µm and an average diameter of 311 nm.
+
+The average crystallite size of the synthesized nanoparticles was estimated using the Scherrer equation:
+
+where D is the crystallite size (nm), K is the Scherrer constant (0.90 for spherical particles), λ is the X-ray wavelength (Cu Kα radiation, 0.15406 nm), β is the full width at half maximum (FWHM) of the diffraction peak in radians, and θ is the Bragg angle. The (002) diffraction peak at 2θ = 26.0 • . Substituting the values, the crystallite sizes of samples Cit-ACP-400 and Cit-ACP-600 were calculated to be approximately 6.04 nm and 49.52 nm, respectively.</text>
+		</method>
+	</methods>
+	<full_text>Fluorine is an essential trace element for human beings and animals. The presence of a certain amount of fluoride in drinking water has beneficial effects on human health, such as preventing tooth decay and strengthening tooth enamel [1]. However, if the fluoride concentration exceeds 1.5 mg per liter, this will damage human health and lead to many diseases such as dental/skeletal fluorosis, fetal cerebral function, and neurotransmitters [2,3].
+
+Given the health hazards of excess fluoride in water, many technologies have been developed to remove fluoride [3]: electrocoagulation [4][5][6], precipitation [7,8], ion exchange [9,10], membrane techniques [11,12], and adsorption [13,14]. Of these techniques, adsorption has proven to be an effective, environmentally friendly, and economical method for the removal of excess fluoride from drinking water [2,15]. Different adsorbents have been successfully utilized for fluoride removal, such as hydroxyapatite [16,17], aluminabased adsorbents [18,19], activated carbon [20,21], ion exchange resins [22], biopolymerbased composites [23,24], clay-based materials [25,26], and mixed oxides [27,28]. However, to date, some problems associated with their applications are still unresolved, such as low adsorption capacities and poor selectivity.
+
+Amorphous calcium phosphate (ACP) [29][30][31], often found in the early stages of biological hard tissue formation or synthetic hydroxyapatite, is often considered to be an intermediate stable calcium-phosphorus compound with the typical chemical formula [M u Ca 3 (HPO 4 ) 3v (PO 4 ) 3y ]•zH 2 O [32]. Due to its excellent bioactivity, biocompatibility, bioabsorbability, and non-toxicity, ACP is an important biomaterial that is of significant interest in dentistry, orthopedics, and other biomedical fields [33][34][35][36][37].
+
+Under the right temperature, pH, and humidity conditions, ACP can be rapidly converted to other thermodynamically more stable calcium-phosphorus compounds such as hydroxyapatite [38][39][40]. In order to prepare ACP, biomolecules or organic small molecules are often used to assist in its formation, such as PEG2000, sodium citrate, casein, etc. [34,41,42]. Of these, sodium citrate is one of the most popular [43]. Sodium citratestabilized amorphous calcium phosphate (Cit-ACP) has a high specific surface area of 200-330 square meters per gram, compared to amorphous calcium phosphate (blank-ACP) which has a specific surface area of only 60-160 square meters per gram. Cit-ACP dry powder can be stored at room temperature for up to four years without any change. In contrast, blank-ACP powders spontaneously convert to crystalline HA within a few hours under ambient conditions. Moreover, the sodium citrate-stabilized ACP nanoparticles are very sensitive to fluoride ions and can be rapidly converted to fluorapatite in a solution environment where fluoride ions are present [44].
+
+Combining the above characteristics, it is reasonable to infer that Cit-ACP nanoparticles may be an efficient fluoride adsorbent. So far, there are few reports on Cit-ACP nanoparticles in fluoride removal compared to the numerous reports on hydroxyapatite in fluoride removal. In this work, the removal of fluoride by Cit-ACP nanoparticles as an adsorbent was systematically investigated for the first time. The fluoride removal capacity, the adsorption thermodynamics, and the kinetics of Cit-ACP were studied. Then, the effects of pH, initial fluoride concentration, and co-existing anions on the adsorption performance of Cit-ACP were investigated. Finally, the adsorption mechanism of Cit-ACP was illustrated.
+
+Calcium chloride dihydrate (CaCl 2 •2H 2 O, purity ≥ 99.0%), sodium phosphate tribasic dodecahydrate (Na 3 PO 4 •12H 2 O, purity ≥ 98.0%), sodium citrate tribasic dihydrate (C 6 H 5 Na 3 O 7 •2H 2 O, purity ≥ 99.0%), sodium fluoride (NaF, purity ≥ 97.0%), and sodium hydroxide (NaOH, purity ≥ 97.0%) were purchased from Shanghai Aladdin Reagent Co., Ltd. (Shanghai, China) All chemicals were used as received without further purification. Deionized water was used throughout the study.
+
+In a typical synthesis, an aqueous solution of sodium citrate (0.02 mol, 30 g H 2 O) was slowly added to an aqueous solution of calcium chloride (0.02 mol, 30 g H 2 O) with continuous stirring for 30 min. Then, an aqueous solution of sodium phosphate (0.012 mol, 40 g H 2 O) was slowly added to the mixture with vigorous stirring for 60 min. Afterwards, the resulting product was purified by a two-round centrifugation-wash process with deionized water. Finally, the precipitate was freeze-dried, and the resulting powder was used as an adsorbent, labeled as sample Cit-ACP-25. In order to compare the adsorption properties, the sample Cit-ACP-25 was subjected to a two-hour calcination process at 200, 400, and 600 • C. The resulting adsorbents were labeled as sample Cit-ACP-200, Cit-ACP-400, and Cit-ACP-600, respectively. The preparation process is shown schematically in Figure S1.
+
+In order to evaluate the adsorption performance of the prepared adsorbent on fluoride ions in water, adsorption experiments were carried out. The sodium fluoride stock solution was obtained by dissolving 4.421 g of sodium fluoride in 1000 mL of deionized water, at which the concentration of fluoride ions was 2000 mg/L. The test solutions with different fluoride ion concentrations required for the experiments were obtained by diluting the sodium fluoride stock solution.
+
+The adsorption isotherm was measured at a pH of 7.0 and an adsorbent addition of 1 g/L. A total of 30 mg of adsorbent was added to a polyethylene centrifuge tube containing 30 mL of a specific concentration of sodium fluoride test solution (5 to 100 mg/L) and then the flasks were shaken at 100 rpm in a shaker at three different temperatures, viz., 25, 35, and 45 • C for 24 h to reach adsorption equilibrium. After the completion of adsorption, the solution was centrifuged at 8000 rpm for 5 min and its supernatant was used by a fluoride ion selective electrode (PF-2-01, Leici, Shanghai, China) for the determination of fluoride ion concentration. The relationship between the fluoride ion standard solution concentration and the electrode potential values is shown in Figure S2.
+
+All measurements were carried out at 25 • C and the adsorption capacity (q e , mg/g) was calculated according to the following equation [45]:
+
+where C 0 and C e are the initial and final equilibrium concentrations (mg/L) of fluoride in solution, respectively; V is the volume of sodium fluoride test solution (L); and m is the mass of adsorbent added (g).
+
+In the kinetic experiments, a series of polyethylene centrifuge tubes containing sodium fluoride test solution (10 mg/L fluoride ion concentration) were added with 30 mg of adsorbent and quickly placed in a constant temperature shaker at 100 rpm and 25 • C. When a specific contact time was reached, one of the centrifuge tubes was quickly removed for centrifugation and the fluoride ion concentration of the test solution after adsorption was measured.
+
+The effect of the initial pH of sodium fluoride test solution on the adsorption performance of the adsorbent was carried out by changing the initial pH of the sodium fluoride test solution using 0.1 M hydrochloric acid and 0.1 M NaOH, and the pH adjustment range was from 3 to 11. In this experiment, the initial fluoride concentration was 10 mg/L, the adsorption temperature was 25 • C, adsorption time was 24 h, and the adsorbent addition was 1 g/L.
+
+The effect of co-existing ions on the adsorption performance of the adsorbent was carried out by adding different types (chloride, phosphate, sulfate, and bicarbonate ions) and different concentrations (0.3 mM, 0.6 mM, 1.2 mM, 2.4 mM) of co-existing ions to the sodium fluoride test solution. In this experiment, the initial fluoride concentration was 10 mg/L and the adsorbent dose was 1 g/L.
+
+The experimental data were fitted using the Langmuir and Freundlich model with the model equation shown below [46]:
+
+ln
+
+where q e is the adsorption capacity at adsorption equilibrium in mg/g; C e is the equilibrium concentration of fluoride ions in mg/L; q m is the maximum adsorption capacity of the adsorbent for fluoride ions in mg/g; K L is the Langmuir's constant of the adsorption process in L/mg; K F is the Freundlich's constant of the adsorption process; and 1/n is the adsorption strength.
+
+The equations for each of the two kinetic models are as follows [47]: ln(q eq t ) = ln q ek 1 t (4)
+
+where q t is the adsorption capacity of fluoride ion at any time t; q e is the adsorption capacity of fluoride ions at the time of reaching adsorption equilibrium, in mg/g; k 1 is the rate constant for the pseudo-first-order reaction in min -1 ; k 1 is the rate constant for the pseudofirst-order reaction in min -1 ; and k 2 is the rate constant for the pseudo-second-order reaction in g/(mg•min).
+
+2.4. Characterization 2.4.1. Wide-Angle X-Ray Diffraction (XRD)
+
+Powder X-ray diffraction was performed in Bragg-Brentano geometry with an Empyrean nano-X-ray diffractometer (Panalytical, Almelo, The Netherlands) equipped with a Cu Kα radiation (0.15406 nm) source. Scans were performed from 10 • to 80 • with a scan rate of 6 • /min.
+
+The particle morphology of the samples was examined by scanning electron microscopy (SEM; Hitachi SU-8010, Hitachi High Technologies, Tokyo, Japan) using a secondary electron detector at 0 • tilt angle and a working distance of 4 mm. Prior to SEM observation, the samples were sputter-coated with gold for 30 s using an MSP-2S magnetron sputter (Hitachi High Technologies, Tokyo, Japan) to enhance conductivity.
+
+The zeta potential of Cit-ACP nanoparticles was measured using a Zetasizer Nano ZS90 (Malvern Instruments Ltd., Malvern, UK) at varying pH values. The nanoparticle concentration in solution was maintained at 0.5 wt.% for all measurements. The data were recorded and analyzed using Dispersion Technology Software v. 5.0 (Malvern Instruments). The pH of sample solutions was adjusted using 0.1 M NaOH or 0.1 M HCl solution, which was determined with a PB-10 pH meter (Sartorius AG, Goettingen, Germany) at 25 • C. No additional electrolytes were added during the measurement.
+
+X-ray photoelectron spectroscopy analyses of the samples were collected on a thermos ESCALAB 250 X-ray photoelectron spectrometer with Al Ka radiation.
+
+The Brunauer-Emmett-Teller specific surface and pore structure of the products were calculated from N 2 adsorption-desorption isotherms at 77 K, and the plot of the pore size distribution was determined using the Barett-Joyner-Halenda (BJH) method from the desorption branch of the isotherm by an ommishop 100CX surface area analyzer (Coulter Inc., Brea, CA, USA).
+
+The characteristics of adsorbents, such as particle size, specific surface area, crystallinity, and other relevant information, are useful in understanding the adsorption behavior of adsorbents. Figure 1 shows the XRD patterns of the prepared samples. The XRD patterns of both samples Cit-ACP-25 and Cit-ACP-200 do not have typical characteristic diffraction peaks, indicating that the samples are amorphous calcium phosphate. The XRD patterns of the samples Cit-ACP-400 and Cit-ACP-600 display the following diffraction peaks at 26.0 • , 32.1 • , 34.1 • , 39.9 • , 46.8 • , 49.6 • , 53.3 • , and 64.1 • which are correlated to the (h k l) indices (0 0 2), (2 1 1), (2 0 2), (3 1 0), (2 2 2), (2 1 3), (0 0 4), and (3 0 4) planes, respectively. All reflections are characteristics of the hexagonal phase of HA according to the standard data (JCPDS No. 09-0432) [48] and reported studies [49].
+
+size distribution was determined using the Barett-Joyner-Halenda (BJH) method from the desorption branch of the isotherm by an ommishop 100CX surface area analyzer (Coulter Inc., Brea, CA, USA).
+
+The characteristics of adsorbents, such as particle size, specific surface area, crystallinity, and other relevant information, are useful in understanding the adsorption behavior of adsorbents. Figure 1 shows the XRD patterns of the prepared samples. The XRD patterns of both samples Cit-ACP-25 and Cit-ACP-200 do not have typical characteristic diffraction peaks, indicating that the samples are amorphous calcium phosphate. The XRD patterns of the samples Cit-ACP-400 and Cit-ACP-600 display the following diffraction peaks at 26.0°, 32.1°, 34.1°, 39.9°, 46.8°, 49.6°, 53.3°, and 64.1° which are correlated to the (h k l) indices (0 0 2), (2 1 1), (2 0 2), (3 1 0), (2 2 2), (2 1 3), (0 0 4), and (3 0 4) planes, respectively. All reflections are characteristics of the hexagonal phase of HA according to the standard data (JCPDS No. 09-0432) [48] and reported studies [49]. In addition, as the sintering temperature was increased from 400 to 600 °C, the profiles of the diffraction peaks of the samples became more and more complete and sharp, indicating that the increase in the sintering temperature not only transformed the samples from amorphous calcium phosphate to crystallized hydroxyapatite but also increased the crystallinity of the product.
+
+Figure 2 are SEM images of the prepared samples. When not sintered, sample Cit-ACP-25 presents as spherical particles with an average diameter around 33 nm. When the sintering temperature was increased to 400 °C, the morphology of the sample particles did not change significantly, but the size increased slightly, e.g., 50 nm (Cit-ACP-200) or 26 nm (Cit-ACP-400). When the sintering temperature is 600 °C, the morphology of the sample particles changes from spherical to rod-like, and the size of the particles increases dramatically, with an average length of 1.2 µm and an average diameter of 311 nm.
+
+The average crystallite size of the synthesized nanoparticles was estimated using the Scherrer equation: In addition, as the sintering temperature was increased from 400 to 600 • C, the profiles of the diffraction peaks of the samples became more and more complete and sharp, indicating that the increase in the sintering temperature not only transformed the samples from amorphous calcium phosphate to crystallized hydroxyapatite but also increased the crystallinity of the product.
+
+Figure 2 are SEM images of the prepared samples. When not sintered, sample Cit-ACP-25 presents as spherical particles with an average diameter around 33 nm. When the sintering temperature was increased to 400 • C, the morphology of the sample particles did not change significantly, but the size increased slightly, e.g., 50 nm (Cit-ACP-200) or 26 nm (Cit-ACP-400). When the sintering temperature is 600 • C, the morphology of the sample particles changes from spherical to rod-like, and the size of the particles increases dramatically, with an average length of 1.2 µm and an average diameter of 311 nm.
+
+The average crystallite size of the synthesized nanoparticles was estimated using the Scherrer equation:
+
+where D is the crystallite size (nm), K is the Scherrer constant (0.90 for spherical particles), λ is the X-ray wavelength (Cu Kα radiation, 0.15406 nm), β is the full width at half maximum (FWHM) of the diffraction peak in radians, and θ is the Bragg angle. The (002) diffraction peak at 2θ = 26.0 • . Substituting the values, the crystallite sizes of samples Cit-ACP-400 and Cit-ACP-600 were calculated to be approximately 6.04 nm and 49.52 nm, respectively.
+
+where D is the crystallite size (nm), K is the Scherrer constant (0.90 for spherical particles), λ is the X-ray wavelength (Cu Kα radiation, 0.15406 nm), β is the full width at half maximum (FWHM) of the diffraction peak in radians, and θ is the Bragg angle. The (002) diffraction peak at 2θ = 26.0°. Substituting the values, the crystallite sizes of samples Cit-ACP-400 and Cit-ACP-600 were calculated to be approximately 6.04 nm and 49.52 nm, respectively. Combined with the XRD results and SEM observation, it can be deduced that when the sintering temperature is below 200 °C, it is mainly attributed to the changes brought about by the loss of crystalline water from amorphous calcium phosphate. When the sintering temperature rises above 400 °C, the amorphous calcium phosphate is transformed into crystallized hydroxyapatite nanoparticles and continues to increase with temperature, accompanied by austenitic ripening and recrystallization.
+
+In order to analyze the specific surface area and pore structure distribution of the samples, the samples were subjected to BET analysis as shown in Figure 3  Combined with the XRD results and SEM observation, it can be deduced that when the sintering temperature is below 200 • C, it is mainly attributed to the changes brought about by the loss of crystalline water from amorphous calcium phosphate. When the sintering temperature rises above 400 • C, the amorphous calcium phosphate is transformed into crystallized hydroxyapatite nanoparticles and continues to increase with temperature, accompanied by austenitic ripening and recrystallization.
+
+In order to analyze the specific surface area and pore structure distribution of the samples, the samples were subjected to BET analysis as shown in Figure 3. The nitrogen adsorption-desorption isotherms for all samples were typical of type IV and H4 hysteresis loops, indicating the presence of mesoporous structures. The specific surface areas of samples Cit-ACP-25, Cit-ACP-200, Cit-ACP-400, and Cit-ACP-600 were 113.32, 84.70, 75.50, and 3.38 m 2 /g, and the average pore sizes were 17.69, 24.58, 23.18, and 55.13 nm, respectively. The pore distribution curves further confirm the presence of mesoporous structures in the samples.
+
+From the above results, it can be seen that the samples without sintering have the highest specific surface area. As the sintering temperature increases, the specific surface area of the samples gradually decreases. Especially when the sintering temperature is 600 • C, the specific surface area of the sample is only a third of that of the unsintered sample, which is consistent with the SEM observation. From the above results, it can be seen that the samples without sintering have the highest specific surface area. As the sintering temperature increases, the specific surface area of the samples gradually decreases. Especially when the sintering temperature is 600 °C, the specific surface area of the sample is only a third of that of the unsintered sample, which is consistent with the SEM observation.
+
+Figure 4 shows the adsorption curves of the samples with time at an initial fluoride ion concentration of 10 mg/L. The adsorption capacity of samples Cit-ACP-25, Cit-ACP-200, Cit-ACP-400, and Cit-ACP-600 was rapidly increased in the time ranges of 360, 360, 300, and 120 min, respectively, and then approached the adsorption equilibrium at 660, 600, 540, and 200 min, respectively.  In order to better understand the effect of adsorption time on fluoride removal, the experimental data were linearly fitted according to pseudo-first-order and pseudo-secondorder adsorption kinetic models, respectively [50]. The fitted pseudo-second-order results and fitted pseudo-first-order results are shown in Figures S3 andS4, respectively, and the associated model fitting parameters are summarized in Table 1. According to the pseudofirst-order model fitting results, the theoretical adsorption amounts of samples Cit-ACP-25, Cit-ACP-200, Cit-ACP-400, and Cit-ACP-600 were 8.11, 6.78, 7.19, and 9.28 mg/g, respectively. Based on the pseudo-second-order model fitting results, the theoretical adsorption amounts of samples Cit-ACP-25, Cit-ACP-200, Cit-ACP-400, and Cit-ACP-600 were 12.38, 10.38, 9.70, and 2.94 mg/g, respectively. By comparing the correlation coefficients R 2 of the two models, the R 2 values of the pseudo-second-order model are higher, and the theoretical adsorption amounts calculated by the pseudo-second-order kinetic model are closer to those obtained from the experiments, which indicates that the pseudo-second-order kinetic model can better describe the adsorption kinetic behavior of the samples. In order to better understand the effect of adsorption time on fluoride removal, the experimental data were linearly fitted according to pseudo-first-order and pseudo-second-order adsorption kinetic models, respectively [50]. The fitted pseudo-second-order results and fitted pseudo-first-order results are shown in Figures S3 andS4, respectively, and the associated model fitting parameters are summarized in Table 1. According to the pseudo-first-order model fitting results, the theoretical adsorption amounts of samples Cit-ACP-25, Cit-ACP-200, Cit-ACP-400, and Cit-ACP-600 were 8.11, 6.78, 7.19, and 9.28 mg/g, respectively. Based on the pseudo-second-order model fitting results, the theoretical adsorption amounts of samples Cit-ACP-25, Cit-ACP-200, Cit-ACP-400, and Cit-ACP-600 were 12.38, 10.38, 9.70, and 2.94 mg/g, respectively. By comparing the correlation coefficients R 2 of the two models, the R 2 values of the pseudo-second-order model are higher, and the theoretical adsorption amounts calculated by the pseudo-second-order kinetic model are closer to those obtained from the experiments, which indicates that the pseudosecond-order kinetic model can better describe the adsorption kinetic behavior of the samples. Table 1. Parameters for pseudo-first-order and pseudo-second-order kinetic models of fluoride adsorption on the prepared samples.
+
+C 0 (mg/L) q e(exp) (mg/g)
+
+Pseudo-Second-Order
+
+Cit-ACP-25 Then, in order to investigate the adsorption capacity of the samples, adsorption isothermal experiments were carried out as shown in Figure 5. The experimental data were linearly fitted using Langmuir model (Figure S5) and Freundlich model (Figure S6), respectively. The calculated parameters of Langmuir and Freundlich models are listed in Table 2.
+
+thermal experiments were carried out as shown in Figure 5. The experimental data were linearly fitted using Langmuir model (Figure S5) and Freundlich model (Figure S6), respectively. The calculated parameters of Langmuir and Freundlich models are listed in Table 2.   By comparing the linear fit correlation coefficients (R 2 ) of the two models, it was found that the adsorption behavior of the prepared samples was closer to that of the Langmuir model, suggesting that the adsorption behavior of the samples should be a monomolecular layer adsorption. The adsorption capacity of the prepared samples increased with increas-ing temperature and the initial concentration of fluoride ions. The maximum adsorption capacity (q m ) of samples Cit-ACP-25, Cit-ACP-200, Cit-ACP-400, and Cit-ACP-600 reached 27.48, 34.05, 25.86, and 15.06 mg/g at an initial fluorine concentration of 100 mg/L and a temperature of 45 • C, respectively.
+
+For comparison, the q m values of fluoride ions on the adsorbents of various calcium phosphate compounds are presented in Table 3. It can be seen that sample Cit-ACP-25 has a higher adsorption capacity than most of the calcium phosphate compound adsorbents reported in the literature. Usually, whether an adsorption process is absorptive or exothermic or spontaneous or non-spontaneous can be determined by calculating its thermodynamic parameters. The thermodynamic parameters include standard enthalpy change (∆H), standard entropy change (∆S), and standard free energy change (∆G), which can be calculated based on adsorption isotherm data at different temperatures.
+
+The ∆G can be calculated from the following equation:
+
+where K is the equilibrium constant in L/g, T is the absolute temperature in K, and R is the ideal gas constant in J/(mol•K). The value of lnK is obtained by first plotting lnKd (distribution coefficient K d = q e /C e ) versus Ce (Figure S7) and then extrapolating C e to zero, with the value of the y-axis intercept being the value of lnK. The ∆H and ∆S were calculated from a linear plot (Figure S8) of lnK versus 1/T for fluoride adsorption on the samples using the following formula:
+
+The calculated thermodynamic parameters obtained for the samples during adsorption are listed in Table 4. The ∆H values of samples Cit-ACP-25, Cit-ACP-200, Cit-ACP-400, and Cit-ACP-600 are positive, indicating that the adsorption process is a heat absorption reaction. The ∆G values of samples Cit-ACP-25, Cit-ACP-200, and Cit-ACP-400 are negative, indicating that the adsorption process was spontaneous. While the ∆G value of samples Cit-ACP-600 is positive, indicating that the adsorption process was non-spontaneous. With the increase in adsorption temperature, the ∆G values of all samples decreased, indicating that the increase in temperature increased the driving force of the adsorption process, which was favorable for the adsorption of fluoride ions on the surface of the samples.
+
+To further demonstrate the fact that physical or chemical adsorption, the value of activation energy (E a ) and the sticking probability (S*) were estimated using a modified Arrhenius equation based on the experimental data [60]:
+
+where θ is the surface coverage, C e is the equilibrium concentration, C 0 is the initial concentration, and R is the gas constant. The values of S* of fluoride ions adsorption onto samples were 0, 0, 0, and 0.3, respectively, indication that the adsorption was a chemical adsorption. The activation energies of samples Cit-ACP-25, Cit-ACP-200, Cit-ACP-400, and Cit-ACP-600 were calculated as 33.57 kJ•mol -1 , 69.34 kJ•mol -1 , 87.21 kJ•mol -1 , and 2.57 kJ•mol -1 , respectively, from the curve of ln(C e /C 0 ) versus 1/T (Figure S9), demonstrating that the samples Cit-ACP-25, Cit-ACP-200, and Cit-ACP-400 were characteristic of chemical adsorption.
+
+In practice, during the adsorption process for the treatment of fluoride-contaminated water, the performance of the adsorbent is affected by the pH value of the water and the co-existing ions in the water.
+
+Figure 6 shows the effect of pH on the fluoride removal efficiency of the samples, where the pH ranges from 3 to 11. Overall, the adsorption performance of all the samples decreased as the pH increased from 3 to 11. The decreases in samples Cit-ACP-25, Cit-ACP-200, and Cit-ACP-400 were small, e.g., the decreases in the removal rates were only 3-5% in the pH range from 3 to 11, indicating that the samples Cit-ACP-25, Cit-ACP-200, and Cit-ACP-400 could maintain high fluoride removal efficiencies over a wide range of pH values. However, the adsorption properties of sample Cit-ACP-600 were sensitive to pH, e.g., the removal rate was 37.88% at pH 3 and 9.89% at pH 5.
+
+where the pH ranges from 3 to 11. Overall, the adsorption performance of all the samples decreased as the pH increased from 3 to 11. The decreases in samples Cit-ACP-25, Cit-ACP-200, and Cit-ACP-400 were small, e.g., the decreases in the removal rates were only 3-5% in the pH range from 3 to 11, indicating that the samples Cit-ACP-25, Cit-ACP-200, and Cit-ACP-400 could maintain high fluoride removal efficiencies over a wide range of pH values. However, the adsorption properties of sample Cit-ACP-600 were sensitive to pH, e.g., the removal rate was 37.88% at pH 3 and 9.89% at pH 5. This relationship between adsorption efficiency and solution pH may be related to the citrate ions adsorbed on the surface of the nanoparticles. For samples calcined at low temperatures (&lt;600 • C), the surface of the particles binds to a large number of citrate ions or partially decomposed citrate, resulting in a buffering effect on the solution pH. In contrast, for the sample calcined at 600 • C, the adsorbed citrate ions on the surface of the particles needed to be completely decomposed and dissipated in order to have a buffering effect on the solution pH [44,61].
+
+Figure 7 shows the effect of co-existing anions on the fluoride removal performance of the samples. The removal of fluoride by the prepared samples was almost the same as that of the blank samples, which was around 95% in the studied concentration ranges of chloride and sulfate ions. When the bicarbonate ion concentration in water was increased from 0 mM to 2.4 mM, the fluoride removal efficiencies of samples Cit-ACP-25, Cit-ACP-200, Cit-ACP-400, and Cit-ACP-600 decreased from 92.82%, 97.78%, 93.25%, and 17.09% to 79.26%, 73%, 61.34%, and 12.91%, respectively. When the phosphate ion concentration in the water was increased from 0 mM to 2.4 mM, the fluoride removal efficiency of samples Cit-ACP-25, Cit-ACP-200, Cit-ACP-400, and Cit-ACP-600 decreased from 92.82%, 97.78%, 93.25%, and 17.09% to 19.25%, 39.4%, 27.08%, and 0.98%, respectively.
+
+to 79.26%, 73%, 61.34%, and 12.91%, respectively. When the phosphate ion concentration in the water was increased from 0 mM to 2.4 mM, the fluoride removal efficiency of samples Cit-ACP-25, Cit-ACP-200, Cit-ACP-400, and Cit-ACP-600 decreased from 92.82%, 97.78%, 93.25%, and 17.09% to 19.25%, 39.4%, 27.08%, and 0.98%, respectively. This indicates that both phosphate and bicarbonate ions have a significant reducing effect on the fluoride removal efficiency of the samples in the concentration range studied, This indicates that both phosphate and bicarbonate ions have a significant reducing effect on the fluoride removal efficiency of the samples in the concentration range studied, especially phosphate ions. The effect of the presence of phosphate and bicarbonate on the fluoride removal efficiency of the samples may be mainly attributed to the fact that hydroxide ions are released from the hydrolysis of both anions in water, resulting in an increase in the pH of the water, which affects the charging of the solid surface of the adsorbent, especially when the pH of the water is higher than the isoelectric point of the solid surface. Secondly, phosphate ions also tend to combine with calcium ions on the solid surface, occupying adsorption sites and competing with fluoride ions for adsorption.
+
+In the previous section, we systematically evaluated the adsorption properties of the prepared samples. From this, we can see that amorphous calcium phosphate shows better adsorption performance compared to hydroxyapatite. The mechanism of fluoride removal by hydroxyapatite is commonly reported, but the mechanism of fluoride removal by ACP is rarely reported. In order to investigate the fluoride removal mechanism of ACP, we compared the changes in Cit-ACP-25 before and after adsorption.
+
+The XRD spectra and particle morphology changes in sample Cit-ACP-25 before and after adsorption are given in Figure 8. Before adsorption, the XRD spectra (Figure 8a) of sample Cit-ACP-25 had no observable characteristic diffraction peaks, indicating that sample Cit-ACP-25 was amorphous before adsorption [35]. After adsorption, the diffraction pattern of Cit-ACP-25 changed significantly with diffraction peaks at 26.00 • , 32.07 • , 33.23 • , 34.28 • , 47.03 • , and 49.75 • , which corresponded to the characteristic peaks &lt;002&gt;, &lt;211&gt;, &lt;300&gt;, &lt;102&gt;, &lt; 222&gt;, and &lt;213&gt; of the Fluorapatite Standard Card (PDF # 77-0120). Other than this, no other observable characteristic peaks were present. This indicates that Cit-ACP-25 is converted from amorphous calcium phosphate to fluorapatite in the process of fluoride removal and no other products, such as calcium fluoride, appear [62].
+
+The XRD spectra and particle morphology changes in sample Cit-ACP-25 before and after adsorption are given in Figure 8. Before adsorption, the XRD spectra (Figure 8a) of sample Cit-ACP-25 had no observable characteristic diffraction peaks, indicating that sample Cit-ACP-25 was amorphous before adsorption [35]. After adsorption, the diffraction pattern of Cit-ACP-25 changed significantly with diffraction peaks at 26.00°, 32.07°, 33.23°, 34.28°, 47.03°, and 49.75°, which corresponded to the characteristic peaks &lt;002&gt;, &lt;211&gt;, &lt;300&gt;, &lt;102&gt;, &lt; 222&gt;, and &lt;213&gt; of the Fluorapatite Standard Card (PDF # 77-0120). Other than this, no other observable characteristic peaks were present. This indicates that Cit-ACP-25 is converted from amorphous calcium phosphate to fluorapatite in the process of fluoride removal and no other products, such as calcium fluoride, appear [62]. It has been reported that the rapid conversion of amorphous calcium phosphate to fluorapatite can be achieved under mild conditions with the co-existence of fluoride ions and citrate ions, which suggests that amorphous calcium phosphate is sensitive to fluoride ions and is susceptible to immobilization by amorphous calcium phosphate [44]. Figure 8b,c shows the changes in particle morphology before and after adsorption of Cit-ACP-25. Before adsorption (Figure 8b), Cit-ACP-25 was mainly in the form of spherical particles of uniform size with an average diameter of 33 nm. After adsorption (Figure 8c), Cit-ACP-25 still maintained a uniform spherical shape, but the average diameter decreased to 18 nm. This may be attributed to the size contraction of amorphous calcium phosphate during fluoride ion adsorption by transforming it into fluorapatite and releasing the structural water from the original molecular structure [63].
+
+Figure 9 shows the XPS patterns of Cit-ACP-25 before and after the adsorption of fluoride ions. As can be seen from the total spectrum of Figure 9a, before adsorption, there It has been reported that the rapid conversion of amorphous calcium phosphate to fluorapatite can be achieved under mild conditions with the co-existence of fluoride ions and citrate ions, which suggests that amorphous calcium phosphate is sensitive to fluoride ions and is susceptible to immobilization by amorphous calcium phosphate [44]. Figure 8b,c shows the changes in particle morphology before and after adsorption of Cit-ACP-25. Before adsorption (Figure 8b), Cit-ACP-25 was mainly in the form of spherical particles of uniform size with an average diameter of 33 nm. After adsorption (Figure 8c), Cit-ACP-25 still maintained a uniform spherical shape, but the average diameter decreased to 18 nm. This may be attributed to the size contraction of amorphous calcium phosphate during fluoride ion adsorption by transforming it into fluorapatite and releasing the structural water from the original molecular structure [63].
+
+Figure 9 shows the XPS patterns of Cit-ACP-25 before and after the adsorption of fluoride ions. As can be seen from the total spectrum of Figure 9a, before adsorption, there were no fluorine F1s peaks present on the spectrum, while fluorine F1s peaks clearly appear on the sample after adsorption, which indicates that fluorine ions are adsorbed within the material after defluorination of the two adsorbents. Figure 9b exhibits the F1s peak after adsorption of Cit-ACP-25, which further proves the presence of fluoride ions.
+
+Figure 9c,d represent the O1s peak splitting before and after the adsorption of fluoride ions by Cit-ACP-25, and the specific data of the peak splitting are shown in Table 5. The O1s profile can be divided into three peaks, which are O 2-(530.5 eV), OH -(531.3 eV), and H 2 O (532.5 eV) [50,64]. From Table 5, it can be seen that the content of O 2-of Cit-ACP-25 remained almost unchanged, while the H 2 O decreased from 20.2% to 18.4%, and the OH - increased from 30.8% to 32.3%. This may be due to the crystallization of Cit-ACP during defluoridation, which releases structural water and forms the more thermodynamically stable fluorapatite or hydroxyapatite.
+
+were no fluorine F1s peaks present on the spectrum, while fluorine F1s peaks clearly appear on the sample after adsorption, which indicates that fluorine ions are adsorbed within the material after defluorination of the two adsorbents. Figure 9b exhibits the F1s peak after adsorption of Cit-ACP-25, which further proves the presence of fluoride ions.   5. The O1s profile can be divided into three peaks, which are O 2-(530.5 eV), OH -(531.3 eV), and H2O (532.5 eV) [50,64]. From Table 5, it can be seen that the content of O 2-of Cit-ACP-25 remained almost unchanged, while the H2O decreased from 20.2% to 18.4%, and the OH -increased from 30.8% to 32.3%. This may be due to the crystallization of Cit-ACP  Figure 9e,f represent the C1s peak splitting before and after the adsorption of fluoride ions by Cit-ACP-25, and the specific data of the peak splitting are shown in Table 6. The C1s profile can be divided into two peaks, which are C-C (284.8 eV) and O-C=O (288.64 eV) [65]. From Table 6, it can be seen that the content of the O-C=O decreased from 20.4% to 10.74%, the content of the C-C increased from 79.6% to 89.26%. This may be due to the release of surface adsorbed citrate molecules during the crystallization of Cit-ACP.   Figure 9e,f represent the C1s peak splitting before and after the adsorption of fluoride ions by Cit-ACP-25, and the specific data of the peak splitting are shown in Table 6. The C1s profile can be divided into two peaks, which are C-C (284.8 eV) and O-C=O (288.64 eV) [65]. From Table 6, it can be seen that the content of the O-C=O decreased from 20.4% to 10.74%, the content of the C-C increased from 79.6% to 89.26%. This may be due to the release of surface adsorbed citrate molecules during the crystallization of Cit-ACP.    Overall, the pH of the solution after adsorption was higher than before adsorption for all the samples. There are also two points of concern. The first is that the pH difference before and after adsorption increases as the initial concentration of the fluoride ion solution increases. The second is that the pH difference in samples Cit-ACP-400 and Cit-ACP-600 is much larger than that of samples Cit-ACP-25 and Cit-ACP-200.
+
+Overall, the pH of the solution after adsorption was higher than before adsorption for all the samples. There are also two points of concern. The first is that the pH difference before and after adsorption increases as the initial concentration of the fluoride ion solution increases. The second is that the pH difference in samples Cit-ACP-400 and Cit-ACP-600 is much larger than that of samples Cit-ACP-25 and Cit-ACP-200. These changes in solution pH may be attributed to two causes. One, for samples Cit-ACP-25 and Cit-ACP-200, the adsorption of fluoride ions on the surface of the samples converted the samples from ACP to fluorapatite, which resulted in the desorption of sodium citrate molecules adsorbed on the surface of the samples into the solution, resulting in an increase in the solution pH. Second, for the samples Cit-ACP-400 and Cit-ACP-600, since they are mainly hydroxyapatite, the adsorption of fluoride ions in the samples is mainly attributed to ion exchange with hydroxide ions in the crystals, resulting in the entry of hydroxide ions into the solution, causing an increase in solution pH [50].
+
+Based on the above analysis of the sample Cit-ACP-25 before and after the adsorption of fluoride ions, the adsorption mechanism may be inferred as shown in Figure 12. These changes in solution pH may be attributed to two causes. One, for samples Cit-ACP-25 and Cit-ACP-200, the adsorption of fluoride ions on the surface of the samples converted the samples from ACP to fluorapatite, which resulted in the desorption of sodium citrate molecules adsorbed on the surface of the samples into the solution, resulting in an increase in the solution pH. Second, for the samples Cit-ACP-400 and Cit-ACP-600, since they are mainly hydroxyapatite, the adsorption of fluoride ions in the samples is mainly attributed to ion exchange with hydroxide ions in the crystals, resulting in the entry of hydroxide ions into the solution, causing an increase in solution pH [50].
+
+Based on the above analysis of the sample Cit-ACP-25 before and after the adsorption of fluoride ions, the adsorption mechanism may be inferred as shown in Figure 12.
+
+the samples. There are also two points of concern. The first is that the pH difference before and after adsorption increases as the initial concentration of the fluoride ion solution increases. The second is that the pH difference in samples Cit-ACP-400 and Cit-ACP-600 is much larger than that of samples Cit-ACP-25 and Cit-ACP-200. These changes in solution pH may be attributed to two causes. One, for samples Cit-ACP-25 and Cit-ACP-200, the adsorption of fluoride ions on the surface of the samples converted the samples from ACP to fluorapatite, which resulted in the desorption of sodium citrate molecules adsorbed on the surface of the samples into the solution, resulting in an increase in the solution pH. Second, for the samples Cit-ACP-400 and Cit-ACP-600, since they are mainly hydroxyapatite, the adsorption of fluoride ions in the samples is mainly attributed to ion exchange with hydroxide ions in the crystals, resulting in the entry of hydroxide ions into the solution, causing an increase in solution pH [50].
+
+Based on the above analysis of the sample Cit-ACP-25 before and after the adsorption of fluoride ions, the adsorption mechanism may be inferred as shown in Figure 12. The XRD results demonstrate that Cit-ACP-25, prepared via sodium citrate-assisted chemical precipitation at room temperature, exhibits a characteristic amorphous phase. Remarkably, this amorphous nature persists even after calcination at 200 • C, indicating the strong stabilizing effect of sodium citrate on amorphous calcium phosphate [43,66]. SEM and BET characterization reveal that Cit-ACP-25 consists of spherical nanoparticles with an average diameter of 33 nm and a specific surface area of 113.32 m 2 /g. Notably, this high surface area was achieved through a simple room-temperature preparation process without complex procedures, representing a significant advantage over previously reported methods in the literature [2]. The adsorption performance of the Cit-ACP-25 sample could be well described by the Langmuir model, and the adsorption kinetic followed the pseudosecond-order model. The maximum adsorption capacity was 27.48 mg/g at pH 7.0 when the fluoride concentration was 100 mg/L. The thermodynamic parameters suggested that the adsorption of fluoride was a spontaneous endothermic process. Comparative studies reveal that Cit-ACP-25 exhibits superior adsorption performance over most reported calcium phosphate-based adsorbents [67,68]. Notably, its adsorption capacity also significantly surpasses that of its calcined counterparts. By analyzing the physicochemical changes in Cit-ACP-25 before and after adsorption, we elucidate the underlying adsorption mechanisms.
+
+Unlike conventional hydroxyapatite adsorption through the mechanism of ion exchange between fluoride ions and hydroxide ions on the surface of hydroxyapatite crystals, Cit-ACP nanoparticles are spherical with a core-shell structure, consisting of an amorphous calcium phosphate as the core and a calcium citrate adsorption layer as the shell. When the Cit-ACP nanoparticles come into contact with the fluoride ions in the solution, the fluoride ions pass through the shell layer into the surface of the ACP core and come into contact with the amorphous calcium phosphate, which leads to the rapid conversion of ACP to fluorapatite. The fluorapatite transformation process proceeds from surface to surface, with the ACP in the inner core gradually and completely transformed into fluorapatite. During the transformation process, calcium ions from calcium citrate in the shell layer are involved in the transformation of fluorapatite by ACP, while sodium citrate is formed and released into solution. This is why Cit-ACP is insensitive to the pH of the adsorption environment and can still maintain a high adsorption efficiency over a wide pH range.
+
+The possible chemical reaction pathways are listed below:
+
+3[Ca 3 (PO 4 ) 2 •yCa 3 (Cit) 2 ] + 2NaF = Ca 10 (PO 4 ) 6 F 2 + 2/3Na 3 Cit + (3y -1/3)Ca 3 (Cit) 2 (11) where Ca 3 (PO 4 ) 2 •yCa 3 (Cit) 2 is the Cit-ACP.
+
+In conclusion, Cit-ACP nanoparticles were successfully prepared at room temperature based on sodium citrate-assisted chemical synthesis method, while the particles were sintered at different temperatures for comparison. It was found that the products prepared at room temperature were pure amorphous calcium phosphate with high specific surface areas and that the sintering treatment reduced the specific surface areas of the products and resulted in the gradual transformation from amorphous calcium phosphate to hydroxyapatite. Fluoride ion adsorption performance evaluation revealed that Cit-ACP had a high fluoride ion adsorption capacity of 27.48 mg/g at an initial fluoride ion concentration of 100 mg/L at 45 • C. Isothermal adsorption studies and adsorption kinetic studies showed that the fluoride ion adsorption behavior of Cit-ACP followed the Langmuir adsorption isothermal model and the pseudo-second-order kinetic model. It was also found that Cit-ACP has a wide pH and co-existing ion adsorption stability. By comparing the changes before and after the adsorption of fluoride ions on Cit-ACP, the main adsorption mechanism is that fluoride ions and calcium ions in the shell layer of Cit-ACP promote the transformation of amorphous calcium phosphate into fluorapatite.
+
+Nanomaterials 2025, 15, 621 https://doi.org/10.3390/nano15080621</full_text>
+	<references>
+		<reference>
+			<title>Figure S9: Linear fits of ln(1-θ) and 1/T for the samples</title>
+			<authors>
+				<author>C</author>
+				<author>Ph</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>Iran. Sci. Rep</title>
+			<authors>
+				<author>A Mohammadi</author>
+				<author>M Yousefi</author>
+				<author>M Yaseri</author>
+				<author>M Jalilzadeh</author>
+				<author>A Mahvi</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>A Bhatnagar</author>
+				<author>E Kumar</author>
+				<author>M Sillanpää</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Environ. Sci. Adv</title>
+			<authors>
+				<author>S Ahmad</author>
+				<author>R Singh</author>
+				<author>T Arfin</author>
+				<author>K Neeti</author>
+			</authors>
+			<date>2022</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>N Kabay</author>
+				<author>Ö Arar</author>
+				<author>S Samatya</author>
+				<author>Ü Yüksel</author>
+				<author>M Yüksel</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Manag</title>
+			<authors>
+				<author>D Moussa</author>
+				<author>M El-Naas</author>
+				<author>M Nasser</author>
+				<author>M Al-Marri</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Chem. Eng</title>
+			<authors>
+				<author>M Kobya</author>
+				<author>E Demirbas</author>
+				<author>F Ulu</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Chem. Eng</title>
+			<authors>
+				<author>C Lacson</author>
+				<author>M.-C Lu</author>
+				<author>Y.-H Huang</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title>Sci. Total Environ</title>
+			<authors>
+				<author>Z Wang</author>
+				<author>J Su</author>
+				<author>A Ali</author>
+				<author>R Zhang</author>
+				<author>W Yang</author>
+				<author>L Xu</author>
+				<author>J Shi</author>
+				<author>Z Gao</author>
+			</authors>
+			<date>2022</date>
+		</reference>
+		<reference>
+			<title>Chemosphere</title>
+			<authors>
+				<author>Y He</author>
+				<author>L Huang</author>
+				<author>B Song</author>
+				<author>B Wu</author>
+				<author>L Yan</author>
+				<author>H Deng</author>
+				<author>Z Yang</author>
+				<author>W Yang</author>
+				<author>H Wang</author>
+				<author>Z Liang</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title>Water Res</title>
+			<authors>
+				<author>F Zeidabadi</author>
+				<author>E Esfahani</author>
+				<author>S Mcbeath</author>
+				<author>M Mohseni</author>
+			</authors>
+			<date>2024</date>
+		</reference>
+		<reference>
+			<title>Sep. Purif. Technol</title>
+			<authors>
+				<author>J Nunes-Pereira</author>
+				<author>R Lima</author>
+				<author>G Choudhary</author>
+				<author>P Sharma</author>
+				<author>S Ferdov</author>
+				<author>G Botelho</author>
+				<author>R Sharma</author>
+				<author>S Lanceros-Méndez</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>Desalination</title>
+			<authors>
+				<author>M Han</author>
+				<author>G Baroña</author>
+				<author>B Jung</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>J Chen</author>
+				<author>R Yang</author>
+				<author>Z Zhang</author>
+				<author>D Wu</author>
+			</authors>
+			<date>2022</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>Z Wang</author>
+				<author>J Su</author>
+				<author>X Hu</author>
+				<author>A Ali</author>
+				<author>Z Wu</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Chem. Eng</title>
+			<authors>
+				<author>J He</author>
+				<author>Y Yang</author>
+				<author>Z Wu</author>
+				<author>C Xie</author>
+				<author>K Zhang</author>
+				<author>L Kong</author>
+				<author>J Liu</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>Y Nie</author>
+				<author>C Hu</author>
+				<author>C Kong</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>L Chen</author>
+				<author>K.-S Zhang</author>
+				<author>J.-Y He</author>
+				<author>W.-H Xu</author>
+				<author>X.-J Huang</author>
+				<author>J.-H Liu</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Water Res</title>
+			<authors>
+				<author>L Chai</author>
+				<author>Y Wang</author>
+				<author>N Zhao</author>
+				<author>W Yang</author>
+				<author>X You</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>E Kumar</author>
+				<author>A Bhatnagar</author>
+				<author>U Kumar</author>
+				<author>M Sillanpää</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. Commun</title>
+			<authors>
+				<author>M Dehghani</author>
+				<author>M Farhang</author>
+				<author>M Alimohammadi</author>
+				<author>M Afsharnia</author>
+				<author>G Mckay</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Chem. Eng</title>
+			<authors>
+				<author>R Araga</author>
+				<author>S Soni</author>
+				<author>C Sharma</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>J. Fluor. Chem</title>
+			<authors>
+				<author>N Viswanathan</author>
+				<author>S Prabhu</author>
+				<author>S Meenakshi</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Water Air Soil Pollut</title>
+			<authors>
+				<author>H Kaygusuz</author>
+				<author>M Çoşkunırmak</author>
+				<author>N Kahya</author>
+				<author>F Erim</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>J. Solid State Chem</title>
+			<authors>
+				<author>A Jeyaseelan</author>
+				<author>N Viswanathan</author>
+				<author>I Kumar</author>
+				<author>S Ansar</author>
+			</authors>
+			<date>2023</date>
+		</reference>
+		<reference>
+			<title>Desalination Water Treat</title>
+			<authors>
+				<author>M Uddin</author>
+				<author>S Ahmed</author>
+				<author>M Naushad</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>A Nagaraj</author>
+				<author>K Pillay</author>
+				<author>S Kumar</author>
+				<author>M Rajan</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>N Oladoja</author>
+				<author>B Helmreich</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>N Oladoja</author>
+				<author>S Chen</author>
+				<author>J Drewes</author>
+				<author>B Helmreich</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Acta Biomater</title>
+			<authors>
+				<author>S Dorozhkin</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Acta Biomater</title>
+			<authors>
+				<author>C Combes</author>
+				<author>C Rey</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Chem. Rev</title>
+			<authors>
+				<author>L Wang</author>
+				<author>G Nancollas</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Mater. Today</title>
+			<authors>
+				<author>W Habraken</author>
+				<author>P Habibovic</author>
+				<author>M Epple</author>
+				<author>M Bohner</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Colloids Surf. B Biointerfaces</title>
+			<authors>
+				<author>Y Luo</author>
+				<author>J Zhao</author>
+				<author>X Zhang</author>
+				<author>C Wang</author>
+				<author>T Wang</author>
+				<author>M Jiang</author>
+				<author>Q Zhu</author>
+				<author>T Xie</author>
+				<author>D Chen</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title>Curr. Nanosci</title>
+			<authors>
+				<author>G.-J Ding</author>
+				<author>Y.-J Zhu</author>
+				<author>G.-F Cheng</author>
+				<author>Y.-J Ruan</author>
+				<author>C Qi</author>
+				<author>B.-Q Lu</author>
+				<author>F Chen</author>
+				<author>J Wu</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Ceram. Int</title>
+			<authors>
+				<author>T Safronova</author>
+				<author>E Mukhin</author>
+				<author>V Putlyaev</author>
+				<author>A Knotko</author>
+				<author>P Evdokimov</author>
+				<author>T Shatalova</author>
+				<author>Y Filippov</author>
+				<author>A Sidorov</author>
+				<author>E Karpushkin</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Chem. B</title>
+			<authors>
+				<author>G.-J Ding</author>
+				<author>Y.-J Zhu</author>
+				<author>C Qi</author>
+				<author>B.-Q Lu</author>
+				<author>F Chen</author>
+				<author>J Wu</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Silicon</title>
+			<authors>
+				<author>M Shahrezaee</author>
+				<author>M Raz</author>
+				<author>S Shishehbor</author>
+				<author>F Moztarzadeh</author>
+				<author>F Baghbani</author>
+				<author>A Sadeghi</author>
+				<author>K Bajelani</author>
+				<author>F Tondnevis</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Chem. Commun</title>
+			<authors>
+				<author>H Pan</author>
+				<author>X Liu</author>
+				<author>R Tang</author>
+				<author>H Xu</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Cryst. Growth Des</title>
+			<authors>
+				<author>L.-W Du</author>
+				<author>S Bian</author>
+				<author>B.-D Gou</author>
+				<author>Y Jiang</author>
+				<author>J Huang</author>
+				<author>Y.-X Gao</author>
+				<author>Y.-D Zhao</author>
+				<author>W Wen</author>
+				<author>T.-L Zhang</author>
+				<author>K Wang</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Nat. Commun</title>
+			<authors>
+				<author>A Lotsari</author>
+				<author>A Rajasekharan</author>
+				<author>M Halvarsson</author>
+				<author>M Andersson</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>Colloids Surf. A Physicochem. Eng. Asp</title>
+			<authors>
+				<author>J Luo</author>
+				<author>S Qiu</author>
+				<author>X Zhou</author>
+				<author>R Lai</author>
+				<author>P Dong</author>
+				<author>X Xie</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Food Res. Int</title>
+			<authors>
+				<author>A Garcia</author>
+				<author>M Vavrusova</author>
+				<author>L Skibsted</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>Cryst. Eng. Comm</title>
+			<authors>
+				<author>K Chatzipanagis</author>
+				<author>M Iafisco</author>
+				<author>T Roncal-Herrero</author>
+				<author>M Bilton</author>
+				<author>A Tampieri</author>
+				<author>R Kröger</author>
+				<author>J Delgado-López</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Cryst. Growth Des</title>
+			<authors>
+				<author>L Degli Esposti</author>
+				<author>A Adamiano</author>
+				<author>A Tampieri</author>
+				<author>G Ramirez-Rodriguez</author>
+				<author>D Siliqi</author>
+				<author>C Giannini</author>
+				<author>P Ivanchenko</author>
+				<author>G Martra</author>
+				<author>F.-H Lin</author>
+				<author>J Delgado-López</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>J. Colloid Interface Sci</title>
+			<authors>
+				<author>K Lin</author>
+				<author>Y Liu</author>
+				<author>S Chen</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>M Jimenez-Reyes</author>
+				<author>M Solache-Rios</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Environ. Nanotechnol. Monit. Manag</title>
+			<authors>
+				<author>J Maity</author>
+				<author>C.-M Hsu</author>
+				<author>T.-J Lin</author>
+				<author>W.-C Lee</author>
+				<author>P Bhattacharya</author>
+				<author>J Bundschuh</author>
+				<author>C.-Y Chen</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>Mater. Today Proc</title>
+			<authors>
+				<author>K Joshi</author>
+				<author>N Shah</author>
+			</authors>
+			<date>2023</date>
+		</reference>
+		<reference>
+			<title>Acta Biomater</title>
+			<authors>
+				<author>J Tan</author>
+				<author>Y Liu</author>
+				<author>J Gong</author>
+				<author>X Jin</author>
+				<author>C Cheng</author>
+				<author>R Zhang</author>
+				<author>M Chen</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>J He</author>
+				<author>K Zhang</author>
+				<author>S Wu</author>
+				<author>X Cai</author>
+				<author>K Chen</author>
+				<author>Y Li</author>
+				<author>B Sun</author>
+				<author>Y Jia</author>
+				<author>F Meng</author>
+				<author>Z Jin</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Ultrason. Sonochemistry</title>
+			<authors>
+				<author>D Mehta</author>
+				<author>P Mondal</author>
+				<author>V Saharan</author>
+				<author>S George</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>J. Fluor. Chem</title>
+			<authors>
+				<author>N Zúñiga-Muro</author>
+				<author>A Bonilla-Petriciolet</author>
+				<author>D Mendoza-Castillo</author>
+				<author>H Reynel-Ávila</author>
+				<author>J Tapia-Picazo</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Microporous Mesoporous Mater</title>
+			<authors>
+				<author>C Rojas-Mayorga</author>
+				<author>J Silvestre-Albero</author>
+				<author>I Aguayo-Villarreal</author>
+				<author>D Mendoza-Castillo</author>
+				<author>A Bonilla-Petriciolet</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Chem. Eng</title>
+			<authors>
+				<author>S Singh</author>
+				<author>A Khare</author>
+				<author>S Chaudhari</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>X Li</author>
+				<author>X Yu</author>
+				<author>L Liu</author>
+				<author>J Yang</author>
+				<author>S Liu</author>
+				<author>T Zhang</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Chem. Eng</title>
+			<authors>
+				<author>W Ayinde</author>
+				<author>W Gitari</author>
+				<author>M Munkombwe</author>
+				<author>A Samie</author>
+				<author>J Smith</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>M Fernando</author>
+				<author>A Wimalasiri</author>
+				<author>S Ratnayake</author>
+				<author>J Jayasinghe</author>
+				<author>G William</author>
+				<author>D Dissanayake</author>
+				<author>K De Silva</author>
+				<author>R De Silva</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Front. Chem</title>
+			<authors>
+				<author>Q Tang</author>
+				<author>T Duan</author>
+				<author>P Li</author>
+				<author>P Zhang</author>
+				<author>D Wu</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>ACS Omega</title>
+			<authors>
+				<author>S Raghav</author>
+				<author>D Sapna; Kumar</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>Electron. J. Biotechnol</title>
+			<authors>
+				<author>M Horsfall Jnr</author>
+				<author>A Spiff</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>J. Colloid Interface Sci</title>
+			<authors>
+				<author>X Jin</author>
+				<author>J Zhuang</author>
+				<author>Z Zhang</author>
+				<author>H Guo</author>
+				<author>J Tan</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>J. Colloid Interface Sci</title>
+			<authors>
+				<author>J Tan</author>
+				<author>X Jin</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Chem. B</title>
+			<authors>
+				<author>L Degli Esposti</author>
+				<author>S Markovic</author>
+				<author>N Ignjatovic</author>
+				<author>S Panseri</author>
+				<author>M Montesi</author>
+				<author>A Adamiano</author>
+				<author>M Fosca</author>
+				<author>J Rau</author>
+				<author>V Uskoković</author>
+				<author>M Iafisco</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title>J. Colloid Interface Sci</title>
+			<authors>
+				<author>J He</author>
+				<author>K Chen</author>
+				<author>X Cai</author>
+				<author>Y Li</author>
+				<author>C Wang</author>
+				<author>K Zhang</author>
+				<author>Z Jin</author>
+				<author>F Meng</author>
+				<author>X Wang</author>
+				<author>L Kong</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Fuller. Nanotub. Carbon Nanostructures</title>
+			<authors>
+				<author>X Chen</author>
+				<author>X Wang</author>
+				<author>D Fang</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Cryst. Eng. Comm</title>
+			<authors>
+				<author>Y Chen</author>
+				<author>W Gu</author>
+				<author>H Pan</author>
+				<author>S Jiang</author>
+				<author>R Tang</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Environ. Sci. Technol</title>
+			<authors>
+				<author>C Kanno</author>
+				<author>R Sanders</author>
+				<author>S Flynn</author>
+				<author>G Lessard</author>
+				<author>S Myneni</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Mater. Chem. Phys</title>
+			<authors>
+				<author>A Wimalasiri</author>
+				<author>M Fernando</author>
+				<author>G Williams</author>
+				<author>D Dissanayake</author>
+				<author>K De Silva</author>
+				<author>R De Silva</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title/>
+			<authors/>
+			<date/>
+		</reference>
+		<reference>
+			<title>The statements, opinions and data contained in all publications are solely those of the individual author(s) and contributor(s) and not of</title>
+			<authors/>
+			<date/>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1038/s41598-017-17328-8</number>
+		<number>DOI-10.1016/j.cej.2011.05.028</number>
+		<number>DOI-10.1039/D1VA00039J</number>
+		<number>DOI-10.1016/j.jhazmat.2007.08.024</number>
+		<number>DOI-10.1016/j.jenvman.2016.10.032</number>
+		<number>DOI-10.1016/j.jece.2016.02.016</number>
+		<number>DOI-10.1016/j.jece.2021.105713</number>
+		<number>DOI-10.1016/j.scitotenv.2021.150341</number>
+		<number>DOI-10.1016/j.chemosphere.2021.129678</number>
+		<number>DOI-10.1016/j.watres.2024.121529</number>
+		<number>DOI-10.1016/j.seppur.2018.05.015</number>
+		<number>DOI-10.1016/j.desal.2010.11.024</number>
+		<number>DOI-10.1016/j.jhazmat.2021.126817</number>
+		<number>DOI-10.1016/j.jhazmat.2020.124748</number>
+		<number>DOI-10.1016/j.jece.2020.104516</number>
+		<number>DOI-10.1016/j.jhazmat.2012.07.020</number>
+		<number>DOI-10.1016/j.cej.2015.10.036</number>
+		<number>DOI-10.1016/j.watres.2013.02.057</number>
+		<number>DOI-10.1016/j.jhazmat.2010.11.102</number>
+		<number>DOI-10.1080/00986445.2018.1423969</number>
+		<number>DOI-10.1016/j.jece.2017.10.023</number>
+		<number>DOI-10.1016/j.jfluchem.2013.04.002</number>
+		<number>DOI-10.1016/j.jssc.2023.124301</number>
+		<number>DOI-10.5004/dwt.2019.23509</number>
+		<number>DOI-10.1039/D0RA00598C</number>
+		<number>DOI-10.1016/j.cej.2014.07.070</number>
+		<number>DOI-10.1016/j.cej.2015.07.007</number>
+		<number>DOI-10.1016/j.actbio.2010.06.031</number>
+		<number>DOI-10.1016/j.actbio.2010.02.017</number>
+		<number>DOI-10.1021/cr0782574</number>
+		<number>DOI-10.1016/j.mattod.2015.10.008</number>
+		<number>DOI-10.1016/j.colsurfb.2021.111638</number>
+		<number>DOI-10.2174/1573413711666150730204449</number>
+		<number>DOI-10.1016/j.ceramint.2016.10.085</number>
+		<number>DOI-10.1039/C4TB01862A</number>
+		<number>DOI-10.1007/s12633-017-9589-y</number>
+		<number>DOI-10.1039/c0cc00971g</number>
+		<number>DOI-10.1021/cg400498j</number>
+		<number>DOI-10.1038/s41467-018-06570-x</number>
+		<number>DOI-10.1016/j.colsurfa.2013.12.041</number>
+		<number>DOI-10.1016/j.foodres.2018.02.020</number>
+		<number>DOI-10.1039/C6CE00521G</number>
+		<number>DOI-10.1021/acs.cgd.0c00038</number>
+		<number>DOI-10.1016/j.jcis.2015.08.061</number>
+		<number>DOI-10.1016/j.jhazmat.2010.04.030</number>
+		<number>DOI-10.1016/j.matpr.2023.01.411</number>
+		<number>DOI-10.1016/j.actbio.2020.09.002</number>
+		<number>DOI-10.1016/j.jhazmat.2015.10.028</number>
+		<number>DOI-10.1016/j.ultsonch.2017.08.015</number>
+		<number>DOI-10.1016/j.jfluchem.2017.03.004</number>
+		<number>DOI-10.1016/j.micromeso.2014.09.002</number>
+		<number>DOI-10.1016/j.jece.2020.103704</number>
+		<number>DOI-10.1039/D1RA02028E</number>
+		<number>DOI-10.1016/j.jece.2020.104026</number>
+		<number>DOI-10.1039/C9RA03981C</number>
+		<number>DOI-10.3389/fchem.2018.00104</number>
+		<number>DOI-10.1021/acsomega.8b01330</number>
+		<number>DOI-10.2225/vol8-issue2-fulltext-4</number>
+		<number>DOI-10.1016/j.jcis.2014.12.010</number>
+		<number>DOI-10.1016/j.jcis.2018.07.081</number>
+		<number>DOI-10.1039/D1TB00601K</number>
+		<number>DOI-10.1016/j.jcis.2016.11.009</number>
+		<number>DOI-10.1080/1536383X.2020.1794851</number>
+		<number>DOI-10.1039/C3CE42274G</number>
+		<number>DOI-10.1021/es405135r</number>
+		<number>DOI-10.1016/j.matchemphys.2020.123712</number>
+	</reference_dois>
+</document>

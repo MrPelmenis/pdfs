@@ -1,0 +1,685 @@
+<document>
+	<file>./pdf-files/Adsorption performance of hydroxyapatite with different crystalline and porous structure towards metal ions in multicomponent solution.pdf</file>
+	<title>Adsorption performance of hydroxyapatite with different crystalline and porous structure towards metal ions in multicomponent solution</title>
+	<date>2019</date>
+	<doi_number>10.1016/j.jwpe.2019.100963</doi_number>
+	<img_preview_path>./pdf-preview-images/Adsorption performance of hydroxyapatite with different crystalline and porous structure towards metal ions in multicomponent solution.jpeg</img_preview_path>
+	<authors>
+		<author>A.I. Ivanets</author>
+		<author>N.V. Kitikova</author>
+		<author>I.L. Shashkova</author>
+		<author>M.Yu. Roshchina</author>
+		<author>V. Srivastava</author>
+		<author>M. Sillanpää</author>
+	</authors>
+	<abstract>Hydroxyapatite (HA) is a well-known and widely used efficient adsorbent for toxic metal ion and radionuclide removal from wastewater. However, the relationship between the structural parameters of HA and its adsorption characteristics (capacity, selectivity, kinetic parameters) requires in-depth study. In this study, HA with different crystalline and porous structures was obtained using crystallisation inhibitors of different natures, and their adsorption properties in a multicomponent solution (Cd 2+ , Co 2+ , Cu 2+ , Fe 3+ , Ni 2+ , Pb 2+ and Zn 2+ ) was investigated. Using low doses of inhibitors (Mg 2+ ions and hydroxyethylenediphosphonic acid) had a positive effect on HA adsorption characteristics, due to their low degree of crystallinity (amorphous calcium phosphate) and a well-developed porous structure (A BET up to 200-240 m 2 g -1 ). The adsorption capacity of the HA samples in relation to the Cd 2+ , Cu 2+ , Fe 3+ , Pb 2+ , Zn 2+ ions and their simultaneous presence in the solution varied from 0.13 to 1.28 mmol g -1 . The achieved residual concentration of Pb 2+ , Zn 2+ and Cu 2+ ions was below the maximum concentration limit, and the ions of Fe 3+ were almost equal to zero. The highest adsorption of Co 2+ and Ni 2+ ions was observed for HA obtained in the presence of Mg 2+ . HA prepared with HEPD has been shown to have the highest efficiency towards Cd 2+ , Cu 2+ , Fe 3+ , Pb 2+ , Zn 2+ ions. The adsorption kinetic data fitted well with the pseudo-second-order model. It was shown that, depending on the composition and structural characteristics of the prepared HA, ion-exchange and dissolution-precipitation were the two main mechanisms in their interaction with metal ions.</abstract>
+	<methods>
+		<method>
+			<heading>Preparation of adsorbents</heading>
+			<text>Hydroxyapatite adsorbents were prepared by chemical precipitation from Ca(NO 3 ) 2 •4H 2 O and H 3 PO 4 solutions, and NH 4 OH to maintain pH 10 at room temperature. The concentration of Ca 2+ cations in the reaction solution after mixing was 0.083 M and anions PO 4 3-of 0.05 M.
+
+These conditions of HA synthesis were different to the conditions under which the processes of medical HA crystallisation were studied (temperature of 37 °C, pH 7.4, reagent concentration of 1 mmol•L -1 ) [30]. All reagents were purchased by Sigma-Aldrich and used without additional purification. The synthesis of HA was carried out by slow addition of a P-containing solution to a Ca-containing solution with constant stirring at 250 rpm. The resulting suspension was kept under the mother liquor for 24 h without stirring for maturation. The precipitate separated on the Buchner funnel was washed with hot water and ethanol (sample I-0). The synthesis of samples in the presence of crystallisation inhibitors was carried out in a similar way. Mg(NO 3 ) 2 additive was introduced into Ca-containing solution at a rate of 1.0 mol. % relative to Ca 2+ ions (sample M-1). The addition of HEPD was introduced into the H 3 PO 4 solution at a rate of 1.0 mol. % relative to PO 4 3-ions (sample P-1). The wet sludge was first dried in air at room temperature, then at 100 °C for 24 h. To study the physical-chemical properties, the dried samples were ground and the fraction of 125-250 μm was sieved.</text>
+		</method>
+		<method>
+			<heading>Characterisation techniques</heading>
+			<text>X-ray phase analysis (XRD) was performed on the D8 Advanced Xray diffractometer (Bruker, Germany) using CuKα radiation. The content of Ca 2+ in the synthesised samples was determined by the reverse titration method with Trilon B and ZnSO 4 solutions, and the phosphorus content analysis was carried out by the method of photometry of the coloured phosphate vanadomolybdenum complex.
+
+The porous structure characteristics of samples were evaluated by isotherms of low temperature nitrogen adsorption-desorption, measured by the volumetric method using an ASAP 2020 M P (Micromeritics, USA). Specific surface area was calculated by BET (A BET ) and single-point BET (A sp ), pore volume was calculated by the Fig. 2. Effect of sorbent dose on the removal efficiency of metal ions (a -c) and their residual concentration (d -f) for I-0 (a, d), M-1 (b, e) and P-1 (c, f) samples. single-point method from adsorption (V sp.ads ) and desorption (V sp.ds ) branches of the isotherm. The average pore diameter for adsorption (D sp.ads ) and desorption (D sp.des ) branches of the isotherm was calculated by equation 4V/A. The samples were previously vacuumed at a temperature of 150 °C for 1 h.</text>
+		</method>
+		<method>
+			<heading>Adsorption experiments 2.3.1. Chemicals and analysis</heading>
+			<text>To prepare a model multi-component solution of wastewater containing Cd 2+ , Co 2+ , Cu 2+ , Fe 3+ , Ni 2+ , Pb 2+ and Zn 2+ ions, the corresponding salts of nitric acid (Sigma-Aldrich) were used. For all experiments, Milli-Q distilled water with a resistance of 18.2 MΩ•cm -1 was used. The composition of the model solution is shown in Table 1. The pH of the initial solution was 3.0.
+
+Measurements of metal ions and realised Ca 2+ and PO 4 3-concentration were carried out using an optical emission spectrometer with inductively coupled plasma (ICP-OES), model iCAP 6300 (Thermo Electron Corporation, USA). The pH of solutions before and after adsorption was controlled by a pH meter 340i ( ± 0.02).</text>
+		</method>
+		<method>
+			<heading>Batch method</heading>
+			<text>The adsorption experiment was carried out by batch method at room temperature. The sorbent sample was filled with 20 mL of the model solution and left for a certain time with constant shaking by a ST 15 shaker (CAT, M. Zipperer GmbH, Staufen, Germany). Then, the solution was filtered using a polypropylene filter (0.45 μm).
+
+To determine the optimal sorbent concentration, the weight of the sorbent sample varied from 0.0100 to 0.2000 g with a constant volume of the purified solution equal to 20 mL. Accordingly, the sorbent concentration in the solution varied in the range of 0.5 to 10 g•L -1 . The contact time of the sorbent with the solution was 24 h.
+
+Studies on the effect of contact time on the adsorption of metal ions was performed by varying the duration of interaction from 0.5 to 48 h. A portion of the sorbent 0.1000 ± 0.0001 g was placed in a plastic test tube filled with 10 mL of the model solution and shaken at 250 rpm.
+
+The adsorption capacity (q, mmol•g -1 ) and removal efficiency of metal ions (α, %) were determined by the following Eqs. ( 1) and (2):
+
+Fig. 3. Effect of contact time on the removal efficiency of metal ions (a -c) and their residual concentration (d -f) for I-0 (a, d), M-1 (b, e) and P-1 (c, f) samples.
+
+The concentration of Ca 2+ (L Ca , mmol•g -1 ) and PO 4 3-ions (L P , mmol•g -1 ) released in solution were calculated by Eqs. ( 3) and ( 4):
+
+where C 0 and C (mmol•L -1 )initial and residual concentration of metal ions; C Cа and C P (mmol•L -1 )concentration of released Cа 2+ and PO 4 3-ions in solution; V (L)volume of solution, m (g)weight of sorbent sample.</text>
+		</method>
+		<method>
+			<heading>Sorbent characterization</heading>
+			<text>As shown by the study of the composition and properties of the synthesised HA samples, the use of crystallisation inhibitors of different natures, even with a small number of them, leads to a change in the chemical composition, crystal and structural characteristics (Fig. 1, Table 2). Thus, with the introduction of 1% Mg 2+ ions, the specific surface area of the obtained crystalline HA increased from 72 (75) to 123 (127) m 2 g -1 . The growth of the specific surface area was accompanied by a corresponding increase in pore volume from 0.233 (0.242) to 0.375 (0.367) cm 3 g -1 , with the average pore size practically unchanged.
+
+The increase in the specific surface area, apparently due to the decrease in the size of crystallites, was due to the inhibitory effect of Mg 2+ ions. According to modern concepts, the process of HA crystallisation is an extremely complex process consisting of five stages: 1) the formation of ion clusters and amorphous calcium phosphate (ACP); 2) the stabilisation of ACP; 3) the transition of ACP to HA through dissolution and crystallisation; 4) crystal growth; 5) HA aging under conditions close to equilibrium [33].The mechanism of action of Mg 2+ ions on HA crystallisation is that, adsorbed on the surface of the formed primary particles of ACP, they prevent the further growth of these particles and the formation of the crystal structure, thereby reducing the size of the crystallites and the degree of their crystallinity [33].
+
+In the synthesis in the presence of the additive HEDP, a weakly crystallised phase was formed, characterised by a smaller specific surface area, but a large volume of pores and their average size. Features of the formation of such a phase are explained by the presence of HEDP molecules, which, capturing several Ca 2+ ions, prevent the crystallisation of HA and form elaborate complexes, resulting in the growth of primary particles [30]. A similar effect was observed for the HEDP modifying of the HA surface [45].
+
+The action of crystallisation inhibitors was accompanied by corresponding changes in the chemical composition of the formed products. According to the chemical analysis, HA samples synthesised without inhibitors are close to the stoichiometric composition with a molar ratio of Ca/P = 1.667 (Table 2). The use of Mg 2+ ions as a crystallisation inhibitor leads to a slight decrease in the molar ratio of Ca/P to 1.63. HEDP had a more significant impact on the chemical composition of HA. The molar ratio of Ca/P of the phase formed in the presence of HEDP was 1.56, which practically corresponds to tricalcium phosphate and thus confirms the XRD data.</text>
+		</method>
+	</methods>
+	<full_text>The high requirements for the quality of wastewater containing toxic metal ions, produced in various fields of industry, demand the intensive study of all available methods of their purification [1][2][3][4]. Inorganic sorbents currently play an important role in environmental problem-solving as efficient and cost-effective materials. In recent years, this has been evidenced by numerous studies and in-depth review articles devoted to the comparative analysis of different sorbents [5,6] including titanosilicates [7], natural and synthetic zeolites [8] and lowcost natural biosorbents, activated charcoal [9][10][11][12][13] and nanostructured carbon derives [5,6,14]. Special attention has been paid to the low-cost sorbents obtained from industrial and agricultural waste [9,11,12,15]. Each sorbent has its advantages, disadvantages and limitations [2,2,3,4,6,11]. The development of adsorption technologies is aimed at increasing the selectivity of sorbents and increasing their adsorption capacity in a wide pH range, the initial concentrations of cations, the presence of background cations and anions, as well as organic impurities.
+
+Calcium and calcium-magnesium phosphates have extremely high potential as sorbents of heavy metals, being non-toxic and environmentally friendly materials [16][17][18][19]. Most works are devoted to the study of synthetic [19][20][21][22][23][24] and natural apatites, both of mineral origin [24][25][26] and biogenic (bio-coal, bone meal) [13,24], obtained from renewable raw materials. Literature presents the results of studies on the treatment of real wastewater [13] and soil [19], which showed high efficiency in heavy metal removal by bone meal and hydroxyapatite (HA).
+
+The peculiarity of calcium phosphates, in particular HA, is the possibility of varying the physical and chemical characteristics, including the porous structure and chemical composition, by changing the method and conditions of synthesis. As was shown in [22,23] the adsorption characteristics depend on various parameters. It was therefore shown that a decrease in the degree of HA crystallinity and in the size of crystallites, leading to an increase in the specific surface area, increased the adsorption of toxic metal ions Pb 2+ , Zn 2+ , Cd 2+ . The molar ratio Ca/P, which for stoichiometric HA is 1.67, changes and, in the presence of replacement of Ca 2+ by H + ions, can therefore decrease to 1.38 [23,27]. In this case, HA, or so-called calcium deficiency HA, is characterised by greater solubility, which leads to an increase in the adsorption capacity of sorbents even in the presence of a salt background [27]. Tertiary calcium phosphate with a stoichiometric ratio of Ca/P = 1.5 and amorphous structure shows the highest efficiency towards heavy metal ions [28,29]. The control of adsorption characteristics could be performed by varying such parameters of HA synthesis as temperature, concentration of the initial reagents and deposition rate, as well as using crystallization inhibitors [22,23]. Previously, various organic ligands [30,31], polymers [32] and metal ions [33][34][35][36][37][38] were studied as crystallisation inhibitors for medical purposes. Comparative studies of a number of organic inhibitors have shown that polyacrylic acid slows down the formation of HA crystals to the greatest extent, and citric acid to the least extent [30]. Phosphonic acids, characterised by the content of one or more groups of CaPO(OH) 2 [30,39], also showed a strong inhibitory effect. The use of phosphonic and diphosphonic acids in the synthesis of bioceramics in an amount of up to 30 wt.% of the total phosphorus content for the functionalisation of HA contributes to the formation of a fine-crystalline phase with a developed porous structure [40][41][42]. This modification also increases the absorption efficiency of Pb 2+ ions [43]. Modification of the surface of calcium phosphates can also be carried out by adsorption of phosphonates per HA from the solution, as a result of which the material can be used for drug delivery [44] or as a selective sorbent for the extraction of heavy metal ions [45]. This is due to the fact that phosphonates form strong complexes with transition metal ions, as well as Ca 2+ and Mg 2+ ions [46]. The effect of HEPD used as a crystallisation inhibitor on the sorption of heavy metal ions has not been considered in literature.
+
+The effect of metal cations, such as Mg 2+ , Sr 2+ , Zn 2+ , Cu 2+ , is mainly to reduce the crystallinity of the HA. As shown by previous studies, most show the strong influence of the ions Zn 2+ and Cu 2+ [35,36], while the presence of Mn2+ ions leads to the formation of the amorphous phase [36]. The influence of Mg 2+ ions, which are among the main substituents of Ca 2+ ions in bone tissue and play an important role in biological processes [33,34,[36][37][38], has been studied in particular detail.
+
+Detailed studies of the adsorption selectivity and the mechanism of different composition HA interaction with a large number of heavy and non-ferrous metal ions were carried out, but usually such studies are performed from single-or bi-component solutions Cd 2+ and Zn 2+ [47], Cu 2+ and Zn 2+ [48], Co 2+ and Sr 2+ [49]. The available data on the interaction of HA simultaneously with various cations indicate their high efficiency [13,21,[24][25][26]50,51]. Such studies are of great practical interest, since the composition of natural water sources and real wastewater is usually represented by a set of multivalent ions at various ratios [13,52].
+
+The aim of this work was to study the efficiency of toxic metal ion adsorption from a multicomponent solution by sorbents based on HA of varying degrees of crystallinity and porous structure, which was controlled by the use of crystallisation inhibitors of organic (HEPD) and inorganic (Mg 2+ ions) natures. In addition to the above features of these substances, they are practically harmless for the environment and do not lead to contamination of the cleaned solutions with harmful byproducts [53]. The choice of these substances is also justified by the fact that Mg 2+ and HEDP ions are not the strongest inhibitors among similar compounds [36,39], since the aim of the work is not to prevent the formation of HA, but the formation of a weakly crystallised structure. In addition, HEDP as the well-known member of diphosphonates was used as the reference standard for studies of the other diphosphonates with its own potency value set to one [53]. The study of adsorption processes was carried out using a model multi-metal solution containing Cd 2+ , Co 2+ , Cu 2+ , Fe 3+ , Ni 2+ , Pb 2+ and Zn 2+ ions, which are most widely used in various technological processes and are therefore often found in real wastewater. The sorbent concentration in the purified solution (sorbent dose) and the duration of purification were chosen as varied parameters. The novelty of this work is to establish the relationship between the structural parameters of HA and its adsorption characteristics (capacity, selectivity, kinetic parameters) in relation to the ions of toxic metals.
+
+Hydroxyapatite adsorbents were prepared by chemical precipitation from Ca(NO 3 ) 2 •4H 2 O and H 3 PO 4 solutions, and NH 4 OH to maintain pH 10 at room temperature. The concentration of Ca 2+ cations in the reaction solution after mixing was 0.083 M and anions PO 4 3-of 0.05 M.
+
+These conditions of HA synthesis were different to the conditions under which the processes of medical HA crystallisation were studied (temperature of 37 °C, pH 7.4, reagent concentration of 1 mmol•L -1 ) [30]. All reagents were purchased by Sigma-Aldrich and used without additional purification. The synthesis of HA was carried out by slow addition of a P-containing solution to a Ca-containing solution with constant stirring at 250 rpm. The resulting suspension was kept under the mother liquor for 24 h without stirring for maturation. The precipitate separated on the Buchner funnel was washed with hot water and ethanol (sample I-0). The synthesis of samples in the presence of crystallisation inhibitors was carried out in a similar way. Mg(NO 3 ) 2 additive was introduced into Ca-containing solution at a rate of 1.0 mol. % relative to Ca 2+ ions (sample M-1). The addition of HEPD was introduced into the H 3 PO 4 solution at a rate of 1.0 mol. % relative to PO 4 3-ions (sample P-1). The wet sludge was first dried in air at room temperature, then at 100 °C for 24 h. To study the physical-chemical properties, the dried samples were ground and the fraction of 125-250 μm was sieved.
+
+X-ray phase analysis (XRD) was performed on the D8 Advanced Xray diffractometer (Bruker, Germany) using CuKα radiation. The content of Ca 2+ in the synthesised samples was determined by the reverse titration method with Trilon B and ZnSO 4 solutions, and the phosphorus content analysis was carried out by the method of photometry of the coloured phosphate vanadomolybdenum complex.
+
+The porous structure characteristics of samples were evaluated by isotherms of low temperature nitrogen adsorption-desorption, measured by the volumetric method using an ASAP 2020 M P (Micromeritics, USA). Specific surface area was calculated by BET (A BET ) and single-point BET (A sp ), pore volume was calculated by the Fig. 2. Effect of sorbent dose on the removal efficiency of metal ions (a -c) and their residual concentration (d -f) for I-0 (a, d), M-1 (b, e) and P-1 (c, f) samples. single-point method from adsorption (V sp.ads ) and desorption (V sp.ds ) branches of the isotherm. The average pore diameter for adsorption (D sp.ads ) and desorption (D sp.des ) branches of the isotherm was calculated by equation 4V/A. The samples were previously vacuumed at a temperature of 150 °C for 1 h.
+
+To prepare a model multi-component solution of wastewater containing Cd 2+ , Co 2+ , Cu 2+ , Fe 3+ , Ni 2+ , Pb 2+ and Zn 2+ ions, the corresponding salts of nitric acid (Sigma-Aldrich) were used. For all experiments, Milli-Q distilled water with a resistance of 18.2 MΩ•cm -1 was used. The composition of the model solution is shown in Table 1. The pH of the initial solution was 3.0.
+
+Measurements of metal ions and realised Ca 2+ and PO 4 3-concentration were carried out using an optical emission spectrometer with inductively coupled plasma (ICP-OES), model iCAP 6300 (Thermo Electron Corporation, USA). The pH of solutions before and after adsorption was controlled by a pH meter 340i ( ± 0.02).
+
+The adsorption experiment was carried out by batch method at room temperature. The sorbent sample was filled with 20 mL of the model solution and left for a certain time with constant shaking by a ST 15 shaker (CAT, M. Zipperer GmbH, Staufen, Germany). Then, the solution was filtered using a polypropylene filter (0.45 μm).
+
+To determine the optimal sorbent concentration, the weight of the sorbent sample varied from 0.0100 to 0.2000 g with a constant volume of the purified solution equal to 20 mL. Accordingly, the sorbent concentration in the solution varied in the range of 0.5 to 10 g•L -1 . The contact time of the sorbent with the solution was 24 h.
+
+Studies on the effect of contact time on the adsorption of metal ions was performed by varying the duration of interaction from 0.5 to 48 h. A portion of the sorbent 0.1000 ± 0.0001 g was placed in a plastic test tube filled with 10 mL of the model solution and shaken at 250 rpm.
+
+The adsorption capacity (q, mmol•g -1 ) and removal efficiency of metal ions (α, %) were determined by the following Eqs. ( 1) and (2):
+
+Fig. 3. Effect of contact time on the removal efficiency of metal ions (a -c) and their residual concentration (d -f) for I-0 (a, d), M-1 (b, e) and P-1 (c, f) samples.
+
+The concentration of Ca 2+ (L Ca , mmol•g -1 ) and PO 4 3-ions (L P , mmol•g -1 ) released in solution were calculated by Eqs. ( 3) and ( 4):
+
+where C 0 and C (mmol•L -1 )initial and residual concentration of metal ions; C Cа and C P (mmol•L -1 )concentration of released Cа 2+ and PO 4 3-ions in solution; V (L)volume of solution, m (g)weight of sorbent sample.
+
+To describe the kinetics of metal ion adsorption by hydroxyapatite samples, kinetic models of pseudo-first-( 5) and pseudo-second-order (6) were used. The linear forms of these kinetic equations have the following form:
+
+-pseudo-first-order equation:
+
+-pseudo-second-order equation:
+
+where q 1 and q t (mmol•g -1 ) are quantity of adsorbed metal ions at equilibrium and time t (min), k 1 (min -1 ) and k 2 (g•mmol -1 ·min -1 ) are the pseudo-first-and the pseudo-second-order rate constants.
+
+As shown by the study of the composition and properties of the synthesised HA samples, the use of crystallisation inhibitors of different natures, even with a small number of them, leads to a change in the chemical composition, crystal and structural characteristics (Fig. 1, Table 2). Thus, with the introduction of 1% Mg 2+ ions, the specific surface area of the obtained crystalline HA increased from 72 (75) to 123 (127) m 2 g -1 . The growth of the specific surface area was accompanied by a corresponding increase in pore volume from 0.233 (0.242) to 0.375 (0.367) cm 3 g -1 , with the average pore size practically unchanged.
+
+The increase in the specific surface area, apparently due to the decrease in the size of crystallites, was due to the inhibitory effect of Mg 2+ ions. According to modern concepts, the process of HA crystallisation is an extremely complex process consisting of five stages: 1) the formation of ion clusters and amorphous calcium phosphate (ACP); 2) the stabilisation of ACP; 3) the transition of ACP to HA through dissolution and crystallisation; 4) crystal growth; 5) HA aging under conditions close to equilibrium [33].The mechanism of action of Mg 2+ ions on HA crystallisation is that, adsorbed on the surface of the formed primary particles of ACP, they prevent the further growth of these particles and the formation of the crystal structure, thereby reducing the size of the crystallites and the degree of their crystallinity [33].
+
+In the synthesis in the presence of the additive HEDP, a weakly crystallised phase was formed, characterised by a smaller specific surface area, but a large volume of pores and their average size. Features of the formation of such a phase are explained by the presence of HEDP molecules, which, capturing several Ca 2+ ions, prevent the crystallisation of HA and form elaborate complexes, resulting in the growth of primary particles [30]. A similar effect was observed for the HEDP modifying of the HA surface [45].
+
+The action of crystallisation inhibitors was accompanied by corresponding changes in the chemical composition of the formed products. According to the chemical analysis, HA samples synthesised without inhibitors are close to the stoichiometric composition with a molar ratio of Ca/P = 1.667 (Table 2). The use of Mg 2+ ions as a crystallisation inhibitor leads to a slight decrease in the molar ratio of Ca/P to 1.63. HEDP had a more significant impact on the chemical composition of HA. The molar ratio of Ca/P of the phase formed in the presence of HEDP was 1.56, which practically corresponds to tricalcium phosphate and thus confirms the XRD data.
+
+According to the data presented in Fig. 2a-c, the removal efficiency of cations increased with an increase in the concentration of the sorbent. At a dose of 5.0 g•L -1 , the removal efficiency of Cd 2+ , Cu 2+ , Fe 3+ , Pb 2+ and Zn 2+ ions was 87-100 %, and at a maximum dose of 10.0 g•L -1 sorbents, regardless of their composition for almost all cations, reached 100%. This phenomenon could be explained by an increased number of active sites for adsorption, as shown in [54]. Exceptions were Fe 3+ , Ni 2+ and Co 2+ ions. Despite the rather high concentration of Fe 3+ ions, the removal efficiency of these ions reached 100% at a minimum dose of sorbents 0.5 g•L -1 for sorbent P-1 and 1.0 g•L -1 for sorbents I-0 and M-1. The adsorption of Ni 2+ and Co 2+ ions, on the other hand, was minimal at all doses by all sorbents. The maximum degree of purification from these ions was obtained using the M-1 sorbent at 76 and 60%, respectively.
+
+A comparison of sorbents among themselves shows that the Fe 3+ , Pb 2+ , Zn 2+ and Cu 2+ ions adsorptions differed from each other. A marked difference can be traced to the adsorption of ions Cd 2+ , Ni 2+ and Co 2+ . Thus, the minimum residual concentration of Cd 2+ ions was obtained by adsorption with samples synthesised using crystallisation inhibitors, especially P-1, and Ni 2+ and Co 2+ ions with the M-1 sample.
+
+Curves of changes in the removal efficiency of toxic metal ions during interaction with sorbents are shown in Fig. 3. All sorbents were characterised by a rapid increase in the removal efficiency of Cd 2+ , Cu 2+ , Fe 3+ , Pb 2+ and Zn 2+ ions at the initial section of the curves corresponding to 5-15 min during adsorption of Fe 3+ ions, 60 min -Pb 2+ ions and 3-6 h -for other ions. Then the curves went plateaued out, which indicates the achievement of equilibrium. First, the equilibrium of Fe 3+ and Pb 2+ ions was established. In the case of sorbent P-1 the equilibrium value for these ions was achieved in 5 min and 3 h, respectively, and sorbents I-0 and M-1 in 15 min and 6 h. For Cd 2+ , Cu 2+ and Zn 2+ ions for all sorbents, equilibrium was reached within 24 h. When comparing the magnitude of the sorbents, the adsorption capacity of these five ions in the first 60 min clearly shows the advantage of the sorbent P-1 (Fig. 4). According to the efficiency of ion removal, sorbents can be arranged in a series of P-1 &gt; M-1 &gt; I-0.
+
+For Ni 2+ and Co 2+ ion adsorption, a different relationship was observed. As can be seen from Fig. 3, Ni 2+ and Co 2+ ion equilibrium was achieved within 48 h of contact, while in 24 h the Ni 2+ ion recovery rate relative to the equilibrium value was 90.5% for the sorbent I-0, 94.5% for P-1 and 96.7% for M-1 as the most active in relation to these ions. For Co 2+ ions, the equilibrium was somewhat better, so the value of removal efficiency at 24 h by the same sorbents reaches 92.8, 97.7 and 98.0% of the equilibrium values, respectively. According to the efficiency of Ni 2+ and Co 2+ ions adsorption, sorbents could be arranged in series of M-1 &gt; I-0 &gt; P-1 (Fig. 4).
+
+The obtained data on the adsorption capacity depending on the contact time were calculated using the pseudo-first-and pseudo-secondorder equations (Fig. 5, Tables 3 and4). Data on the adsorption of Fe 3+ ions could not be short-circuited due to the rapid achievement of the equilibrium state at their available concentration in the initial solutions. According to the calculation results (Table 3), when using the pseudo-first-order model for the processes of adsorption of Pb 2+ , Co 2+ and Ni 2+ ions, low R 2 values and a large difference between q exp and q 1 values were obtained. This indicates that these processes cannot be described by the pseudo-first-order equation. The results on the adsorption of another group of ions -Cu 2+ , Cd 2+ and Zn 2+ were characterised by higher values of R 2 and a slight discrepancy between the values of q exp and q 1 , which suggests a different mechanism of interaction between HA samples and metal ions.
+
+As calculations have shown, the equation of pseudo-second-order (Table 4) describes the experimental data fairly accurately. This model can be most reliably applied to the adsorption of Pb 2+ , Cu 2+ , Cd 2+ and Zn 2+ ions, for which the coefficients R 2 with all sorbents are almost 1.0. At the same time, according to the results, it was possible to trace the adsorption selectivity of various ions and analyse the advantages of sorbents. Comparison of the obtained values of the initial velocity h• for different ions shows that all three sorbents had the highest adsorption rate of Pb 2+ ions and the lowest for Co 2+ . As the initial velocity decreased, the metal ions could be arranged in the following sequence:
+
+According to the rate constant of different cations, the sorbents had some differences. Thus, in the interaction of ions with the sorbent obtained without inhibitors, the constants could be arranged in the following sequence:
+
+For sorbents M-1 and P-1, rate constants were formed in other sequences 9 and 10, respectively:
+
+According to these series, the sorbents obtained with inhibitors had the highest rate constant for Pb 2+ ions adsorption, and the lowest for M-1 while interacting with Ni 2+ ions, as in sorbent I-0, and with Cd 2+ ions for P-1.
+
+Comparison of sorbents between themselves shows that sample P-1 was allocated the highest values of the parameters k 2 and h and the highest adsorption capacity of Pb 2+ ions. It was not possible to compare sorbents according to the equilibrium adsorption capacity since, at a given concentration of metal ions during equilibrium, the removal efficiency of metal ions reached 100%. Only in relation to Ni 2+ ions was it the most prominent advantage of the sorbent M-1. Sorbents I-0 and M-1 differed from each other in these parameters, although some advantage in respect of Pb 2+ , Cu 2+ , Cd 2+ and Zn 2+ ions was manifested in sorbent M-1, and in respect of Ni 2+ and Co 2+ ions for I-0. All the revealed differences can be caused by the peculiarities of the chemical composition of sorbents, their morphology and, accordingly, physical and chemical properties.
+
+To study the features of sorbent interaction depending on the composition and physical-chemical properties, the pH measurement of filtrates was carried out and the content of Cа 2+ and PO 4 3-ion leaching into the solution was determined (Fig. 6). The change in pH according to the sorbent dose (Fig. 6a) and during adsorption (Fig. 6d) reflected the difference between the sorbents. Thus, the sorbent obtained without the use of crystallisation inhibitors in the process of interaction with toxic metal ions in the solution had more alkaline properties, resulting in an increase in the dose of the sorbent pH from 3 to 4.0-4.6. The sorbent obtained with the addition of HEDP, on the other hand, had more acidic properties, so there was a minimum increase in pH to 3.9. The behaviour of sorbent M-1 at low doses in solution (0.5-2.5 g•L -1 ) was similar to the sorbent P-1, and at high doses (5.0-10.0 g•L -1 ) -sorbent I-0. The similarity of the behaviour of the sorbents I-0 and M-1 in the solution was confirmed by the graphs of the variation of pH during adsorption (Fig. 6d). By the time equilibrium was reached for the adsorption of most ions during the first 6 h (Fig. 3), the pH of the filtrates had increased to 4.5 and 4.6 for I-0 and M-1, respectively. At equilibrium, pH was 4.8. In the case of the P-1 sample, the equilibrium pH approached 4.0.
+
+The changes in the acid-base composition of the solutions were in good agreement with the data on the number of Cа 2+ and PO 4 3-ions transferred to the solution. According to the results of the analysis, the transition to a solution of Ca 2+ ions accompanying the adsorption of toxic metal ions decreased as the sorbent dose increased and the molar ratio L Cа /q M increased and, at a dose of 5 g•L -1 , reached a constant value close to one (Table 5, Fig. 6b). At the same time, a more intense leaching of Ca 2+ ions into the solution and the highest L Cа /q M value of 1.0 was observed for the P-1 sorbent, characterised by a large adsorption of metal ions. The lowest values of Ca 2+ ion concentration and the L Cа /q M molar ratio of 0.91 were obtained for the system containing the M-1 sorbent. According to the content of phosphate ions in the filtrate between samples I-0 and M-1, there was no large spread for either of the sorbent concentrations. At the maximum dose of sorbents, the concentration of phosphate ions did not exceed 0.047 mmol•L -1 , and the molar ratio L P /q M was 0.009 (Fig. 6c). For the P-1 sample, the phosphorus concentration increased with the sorbent dose, and at the maximum sorbent dose reached 0.56 mmol•L -1 (L P /q M = 0.107). This increase in the concentration of phosphorus in the filtrate may be due to the higher solubility of this sample, which contributes to the higher adsorption capacity of this sample, as well as the transition to a solution of the crystallisation inhibitor HEDP. This explains the lower pH of the solution after adsorption.
+
+As shown by the data on the change in the concentration of Ca 2+ and PO 4 3-ions in the adsorption process, with an increase in the Fig. 6. Effect of sorbent dose (a-c) and contact time (d-f) on рH (a, d), molar ratio L Cа /q M (b, e) and L P /q M (c, f).
+
+contact time of sorbents with the solution, the number of absorbed ions simultaneously increased. This correlated well with the increase of Ca 2+ ion concentration in the solution and the molar ratio Ca/M (Fig. 6e). In general, all sorbents showed similar changes in the content of Ca 2+ ions in the solution at a higher concentration of Ca 2+ ions in the system with the sorbent P-1, and the smallestwith the sorbent M-1. The change in the concentration of PO 4 3-ions -sorbent P-1 was significantly different from sorbents I-0 and M-1. According to the data shown in Fig. 6f, in the first case there was an abrupt increase in the concentration of phosphorus for 6 h, reaching a maximum concentration C e of 0.66 mmol L -1 , and then gradually decreasing to 0.55 mmol L - 1 . For sorbents I-0 and M-1 at the initial stage during the first 5 min, as a result of the dissolution processes a rapid transition of PO 4 3-ions into the solution occurred, then at 15 min of contact, a minimum concentration was observed, which then increased and plateaued. During the whole period, the concentration of phosphate ions in the adsorption sample I-0 ranged from 0.008-0.055 mmol L -1 and adsorption at M-1 in a slightly smaller range of 0.008-0.042 mmol L -1 . The molar ratio L P /q M changes were indicated for a much smaller amount of PO 4 3-ions in the solution at a high pH of the solution and a relatively low concentration of toxic metal ions. Data on the effect of sorbent concentrations showed that the adsorption of Fe 3+ , Pb 2+ , Zn 2+ and Cu 2+ ions for all sorbents exhibited approximately the same efficiency while, in respect of ions Co 2+ and Ni 2+ , the more effective sorbent was M-1 for which the maximum removal efficiency was 76 and 60%, respectively. The lowest removal efficiency was obtained using the sorbent P-1 (67 and 49%, respectively), although this sorbent showed high efficiency with respect to Cd 2+ ions. However, the study of the adsorption kinetics of metal ions from the multicationic solution showed the significant advantage of the P-1 sample obtained with the use of HEDP as a crystallisation inhibitor, and the selectivity of different metal ions adsorption was more reliable and arranged in the sequence (7).
+
+The data on the release of Ca 2+ ions and PO 4 3-ions into solution was accompanied with the adsorption of toxic metal ions. It is indicated that the relationship of the sorbent structure with its adsorption properties and interaction mechanism allows us to conclude that the advantage of the P-1 sample is due to the higher solubility of the amorphous sample. Thus, the greatest mobility of Ca 2+ ions and PO 4 3-ions and a more developed porous structure had a positive effect on kinetic characteristics. The features of changes in the pH of solutions and the content of Ca 2+ ions for the M-1 sample in a series of experiments with different sorbent concentrations may be due to the presence in the HA structure of hydrophosphate groups HPO 4 2-, characteristic of Ca-deficient HA with a molar ratio of Ca/P 1.67. As a result, there was a decrease in pH solution, as in the case of the P-1 sample, and lower values of the L Cа /q M molar ratio, so Ca 2+ ions and H + participated in the exchange reaction.
+
+The values of the molar ratio L Ca /q M , were close to 1.0, which indicated that all samples, regardless of their characteristics, under conditions of low concentration of divalent metal ions reacted according to the following exchange reaction (11):
+
+The analysis of the data for adsorption of toxic metal ions from multicomponent solution by HA samples synthesised with the use of crystallisation inhibitors showed that the achieved residual concentration of ions Pb 2+ , Zn 2+ and Cu 2+ was below the maximum concentration limit (MCL), and for Fe 3+ ions was almost equal to zero (Table 6). The concentration of sorbents was much lower than that of widely used natural sorbents [2,[8][9][10][11].
+
+It was shown that the adsorption characteristics of the HA synthesised in the presence of low doses of crystallisation inhibitors in the processes of Cd 2+ , Cu 2+ , Fe 3+ , Pb 2+ , Zn 2+ ions adsorption was significantly improved, due to their lower degree of crystallinity and welldeveloped porous structure. It was established that almost complete adsorption of Cd 2+ , Cu 2+ , Fe 3+ , Pb 2+ , Zn 2+ ions occurred within 6 h at the dose of sorbent 5.0-10.0 gL -1 . The adsorption capacity of the samples of HA in relation to the ions Cd 2+ , Cu 2+ , Fe 3+ , Pb 2+ , Zn 2+ with their simultaneous presence in the solution with the content of individual components varied from 0.13 to 1.28 mmol g -1 or a total of about 6 mmol g -1 . The adsorption of metal ions from a multicomponent solution was described by a pseudo-second-order equation, which indicated a heterogeneous chemical reaction between the sorbent and ions in the solution. The highest adsorption for Co 2+ and Ni 2+ ions was observed for HA obtained in the presence of Mg 2+ that was characterised by A BET of 123-127 m 2 g -1 and a pore diameter of 12 nm. HA prepared with HEPD had a pore volume of 0.516-0.735 cm 3 g -1 , an average pore diameter of 28-29 nm and showed the highest efficiency towards Cd 2+ , Cu 2+ , Fe 3+ , Pb 2+ , Zn 2+ ions.
+
+None.
+
+This work was financially supported by State Research Programme (grant # 1.05).
+
+* Barakat, 2011 [4].
+
+* Barakat, 2011 [4]</full_text>
+	<references>
+		<reference>
+			<title>Guidelines for Drinking-water Quality</title>
+			<authors/>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Manage</title>
+			<authors>
+				<author>F Fu</author>
+				<author>Q Wang</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Chem. Eng</title>
+			<authors>
+				<author>C Carolin</author>
+				<author>P Kumar</author>
+				<author>A Saravanan</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Arabian J. Chem</title>
+			<authors>
+				<author>M Barakat</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Ecotoxicol. Environ. Saf</title>
+			<authors>
+				<author>A Burakov</author>
+				<author>E Galunin</author>
+				<author>I Burakova</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>P Ray</author>
+				<author>H Shipley</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>O Oleksiienko</author>
+				<author>C Wolkersdorfer</author>
+				<author>M Sillanpää</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Environ. Eng. Sci</title>
+			<authors>
+				<author>Z Yuna</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>J. Water Reuse Desalin</title>
+			<authors>
+				<author>R Bisht</author>
+				<author>M Agarwal</author>
+				<author>K Singh</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Chem. Eng</title>
+			<authors>
+				<author>M Vhahangwele</author>
+				<author>G Mugera</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Rev. Environ. Sci. Biotechnol</title>
+			<authors>
+				<author>A Lim</author>
+				<author>A Aris</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Crit. Rev. Environ. Sci. Technol</title>
+			<authors>
+				<author>M Inyang</author>
+				<author>B Gao</author>
+				<author>Y Yao</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>H Modin</author>
+				<author>K Persson</author>
+				<author>A Andersson</author>
+				<author>M Van Praagh</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Sep. Purif. Technol</title>
+			<authors>
+				<author>A Abbas</author>
+				<author>A Ihsanullah</author>
+				<author>Al-Amer</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>J. Water Process Eng</title>
+			<authors>
+				<author>M Ahmed</author>
+				<author>M Ahmaruzzaman</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>J. Radioanalyt. Nuclear Chem</title>
+			<authors>
+				<author>N Kitikova</author>
+				<author>A Ivanets</author>
+				<author>I Shashkova</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>J. Taiwan Inst. Chem. Eng</title>
+			<authors>
+				<author>I Shashkova</author>
+				<author>A Ivanets</author>
+				<author>N Kitikova</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Radiochemistry</title>
+			<authors>
+				<author>A Ivanets</author>
+				<author>I Shashkova</author>
+				<author>N Kitikova</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Appl. Geochem</title>
+			<authors>
+				<author>E Hafsteinsdottir</author>
+				<author>D Camenzuli</author>
+				<author>A Rocavert</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Manage</title>
+			<authors>
+				<author>J Gomez Del Rio</author>
+				<author>P Morando</author>
+				<author>D Cicerone</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>J. Colloid Interface Sci</title>
+			<authors>
+				<author>A Corami</author>
+				<author>S Mignardi</author>
+				<author>V Ferrini</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Colloids Surf. B</title>
+			<authors>
+				<author>C Stötzel</author>
+				<author>F Müller</author>
+				<author>F Reinert</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Environ. Sci. Technol</title>
+			<authors>
+				<author>N Da Rocha</author>
+				<author>R De Campos</author>
+				<author>A Rossi</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>Sci. Total Environ</title>
+			<authors>
+				<author>A Dybowska</author>
+				<author>D Manning</author>
+				<author>M Collins</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Environ. Sci. Technol</title>
+			<authors>
+				<author>X Chen</author>
+				<author>J Wright</author>
+				<author>J Conca</author>
+			</authors>
+			<date>1997</date>
+		</reference>
+		<reference>
+			<title>Colloids Surf. A</title>
+			<authors>
+				<author>S Asri</author>
+				<author>A Laghzizil</author>
+				<author>T Coradin</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Sci. Rep</title>
+			<authors>
+				<author>Y Sekine</author>
+				<author>R Motokawa</author>
+				<author>N Kozai</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Colloids Surf. A</title>
+			<authors>
+				<author>I Shashkova</author>
+				<author>A Rat'ko</author>
+				<author>N Kitikova</author>
+			</authors>
+			<date>1999</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>G.-J Ding</author>
+				<author>Y.-J Zhu</author>
+				<author>C Qi</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Langmuir</title>
+			<authors>
+				<author>Z Amjad</author>
+			</authors>
+			<date>1987</date>
+		</reference>
+		<reference>
+			<title>J. Cryst. Growth</title>
+			<authors>
+				<author>J Van Der Houwen</author>
+				<author>G Cressey</author>
+				<author>B Cressey</author>
+				<author>E Valsami-Jones</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>Crystal Growth of Calcium Phosphates in the Presence of Polymeric Inhibitors. Calcium Phosphate in Biological and Industrial Systems</title>
+			<authors>
+				<author>S Shimabayashi</author>
+				<author>T Uno</author>
+				<author>Z Amjad</author>
+			</authors>
+			<date>1998</date>
+		</reference>
+		<reference>
+			<title>Cryst. Growth Des</title>
+			<authors>
+				<author>H Ding</author>
+				<author>H Pan</author>
+				<author>X Xu</author>
+				<author>R Tang</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>J. Phys. Chem. B</title>
+			<authors>
+				<author>N Kanzaki</author>
+				<author>K Onuma</author>
+				<author>G Treboux</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>J. Cryst. Growth</title>
+			<authors>
+				<author>H Lundager Madsen</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>J. Inorg. Biochem</title>
+			<authors>
+				<author>B Bracci</author>
+				<author>P Torricelli</author>
+				<author>S Panzavolta</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Calcium Phosphates in Biological and Industrial Systems</title>
+			<authors>
+				<author>P Koutsoukos</author>
+			</authors>
+			<date>1998</date>
+		</reference>
+		<reference>
+			<title>Acta Biomater</title>
+			<authors>
+				<author>E Boanini</author>
+				<author>M Gazzano</author>
+				<author>A Bigi</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Langmuir</title>
+			<authors>
+				<author>A Zieba</author>
+				<author>G Sethuraman</author>
+				<author>F Perez</author>
+			</authors>
+			<date>1996</date>
+		</reference>
+		<reference>
+			<title>Colloid Surf. A: Physicochem. Eng. Asp</title>
+			<authors>
+				<author>L Hammari</author>
+				<author>A Laghzizil</author>
+				<author>A Saoiabi</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>Appl. Surf. Sci</title>
+			<authors>
+				<author>H Agougui</author>
+				<author>A Aissa</author>
+				<author>S Maggi</author>
+				<author>M Debbabi</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Colloids Surf. A: Physicochem. Eng. Asp</title>
+			<authors>
+				<author>M Othmani</author>
+				<author>A Aissa</author>
+				<author>A Grelard</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Colloid Surf. A: Physicochem. Eng. Asp</title>
+			<authors>
+				<author>S Saoiabi</author>
+				<author>K Achelhi</author>
+				<author>S Masse</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Sci. Mater. Med</title>
+			<authors>
+				<author>P Pascaud</author>
+				<author>F Errassifi</author>
+				<author>F Brouillet</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Ind. Eng. Chem. Res</title>
+			<authors>
+				<author>Y Daniels</author>
+				<author>N Lyczko</author>
+				<author>A Nzihou</author>
+				<author>S Alexandratos</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Environ. Technol</title>
+			<authors>
+				<author>S Lacour</author>
+				<author>V Deluchat</author>
+				<author>J.-C Bollinger</author>
+				<author>B Serpaud</author>
+			</authors>
+			<date>1999</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>K Viipsi</author>
+				<author>S Sjöberg</author>
+				<author>K Tõnsuaadu</author>
+				<author>A Shchukarev</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>A Corami</author>
+				<author>S Mignardi</author>
+				<author>V Ferrini</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Sep. Sci. Technol</title>
+			<authors>
+				<author>B Ma</author>
+				<author>W Shin</author>
+				<author>S Oh</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Environ. Sci. Technol</title>
+			<authors>
+				<author>Q Ma</author>
+				<author>S Traina</author>
+				<author>T Logan</author>
+				<author>J Ryan</author>
+			</authors>
+			<date>1994</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Sci</title>
+			<authors>
+				<author>J Reichert</author>
+				<author>J Binner</author>
+			</authors>
+			<date>1996</date>
+		</reference>
+		<reference>
+			<title>J. Water Process. Eng</title>
+			<authors>
+				<author>A Ivanets</author>
+				<author>N Kitikova</author>
+				<author>I Shashkova</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Endocr. Rev</title>
+			<authors>
+				<author>H Fleisch</author>
+			</authors>
+			<date>1998</date>
+		</reference>
+		<reference>
+			<title>J. Clean. Prod</title>
+			<authors>
+				<author>J Iqbal</author>
+				<author>N Shah</author>
+				<author>M Sayed</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1016/j.jenvman.2010.11.011</number>
+		<number>DOI-10.1016/j.jece.2017.05.029</number>
+		<number>DOI-10.1016/j.arabjc.2010.07.019</number>
+		<number>DOI-10.1016/j.ecoenv.2017.11.034</number>
+		<number>DOI-10.1039/C5RA02714D</number>
+		<number>DOI-10.1016/j.cej.2017.02.079</number>
+		<number>DOI-10.1089/ees.2015.0166</number>
+		<number>DOI-10.1016/j.jece.2015.08.016</number>
+		<number>DOI-10.1007/s11157-013-9330-2</number>
+		<number>DOI-10.1080/10643389.2015.1096880</number>
+		<number>DOI-10.1016/j.jhazmat.2011.03.001</number>
+		<number>DOI-10.1016/j.seppur.2015.11.039</number>
+		<number>DOI-10.1016/j.jwpe.2016.01.014</number>
+		<number>DOI-10.1007/s10967-017-5592-4</number>
+		<number>DOI-10.1016/j.jtice.2017.09.027</number>
+		<number>DOI-10.1134/S106636221401007X</number>
+		<number>DOI-10.1016/j.apgeochem.2015.03.014</number>
+		<number>DOI-10.1016/j.jenvman.2004.02.004</number>
+		<number>DOI-10.1016/j.jcis.2007.09.075</number>
+		<number>DOI-10.1016/j.colsurfb.2009.06.031</number>
+		<number>DOI-10.1021/es0155940</number>
+		<number>DOI-10.1016/j.scitotenv.2008.12.053</number>
+		<number>DOI-10.1021/es950882f</number>
+		<number>DOI-10.1016/j.colsurfa.2010.03.036</number>
+		<number>DOI-10.1038/s41598-017-02269-z</number>
+		<number>DOI-10.1016/S0927-7757(99)00193-4</number>
+		<number>DOI-10.1039/C5RA04624F</number>
+		<number>DOI-10.1021/la00078a032</number>
+		<number>DOI-10.1016/S0022-0248(02)02227-3</number>
+		<number>DOI-10.1021/cg401619s</number>
+		<number>DOI-10.1021/jp9939726</number>
+		<number>DOI-10.1016/j.jcrysgro.2008.01.047</number>
+		<number>DOI-10.1016/j.jinorgbio.2009.09.009</number>
+		<number>DOI-10.1016/j.actbio.2009.12.041</number>
+		<number>DOI-10.1021/la950842p</number>
+		<number>DOI-10.1016/j.colsurfa.2006.04.009</number>
+		<number>DOI-10.1016/j.apsusc.2010.08.021</number>
+		<number>DOI-10.1016/j.colsurfa.2016.08.078</number>
+		<number>DOI-10.1016/j.colsurfa.2012.12.005</number>
+		<number>DOI-10.1007/s10856-014-5218-0</number>
+		<number>DOI-10.1021/ie504181z</number>
+		<number>DOI-10.1080/09593332008616815</number>
+		<number>DOI-10.1016/j.jhazmat.2013.02.034</number>
+		<number>DOI-10.1016/j.jhazmat.2006.12.003</number>
+		<number>DOI-10.1080/01496390903484941</number>
+		<number>DOI-10.1021/es00056a007</number>
+		<number>DOI-10.1007/BF00353102</number>
+		<number>DOI-10.1016/j.jwpe.2016.01.005</number>
+		<number>DOI-10.1210/edrv.19.1.0325</number>
+		<number>DOI-10.1016/j.jclepro.2019.06.316</number>
+	</reference_dois>
+</document>

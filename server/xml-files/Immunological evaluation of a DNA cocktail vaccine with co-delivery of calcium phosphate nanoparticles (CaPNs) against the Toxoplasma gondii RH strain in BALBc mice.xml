@@ -1,0 +1,512 @@
+<document>
+	<file>./pdf-files/Immunological evaluation of a DNA cocktail vaccine with co-delivery of calcium phosphate nanoparticles (CaPNs) against the Toxoplasma gondii RH strain in BALBc mice.pdf</file>
+	<title>Immunological evaluation of a DNA cocktail vaccine with co-delivery of calcium phosphate nanoparticles (CaPNs) against the Toxoplasma gondii RH strain in BALB/c mice</title>
+	<date>2016</date>
+	<doi_number>10.1007/s00436-016-5325-6</doi_number>
+	<img_preview_path>./pdf-preview-images/Immunological evaluation of a DNA cocktail vaccine with co-delivery of calcium phosphate nanoparticles (CaPNs) against the Toxoplasma gondii RH strain in BALBc mice.jpeg</img_preview_path>
+	<authors>
+		<author>Mohammad Taghi Rahimi</author>
+		<author>Shahabeddin Sarvi</author>
+		<author>Mahdi Sharif</author>
+		<author>Saeid Abediankenari</author>
+		<author>Ehsan Ahmadpour</author>
+		<author>Reza Valadan</author>
+		<author>Mahdi Fasihi- Ramandie</author>
+		<author>Seyed-Abdollah Hosseini</author>
+		<author>Ahmad Daryani</author>
+	</authors>
+	<abstract>Many recent studies have been conducted to evaluate protective immunity mediated by DNA vaccines against toxoplasmosis. Cocktail DNA vaccines showed better immune responses compared to single vaccines. The objective of the current study was to evaluate the protective efficacy of rhomboid 4 (ROM4) and cocktail DNA vaccines (ROM4 + GRA14) of the Toxoplasma gondii RH strain with or without coated calcium phosphate nanoparticles (CaPNs) as the adjuvant to improve the immunogenicity against the T. gondii RH strain in BALB/c mice. Cocktail DNA vaccines of pcROM4 + pcGRA14 of the T. gondii RH strain were constructed. CaPNs were synthesized and the cocktail DNA vaccine was coated with the adjuvant of CaPNs. Immunogenicity and the protective effects of cocktail DNA vaccines with or without CaPNs against lethal challenge were evaluated in BALB/c mice. pcROM4 and cocktail DNA vaccine coated with CaPNs significantly enhanced cellular and humoral immune responses against Toxoplasma compared to pcROM4 and cocktail DNA vaccine without CaPNs (p &lt; 0.05). These findings indicate that the survival time of immunized mice after challenge with the RH strain of T. gondii was increased compared to that of controls and the DNA vaccine provided significant protection in mice (p &lt; 0.05). The CaPN-based cocktail DNA vaccine of pcROM4 + pcGRA14 showed the longest survival time compared to the other groups. Co-immunization with CaPN-based cocktail DNA vaccine (pcROM4 + pcGRA14) boosted immune responses and increased the protective efficacy against acute toxoplasmosis in BALB/c mice compared to both single gene and bivalent DNA vaccine without nano-adjuvants.</abstract>
+	<methods>
+		<method>
+			<heading>Experimental mice</heading>
+			<text>Eight to 10-week-old female BALB/c mice (20-25 g) were obtained from the Animal Research Center of Mazandaran University of Medical Sciences, Sari, Iran. All mice were maintained and handled under standard conventional conditions. The animal protocols were approved by the Animal Research Center, Mazandaran University of Medical Sciences. Ethical approval was obtained from the Mazandaran University of Medical Sciences Ethics Committee (Approval No. 1452).</text>
+		</method>
+		<method>
+			<heading>Preparation of T. gondii lysate antigen</heading>
+			<text>To prepare T. gondii lysate antigen (TLA), purified tachyzoites were disrupted by three cycles of freezing at -80 °C, thawing and sonication on ice (400 W × 5 min). The prepared cellular lysate was centrifuged at 10,000×g for 30 min at 4 °C, and the supernatants were pooled and sterile-filtered with 0.22-μm sterile nitrocellulose filters. The protein concentration was determined by the Bradford method. TLA was aliquoted and stored at -80 °C until use (EL-Malky et al. 2014).</text>
+		</method>
+		<method>
+			<heading>Synthesis of DNA vaccine coated with CaPNs</heading>
+			<text>CaPNs were synthesized as described previously (Qing et al. 2000). Briefly, 12.5 mM calcium chloride, 12.5 mM dibasic sodium phosphate, and 15.6 mM sodium citrate were added and mixed slowly with stirring for 48 h. After 30 min of sonication, particle size was measured by Zetasizer Nano (Malvern Instruments, Malvern, UK) and scanning electron microscopy. DNA vaccine-coated nanoparticles were prepared by gently mixing 5 mL of the CaPNs and 1 mL of ROM4 (5:1 ratio) for 60 min. CaPN-based pcGRA14 produced in our previous work was also used.</text>
+		</method>
+		<method>
+			<heading>Characterization of CaPNs</heading>
+			<text>Images of CaPNs showed that the particles had the same size and shape. In addition, the sizes of most CaPNs using Fig. 1 WB analysis of recombinant pcROM4. Lanes 1 and 2: transfected cells containing pcROM4 plasmid with 3:1 and 6:1 ratio of transfection reagent to plasmid, respectively. Lane 3: pcDNA3 without ROM4 fragment as a negative control Zetasizer ranged from 90 to 120 nm and the CaPNs had a spherical shape and smooth surface.</text>
+		</method>
+	</methods>
+	<full_text>Toxoplasma gondii, the causative agent of toxoplasmosis, is an obligate intracellular protozoan that can infect a wide variety of mammals including humans. Although toxoplasmosis is typically asymptomatic in immunocompetent people, in congenital cases it may cause microcephaly, hydrocephalus, blindness, mental retardation, spontaneous abortion, and death of fetuses (Elmore et al. 2010;Petersen et al. 2012). In immunocompromised individuals, recrudescence of latent toxoplasmosis may cause encephalitis or even lethal damage (Cenci-Goga et al. 2011;Pereira-Chioccola et al. 2009). Toxoplasma infection in animals causes considerable economic losses to the livestock industries from abortion, particularly in sheep and goats. Meat products containing tissue cysts of T. gondii are the major source of infection transmission to humans (Sarvi et al. 2015).
+
+Development of an effective vaccine against toxoplasmosis is very important because current drug treatments can control only the acute phase of the disease in humans, but do not eliminate infection, particularly the tissues cysts of T. gondii (Innes 2010;Zhang et al. 2013). There is no effective vaccine for humans ' and Toxovax (S48 strain) is the only commercially accessible vaccine for sheep and goats that has been licensed in Europe and New Zealand; however, there are safety concerns regarding the recrudescence of infection and inadequate efficacy (Buxton et al. 1991). Thus, an effective and safe vaccine that induces protective immunity in humans and animals is needed.
+
+Apicomplexan parasites such as T. gondii require transmembrane adhesive proteins for host cell invasion, which mediate binding to receptors on the substrate and host cell in order to facilitate motility and invasion. Rhomboid proteases (ROMs) are considered to cleave adhesive proteins within their transmembrane domains, allowing the parasite to separate from receptors and facilitate entry into host cell (Buguliskis et al. 2010).
+
+T. gondii contains six ROMs known as ROM1-ROM6 which are localized and expressed differentially along the secretory pathway during the life cycle of Toxoplasma (Dowse et al. 2005). ROM1, ROM2, and ROM3 are present in sporozoites and ROM1, ROM4, and ROM5 are expressed during the tachyzoite stage. ROM6 is predicted to be a mitochondrial PARL-like rhomboid (Brossier et al. 2005). Micronemes (MIC2, MIC3, and MIC4) are important antigens of tachyzoites of T. gondii for both binding to the host cell and invasion of the organism (Shen et al. 2014). The MIC2 protein complex is a major virulence determinant for Toxoplasma infection and MIC2-deficient parasites constitute an effective live-attenuated vaccine for experimental toxoplasmosis (Huynh and Carruthers 2006). This important and vital function of micronemes depends on ROM4. This antigen affects the processing of surface adhesions and facilitates host cell invasion of tachyzoites. Therefore, ROM4 is a trigger for the microneme (Shen et al. 2014). Another major organelle that is necessary for Toxoplasma tachyzoite intracellular development consists of dense granule molecules (GRA), secreted in abundance. They are the major components of excretory/ secretory antigens (ESAs) secreted by the parasite and have been shown to be involved in the intracellular development of Toxoplasma and implicated in the intracellular maintenance of the parasite (Arab et al. 2014). The novel dense granule protein GRA14, secreted into the vacuole, and can be transferred to intervacuolar sites during infection. Also, GRA14 has a unique topology in the parasitophorous vacuole membrane. The findings show that the C terminus of GRA14 faces the host cytoplasm and its N terminus faces the vacuolar lumen (Rome et al. 2008).
+
+In a previous study, we used a DNA vaccine encoding T. gondii GRA14 to immunize mice. Although, we obtained high levels of immune response, the DNA vaccine did not completely protect BALB/c mice against challenge with the parasite. Because cocktail DNA vaccines may show better protective immunity compared to single vaccines (Cui et al. 2008;Mévélec et al. 2005), the objective of this study was to evaluate the protective efficacy of ROM4 and cocktail DNA vaccines (ROM4 + GRA14) of the T. gondii RH strain with or without coated calcium phosphate nanoparticles (CaPNs) as an adjuvant to improve the immunogenicity of vaccines against acute toxoplasmosis in BALB/c mice.
+
+Eight to 10-week-old female BALB/c mice (20-25 g) were obtained from the Animal Research Center of Mazandaran University of Medical Sciences, Sari, Iran. All mice were maintained and handled under standard conventional conditions. The animal protocols were approved by the Animal Research Center, Mazandaran University of Medical Sciences. Ethical approval was obtained from the Mazandaran University of Medical Sciences Ethics Committee (Approval No. 1452).
+
+Tachyzoites of the highly virulent RH strain of T. gondii were kindly provided by the Toxoplasmosis Research Center in Mazandaran University of Medical Sciences, Sari, Iran. Tachyzoites were harvested from the peritoneal cavity of BALB/c mice at 96 h after intraperitoneal injection with 0.5 mL of the parasite suspension (1 × 10 5 tachyzoites) in sterile phosphate-buffered saline (PBS) containing 100 IU/ mL penicillin and 100 μg/mL streptomycin. The tachyzoites were used to challenge both control and immunized mice (Kalani et al. 2016).
+
+To prepare T. gondii lysate antigen (TLA), purified tachyzoites were disrupted by three cycles of freezing at -80 °C, thawing and sonication on ice (400 W × 5 min). The prepared cellular lysate was centrifuged at 10,000×g for 30 min at 4 °C, and the supernatants were pooled and sterile-filtered with 0.22-μm sterile nitrocellulose filters. The protein concentration was determined by the Bradford method. TLA was aliquoted and stored at -80 °C until use (EL-Malky et al. 2014).
+
+The coding sequence of the TgROM4 gene (1926 bp; GenBank accession no.: GbAY596193) was amplified by PCR from tachyzoite complementary DNA (cDNA) of T. gondii RH strain using specific primers (forward primer: 5′-AAAGAATTCATGGTGTGGACTTCGGCCGTCG-3′; reverse primer: 5′-AAACTCGAGTTACGGTTCAA GATAATACTGC-3′) with the introduction of EcoRI and XhoI restriction sites (underlined) at the 5′ end of the forward and reverse primers, respectively. The purified ROM4 gene was cloned initially into pTG19-T as a plasmid vector (Vivantis, Selangor Darul Ehsan, Malaysia). Next, the digested fragment of ROM4 with the corresponding restriction enzymes was purified from the agarose gel and ligated into the eukaryotic expression plasmid pcDNA3 vector (Invitrogen, Carlsbad, CA, USA) to construct the pcROM4 plasmid. The recombinant plasmid clones were screened by PCR and double restriction enzyme digestion and confirmed by sequencing in both directions to ensure fidelity. The sequence was submitted to GenBank. Plasmids were transferred into Escherichia coli Top10. Large-scale plasmid extraction (pcROM4 and pcDNA3) was purified using the EndoFree Plasmid Mega Kit (Qiagen, Hilden, Germany) according to the manufacturer s instructions. pcGRA14, which was produced in our previous research, was used. The extracted plasmid concentration was measured using a spectrophotometer (Biowave 11, Biochrom, Ltd., Cambridge, UK) and dissolved in sterile endotoxinfree PBS at a final concentration of 1 mg/mL.
+
+CHO cells grown in six-well plates were transfected with recombinant plasmid pcROM4 using TurboFect Transfection Reagent (Cat. No. R0531, Fermentas, Vilnius, Lithuania) according to the manufacturer's instructions. CHO cells transfected with empty pcDNA3 served as the negative control. After 48 h, the cells were lysed and proteins were collected. Expression of recombinant ROM4 mRNA and protein in the eukaryotic system were evaluated by RT-PCR, sodium dodecyl sulfate polyacrylamide gel electrophoresis and western blotting analysis. Briefly, the collected proteins were transferred to a 0.2-μm nitrocellulose membrane (Sigma-Aldrich, St. Louis, MO, USA) followed by overnight blocking at 4 °C with 2% bovine serum albumin (BSA) in PBS-0.1% Triton-X-100 (PBST). After washing with PBS containing 0.5% Tween-20, the membrane strips were incubated with mouse anti-T. gondii tachyzoites polyclonal antibody (1:500 dilution in PBST) at 37 °C for 2 h. After three washes, horseradish peroxidase-conjugated goat anti-mouse (or human) IgG (1:3000, Sigma) was added to the membrane and incubated at 37 °C for 2 h. The membrane was developed using a chromogenic substrate 3,3′-diaminobenzidine/H 2 O 2 substrate solution for 15 min at 25 °C. The reaction was stopped by washing three times in distilled water.
+
+CaPNs were synthesized as described previously (Qing et al. 2000). Briefly, 12.5 mM calcium chloride, 12.5 mM dibasic sodium phosphate, and 15.6 mM sodium citrate were added and mixed slowly with stirring for 48 h. After 30 min of sonication, particle size was measured by Zetasizer Nano (Malvern Instruments, Malvern, UK) and scanning electron microscopy. DNA vaccine-coated nanoparticles were prepared by gently mixing 5 mL of the CaPNs and 1 mL of ROM4 (5:1 ratio) for 60 min. CaPN-based pcGRA14 produced in our previous work was also used.
+
+Seven groups of BALB/c mice (14 per group) were used in the current study, including three negative control groups (PBS, pcDNA3 vector, and CaPNs) and four vaccination groups (pcROM4, pcROM4-CaPNs, pcROM4 + pcGRA14, and pcROM4-CaPNs + pcGRA14-CaPNs). Mice were immunized three times with 100 μg of plasmid DNA intramuscular (anterior tibial muscle) injections and boosted with at 2-week intervals as experimental groups. Five weeks after the last immunization, 11 mice from each group were challenged intraperitoneally with 1 × 10 3 tachyzoites of the highly virulent T. gondii RH strain and the survival time for each mouse was recorded daily and compared.
+
+Mouse sera from all groups were separated by centrifugation of the collected blood from the venous plexus of mice tails ahead of each immunization. Next, T. gondii-specific serum IgG, IgG1, and IgG2a antibody levels were determined by enzyme-linked immunosorbent assay (ELISA). Briefly, 96well microtiter plates were coated with 20 μg of TLA in 1 mL of PBS at 4 °C overnight and blocked with PBS containing 2% BSA at room temperature for 2 h. Mice sera were diluted 1:100 in 1% BSA-PBS at 37 °C for 2 h. The plates were washed three times with PBST and incubated with horseradish peroxidase-conjugated goat anti-mouse IgG, IgG1, and IgG2a antibodies (Santa Cruz Biotechnology, Santa Cruz, CA, USA), diluted to 1:5000 at 37 °C for 2 h, and immune complexes were visualized by incubating with substrate solution (pH 4.0) (1.05% citrate substrate buffer; 1.5% ABTS; 0.03% H 2 O 2 ). The reaction was stopped by adding 1MH 2 SO 4 and optical density was determined at 450 nm using a microplate reader (Stat Fax 2100, Awareness, Palm City, FL, USA) (Rahimi et al. 2015). All samples were evaluated in triplicate.
+
+Spleens from three mice of each group were removed under aseptic conditions 5 weeks after the last immunization and rapidly dipped in Roswell Park Memorial Institute medium (RPMI) 1640 (Sigma). Splenocytes were harvested by pushing the spleens through a nylon net, and then removed the red blood cells using erythrocyte lysis buffer (0.83% NH 4 Cl, 0.01 M Tris-HCl, pH 7.2). The lymphocytes were washed and resuspended in RPMI-1640 supplemented with 10% fetal bovine serum. The viability of collected cells was determined by trypan blue staining (Sigma).
+
+Purified spleen lymphocytes were seeded in triplicate into flatbottomed 96-well microtiter plates and the number of lymphocytes in each group suspension was counted and adjusted to a final concentration of 5 × 10 5 cells/well. The cells were cultured in RPMI-1640 (Sigma) supplemented with 10% fetal calf serum and stimulated with TLA (10 μg/mL) at 37 °C for 72 h at 5% CO 2 . Phytohemagglutinin (PHA, 5 μg/mL, Sigma) and RPMI medium 1640 alone served as positive and negative controls, respectively. Next, 50 μL of methylthiazolyl-tetrazolium (MTT, 2 mg/mL) was added into each well and incubated for 4 h. The supernatant of each well was discarded, and cells were resuspended in 100 μL dimethyl sulfoxide (Sigma). The absorbance was read at 570 nm with an ELISA reader. The stimulation index (SI) was calculated b y t h e f o l l o w i n g f o r m u l a : S t i m u l a t i o n i n d e x (SI) = (OD 570TLA /OD 570M ): (OD 570 PHA /OD 570M ).
+
+Splenocyte suspensions from each group were cultured with TLA in flat-bottom 96-well microtiter plates to analyze the level of cytokine production and RPMI medium 1640 alone was used as a negative control. Cell-free supernatants were harvested and assayed at 24 h to evaluate interleukin (IL-4) and 96 h for interferon (IFN)-γ activity using commercial ELISA kits (eBiosciences, San Diego, CA, USA) according to the manufacturer's instructions. All assays were performed in triplicate.
+
+Statistical analysis was performed using the Mann-Whitney test to determine the differences between the experimental groups and control groups. The Kaplan-Meier method was used to compare the survival time in the vaccinated and control groups and statistical comparisons were made using the log-rank method. SPSS 13.0 software was used in the statistical analysis (SPSS Inc., Chicago, IL, USA). Differences were considered to be statistically significant between two groups when p &lt; 0.05.
+
+A 1926-bp PCR fragment corresponding to the ROM4 coding sequence was amplified and digested by the EcoRI and XhoI restriction enzymes. This sequence was cloned into the expression vector pcDNA3. The sequences of recombinant pcROM4 were submitted to GenBank and registered under the following accession no.: KT715444. CHO cells were transfected with pcROM4. The results of western blotting of the extracted proteins showed that the Toxoplasma pcROM4 protein was successfully expressed by pcROM4 in CHO cells and that a 65-kDa band was detected. No band was observed in control cells transfected with the empty plasmid (Fig. 1).
+
+Images of CaPNs showed that the particles had the same size and shape. In addition, the sizes of most CaPNs using Fig. 1 WB analysis of recombinant pcROM4. Lanes 1 and 2: transfected cells containing pcROM4 plasmid with 3:1 and 6:1 ratio of transfection reagent to plasmid, respectively. Lane 3: pcDNA3 without ROM4 fragment as a negative control Zetasizer ranged from 90 to 120 nm and the CaPNs had a spherical shape and smooth surface.
+
+The increase in the single gene vaccine, cocktail without adjuvant, and cocktail with adjuvant specific antibodies began after the second immunization, and the optical density values reached to the highest level after the last immunization (p &lt; 0.05), whereas the levels of antibodies in the control groups did not significantly increase. In order to determine whether a Th1 and/or Th2 response was elicited, the ratio of the IgG1 and IgG2a isotypes was analyzed 5 weeks after the last immunization. In all vaccinated mice, a high IgG2a to IgG1 ratio was detected. Co-injection of pcROM4-CaPNs + pcGRA14-CaPNs induced the highest IgG2a/IgG1 ratio (Fig. 2).
+
+Splenocytes from immunized mice and control groups were prepared 5 weeks after the third immunization to assess the proliferative response of lymphocytes following stimulation by TLA. The splenocytes from mice immunized with pcROM4, pcROM4-CaPNs, pcROM4 + pcGRA14, and pcROM4-CaPNs + pcGRA14-CaPNs showed significantly higher proliferation activity compared to the PBS, pcDNA3, and nano-adjuvant groups (p &lt; 0.05) (Fig. 3).
+
+IFN-levels in the spleen cells of vaccinated mice were significantly higher than those in the three negative control groups (p &lt; 0.05). The highest level of IFN-was observed in immunized mice with pcROM4-CaPNs + pcGRA14-CaPNs (Fig. 4). However, for the production of IL-4, there was no difference in different treatments (p &gt; 0.05) data not shown.
+
+The survival curves of the immunized and control groups are shown in Fig. 5. The mice immunized with pcROM4, pcROM4-CaPNs, pcROM4 + pcGRA14, and pcROM4-CaPNs + pcGRA14-CaPNs showed significantly prolonged survival compared to the three negative control groups. The vaccinated mice with pcROM4-CaPNs + pcGRA14-CaPNs among the different immunized groups showed significantly prolonged survival (p &lt; 0.05), but all mice in the control groups died within 6 day after challenge.
+
+In the current study, the immunogenicity of ROM4 and cocktail DNA vaccines (ROM4 + GRA14) of the T. gondii RH strain with or without coated with CaPNs as an adjuvant to improve the immunogenicity of the vaccines was evaluated by immunization of BALB/c mice. The results suggest that DNA immunization with pcROM4 or cocktail DNA vaccine with nano-adjuvant triggered Th1-type immune responses and provided more effective protection against acute toxoplasmosis compared to both single and cocktail vaccines without the nano-adjuvant. In fact, CaPNs as adjuvants or delivery systems can evoke strong immune responses because of their important functions in increasing antigen stability and immunogenicity as well as prolonging the release of antigens to maximize exposure to the immune system, which determines the type of immune responses and targeted delivery (Gregory et al. 2013;Zhao et al. 2014). In general, macrophages take up antigens by phagocytosis or endocytosis processes, leading to their activation; the use of NPs as delivery vehicles for vaccines enhances and facilitates antigen uptake by antigenpresenting cells. In addition, NPs may cross-present antigens, which is important mainly in the generation of CD8 T cellmediated protective immunity (Oyewumi et al. 2010). More pcROM4 coated with CaPNs and pcROM4-CaPNs + pcGRA14-CaPNs were taken up by macrophages compared to pcROM4 and pcROM4 + pcGRA14 without adjuvant, leading to stimulation of MHC I expression followed by increased IFN-γ secretion. Our results indicate that pcROM4-CaPNs and pcROM4-CaPNs + pcGRA14-CaPNs significantly enhance the levels of IFN-γ and IgG2a compared to pcROM4 and pcROM4 + pcGRA14 without adjuvant. Vaccines coated with nano-adjuvant may stimulate both humoral and cellular systems and induce a protective immune response against toxoplasmosis.
+
+In the current study, vaccination in all cases groups resulted in the predominance of IgG2a over IgG1 compared to in the control groups. These findings are in accordance with a previous report in which DNA immunization readily triggered a mixed Th1/Th2 immune response and even more heterogeneity in IgG2a production, but the dominance of Toxoplasmaspecific IgG2a compared to IgG1 was greater in polygene vaccination compared to immunization with a single gene (Zhang et al. 2007).
+
+Th1-type immune response plays a crucial role in the protection against infections with intracellular pathogens such as T. gondii (Denkers and Gazzinelli 1998). A strong Th1 immune  2009). In this study, high IFN-γ production and a slight increase in the cytokine IL-4 as a factor of the Th2 type immune response confirmed activated Th1-biased immune responses in all case groups. In addition, pcROM4-CaPNs + pcGRA14-CaPNs induced the strongest Th1 responses, which is consistent with the results of previous studies (Zhang et al. 2015;Li et al. 2012). Thus, Th1 immune responses can be enhanced by DNA immunization with cocktails containing more than one antigen (Yan et al. 2012). T cell-mediated immunity is essential for mediating the resistance to Toxoplasma infection (Gazzinelli et al. 1992). The results of the lymphocyte proliferation assay 5 weeks after the third immunization showed that mice vaccinated with the studied DNA vaccines could stimulate cell-mediated immune responses in BALB/c mice.
+
+There is currently no effective vaccine that elicits complete protection against intra peritoneal challenge with the T. gondii highly virulent RH strain (Fachado et al. 2003). Our results indicate that the vaccines used in this study extend the survival time of BALB/c mice challenged with the T. gondii tachyzoite RH strain compared to controls. In addition, co-administration of pcROM4-CaPNs with pcGRA14-CaPNs resulted in longer survival after challenge compared to other immunized groups. The longer survival period in this study was associated with the use and effectiveness of the cocktail vaccine and NPs. Previous studies reported that cocktail DNA vaccines are more effective compared to monogenic vaccines because cocktail DNA vaccines can evoke better protective immunity by enhanced humoral and cellular immune responses than single vaccines, which typically induce partial protective immunity (Fachado et al. 2003;Mévélec et al. 2005). In addition, cocktail DNA vaccines of complex intracellular parasites such as T. gondii induce effective and long-lasting immune responses because they present a wide variety of antigenic epitopes. Immunization with a cocktail vaccine stimulates immunity for a broad range of antigens, which is likely to be more effective compared to immunization with a vaccine for a single antigen, which is effective against just one antigen to induce a protective immune response against T. gondii (Fachado et al. 2003). Our findings in terms of the protection efficacy of polygene DNA vaccines agree with the results for several other cocktail DNA vaccines in BALB/c mice (Cui et al. 2008;Fachado et al. 2003;Mévélec et al. 2005;Quan et al. 2012;Xue et al. 2008).
+
+In a study by Li et al. (2012), a DNA vaccine encoding TgROM1 protein was constructed and evaluated against toxoplasmosis in BALB/c mice. That DNA vaccine triggered strong humoral and cellular responses and increased survival time (12.5 days) compared to control groups (5 days) against Toxoplasma in BALB/c mice. More recently, the immunogenicity of DNA vaccines of pVAX-TgROM4 and pVAX-TgROM5 were evaluated in Kunming mice (Zhang et al. 2015). Mice vaccinated with these DNA vaccines elicited strong Th1-type humoral and cellular responses. Mice immunized with pVAX-TgROM4 (8 days) and pVAX-TgROM5 (11 days) showed a significantly longer average survival time than control groups (8 days) (p &lt; 0.05), whereas in the present study, pcROM4 and pcGRA14 coated with nano-adjuvant protected the mice for 15 days after lethal challenge by the RH strain.
+
+In conclusion, pcROM4 coated with nano-adjuvant enhanced the immunogenicity and increased protection against infection and elicited stronger humoral and cellular immune responses compared to pcROM4 without nano-adjuvant. In addition, a combination of pcROM4 and pcGRA14 with nano-adjuvant boosted the immune responses and increased the protective efficacy against acute T. gondii infection compared to both single and cocktail vaccines without nano-adjuvant. The use of CaPNs as an adjuvant successfully increased the level of protection induced by the vaccines, making this a promising immunization protocol. The authors recommend the nano-adjuvant of CaPNs as a novel adjuvant for DNA vaccine for further studies regarding vaccine design against T. gondii and other intracellular parasites.
+
+Parasitol Res</full_text>
+	<references>
+		<reference>
+			<title>Novelty Biomed</title>
+			<authors>
+				<author>M Arab</author>
+				<author>T Seyyed</author>
+				<author>H Mirahmadi</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Proc Natl Acad Sci U S A</title>
+			<authors>
+				<author>F Brossier</author>
+				<author>T Jewett</author>
+				<author>L Sibley</author>
+				<author>S Urban</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>PLoS Pathog</title>
+			<authors>
+				<author>J Buguliskis</author>
+				<author>F Brossier</author>
+				<author>J Shuman</author>
+				<author>L Sibley</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Parasitol Res</title>
+			<authors>
+				<author>D Buxton</author>
+				<author>K Thomson</author>
+				<author>S Maley</author>
+				<author>S Wright</author>
+				<author>H Bos</author>
+			</authors>
+			<date>1991</date>
+		</reference>
+		<reference>
+			<title>Foodborne Pathog Dis</title>
+			<authors>
+				<author>B Cenci-Goga</author>
+				<author>P Rossitto</author>
+				<author>P Sechi</author>
+				<author>C Mccrindle</author>
+				<author>J Cullor</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Parasite Immunol</title>
+			<authors>
+				<author>Y Cui</author>
+				<author>S He</author>
+				<author>M Xue</author>
+				<author>J Zhang</author>
+				<author>H Wang</author>
+				<author>Y Yao</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Clin Microbiol Rev</title>
+			<authors>
+				<author>E Denkers</author>
+				<author>R Gazzinelli</author>
+			</authors>
+			<date>1998</date>
+		</reference>
+		<reference>
+			<title>Int J Parasitol</title>
+			<authors>
+				<author>T Dowse</author>
+				<author>J Pascall</author>
+				<author>K Brown</author>
+				<author>D Soldati</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>Parasitol Res</title>
+			<authors>
+				<author>M El-Malky</author>
+				<author>Al-Harthi Sa</author>
+				<author>R Mohamed</author>
+				<author>Mae Bali</author>
+				<author>N Saudy</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Trends Parasitol</title>
+			<authors>
+				<author>S Elmore</author>
+				<author>J Jones</author>
+				<author>P Conrad</author>
+				<author>S Patton</author>
+				<author>D Lindsay</author>
+				<author>J Dubey</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Vaccine</title>
+			<authors>
+				<author>A Fachado</author>
+				<author>A Rodriguez</author>
+				<author>S Angel</author>
+				<author>D Pinto</author>
+				<author>I Vila</author>
+				<author>A Acosta</author>
+				<author>R Amendoeira</author>
+				<author>Lannes- Vieira</author>
+				<author>J</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>J Immunol</title>
+			<authors>
+				<author>R Gazzinelli</author>
+				<author>Y Xu</author>
+				<author>S Hieny</author>
+				<author>A Cheever</author>
+				<author>A Sher</author>
+			</authors>
+			<date>1992</date>
+		</reference>
+		<reference>
+			<title>Front Cell Infect Microbiol</title>
+			<authors>
+				<author>A Gregory</author>
+				<author>R Titball</author>
+				<author>D Williamson</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>PLoS Pathog</title>
+			<authors>
+				<author>M-H Huynh</author>
+				<author>V Carruthers</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>Expert Rev Vaccines</title>
+			<authors>
+				<author>E Innes</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Iranian J Parasitol</title>
+			<authors>
+				<author>H Kalani</author>
+				<author>A Daryani</author>
+				<author>M Sharif</author>
+				<author>E Ahmadpour</author>
+				<author>A Alizadeh</author>
+				<author>M Nasrolahi</author>
+				<author>R Faridnia</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Vet Parasitol</title>
+			<authors>
+				<author>J Li</author>
+				<author>Q Han</author>
+				<author>P Gong</author>
+				<author>T Yang</author>
+				<author>B Ren</author>
+				<author>S Li</author>
+				<author>X Zhang</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Clin Dev Immunol</title>
+			<authors>
+				<author>J Matowicka-Karna</author>
+				<author>V Dymicka-Piekarska</author>
+				<author>H Kemona</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Vaccine</title>
+			<authors>
+				<author>M-N Mévélec</author>
+				<author>D Bout</author>
+				<author>B Desolme</author>
+				<author>H Marchand</author>
+				<author>R Magné</author>
+				<author>O Bruneel</author>
+				<author>D Buzoni-Gatel</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>Expert Rev Vaccines</title>
+			<authors>
+				<author>M Oyewumi</author>
+				<author>A Kumar</author>
+				<author>Z Cui</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Future Microbiol</title>
+			<authors>
+				<author>V Pereira-Chioccola</author>
+				<author>J Vidal</author>
+				<author>C Su</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Ocul Immunol Inflamm</title>
+			<authors>
+				<author>E Petersen</author>
+				<author>A Kijlstra</author>
+				<author>M Stanford</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Clin Diagn Lab Immunol</title>
+			<authors>
+				<author>H Qing</author>
+				<author>A Mitchell</author>
+				<author>S Johnson</author>
+				<author>C Wagner-Bartak</author>
+				<author>T Morcol</author>
+				<author>S Bell</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>Clin Vaccine Immunol</title>
+			<authors>
+				<author>J-H Quan</author>
+				<author>J-Q Chu</author>
+				<author>Haha Ismail</author>
+				<author>W Zhou</author>
+				<author>E-K Jo</author>
+				<author>G-H Cha</author>
+				<author>Y-H Lee</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Iranian J Parasitol</title>
+			<authors>
+				<author>M Rahimi</author>
+				<author>S Mahdavi</author>
+				<author>B Javadian</author>
+				<author>R Rezaei</author>
+				<author>M Moosazadeh</author>
+				<author>M Khademlou</author>
+				<author>S Seyedpour</author>
+				<author>A Syadatpanah</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Infect Immun</title>
+			<authors>
+				<author>M Rome</author>
+				<author>J Beck</author>
+				<author>J Turetzky</author>
+				<author>P Webster</author>
+				<author>P Bradley</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Asian Pac J Trop Biomed</title>
+			<authors>
+				<author>S Sarvi</author>
+				<author>A Daryani</author>
+				<author>M Rahimi</author>
+				<author>M Aarabi</author>
+				<author>A Shokri</author>
+				<author>E Ahmadpour</author>
+				<author>A Mizani</author>
+				<author>M Sharif</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>MBio</title>
+			<authors>
+				<author>B Shen</author>
+				<author>J Buguliskis</author>
+				<author>T Lee</author>
+				<author>L Sibley</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Parasitol Int</title>
+			<authors>
+				<author>M Xue</author>
+				<author>S He</author>
+				<author>Y Cui</author>
+				<author>Y Yao</author>
+				<author>H Wang</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Clin Vaccine Immunol</title>
+			<authors>
+				<author>H Yan</author>
+				<author>Z Yuan</author>
+				<author>H Song</author>
+				<author>E Petersen</author>
+				<author>Y Zhou</author>
+				<author>D Ren</author>
+				<author>D Zhou</author>
+				<author>H Li</author>
+				<author>R Lin</author>
+				<author>G Yang</author>
+				<author>X Zhu</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Parasitol Res</title>
+			<authors>
+				<author>J Zhang</author>
+				<author>S He</author>
+				<author>H Jiang</author>
+				<author>T Yang</author>
+				<author>H Cong</author>
+				<author>H Zhou</author>
+				<author>J Zhang</author>
+				<author>Q Gu</author>
+				<author>Y Li</author>
+				<author>Q Zhao</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Expert Rev Vaccines</title>
+			<authors>
+				<author>N-Z Zhang</author>
+				<author>Chen Wang</author>
+				<author>M Petersen</author>
+				<author>E Zhu</author>
+				<author>X-Q</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Expert Rev Vaccines</title>
+			<authors>
+				<author>N-Z Zhang</author>
+				<author>Y Xu</author>
+				<author>M Wang</author>
+				<author>E Petersen</author>
+				<author>J Chen</author>
+				<author>S-Y Huang</author>
+				<author>X-Q Zhu</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Vaccine</title>
+			<authors>
+				<author>L Zhao</author>
+				<author>Seth Wibowo</author>
+				<author>N Zhao</author>
+				<author>C-X Mitter</author>
+				<author>N Yu</author>
+				<author>C Middelberg</author>
+				<author>A</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1073/pnas.0407918102</number>
+		<number>DOI-10.1371/journal.ppat.1000858</number>
+		<number>DOI-10.1136/vr.129.5.89</number>
+		<number>DOI-10.1089/fpd.2010.0795</number>
+		<number>DOI-10.1111/j.1365-3024.2008.01025.x</number>
+		<number>DOI-10.1128/CMR.11.4.569</number>
+		<number>DOI-10.1016/j.ijpara.2005.04.001</number>
+		<number>DOI-10.1007/s00436-014-3882-0</number>
+		<number>DOI-10.1016/j.pt.2010.01.009</number>
+		<number>DOI-10.1016/S0264-410X(02)00692-8</number>
+		<number>DOI-10.4049/jimmunol.149.1.175</number>
+		<number>DOI-10.1371/journal.ppat.0020084</number>
+		<number>DOI-10.1586/erv.10.113</number>
+		<number>DOI-10.1016/j.vetpar.2011.08.014</number>
+		<number>DOI-10.1016/j.vaccine.2005.04.025</number>
+		<number>DOI-10.1586/erv.10.89</number>
+		<number>DOI-10.2217/fmb.09.89</number>
+		<number>DOI-10.3109/09273948.2012.661115</number>
+		<number>DOI-10.1128/CDLI.7.6.899-903.2000</number>
+		<number>DOI-10.1128/CVI.05385-11</number>
+		<number>DOI-10.1128/IAI.00782-08</number>
+		<number>DOI-10.1016/S1995-7645(14)60301-1</number>
+		<number>DOI-10.1016/j.parint.2008.05.001</number>
+		<number>DOI-10.1128/CVI.05578-11</number>
+		<number>DOI-10.1007/s00436-007-0465-3</number>
+		<number>DOI-10.1586/14760584.2013.844652</number>
+		<number>DOI-10.1586/14760584.2015.1061938</number>
+		<number>DOI-10.1016/j.vaccine.2013.11.069</number>
+	</reference_dois>
+</document>

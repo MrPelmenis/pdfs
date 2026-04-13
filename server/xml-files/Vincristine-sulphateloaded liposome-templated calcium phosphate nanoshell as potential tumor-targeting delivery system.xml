@@ -1,0 +1,409 @@
+<document>
+	<file>./pdf-files/Vincristine-sulphateloaded liposome-templated calcium phosphate nanoshell as potential tumor-targeting delivery system.pdf</file>
+	<title>Vincristine-sulphate–loaded liposome-templated calcium phosphate nanoshell as potential tumor-targeting delivery system</title>
+	<date>2011</date>
+	<doi_number>10.3109/08982104.2011.633266</doi_number>
+	<img_preview_path>./pdf-preview-images/Vincristine-sulphateloaded liposome-templated calcium phosphate nanoshell as potential tumor-targeting delivery system.jpeg</img_preview_path>
+	<authors>
+		<author>Hetal Paresh Thakkar</author>
+		<author>Amit Kumar Baser</author>
+		<author>Mayur Prakashbhai Parmar</author>
+		<author>Ketul Harshadbhai Patel</author>
+		<author>Rayasa Ramachandra Murthy</author>
+	</authors>
+	<abstract>Vincristine-sulfate-loaded liposomes were prepared with an aim to improve stability, reduce drug leakage during systemic circulation, and increase intracellular uptake. Liposomes were prepared by the thin-film hydration method, followed by coating with calcium phosphate, using the sequential addition approach. Prepared formulations were characterized for size, zeta potential, drug-entrapment efficiency, morphology by transmission electron microscopy (TEM), in vitro drug-release profile, and in vitro cell cytotoxicity study. Effect of formulation variables, such as drug:lipid ratio as well as nature and volume of hydration media, were found to affect drug entrapment, and the concentration of calcium chloride in coating was found to affect size and coating efficiency. Size, zeta potential, and TEM images confirmed that the liposomes were effectively coated with calcium phosphate. The calcium phosphate nanoshell exhibited pH-dependent drug release, showing significantly lower release at pH 7.4, compared to the release at pH 4.5, which is the pH of the tumor interstitium. The in vitro cytotoxicity study done on the lung cancer cell line indicated that coated liposomes are more cytotoxic than plain liposomes and drug solution, indicating their potential for intracellular drug delivery. The cell-uptake study done on the lung cancer cell line indicated that calcium-phosphatecoated liposomes show higher cell uptake than uncoated liposomes.</abstract>
+	<methods>
+		<method>
+			<heading>Materials</heading>
+			<text>VCR was obtained as a gift sample from Sun Pharmaceutical Pvt. Ltd. (Mumbai, India). Phospholipids such as hydrogenate soya phosphatidylcholine (HSPC) and 1,2-dipalmitoyl-sn-glycero-3-phosphocholine (DPPC), and 1,2-dipalmitoyl-sn-glycero-3-phosphate (DPPA) were obtained as gift sample from Lipoid GmbH (Ludwigshafen, Germany) and Genzyme (Baar, Switzerland), respectively. Cholesterol was obtained as a gift sample from Merck (Mumbai, India). All other chemicals, reagents, and solvents used, such as sodium hydroxide, sodium chloride, potassium dihydrogen phosphate, chloroform, methanol, dimethyl sulfoxide (DMSO) and isopropanol (IPA), were purchased from S.D. Fine Chemicals (Mumbai, India). Sephadex G-50 was purchased from Sigma-Aldrich GmbH (Munich, Germany). Diamino rhodamine 4M was purchased from Merck. A 549 lung cancer cell line was purchased from NCCS (Pune, India). Dulbecco's modified Eagle's medium (DMEM), trypsin-EDTA (ethylene diamine tetraacetic acid) solution, antibiotic-antimycotic solution, methylthiazoletetrazolium (MTT), and fetal bovine serum were purchased from Himedia (Mumbai, India).</text>
+		</method>
+		<method>
+			<heading>Preparation of liposomes</heading>
+			<text>Multilamellar vesicles (MLVs), comprising HSPC, DPPC, DPPA, and CHOL with entrapped VCR, were prepared by the thin-film hydration (TFH) technique (Lasch et al., 2003). Briefly, the lipids were dissolved in a mixture of chloroform and methanol in a 100-mL round-bottomed flask in different molar ratios. The solvent was evaporated in the rotary flask evaporator under a vacuum to prepare a thin, dry film. The lipid film thus formed was hydrated using different types of hydration media of different pH levels at 58 ± 3°C (i.e., above the phase-transition temperature of lipid; Tg). The formed liposomal dispersion was sonicated using a probe sonicator (80% amplitude and 0.6-second cycle) to obtain small unilamellar vesicles. The sonicated liposomes were then allowed to stand undisturbed for approximately 60 minutes, for annealing. Resultant liposomes were subjected to Remi centrifugation at 3,000 rpm, 4°C, for 10 minutes to remove unhydrated lipid, if any.</text>
+		</method>
+		<method>
+			<heading>Preparation of liposome-templated calcium phosphate nanoshell</heading>
+			<text>The liposome-templated calcium phosphate nanoshell was synthesized using a sequential step addition approach (Schmidt and Ostafin, 2002), in which calcium and phosphate were added in alternating aliquots. Briefly, an aliquot (1-mL) of the liposomal suspension was diluted to 10 mL with distilled water and transferred to a 50-mL two-necked, round-bottomed flask. An aliquot (100-µL) of calcium chloride solution (Ca +2 precursor), adjusted to pH 7.0, which was sufficient to coat the perimeter of liposomes, was added under gentle stirring conditions at room temperature and allowed to react for 10 minutes with the liposome suspension. An aliquot (100-µL) of potassium dihydrogen phosphate solution (Po 4 -3 precursor), adjusted to pH 7.0, which was sufficient to form a monolayer, was added to the solution using a micropipette, keeping in mind that the ratio of Ca +2 to Po 4 -3 had to remain at 1.67, which corresponded to the hydroxyapatite coating, and was allowed to stir for an additional 10 minutes. The entire procedure was carried out at room temperature.
+
+After the addition of both solutions, the pH was raised to 9.0, using 100 mM of sodium hydroxide to precipitate calcium phosphate around liposomes, and the suspension was stirred for 2 hours using a Whirlamatic Mega stirrer at 400 rpm, then allowed to stand for 12 hours for effective aging of the calcium phosphate coating. The suspension was then passed through the 0.45-µm polycarbonate filter to remove calcium phosphate crystals and larger aggregates of coated liposomes while allowing monodispersed coated liposome to pass through the filter.</text>
+		</method>
+	</methods>
+	<full_text>Cancer is a major public health problem in the world. Cancer continues to be a major life-threatening disease. Although conventional treatment options, such as chemotherapy and radiation, have experienced many advances over recent decades, cancer therapy is still far from optimal. The main reason behind this is the negligible biochemical differences between the healthy cells and cancer cells, leading to the difficulty in discrimination between them by the anticancer drugs. Chemotherapy is limited by poor penetration of the anticancer agents to the tumor by blood vessel walls, slow diffusion in the interstitial space between vessels and cells, and the cell membrane itself (Larina et al., 2005). Bioavailability problems are exacerbated by systemic toxicity (Pautard, 1981) of anticancer agents to surrounding tissues, allowing only low systemic doses to be used and negatively affecting the concentration gradients driving the diffusion; therefore, a lower total dose targeted to the tumor region is superior to long-term systemic circulation (Allen, 1994;Gref et al., 1994). Liposomes have raised considerable interest as drug carriers in cancer chemotherapy because of their ability to alter biodistribution by selectively targeting the drug to the tumor and control the release rate of encapsulated drugs. Their versatility, biocompatibility, biodegradability, and lack of immunogenicity confer them intrinsic advantages as pharmaceutical devices for drug delivery. The effectiveness of a liposomal carrier can be limited by
+
+Vincristine-sulphate-loaded liposome-templated calcium phosphate nanoshell as potential tumor-targeting delivery system its ability to retain drug while in the circulation. Rapid release of the drug will eliminate the benefits of liposomal encapsulation, resulting in efficacy similar to that of an equivalent dose of free drug. Conversely, complete retention will also compromise the therapeutic activity of the encapsulated drug, as the drug is not bioavailable. Thus, the therapeutic optimum lies somewhere in between these two extreme points. In the case of each individual drug, the optimal balance between retention and release must be established experimentally by varying the factors controlling the drug-leakage rate. The antitumor efficacy of liposomally entrapped anticancer drugs strongly depends on the rate of drug release from the liposomal carrier in the blood (Zhigaltsev et al., 2005). Recent work has shown that nanoscale liposomes can be used as a template for the deposition of silica (Hubert et al., 2000;Begu et al., 2003), yttrium basic carbonate (Bellino and Regazzoni, 2009), calcium phosphate (Schmidt and Ostafin, 2002;Schmidt et al., 2004), and polymers (Hotz and Meier, 1998;Sehgal and Rogers, 1995;Kawakami et al., 2009;Heldt et al., 2001) to form hybrid nanocapsules. The reinforcing coating temporarily protects the inherently fragile liposome and its contents while in the bloodstream and provides a platform on which to construct a surface capable of chemical recognition and the ability to elude the reticuloendothelial system (Schmidt et al., 2004). Calcium-phosphate-coated liposomes may have a unique usefulness for the delivery of bone and dental therapeutics (Sun et al., 2001;Ong et al., 2002) and anticancer agents (Chu and Liu, 2005). Calcium phosphate, a biocompatible (Tas and Bhaduri, 2004) and biodegradable (Lu et al., 2002;Chu et al., 2002) material, is native to the body. The dissolution profile of calcium phosphate plays an important role in drug release. Calcium phosphate is less soluble at pH 7.4 (physiological pH), whereas it is more soluble under acidic conditions (e.g., tumor interstitium), and the thickness of the coating enables it to have accurate control over the release of drugs from the calcium phosphate nanoshell during systemic circulation (Xu et al., 2007). The calcium phosphate nanoshell may be more easily internalized by endocytosis of tumor cells via clathrin-coated pit-mediated endocytosis, thus increasing intracellular uptake (Schmidt et al., 2008). Vincristine sulfate (VCR) is an anticancer drug used in lung cancer and leukemia. It is available as an intravenous injection and is administered at the dose of 1 or 2 mg/mL once-weekly. The nonspecific drug action results in severe side effects, such as peripheral neuropathy (dose-limiting side effect), alopecia, eye irritation, nausea, and vomiting, and so on. Its high volume of distribution of 163-165 L/m 2 indicates its extensive distribution throughout the body. It is rapidly removed from the bloodstream and tightly bound to tissues (excessive tissue protein binding: 75%) and has a very short plasma half-life (initial phase: 5 minutes; middle phase: 2.38 hours). VCR undergoes a pH-dependent degradation, having its highest stability at pH 4.0). Thus, it is not stable at the physiological pH and undergoes rapid degradation upon administration. Preclinical and clinical studies showed that liposomal encapsulation of VCR results in increased drug-circulation time and accumulation of VCR at the tumor site. However, further improvement in the therapy was tried in this investigation by coating the liposomes with calcium phosphate for reduction in drug leakage during systemic circulation and also for intracellular drug delivery. The formulation optimization and evaluation of VCR-loaded liposomes coated with calcium phosphate is described below.
+
+VCR was obtained as a gift sample from Sun Pharmaceutical Pvt. Ltd. (Mumbai, India). Phospholipids such as hydrogenate soya phosphatidylcholine (HSPC) and 1,2-dipalmitoyl-sn-glycero-3-phosphocholine (DPPC), and 1,2-dipalmitoyl-sn-glycero-3-phosphate (DPPA) were obtained as gift sample from Lipoid GmbH (Ludwigshafen, Germany) and Genzyme (Baar, Switzerland), respectively. Cholesterol was obtained as a gift sample from Merck (Mumbai, India). All other chemicals, reagents, and solvents used, such as sodium hydroxide, sodium chloride, potassium dihydrogen phosphate, chloroform, methanol, dimethyl sulfoxide (DMSO) and isopropanol (IPA), were purchased from S.D. Fine Chemicals (Mumbai, India). Sephadex G-50 was purchased from Sigma-Aldrich GmbH (Munich, Germany). Diamino rhodamine 4M was purchased from Merck. A 549 lung cancer cell line was purchased from NCCS (Pune, India). Dulbecco's modified Eagle's medium (DMEM), trypsin-EDTA (ethylene diamine tetraacetic acid) solution, antibiotic-antimycotic solution, methylthiazoletetrazolium (MTT), and fetal bovine serum were purchased from Himedia (Mumbai, India).
+
+Multilamellar vesicles (MLVs), comprising HSPC, DPPC, DPPA, and CHOL with entrapped VCR, were prepared by the thin-film hydration (TFH) technique (Lasch et al., 2003). Briefly, the lipids were dissolved in a mixture of chloroform and methanol in a 100-mL round-bottomed flask in different molar ratios. The solvent was evaporated in the rotary flask evaporator under a vacuum to prepare a thin, dry film. The lipid film thus formed was hydrated using different types of hydration media of different pH levels at 58 ± 3°C (i.e., above the phase-transition temperature of lipid; Tg). The formed liposomal dispersion was sonicated using a probe sonicator (80% amplitude and 0.6-second cycle) to obtain small unilamellar vesicles. The sonicated liposomes were then allowed to stand undisturbed for approximately 60 minutes, for annealing. Resultant liposomes were subjected to Remi centrifugation at 3,000 rpm, 4°C, for 10 minutes to remove unhydrated lipid, if any.
+
+Before coating of the liposomes, it was necessary to separate the free drug from the liposomal suspension.
+
+Separation of unentrapped free drug from the liposome was done using gel exclusion chromatography (Shriram and Rhodes, 1994). Briefly, the column was prepared by soaking Sephadex G-50 into 0.15 M of sodium chloride overnight, followed by pouring this slurry into a 2-mL syringe to give a column of 2 cm in length. The syringe was put into a 10-mL centrifuge tube and subjected to Remi centrifugation at 1,000 rpm for 10 minutes to remove the excess solvent. The column was preequilibrated with 0.15 M of sodium chloride by three consecutive passes and, each time, Remi centrifuged to remove excess 0.15-M sodium chloride. Then, an aliquot (1-mL) of the liposomal suspension was applied at the top of the column and elute was collected, which contained vincristine-loaded liposomes, whereas the free drug was retained into the column.
+
+The liposome-templated calcium phosphate nanoshell was synthesized using a sequential step addition approach (Schmidt and Ostafin, 2002), in which calcium and phosphate were added in alternating aliquots. Briefly, an aliquot (1-mL) of the liposomal suspension was diluted to 10 mL with distilled water and transferred to a 50-mL two-necked, round-bottomed flask. An aliquot (100-µL) of calcium chloride solution (Ca +2 precursor), adjusted to pH 7.0, which was sufficient to coat the perimeter of liposomes, was added under gentle stirring conditions at room temperature and allowed to react for 10 minutes with the liposome suspension. An aliquot (100-µL) of potassium dihydrogen phosphate solution (Po 4 -3 precursor), adjusted to pH 7.0, which was sufficient to form a monolayer, was added to the solution using a micropipette, keeping in mind that the ratio of Ca +2 to Po 4 -3 had to remain at 1.67, which corresponded to the hydroxyapatite coating, and was allowed to stir for an additional 10 minutes. The entire procedure was carried out at room temperature.
+
+After the addition of both solutions, the pH was raised to 9.0, using 100 mM of sodium hydroxide to precipitate calcium phosphate around liposomes, and the suspension was stirred for 2 hours using a Whirlamatic Mega stirrer at 400 rpm, then allowed to stand for 12 hours for effective aging of the calcium phosphate coating. The suspension was then passed through the 0.45-µm polycarbonate filter to remove calcium phosphate crystals and larger aggregates of coated liposomes while allowing monodispersed coated liposome to pass through the filter.
+
+Size and zeta potential were determined by dynamic light scattering (DLS) with a Malvern Zetasizer 3000HS (Malvern Instruments, Malvern, UK). Approximately 0.5 mL of liposomes and calcium phosphate nanoshell suspension diluted up to 2 mL with water was filled in a sample cuvette and placed in a zetasizer. The sample was allowed to stabilize for 2 minutes, then the reading was taken. Average size and zeta potential was measured, and the experiment was performed in triplicate.
+
+First, 1-2 µL of the calcium-phosphate-coated liposome suspension was placed in the center of carbon-coated 300-mesh copper grids with a Formvar support grid and allowed to air dry. The sample was visualized using a transmission electron microscope, operated at 200 kV, and an image was obtained on Kodak electron microscopy film (Eastman Kodak Co., Rochester, New York, USA).
+
+Entrapment efficiency was determined using the protamine aggregation method (Gunter et al., 1982;Rosier et al., 1979). Briefly, 1 mL of the formulation and 1 mL of protamine sulfate solution (10 mg/mL in distilled water) was transferred to a microcentrifuge tube and centrifuged at 3,000 rpm for 10 minutes using a Remi centrifuge. The clear supernatant was removed carefully to separate unentrapped drug, and absorbance was taken at 297 nm to determine the amount of free drug. The sediment in the microcentrifuge tube was diluted with methanol and again centrifuged at 3,000 rpm for 10 minutes to remove protamine sulfate. The supernatant was taken and diluted up to 10 mL with methanol, and absorbance was taken at 297 nm to determine the amount of entrapped drug. The percent drug entrapped was then calculated using the following formula: PDE = (Entrapped drug/Free drug + Entrapped drug) 100 ×
+
+The in vitro drug release studies were performed using the dialysis bag technique (Sivakumar and Rao, 2003). Two different diffusion media (e.g., phosphate buffer, pH 7.4, and acetate buffer, pH 4.5) were used for studying the drug release pattern from the liposome and coated liposome system. The release study was carried out in 100-mL beakers containing 50 mL of diffusion media. The beakers were assembled on a magnetic stirrer, and the medium was equilibrated at 37 ± 0.5 °C. The beaker was closed with aluminium foil to prevent any evaporative losses during the experiment run. The dialysis membrane was taken, and one end of the membrane was sealed. After separation of unentrapped drug, liposomes and the coated liposomes dispersion were filled in the dialysis membrane and the other end was closed. The dialysis membrane containing the sample was suspended in the diffusion medium. Aliquots (2-mL) were withdrawn at specific time intervals and replenished with an equal volume of fresh buffer. Each experiment was done in triplicate.
+
+The cytotoxicity of plain drug (VCR), liposomes, calcium-phosphate-coated liposomes, and blank calciumphosphate-coated liposomes (without drug) formulation were evaluated by using the MTT method (Twentyman and Luscombe, 1987;Burton, 2005). Briefly, an aliquot (200-µL) of tumor cell suspension (2.0 × 10 4 cells/mL) in its exponential growth phase were plated in 96-well flatbottomed tissue-culture plates and incubated at 37°C in a 5% CO 2 incubator for 24 hours. Three microtiter wells, containing a tumor cell suspension in complete medium, were used as a control for cell viability, and three wells containing only complete medium were used as controls for nonspecific dye reduction. After 24 hours, the wells (except control wells) were washed with sterile phosphatebuffered saline (PBS) and treated with 200 µL of DMEM, containing plain drug, uncoated liposomes, and coated liposomes, respectively, at equal molar concentrations, ranging from 100 nM to 10 µM, and a fixed molar concentration (10 µM of blank calcium-phosphate-coated liposomes). After an additional 48-hour incubation at 37°C in 5% CO 2 , each well was washed with sterile PBS and added with 20 µL of MTT solution and incubated for 4 hours. After 4 hours, each well was washed with 100 μL of PBS and was replaced with 200 µL of dimethyl sulfoxide to dissolve the blue formazan crystals converted from MTT. Plates were shaken for 20 minutes, and absorbance was read at 595 nm using an enzyme-linked immunosorbent assay (ELISA) microplate reader (Bio-Rad, Hercules, California, USA).
+
+The quantitative cell-uptake study of calcium-phosphatecoated liposomes and a plain liposome formulation were evaluated by using diamino rhodamine 4M-loaded formulations (Jain and Jain, 2008). An aliquot (200-µL) of tumor cell suspension (2.0 × 10 4 cells/mL) in its exponential growth phase were plated in 96-well flat-bottomed tissue-culture plates and incubated at 37°C in a 5% CO 2 incubator for 24 hours. After 24 hours, the wells (except control wells) were washed with sterile PBS and treated with 200 µL of DMEM containing noncoated liposomes and coated liposomes, with an equal molar concentration (10 µM). After an additional 0.5, 1, 2, 4, and 6 hours of incubation at 37°C in 5% CO 2 , each well was washed with 100 μL of PBS and replaced with 200 µL of DMSO for lysis of tumors cells. Plates were shaken for 20 minutes, and absorbance was read at 575 nm using an ELISA microplate reader (Bio-Rad). The cell-associated fluorescence was converted to number of bound/internalized liposomes, based on the standard curve obtained with the known diamino rhodamine 4M concentration in lysing medium.
+
+VCR-loaded liposomes were prepared by the thin-film hydration method. During the preliminary studies, different liposomal batches were prepared for the optimization of various process parameters, such as vacuum, speed of rotation (rpm), film formation time, hydration time, and solvent system, keeping the other parameters constant (Table 1). All these process parameters were optimized on the basis of the quality of the film formed, that is, uniformity, clarity, thickness, and dryness (i.e., absence of organic solvent), because these factors indirectly affect the percent entrapment, stability, shape, and size distribution of liposomes. Sonication cycle was optimized on the basis of desired size range. Optimized process parameters were vacuum (600 mmHg), speed of rotation (during film formation: 100 rpm; during film hydration: 70 rpm), film formation time (40 minutes), hydration time (75 minutes), solvent system (chloroform:methanol, 3:1), and sonication cycle (4 cycles of 30 seconds, 80% amplitude, and 0.6-second cycle). Various formulation variables were studied during the percent drug optimization, such as drug/lipid ratio, HSPC/DPPC ratio, total lipid/cholesterol ratio, hydration media and pH, and hydration volume; but, major formulation variables were found to be drug/lipid ratio, hydration media and hydration volume because these parameters drastically affect the percent drug entrapment.
+
+From the result of percent drug entrapment study (Table 2), it can be observed that as the drug:lipid ratio was increased, there was a subsequent increase in drug entrapment. But, beyond a 1:30 drug:lipid ratio, there was no further increase in entrapment, probably the result of saturation of lipid bilayer with reference to drug. Three different hydration media were studied, and it was found that distilled water was found to be the optimum hydration medium because of its higher entrapment, compared citrate buffer and PBS. Lesser entrapment in the case of PBS was probably the result of the improper hydration of phospholipids, whereas there was a slight precipitation of phospholipid results in the case of acetate buffer. The optimum volume of hydration media was found to be 4 mL, probably because of minimum unhydrated lipid content, whereas lesser entrapment in the case of 5 and 3 mL was probably the result of excessive hydration of the phospholipid bilayer and improper hydration of lipid film, respectively. Cholesterol concentration is important because it gives rigidity to liposomal vesicles, which enhances their stability during their circulation in the blood. Cholesterol also alters the permeability and fluidity of the bilayer and prevents major leakage of entrapped drug from liposomes, thus improving entrapment.
+
+As shown in Figure 1, the synthesis of nanoshell of calcium phosphate uses the sequential addition approach, in which calcium and phosphate are added in alternating aliquots. This is done to minimize undesired side reactions from occurring and to improve liposome stability. Liposome stability is sensitive to ionic strength, and this synthesis keeps the number of free ions in solution to a minimum. Throughout the process, two reactions would be competing: one would be the deposition of calcium phosphate coating onto the liposomal nucleation site and the other would be the reaction of calcium and phosphate ions in solution, forming solid calcium phosphate particles and crystals. In our procedure, the calcium source is first added in proportion to the surface of the liposome to provide a monolayer that covers the periphery of the liposome. When the phosphate source is added, a Ca +2 -coated liposome is the preferred site for precipitation, leading to the formation of the nanoshell. To avoid large excess of Ca +2 that would affect the liposome-phase stability, only a monolayer amount of Ca +2 was added initially to the suspension to prime the liposome for shell growth. A monolayer was approximated by assuming the entire amount of negatively charged lipid (DPPA) in solution forming unilamellar, bilayered liposomes, and hence one half of the total phosphate head groups was available for binding. It was hypothesized that the formation of calcium phosphate coating on the exterior of the liposomes was initiated by electrostatic localization of free ions around the liposome, thereby raising the local concentration much higher than in bulk solution. In the case of negatively charged liposomes, the Ca +2 ions are electrostatically attracted by the negative exterior charge and form a Stern Layer on the liposomes, whereas a diffuse layer of PO 4 -3 ions is formed around it. The formation of this electric double layer effectively increases the local concentration of the calcium and phosphate above the saturation point and causes crystallization to preferentially occur near the surface of the liposome. As time goes on, the inorganic phase continues to grow on the exterior until equilibrium between the solid and ions in solution is reached. The precipitation of calcium phosphate can be approximately represented as shown in the following equation:
+
+Liposome concentration proportionately affects the nanoshell yield. If it becomes too high, the liposome-liposome collision frequency would be increased, and one of two things could happen. The bilayers of the liposomes could interact with each other, forming an assortment of nonspherical, multilamellar, or larger liposomes. The shells may also form aggregates in solution held together by calcium phosphate linkages as they grow. Ionic strength changes across the lipid bilayer should be kept to a minimum so the membrane does not destabilize. If the ionic-strength gradient across the membrane is too high, the liposome will shrink in an effort to increase the interior ionic strength and smaller daughter vesicles will pinch off. Likewise, if it is too low, the liposome ruptures and the free lipids form a random assortment of bilayer and micellar structures that eventually can be calcified.
+
+From the result of the coating process (Table 3), it was found that as the concentration of calcium chloride increased, the size of the nanoshell increased, probably because of the formation of aggregates via calcium phosphate linkage as they grow, and zeta potential was also increased, probably the result of neutralization of the surface charge of liposomes. Calcium chloride concentration (50 mM) was optimized with reference to stability after overnight, as well as size required when undergoing the enhanced permeability and retention effect, so that the delivery system could preferentially localize into tumor tissues.
+
+Calcium-chloride concentration and dilution of liposomal suspension, which was used for the coating, were found to be the most important factors that affected the coating process. Beyond the 50-M concentration and below 10 times dilution, coated liposomes tend to aggregate, which indicates instability. Comparative study of uncoated and coated liposomes with respect to size and zeta potential indicated that calcium phosphate coating had taken place. Before coating, the size and zeta potential were 116 nm and -43.1 mV, whereas after coating, size increased up to 160.3 nm and zeta potential decreased to -3.31 mV. TEM images further confirmed that coating had been done (Figure 4).
+
+As shown in Figures 2 and3, from the results of in vitro drug release experiments, it is clear that after 48 hours, drug release from liposomes was 95.25 (PBS 7.4) and 87.24% (acetate buffer 4.5), whereas in the   case of calcium-phosphate-coated liposomes, percent drug release was 76.29 (PBS 7.4) and 94.38% (acetate buffer 4.5). Drug release from calcium-phosphate-coated liposomes in PBS 7.4 was less because calcium phosphate is less soluble in neutral and basic conditions. However, calcium phosphate dissolves to an appreciable extent at acidic pH and thus is expected to dissolve and release the drug at the pH of the tumor interstitium (4.5-5.5). The calcium phosphate surface layer is dissolved under acidic conditions until it is finally removed; thereafter, the drug release profiles approximately follow those of the uncoated liposomes. This gives rise to a time lag before drug release becomes appreciable. It is expected that this time lag could be controlled via changes in thickness of the calcium phosphate coating. Thus, leakage of hydrophilic drug during circulation can be reduced and release kinetics can be controlled via calcium phosphate coating.
+
+Because the drug release profiles at pH levels of approximately 4-5 and 7.4 are now quite distinct, it is possible that calcium-phosphate-coated liposomes could be used as a smart targeted drug delivery system. A switch to a low pH around the tumor interstitium could trigger the release of anticancer drugs.
+
+Results of in vitro cell cytotoxicity study indicate that after 48-hour incubation, calcium-phosphate-coated liposomes [half-maximal inhibitory concentration (IC 50 ) = 1.2 µM] exhibit superior cytotoxic activities to liposomes (IC 50 = 4.50 µM) and free VCR (IC 50 = 7.2 µM) (Figure 5). Liposomal formulations showed higher cytotoxicity, compared to free VCR. However, calcium-phosphate-coated liposomes exhibited higher cytotoxicity than liposomes and free VCR. The results showed that calcium-phosphate-coated liposomes had an approximately 3-4 times lower IC 50 value compared to that of liposomes and free VCR, respectively. Results also showed that blank calcium-coated liposomes did not cause any significant reduction in percent cell viability at 10 µM. Increased cell toxicity of calcium-phosphatecoated liposomes was probably the result of calcium phosphate coating on liposomes, which played an important role intracellular uptake via clathrin-coated receptor-mediated endocytosis. Because a greater amount of VCR could be intracellularly delivered into cells in the form of nanosized calcium-phosphatecoated liposomes by endocytosis, cells were more vulnerable to the cytotoxic effect of VCR. Free VCR showed less cytotoxicity, compared to liposomes and coated liposomes, resulting from the reduced cellular uptake of VCR.
+
+Results of the cell-uptake study showed that cellular uptake was greater in calcium-phosphate-coated liposomes (almost 3-4 times greater), as compared to plain liposomes. The data of the cell-uptake study are shown in Table 4. Figure 6 also shows that cellular uptake was greater in the calcium-phosphate-coated liposomes, as compared to plain liposomes.  Journal of Liposome Research Downloaded from informahealthcare.com by Korea University on 12/30/14 conclusion Calcium phosphate coating on liposomal formulations showed drug release preferentially at the tumor interstitium having an acidic pH (4.5-5.5), compared to systemic circulation, which would overcome the unwanted side effects arising from drug leakage during systemic circulation. Thus, pH-dependent solubility of calcium phosphate could play an important role in targeting the drug preferentially to the tumor site. Calcium-phosphate nanoshell-mediated intracellular delivery of VCR is an effective way to circumvent the multidrug resistance effect associated with drug and to increase the cytotoxic effect. Also, the higher cytotoxic results for calciumphosphate-coated liposomes could be attributed to the increased cellular uptake of VCR. However, the role of this delivery system for tumor-targeting purposes could only be settled after animal experimentation, followed by extensive clinical trials. Mean ± standard error of the mean (n = 3).
+
+Figure 6. Quantitative cell-uptake study.
+
+Journal of Liposome Research Downloaded from informahealthcare.com by Korea University on 12/30/14
+
+For personal use only.
+
+a Mean ± standard error of the mean (n = 3).
+
+a Mean ± standard error of the mean (n = 3).© 2012 Informa Healthcare USA, Inc.
+
+a Mean ± standard error of the mean (n = 3).
+
+Journal of Liposome Research Downloaded from informahealthcare.com by Korea University on 12/30/14 For personal use only.
+
+Journal of Liposome Research Downloaded from informahealthcare.com by Korea University on 12/30/14 For personal use only. Calcium phosphate coated Vincristine sulphate liposomes 143 © 2012 Informa Healthcare USA, Inc.</full_text>
+	<references>
+		<reference>
+			<title>Trends Pharmacol Sci</title>
+			<authors>
+				<author>T Allen</author>
+			</authors>
+			<date>1994</date>
+		</reference>
+		<reference>
+			<title>Chem Commun</title>
+			<authors>
+				<author>S Begu</author>
+				<author>R Durand</author>
+				<author>D Lerner</author>
+				<author>C Charnay</author>
+				<author>C Peteilh</author>
+				<author>J Devoisselle</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>J Coll Interf Sci</title>
+			<authors>
+				<author>M Bellino</author>
+				<author>A Regazzoni</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Meth Mol Med</title>
+			<authors>
+				<author>J Burton</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>Nanotechnology</title>
+			<authors>
+				<author>M Chu</author>
+				<author>G Liu</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>Ultrasound Med Biol</title>
+			<authors>
+				<author>T Chu</author>
+				<author>Q He</author>
+				<author>D Potter</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>Science</title>
+			<authors>
+				<author>R Gref</author>
+				<author>Y Minamitake</author>
+				<author>M Peracchia</author>
+				<author>V Trubetskoy</author>
+				<author>V Torchilin</author>
+				<author>R Langer</author>
+			</authors>
+			<date>1994</date>
+		</reference>
+		<reference>
+			<title>Anal Biochem</title>
+			<authors>
+				<author>K Gunter</author>
+				<author>T Gunter</author>
+				<author>A Jarkowski</author>
+				<author>R Rosier</author>
+			</authors>
+			<date>1982</date>
+		</reference>
+		<reference>
+			<title>React Funct Polym</title>
+			<authors>
+				<author>N Heldt</author>
+				<author>M Gauger</author>
+				<author>J Zhao</author>
+				<author>G Slack</author>
+				<author>P John</author>
+				<author>Y Li</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>Langmuir</title>
+			<authors>
+				<author>J Hotz</author>
+				<author>W Meier</author>
+			</authors>
+			<date>1998</date>
+		</reference>
+		<reference>
+			<title>Adv Mater</title>
+			<authors>
+				<author>D Hubert</author>
+				<author>M Jung</author>
+				<author>P Frederik</author>
+				<author>P Bomans</author>
+				<author>J Meuldijk</author>
+				<author>A German</author>
+			</authors>
+			<date>2000</date>
+		</reference>
+		<reference>
+			<title>Eur J Pharm Sci</title>
+			<authors>
+				<author>A Jain</author>
+				<author>S Jain</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>J Phys Chem B</title>
+			<authors>
+				<author>K Kawakami</author>
+				<author>Y Nishihara</author>
+				<author>K Hirano</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Technol Cancer Res Treat</title>
+			<authors>
+				<author>I Larina</author>
+				<author>B Evers</author>
+				<author>T Ashitkov</author>
+				<author>C Bartels</author>
+				<author>K Larin</author>
+				<author>R Esenaliev</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>Liposomes: a practical approach</title>
+			<authors>
+				<author>J Lasch</author>
+				<author>V Weissig</author>
+				<author>M Brandl</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>J Biomed Mater</title>
+			<authors>
+				<author>J Lu</author>
+				<author>M Descamps</author>
+				<author>J Dejou</author>
+				<author>G Koubi</author>
+				<author>P Hardouin</author>
+				<author>J Lemaitre</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>J Biomed Mater Res</title>
+			<authors>
+				<author>J Ong</author>
+				<author>K Bessho</author>
+				<author>R Cavin</author>
+				<author>D Carnes</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>Prog Crystal Growth Charact Mater</title>
+			<authors>
+				<author>F Pautard</author>
+			</authors>
+			<date>1981</date>
+		</reference>
+		<reference>
+			<title>Anal Biochem</title>
+			<authors>
+				<author>R Rosier</author>
+				<author>T Gunter</author>
+				<author>D Tucker</author>
+				<author>K Gunter</author>
+			</authors>
+			<date>1979</date>
+		</reference>
+		<reference>
+			<title>Chem Mater</title>
+			<authors>
+				<author>H Schmidt</author>
+				<author>B Gray</author>
+				<author>P Wingert</author>
+				<author>A Ostafin</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Adv Mater</title>
+			<authors>
+				<author>H Schmidt</author>
+				<author>A Ostafin</author>
+			</authors>
+			<date>2002</date>
+		</reference>
+		<reference>
+			<title>Calcium phosphate coated Vincristine sulphate liposomes</title>
+			<authors>
+				<author>S Schmidt</author>
+				<author>K Moran</author>
+				<author>M Ailis</author>
+				<author>K Tweed</author>
+				<author>L Jenalle</author>
+				<author>S Matthew</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>J Microencapsulat</title>
+			<authors>
+				<author>S Sehgal</author>
+				<author>J Rogers</author>
+			</authors>
+			<date>1995</date>
+		</reference>
+		<reference>
+			<title>Pharmaceut Acta Helvet</title>
+			<authors>
+				<author>V Shriram</author>
+				<author>C Rhodes</author>
+			</authors>
+			<date>1994</date>
+		</reference>
+		<reference>
+			<title>Carbohydr Polym</title>
+			<authors>
+				<author>P Sivakumar</author>
+				<author>K Rao</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>J Biomed Mater Res</title>
+			<authors>
+				<author>J Sun</author>
+				<author>Y Tsuang</author>
+				<author>C Liao</author>
+				<author>H Liu</author>
+				<author>Y Hang</author>
+				<author>F Lin</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>J Mater Res</title>
+			<authors>
+				<author>A Tas</author>
+				<author>S Bhaduri</author>
+			</authors>
+			<date>2004</date>
+		</reference>
+		<reference>
+			<title>Br J Cancer</title>
+			<authors>
+				<author>P Twentyman</author>
+				<author>M Luscombe</author>
+			</authors>
+			<date>1987</date>
+		</reference>
+		<reference>
+			<title>Biomaterials</title>
+			<authors>
+				<author>Q Xu</author>
+				<author>Y Tanaka</author>
+				<author>J Czernurzka</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>J Control Release</title>
+			<authors>
+				<author>I Zhigaltsev</author>
+				<author>N Maurer</author>
+				<author>Q Akhong</author>
+				<author>R Leone</author>
+				<author>E Leng</author>
+				<author>J Wang</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1016/0165-6147(94)90314-X</number>
+		<number>DOI-10.1039/b210927a</number>
+		<number>DOI-10.1016/j.jcis.2009.02.035</number>
+		<number>DOI-10.1088/0957-4484/16/8/039</number>
+		<number>DOI-10.1126/science.8128245</number>
+		<number>DOI-10.1016/0003-2697(82)90326-8</number>
+		<number>DOI-10.1016/S1381-5148(01)00055-4</number>
+		<number>DOI-10.1021/la971080w</number>
+		<number>DOI-10.1002/1521-4095(200009)12:17&lt;1286::AID-ADMA1286&gt;3.0.CO;2-7</number>
+		<number>DOI-10.1016/j.ejps.2008.08.008</number>
+		<number>DOI-10.1021/jp000087a</number>
+		<number>DOI-10.1177/153303460500400211</number>
+		<number>DOI-10.1002/jbm.1232</number>
+		<number>DOI-10.1016/0146-3535(81)90049-6</number>
+		<number>DOI-10.1016/0003-2697(79)90596-7</number>
+		<number>DOI-10.1021/cm040056i</number>
+		<number>DOI-10.1002/1521-4095(20020404)14:7&lt;532::AID-ADMA532&gt;3.0.CO;2-4</number>
+		<number>DOI-10.1002/jbm.a.31761</number>
+		<number>DOI-10.3109/02652049509051125</number>
+		<number>DOI-10.1016/0031-6865(94)90009-4</number>
+		<number>DOI-10.1016/S0144-8617(02)00187-X</number>
+		<number>DOI-10.1002/1097-4636(2001)58:3&lt;319::AID-JBM1024&gt;3.0.CO;2-F</number>
+		<number>DOI-10.1557/JMR.2004.0349</number>
+		<number>DOI-10.1038/bjc.1987.190</number>
+		<number>DOI-10.1016/j.biomaterials.2007.02.007</number>
+		<number>DOI-10.1016/j.jconrel.2005.01.010</number>
+	</reference_dois>
+</document>

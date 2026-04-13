@@ -25,7 +25,7 @@ export default function ConditionalHeader() {
             </svg>
           </div>
           <span className="text-sm font-semibold text-ink group-hover:text-accent transition-colors duration-150">
-            PDF Magic
+                PDF 
           </span>
         </Link>
 

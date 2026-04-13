@@ -1,0 +1,984 @@
+<document>
+	<file>./pdf-files/Effect of Sr substituted on multifunction pure green emission of rare-earth-element doped HA-β-TCP nanocomposite for optical thermometer.pdf</file>
+	<title>Effect of Sr substituted on multifunction pure green emission of rare-earth-element doped HA/β-TCP nanocomposite for optical thermometer</title>
+	<date>2025</date>
+	<doi_number>10.1016/j.ceramint.2024.07.119</doi_number>
+	<img_preview_path>./pdf-preview-images/Effect of Sr substituted on multifunction pure green emission of rare-earth-element doped HA-β-TCP nanocomposite for optical thermometer.jpeg</img_preview_path>
+	<authors>
+		<author>Hoang Nhu Van</author>
+		<author>Le Thanh Cuong</author>
+		<author>Duy-Hung Nguyen</author>
+		<author>Le Thi Tam</author>
+		<author>Vuong-Hung Pham</author>
+	</authors>
+	<abstract>The selective enhancement of dual-mode emissions leads to high-sensitivity optical temperature sensors, making them suitable for thermal sensor applications. This work was aimed to reach good optical sensor properties from the dual-mode pure green emission of Sr substituted hydroxyapatite/β-tricalcium phosphate [Ca 10 (PO 4 ) 6 (OH) 2 / β-Ca 3 (PO 4 ) 2 ] doped with Er/Yb/Mo synthesized using the hydrothermal method. XRD results confirmed the formation of the primary phase of high-crystallinity hydroxyapatite (HA) and the secondary phase of β-tricalcium phosphate (β-TCP) in Sr 2+ -doped systems. Under the 975 and 379 nm excitations, the obtained phosphors emitted intense green light (530/553 nm) via up and down-conversions (UC and DC), respectively, which are dependent on the Sr 2+ content and reach the maximum value at 10 mol % Sr 2+ . Significantly, the 10 mol % Sr 2+ doped UC samples showed a high color purity (97.97 %), and its green emission intensity was enhanced 83 times compared with the undoped one. This phenomenon is due to the improvement of phosphor crystallinity because of the presence of Sr 2+ ions in HA/β-TCP host lattice. Furthermore, the optical temperature sensor property of the phosphor was investigated using the fluorescence intensity ratio technique that showed a high absolute sensitivity of 0.99 % K -1 at 423K (UC) and 0.75 % K -1 at 503 K (DC). The results indicated that the phosphor can be used in thermal sensor applications and other optoelectronic devices.</abstract>
+	<methods>
+		<method>
+			<heading>Experimental procedure</heading>
+			<text>xSr-HA:1Er/10Yb/3Mo (x = 0, 5, 10, 15, and 20 % mol) nanophosphors were successfully synthesized using a hydrothermal method and such high pure materials as Ca(NO 3 ) 2 (Aldrich, 99.9 %), NH 4 H 2 PO 4 (Aldrich, 99.9 %), Er(NO 3 ) 3 (Merck, 99.99 %), Yb(NO 3 ) 3 (Merck, 99.99 %) and (NH 4 ) 6 Mo 7 O 24 (Aldrich, 99.9 %). The Er 3+ , Yb 3+ , and Mo 6+ contents were fixed at 1, 10, and 3 mol%, respectively, in reference to the Ca 2+ content, whereas the Sr 2+ content was fixed a 0, 5, 10, 15, and 20 % mol (labeled as S0, S5, S10, S15, and S20 samples, respectively) in reference to the Ca 2+ content. The aqueous solutions Ca 2+ (1 M), Sr 2+ (1 M), and H 2 PO - 4 (0.6 M) were obtained by dissolving these salts in deionized water under magnet-stirring conditions. The dopant ions (Er 3+ , Yb 3+ , Mo 6+ , and Sr 2+ ) were added dropwise to the Ca 2+ solution and stirred for 1 h at room temperature to obtain a homogeneous solution. Afterward, the H 2 PO - 4 solution was added dropwise to the cation solution and stirred for 1 h. The pH value was controlled to 10 using the NH 3 solution. The hydrothermal reaction in mixture solution was carried out at 200 • C for 24 h. Subsequently, the obtained precipitation was washed many times with deionized water and alcohol, and then dried at 100 • C for 24 h. Finally, the obtained powder was annealed at 500 • C for 5 h and further annealed at 1100 • C for 1 h in air.
+
+The structural characteristics of the phosphor were explored using Xray diffraction (XRD, Bruker D8 Advance) and Fourier-transform infrared (FT-IR) spectroscopy (Perkin-Elmer spectrum BX spectrometer). The particle morphology was determined using a field-emission scanning electron microscope (JEOL, JEM 1010, JEOL Techniques, Tokyo, Japan). The optical properties of the system were evaluated using a Varian Cary 5000 UV-vis-NIR spectrophotometer and a NANO LOG spectrophotometer (Horiba, USA) coupled with an arc (450 W Xe) lamp and a laser diode (975 nm) as the excitation source.</text>
+		</method>
+	</methods>
+	<full_text>Temperature is an important parameter closely related to daily life, which plays a critical role in scientific research, industrial production, and life activities [1,2]. Therefore, the accurate measurement of temperature is important [3][4][5]. The determined temperature by conventional contact measurements, such as the use of liquid-filled glass thermometers and thermocouples, present low sensitivity, and inability to measure under harsh conditions, thereby limiting the applications of this method [5][6][7]. By contrast, non-contact temperature measurement presents excellent advantages because it could overcome the limitations of conventional contact temperature measurement [8,9]. Consequently, rare-earth (RE) doped phosphors with emission via frequency down and up-conversion on an optical thermal sensor are widely studied [7,10]. The dependence of the phosphor's emission intensity and lifetime on temperature could be used to determine the sensitivity of the optical thermal sensor [1,8,9,11]. Accordingly, the sensing characteristics of phosphors determined using the fluorescence intensity ratio (FIR) technique based on the emission spectra are of great importance and regarded as a promising tool for measuring temperature. The FIR technique is performed by measuring the two emission bands correspondent to two thermally coupled levels (energy gap is approximately 200-2000 cm -1 ) of RE ions [12,13]. This advanced technique is not dependent on spectrum losses and fluctuations in the excitation intensity, thereby indicating its good measurement accuracy, high resolution, and high reliability [8,14].
+
+Furthermore, the combination of good optical properties and biocompatible materials extend materials' application areas, especially in medicine. In the case of hydroxyapatie (HA), Ca 10 (PO 4 ) 6 (OH) 2 has attracted considerable attention in studies on catalysis, drug delivery system, bio-imaging, displays, medicine, and optoelectronic devices [15][16][17] because of its excellent biocompatibility, high chemical stability, composition and structure, which are close to the human bone. However, the artificially synthesized pure HA exhibits poor mechanical properties [18,19]; thus, synthetic HA can be doped with several ions with different valence to improve the properties, such as bioactivity, degradation rate, antibacterial characteristics, and optical and mechanical characteristics [15,[20][21][22]. Accordingly, previous works showed that the presence of strontium ion (Sr 2+ ) into the HA host improves its physicochemical properties, thereby increasing the crystallinity [23][24][25]. In addition, Sr is a bone trace element, and it can increase bone formation in the body and reduce bone self-absorption because of their properties of promoting the growth of bone cells [24,26]. Sr and Ca belong to the IIA group in the Periodic table, and they have similar chemical properties; therefore, the substitution of Sr for Ca sites in HA structure could improve and enrich the biological properties of HA. Frasnelli et al. [27] investigated the strontium-substituted HA nanoparticles for bone regeneration and revealed that the presence of Sr 2+ in the HA host had no apoptotic effect on osteoblast cells and promoted osteoblast viability and proliferation with the increase of Sr 2+ content. Krishnan et al. [28] confirmed that the presence of 25 % mol optimal Sr 2+ in the HA host lattice increases its crystallinity. In addition, the Sr-doped sample exhibited higher cell viability than pure HA, making it less cytotoxic; hence, a biologically friendly material can be applied in a patient's mouth. Moreover, Suganthi et al. [29] synthesized Sr-substituted HA by the hydrothermal method and confirmed that the presence of Sr 2+ ion leads to increased HA crystallinity (from 64 % to 87 % corresponding to the Sr 2+ content from 0 to 10 % mol), crystallite size and in vitro bioactivity. Recently, in our works, intense green UC emission was achieved using Er/Yb/Mo tri-doped HA and HA/β-TCP host lattice which result in good temperature sensor properties [30][31][32]. However, to date, a high-sensitivity temperature sensor of multifunction intense green UC/DC emissions in Sr-substituted HA/β-TCP:Er/Yb/Mo phosphor has not yet been well documented.
+
+In this study, a high-sensitivity temperature sensor based on intense multifunction emissions of Sr-substituted HA/β-TCP:Er/Yb/Mo composite phosphors was explored. The compound was prepared using the hydrothermal reaction followed by treatment at 1100 • C in air. The influence of Sr 2+ ion on the crystal structure, morphology and optical properties of the phosphors was investigated. The properties of fabricated thermal sensor were determined using the FIR technique based on the UC and DC emission spectra.
+
+xSr-HA:1Er/10Yb/3Mo (x = 0, 5, 10, 15, and 20 % mol) nanophosphors were successfully synthesized using a hydrothermal method and such high pure materials as Ca(NO 3 ) 2 (Aldrich, 99.9 %), NH 4 H 2 PO 4 (Aldrich, 99.9 %), Er(NO 3 ) 3 (Merck, 99.99 %), Yb(NO 3 ) 3 (Merck, 99.99 %) and (NH 4 ) 6 Mo 7 O 24 (Aldrich, 99.9 %). The Er 3+ , Yb 3+ , and Mo 6+ contents were fixed at 1, 10, and 3 mol%, respectively, in reference to the Ca 2+ content, whereas the Sr 2+ content was fixed a 0, 5, 10, 15, and 20 % mol (labeled as S0, S5, S10, S15, and S20 samples, respectively) in reference to the Ca 2+ content. The aqueous solutions Ca 2+ (1 M), Sr 2+ (1 M), and H 2 PO - 4 (0.6 M) were obtained by dissolving these salts in deionized water under magnet-stirring conditions. The dopant ions (Er 3+ , Yb 3+ , Mo 6+ , and Sr 2+ ) were added dropwise to the Ca 2+ solution and stirred for 1 h at room temperature to obtain a homogeneous solution. Afterward, the H 2 PO - 4 solution was added dropwise to the cation solution and stirred for 1 h. The pH value was controlled to 10 using the NH 3 solution. The hydrothermal reaction in mixture solution was carried out at 200 • C for 24 h. Subsequently, the obtained precipitation was washed many times with deionized water and alcohol, and then dried at 100 • C for 24 h. Finally, the obtained powder was annealed at 500 • C for 5 h and further annealed at 1100 • C for 1 h in air.
+
+The structural characteristics of the phosphor were explored using Xray diffraction (XRD, Bruker D8 Advance) and Fourier-transform infrared (FT-IR) spectroscopy (Perkin-Elmer spectrum BX spectrometer). The particle morphology was determined using a field-emission scanning electron microscope (JEOL, JEM 1010, JEOL Techniques, Tokyo, Japan). The optical properties of the system were evaluated using a Varian Cary 5000 UV-vis-NIR spectrophotometer and a NANO LOG spectrophotometer (Horiba, USA) coupled with an arc (450 W Xe) lamp and a laser diode (975 nm) as the excitation source.
+
+In Fig. 1a are the XRD patterns of all resulting samples with different Sr 2+ doping contents. All diffraction peaks are consistent with two characteristic phases, including the main phase HA (PDF# 024-0033 [31]) with a hexagonal structure and the secondary phase β-TCP (PDF# 09-0169 [32]) with a rhombohedral structure. Notably, the presence of the β-TCP phase in the composite system is due to thermal treatment at high temperatures [33]. The mixtures of the HA and β-TCP phases are known as biphasic calcium phosphate (BCP), which has excellent biomedical properties and is widely used in biomedical and other applications [34,35]. In addition, the change in diffraction peak intensity can be clearly observed because of the presence of Sr 2+ ions. In this case, the diffraction peak intensity of the {210} plane, which is attributed to the HA phase, is remarkably increased by enhancing the Sr 2+ doping content, indicating the preferred orientation growth on the {210} plane, one further confirms based on the diffraction peak intensity ratio of the {210} and {211} planes (Fig. 1b). In previous works [36][37][38][39], it was observed that the preferred orientation of crystalline growth remarkably affects their biomedical [36], electrochemical surface [38] and optical properties [39]. Notably, all diffraction peaks are shifted toward lower 2θ angles (typical peak corresponding to the {210} plane) after the substitution of Sr 2+ with larger ionic radius (1.12 Å) for Ca 2+ (1 Å), leading to a lattice expansion [40,41], indicating that Sr 2+ ions were successfully incorporated in the Ca 2+ sites of the host lattice. These results could destroy the crystal field's symmetry, thereby enhancing the electric dipole transition probability and improving the emission efficiency of the systems [40][41][42][43][44]. Moreover, the presence of the β-TCP phase in the systems could reduce the OH -content (main effect luminescence quenching [31,45]), supporting the enhancement of the emission intensity of the phosphors [31]. Further addition of Sr 2+ can result in the increase of HA phase content (Fig. 1c), indicating that the composition percentage of the compostie systems can be controlled by Sr 2+ doping.
+
+Furthermore, the crystallinity degree (X C ) of the HA phase present in the system was calculated in accordance with a previous study [31]:
+
+where I 300 is the diffraction peak intensity corresponding to (300) plane; V 112/300 is the intensity of the hollow between (112) and (300) reflections, which is not observed in non-crystalline samples. The X C value of all samples was calculated, and the results are shown in Table 1.
+
+Notably, X C increase with the increase of Sr 2+ content. The improvement in crystallinity degree of the host lattice and the presence of the β-TCP phase in the HA/β-TCP phosphors can remarkably enhance the emission efficiency of the systems. This effect can be observed elsewhere [46,47]. Furthermore, other potential impurity phases, such as CaMoO 4 (PDF # 00-007-0212), SrMoO 4 (PDF # 00-008-0482), and MoO 3 (PDF # 00-005-0508) [48], were checked using the recorded diffraction peaks of all samples, and no foreign peaks existed were found, verifying the successful synthesis of high-purity phosphors. FT-IR spectra of the samples with different Sr 2+ doping contents, ranging from 450 to 4000 cm -1 , are presented in Fig. 2a. The characteristic PO 4 3-group of the HA/β-TCP structure is characterized by vibrational modes at 474 cm -1 (ν 2 mode), 565/603 cm -1 (ν 4 mode), 963 cm -1 (ν 1 mode), and 1020/1092 cm -1 (ν 3 mode) [31,49]. The peaks observed at 634 and 3568 cm -1 are atributed to the stretching modes of OH -groups in HA [49]. The peak at 634 cm -1 (OH -) did not appear in the Sr 2+ doped samples, suggesting that Sr 2+ reduces the OH -content in the samples, resulting in enhanced emission efficiency. Meanwhile, the stretching vibration of Mo-O-Mo bindings was observed at 813.6 cm -1 (S0) [50], which is shifted toward wavenumbers (781 cm -1 ) for Sr 2+ -doped samples (Fig. 2b). This finding revealed that successfully introducing Mo 6+ into the host lattice supports the formation of a Yb 3+ -MoO 2- 4 dimer, which causes selective enhancement of the geen UC emission of the phosphor [31]. In addition, the peak observed at 565 cm -1 (S0) shifts to a lower wavenumber (540 cm -1 ) because of replacing Sr 2+ for Ca 2+ ions in the host lattice, resulting in the change of bonding forces between these ions, which causes the weakening of the bending bands of O-P-O. This change verifies the presence of Sr 2+ ions in the samples, which is consistent with the XRD results (Fig. 1).
+
+In Fig. 3 are the SEM images of the obtained phosphors with different  Fig. 2. FT-IR spectra ranging from 450 to 4000 cm -1 (a) and higher resolution spectra in the range from 500 to 1250 cm -1 (b).
+
+Sr 2+ doping contents. The Sr 2+ -free sample (Fig. 3a) exhibits agglomerate grains with the average size of approximately 428 nm. Meanwhile, Sr 2+ -doped samples show distinct morphologies with hexagonal-like grain boundaries, and the average grain size increase from 469 nm to 521 nm (Fig. 3b-d). The orientation of the hexagonal structure with the measured plane (picture plane) is responsible for the difference in the morphology of these samples. The samples (S10 and S20) revealed that a larger number of orientations (hexagon with c axis) perpendicular to the measured plane and a trace amount of a tube-like structure could be attributed to orientations with the c axis paralled to the measured plane. These results are in good agreement with the structural properites determination above using XRD measurements. In bulk materials, Gallo et al. [36] used electron backscatter diffraction to study the individual grain orientation and its influence on the resorption behavior,  confirming that it is more convenient to express the grain orientation with regard to the hexagonal unit cell. The ionic radius of Sr 2+ is larger than that of the Ca 2+ ion, and it may cause grain size increase. Therefore, the presence of Sr 2+ significantly affects the structure and morphology of the systems, which could affect the emission efficiency of the phosphors. In several previous works [51,52], it was reported that the increased grain size could reduce the energy loss because of the scattering and absorption during light irradiation, resulting in the enhanced emission efficiency of the phosphors.
+
+The UC emission spectra of the synthesized samples with different Sr 2+ contents under 975 nm excitation are shown in Fig. 4a. The Sr 2+free sample exhibits intense green emission at 530/553 nm ( 2 H 11/2 -4 I 15/ 2 / 4 S 3/2 -4 I 15/2 ) and weak red emission at 656 nm ( 4 F 9/2 -4 I 15/2 , inset of Fig. 4a). The selective enhancement of green UC emission using Er/Yb/ Mo tri-doped phosphor is due to the energy transfer from the | 2 F 7/2 , 3 T 2 &gt; level of the Yb 3+ -MoO 2- 4 dimer to the 4 F 7/2 level of Er 3+ ion, which are well explained in our previous works [30][31][32] and other works [53]. In this case, adding Sr 2+ in the samples induced excellent UC emission properties, and the emission intensity is dependent on the Sr 2+ content (Fig. 4b). Significantly, the green emission intensity of the S10 sample was enhanced 83 times compared with that of the S0 sample. This phenomenon is due to the presence of Sr 2+ in the samples leading to increased phosphor crystallinity, decreased crystal field symmetry, and preferred orientation gowth on the (210) plane (HA), which is clearly observed from the XRD and FT-IR results (Figs. 1 and2). The enhancement of phosphor's crystallinity results in the improved emission efficiency of RE ions, which is consistent with many studies [46,47]. Notably, Sr 2+ content exceeds 10 % mol, leading to energy transfer between Er 3+ -Er 3+ ion as well as Yb 3+ -MoO 2- 4 dimer. In addition, the ionic radius Sr 2+ (1.12 Å) is larger than Ca 2+ (1 Å), resulting in the difficulty of Mo 6+ doping into the HA/β-TCP phosphor at high Sr 2+ doping content, which causes a decreased energy transfer rate from Yb 3+ -MoO 2- 4 to Er 3+ ion. These reasons led to luminescence quenching [32,54]. The selective green emission enhancement in investigated phosphor is supported by the green/red (G/R) emission intensity ratio that shows the maximum value at 10 % mol Sr 2+ doping level (Fig. 4c). Furthermore, the coordinate chromaticity of all samples was estimated, indicating that its CIE chromaticity is close to pure green light [55] (Table 2). Moreover, the color purity of obtained phosphors was estimated using Equation (2) [55]:
+
+where (x, y) and (x d , y d ) are the color coordinates of the obtained samples and the dominant wavelength, respectively; x i = 0.3333 and y i = 0.3333 presents the color coordinate of the white light. Putting these values in Equation ( 8), the calculated color purity of all UC samples is displayed in Table 2. The S10 sample exhibits high color purity up to 98 %, indicating its suitability for display applications. Consequently, the S10 sample representing the highest intensity can be selected to explore its optical temperature sensor properties.
+
+The dependence of the emission intensity (I) on the power excitation (P) of the S10 sample was investigated to confirm the UC mechanism, which can be plotted as I ∝ P n . The n value is the number of photons absorbed to produce UC emissions. The P value ranged from 300 mW to 700 mW, to see the dependence of I on P value (Fig. 5a). The slope value (n) of green and red emission is 1.66 (530 nm), 1.50 (553 nm), and 1.30 (656 nm), suggesting that the two photons absorption process is dominant for both green and red emissions (Fig. 5b). In particular, the green emission exhibits higher n values than red emission, confirming ET from Yb 3+ -MoO 2- 4 dimer to Er 3+ ions resulting in selective enhancement of the green emission of the phosphors.
+
+The temperature-dependence of emission intensity in sample S10 was investigated to determine its thermal sensor properties (Fig. 6a). Evidently, the UC geen emission intensity related to the 2 H 11/2 -4 I 15/2 and 4 S 3/2 -4 I 15/2 transitions gradually decreases with the increase of temperature. The 4 S 3/2 -4 I 15/2 transition intensity is higher than the 2 H 11/2 -4 I 15/2 at low temperatures, whereas those are opposite at high temperatures (Fig. 6b). Increasing the temperature increases the number of ions in the higher excited state due to increased lattice vibrations [56,57]. This means that as the temperature rises, the population of the ions shifts from a lower level ( 4 S 3/2 ) to a higher level ( 2 H 11/2 ) in the two thermally couped levels, resulting in the emission intensity of 530 nm becoming larger than 553 nm [57]. In addition, the difference in energy gap between 2 H 11/2 and 4 S 3/2 levels of Er 3+ is approximately 800 cm -1 , making this pair to be suitable for temperature sensing [58,59]. In addition, the 2 H 11/2 level can be reached from the 4 S 3/2 level by thermal excitation, and a quasi-thermal equilibirium occurs between them [58]. Thus, with the increase of temperature, the change in transitions intensity corresponding to 2 H 11/2 -4 I 15/2 (I 530 ) and 4 S 3/2 -4 I 15/2 (I 553 ) is clearly observed. In the FIR technique, the emission intensity ratio I 530 /I 553 can be applied to explore the phosphor thermal sensor properties using the following equation [60]:
+
+where I H is the emission intensity of the 2 H 11/2 -4 I 15/2 transition and I S corresponds to the 4 S 3/2 -4 I 15/2 transition, A (constant) is dependent on the host lattice, k (0.6950348 cm -1 /K) is the Boltzmann constant, T is the absolute temperature and ΔE presents the energy gap between two levels [59]. Furthermore, the relationship between FIR and 1/T can be formed by taking the natural logarithm on both sides of Equation (3).
+
+Using a linear fit based on Equation ( 4) to describe the relationship Ln(FIR) versur 1/T, interesting parameters such as ΔE (610.3 cm -1 ) and A (2.77) can be determined (Fig. 6c). The population redistribution ability (PRA) of the thermal coupled energy levels in the phosphor depends on the temperature, which was estimated to understand Boltzmann thermal distribution mechanisms using the following equation [61]:
+
+Combining equations ( 3) and ( 4), the temperature-dependent PRA can be written as follows: Placing the ΔE and A values above on equation ( 6), the PRA values increase sharply with the increase of temperature and reached the maximum of 0.752 at 523 K (Fig. 6e).
+
+Notably, the key parameters, such as relative sensitivity (S r ) and absolute sensitivity (S a ), evaluating the temperature sensor performance of phosphor were determined using a known value (ΔE), as follows [62]:
+
+In Fig. 6d is the sensitivity behavior of the S10 sample with temperature, revealing the maximum value of S r (0.94 % K -1 at 303 K) and S a (0.99 % K -1 at 423 K). The applicability of the phosphor obtained in this work is further checked, and its sensor sensitivity value is compared with other RE-doped phosphors (Table 3). As seen in Table 3, this work represents a higher result compared with many phosphors, such as ZnAl 2 O 4 : Er, Yb [14], and Al 2 O 3 : Er, Yb, Mo [7], but lower than few phosphors, such as NaYb(MoO 4 ) 2 :Er [55], SrLaLiWO 6 :Er, Yb [58], SrTiO 3 : Er/Yb [59] and TZLB: Er, Yb, Mo [61]. Additionally, the measurement reliability was further checked using the following equation [58]:
+
+The relationship between the calculated (T cal ) and actual experimental (T exp ) temperature is shown in Fig. 6f. The fitting results between them show a high correlation coefficient (R 2 = 0.995), confirming the reliability and accuracy of the FIR technique. The high-sensitivity temperature and high color purity of UC biocompatibility phosphor make it suitable for temperature sensor applications, display devices, and medicine.
+
+The photoluminescence excitation spectra of typical sample S10 monitored at 553 nm emission is shown in Fig. 7a. The sharp absorption peaks at 360 and 379 nm correspond to the 4 I 15/2 -4 G 9/2 and 4 I 15/2 -4 G 11/ 2 transitions of Er 3+ ions, respectively. The absorption peak at 379 nm exhibits the highest intensity, and it was used for excitation of DC phosphors. Significantly, the broad absorption band from 250 nm to 320 nm is attributed to the 1 A 1 -3 T 2 transition of MoO 2- 4 group [52]. This result confirms the presence of MoO 2- 4 ion in the host lattice that supports the formation of the Yb 3+ -MoO 2-4 dimer in which green UC emission was selectively enhanced [45,54]. Under the 379 nm excitation, the phosphor emitted strong green DC emission at 530/553 nm ( 2 H 11/2 4 I 15/2 / 4 S 3/2 -4 I 15/2 ) as a function of Sr 2+ content (Fig. 7b). The G/R emission ratios shown in Fig. 7c confirm the selective enhancement of green emission-based phosphors. The S10 sample shows the highest emission intensity, which is several times higher than the un-doped sample. This phenomenon is due to the increased crystallinity of the phosphor because of the presence of Sr 2+ ion, which is consistent with the XRD results (Fig. 1). Notably, the selective enhancement of green DC emission is due to ET from the Yb 3+ -MoO 2-4 dimer to the Er 3+ ion [31,52]. The energy level diagram of the DC phosphor is proposed and explained in Fig. 7d. First, electrons in the 4 I 15/2 level (ground state) of Er 3+ ions absorb a photon from an excited source and move to the 4 G 11/2 level (Fig. 7d) via ground state absorption (GSA). Next, most electrons of the 4 G 11/2 level nonradiative relaxation (NR) to the 2 H 11/2 / 4 S 3/2 level and then return to the 4 I 15/2 ground state to produce green emission regions. The NR rate is faster than the multi-phonon relaxation rate, which causes intense green emissions [31]. Meanwhile, the NR processes from the 4 S 3/2 to 4 F 9/2 level produce red emission. Notably, the energy of the 4 S 3/2 level is much higher than that of the 4 F 9/2 level, leading to a low electron population at the 4 F 9/2 level, which causes a weak red emission band (Fig. 7d). These results indicated that the behavior of DC green emission of the phosphor was explained based on the suitably proposed mechanism because of the point of view of the electronic structure scale. In addition, the CIE chromaticity point of the S10 sample was calculated (x = 0.24798, y = 0.69594), and it is close to pure green emission region [55]. Accordingly, the color purity of all DC phosphors was determined, resulting in a high color purity value up to (87.60 %) for the S10 sample, indicating that the phosphor could be applied for display imaging.
+
+Furthermore, the temperature sensor characteristics of DC phosphor were determined by measuring the dependence of DC emission on temperature in the range of 303-503 K (Fig. 8a). The change in emission intensity with the increase of temperature is shown in Fig. 8b. As shown in Fig. 8b, with the increse of temperature, the emission intensity at 530 nm increases from 303 to 423 K and then decreases. On the contrary, the emission at 553 nm decreases with the increase of temperature. The thermal quenching effects are responsible for these phenomena [56,63]. In particular, the phosphor showed strong emission intensity and stability at high temperature (503 K), indicating its applicability at higher temperatures.
+
+Based on Equations ( 3) and ( 4), the relationship of Ln(FIR) versus 1/ T was estimated using the DC emission spectra. In Fig. 8c are the fitting results that presents a slope value of -1012.5, which is related to -ΔE/k value. In addition, the S r and S a values were determined using Equations ( 5) and (6), and the curves are represented in Fig. 8d. S a enhanced with temperature and reached the maximum value 0.75 % K -1 at 503 K, suggesting that the phosphor as a thermal sensor can be employed at high temperatures, whereas the maximum S r value is 0.94 % K -1 at 303 K. In this study, the sensitivity temperature was compared to previous works to confirm the applicability of this phosphor (Table 4). It is noted that the DC phosphor exhibits S r value that is higher than those in previously reported materials, thereby extending phosphor application. Overall, the observed phosphor has high color purity and can be used in high-sensitivity sensor, indicating its suitability for thermal sensor and optoelectronic devices.
+
+The effect of Sr 2+ doping content on the structural and optical properties of HA/β-TCP:Er/Yb/Mo phosphors was investigated systematically. The incorporation of Sr 2+ into the HA/β-TCP host improves its crystallinity and emission efficiency, providing good temperature sensor properties. Thus, the 10 % mol Sr 2+ -doped sample has 83 times higher UC green emission intensity than the undoped one and shows high color purity: 97.97 % for UC emission and 87.57 % for DC. Significantly, the phosphor presents high-sensitivity temperature sensing properties in UC (S a = 0.99 % K -1 at 423 K and S r = 0.94 % K -1 at 303 K) and DC (S a = 0.75 % K -1 at 503K, S r = 0.94 % K -1 at 303 K) emissions, using the FIR technique. These results indicate that introducing Sr 2+ into the system to enhance the degree of crystallization is a promising way to increase its emission efficiency and reach good temperature sensing properties. Therefore, 10Sr-HA/β-TCP:Er/Yb/Mo biocompatibility phosphor, which shows multifunction pure green emissions with high-sensitivity sensors is a promising candidate material for thermal sensors and display devices.</full_text>
+	<references>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>J Zhu</author>
+				<author>T Yang</author>
+				<author>H Li</author>
+				<author>Y Xiang</author>
+				<author>R Song</author>
+				<author>H Zhang</author>
+				<author>B Wang</author>
+			</authors>
+			<date>2023</date>
+		</reference>
+		<reference>
+			<title>Inorg. Chem</title>
+			<authors>
+				<author>B Hou</author>
+				<author>M Jia</author>
+				<author>P Li</author>
+				<author>G Liu</author>
+				<author>Z Sun</author>
+				<author>Z Fu</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>A Phys</title>
+			<authors>
+				<author>O Kıbrıslı</author>
+				<author>E Erol</author>
+				<author>N Vahedigharehchopogh</author>
+				<author>E Yousef</author>
+				<author>M Çelikbilek Ersundu</author>
+				<author>A Ersundu</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Photonics</title>
+			<authors>
+				<author>G Kuptsov</author>
+				<author>A Konovalova</author>
+				<author>V Petrov</author>
+				<author>A Laptev</author>
+				<author>V Atuchin</author>
+				<author>V Victor</author>
+				<author>Petrov</author>
+			</authors>
+			<date>2022</date>
+		</reference>
+		<reference>
+			<title>Adv. Sci</title>
+			<authors>
+				<author>B Zhou</author>
+				<author>K Fan</author>
+				<author>J Zhai</author>
+				<author>C Jin</author>
+				<author>L Kong</author>
+			</authors>
+			<date>2023</date>
+		</reference>
+		<reference>
+			<title>Inorg. Chem</title>
+			<authors>
+				<author>G Xiang</author>
+				<author>X Liu</author>
+				<author>Q Xia</author>
+				<author>S Jiang</author>
+				<author>X Zhou</author>
+				<author>L Li</author>
+				<author>Y Jin</author>
+				<author>L Ma</author>
+				<author>X Wang</author>
+				<author>J Zhang</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Sens. Actuators, B</title>
+			<authors>
+				<author>B Dong</author>
+				<author>B Cao</author>
+				<author>Z Feng</author>
+				<author>X Wang</author>
+				<author>Y He</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>J. Alloys Compd</title>
+			<authors>
+				<author>Y Zhao</author>
+				<author>X Wang</author>
+				<author>Y Zhang</author>
+				<author>Y Li</author>
+				<author>X Yao</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>J. Alloys Compd</title>
+			<authors>
+				<author>Q Wang</author>
+				<author>H Wu</author>
+				<author>L Zhang</author>
+				<author>H Wu</author>
+				<author>Y Luo</author>
+				<author>G Pan</author>
+				<author>Z Hao</author>
+				<author>Q Mu</author>
+				<author>J Zhang</author>
+			</authors>
+			<date>2022</date>
+		</reference>
+		<reference>
+			<title>J. Alloys Compd</title>
+			<authors>
+				<author>C Lim</author>
+				<author>A Aleksandrovsky</author>
+				<author>M Molokeev</author>
+				<author>A Oreshonkov</author>
+				<author>V Atuchin</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Ceram. Int</title>
+			<authors>
+				<author>J Xing</author>
+				<author>F Shang</author>
+				<author>G Chen</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title>Appl. Phys. Lett</title>
+			<authors>
+				<author>P Li</author>
+				<author>Z Sun</author>
+				<author>R Shi</author>
+				<author>G Liu</author>
+				<author>Z Fu</author>
+				<author>Y Wei</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>A Phys</title>
+			<authors>
+				<author>K Krishna</author>
+				<author>S Tiwari</author>
+				<author>A Kumar</author>
+				<author>K Kumar</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>J. Alloys Compd</title>
+			<authors>
+				<author>H Liang</author>
+				<author>Z Luo</author>
+				<author>W Lei</author>
+				<author>P Zhang</author>
+				<author>S Liu</author>
+				<author>Z Zhou</author>
+				<author>A Lu</author>
+			</authors>
+			<date>2022</date>
+		</reference>
+		<reference>
+			<title>Adv. Colloid Interface Sci</title>
+			<authors>
+				<author>R Verma</author>
+				<author>S Mishra</author>
+				<author>V Gadore</author>
+				<author>M Ahmaruzzaman</author>
+			</authors>
+			<date>2023</date>
+		</reference>
+		<reference>
+			<title>Adv. Colloid Interface Sci</title>
+			<authors>
+				<author>S Mondal</author>
+				<author>S Park</author>
+				<author>J Chai</author>
+				<author>V Ha</author>
+				<author>V Doan</author>
+				<author>V Truong</author>
+				<author>B Lee</author>
+				<author>J Oh</author>
+			</authors>
+			<date>2023</date>
+		</reference>
+		<reference>
+			<title>Nanoscale</title>
+			<authors>
+				<author>J Wu</author>
+				<author>Y Chi</author>
+				<author>Y Yan</author>
+				<author>M Ji</author>
+				<author>X Chen</author>
+				<author>X Wang</author>
+				<author>Y Gao</author>
+				<author>Q Zou</author>
+				<author>L Zou</author>
+				<author>X Li</author>
+			</authors>
+			<date>2023</date>
+		</reference>
+		<reference>
+			<title>ACS Appl. Nano Mater</title>
+			<authors>
+				<author>W Shi</author>
+				<author>Z Liu</author>
+				<author>I Yamada</author>
+				<author>D Noda</author>
+				<author>T Kataoka</author>
+				<author>K Shinozaki</author>
+				<author>M Tagaya</author>
+			</authors>
+			<date>2022</date>
+		</reference>
+		<reference>
+			<title>Int. J. Mol. Sci</title>
+			<authors>
+				<author>M Del</author>
+				<author>C De Lama-Odría</author>
+				<author>L De Valle</author>
+				<author>J Puiggalí</author>
+			</authors>
+			<date>2023</date>
+		</reference>
+		<reference>
+			<title>Chem. Sci</title>
+			<authors>
+				<author>A Escudero</author>
+				<author>M Espanol</author>
+				<author>M Ginebra</author>
+			</authors>
+			<date>2024</date>
+		</reference>
+		<reference>
+			<title>Coll. Surf. A Physicochem. Eng. Asp</title>
+			<authors>
+				<author>X Zhang</author>
+				<author>G Song</author>
+				<author>H Qiao</author>
+				<author>J Lan</author>
+				<author>B Wang</author>
+				<author>H Yang</author>
+				<author>L Ma</author>
+				<author>S Wang</author>
+				<author>H Lin</author>
+				<author>S Han</author>
+				<author>S Kang</author>
+				<author>X Chang</author>
+				<author>Y Huang</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Mater. Sci. Eng. C</title>
+			<authors>
+				<author>B Wang</author>
+				<author>Y Li</author>
+				<author>S Wang</author>
+				<author>F Jia</author>
+				<author>A Bian</author>
+				<author>K Wang</author>
+				<author>L Xie</author>
+				<author>H Qiao</author>
+				<author>H Lin</author>
+				<author>J Lan</author>
+				<author>Y Huang</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title>J. Inorg. Biochem</title>
+			<authors>
+				<author>K Szyszka</author>
+				<author>J Soroczynska</author>
+				<author>A Jach</author>
+				<author>K Ledwa</author>
+				<author>A Piecuch</author>
+				<author>M Giersig</author>
+				<author>Z Kawa</author>
+				<author>R Wiglusz</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Mater. Chem. Phys</title>
+			<authors>
+				<author>Q Yuan</author>
+				<author>Z Zhang</author>
+				<author>Y Yang</author>
+				<author>Y Jian</author>
+				<author>R Li</author>
+				<author>X Dai</author>
+				<author>W Wu</author>
+				<author>J Zhong</author>
+				<author>C Chen</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>K Lin</author>
+				<author>P Liu</author>
+				<author>L Wei</author>
+				<author>Z Zou</author>
+				<author>W Zhang</author>
+				<author>Y Qian</author>
+				<author>Y Shen</author>
+				<author>J Chang</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Appl. Surf. Sci</title>
+			<authors>
+				<author>X Jiang</author>
+				<author>D Zhang</author>
+				<author>R Sun</author>
+				<author>H Wang</author>
+				<author>Y Yang</author>
+				<author>H Guo</author>
+				<author>Y Tang</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Mater. Sci. Eng. C</title>
+			<authors>
+				<author>M Frasnelli</author>
+				<author>F Cristofaro</author>
+				<author>V Sglavo</author>
+				<author>S Dire</author>
+				<author>E Callone</author>
+				<author>R Ceccato</author>
+				<author>G Bruni</author>
+				<author>A Cornaglia</author>
+				<author>L Visai</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Dent. Mater</title>
+			<authors>
+				<author>V Krishnan</author>
+				<author>A Bhatia</author>
+				<author>H Varma</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Mater. Sci. Eng. C</title>
+			<authors>
+				<author>R Suganthi</author>
+				<author>K Elayaraja</author>
+				<author>M Joshy</author>
+				<author>V Chandra</author>
+				<author>E Girija</author>
+				<author>S Kalkura</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>New J. Chem</title>
+			<authors>
+				<author>H Van</author>
+				<author>L Tu</author>
+				<author>D Dung</author>
+				<author>P Vuong</author>
+				<author>N Hung</author>
+				<author>P Diep</author>
+				<author>H Hung</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title>J. Alloys Compd</title>
+			<authors>
+				<author>D Thuy</author>
+				<author>V Minh</author>
+				<author>T Xuan</author>
+				<author>P Van Huan</author>
+				<author>V Hung</author>
+				<author>D Nguyen</author>
+				<author>B Hoan</author>
+				<author>T Le Manh</author>
+				<author>H Van</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title>J. Alloys Compd</title>
+			<authors>
+				<author>H Van</author>
+				<author>V Hung</author>
+				<author>P Vuong</author>
+				<author>P Huan</author>
+				<author>B Hoan</author>
+				<author>N Hung</author>
+				<author>L Tu</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Ceram. Int</title>
+			<authors>
+				<author>A Farzadi</author>
+				<author>F Bakhshi</author>
+				<author>A Aminian</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>ACS Appl. Bio Mater</title>
+			<authors>
+				<author>S Basu</author>
+				<author>B Basu</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Biomaterials</title>
+			<authors>
+				<author>S Roohani-Esfahani</author>
+				<author>S Nouri-Khorasani</author>
+				<author>Z Lu</author>
+				<author>R Appleyard</author>
+				<author>H Zreiqat</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Acta Biomater</title>
+			<authors>
+				<author>M Gallo</author>
+				<author>B Santoni</author>
+				<author>T Douillard</author>
+				<author>F Zhang</author>
+				<author>L Gremillard</author>
+				<author>S Dolder</author>
+				<author>W Hofstetter</author>
+				<author>S Meille</author>
+				<author>M Bohner</author>
+				<author>J Chevalier</author>
+				<author>S Tadier</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Results Phys</title>
+			<authors>
+				<author>K Ganesan</author>
+				<author>N Anandhan</author>
+				<author>V Dharuman</author>
+				<author>P Sami</author>
+				<author>R Pannerselvam</author>
+				<author>T Marimuthu</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Acta Mater</title>
+			<authors>
+				<author>A Speidel</author>
+				<author>R Su</author>
+				<author>J Smith</author>
+				<author>P Dryburgh</author>
+				<author>I Bisterov</author>
+				<author>D Pieris</author>
+				<author>W Li</author>
+				<author>R Patel</author>
+				<author>M Clark</author>
+				<author>A Clare</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>S Wu</author>
+				<author>S Wu</author>
+				<author>L Wang</author>
+				<author>X Yi</author>
+				<author>Z Liu</author>
+				<author>J Yan</author>
+				<author>G Yuan</author>
+				<author>T Wei</author>
+				<author>J Wan</author>
+				<author>J Li</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>Mater. Sci. Eng. B Solid-State Mater. Adv. Technol</title>
+			<authors>
+				<author>P Huan</author>
+				<author>B Hue</author>
+				<author>B Hoan</author>
+				<author>N Hanh</author>
+				<author>H Van</author>
+				<author>C Thang</author>
+				<author>H Ho</author>
+				<author>P Tam</author>
+				<author>V Pham</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>N Hai</author>
+				<author>N Linh</author>
+				<author>D Hien</author>
+				<author>B Hoan</author>
+				<author>N Tu</author>
+				<author>P Vuong</author>
+				<author>N Hung</author>
+				<author>V Anh</author>
+				<author>H Van</author>
+			</authors>
+			<date>2023</date>
+		</reference>
+		<reference>
+			<title>New J. Chem</title>
+			<authors>
+				<author>S Sinha</author>
+				<author>M Mahata</author>
+				<author>K Kumar</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>Nanoscale</title>
+			<authors>
+				<author>J Tang</author>
+				<author>L Chen</author>
+				<author>J Li</author>
+				<author>Z Wang</author>
+				<author>J Zhang</author>
+				<author>L Zhang</author>
+				<author>Y Luo</author>
+				<author>X Wang</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Inorg. Chem. Commun</title>
+			<authors>
+				<author>H Van</author>
+				<author>P Tam</author>
+				<author>V Pham</author>
+				<author>D Nguyen</author>
+				<author>C Thang</author>
+				<author>L Minh</author>
+			</authors>
+			<date>2022</date>
+		</reference>
+		<reference>
+			<title>Luminescence</title>
+			<authors>
+				<author>H Van</author>
+				<author>P Tam</author>
+				<author>N Kien</author>
+				<author>P Huy</author>
+				<author>V Pham</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>J. Alloys Compd</title>
+			<authors>
+				<author>W Zhou</author>
+				<author>Z Sun</author>
+				<author>J Luo</author>
+				<author>X Zhang</author>
+				<author>Q Pang</author>
+				<author>L Zhou</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title>J. Lumin</title>
+			<authors>
+				<author>W Xu</author>
+				<author>Y Hu</author>
+				<author>L Zheng</author>
+				<author>Z Zhang</author>
+				<author>W Cao</author>
+				<author>H Liu</author>
+				<author>X Wwu</author>
+			</authors>
+			<date>2019</date>
+		</reference>
+		<reference>
+			<title>J. Cryst. Growth</title>
+			<authors>
+				<author>V Atuchin</author>
+				<author>T Gavrilova</author>
+				<author>T Grigorieva</author>
+				<author>N Kuratieva</author>
+				<author>K Okotrub</author>
+				<author>N Pervukhina</author>
+				<author>N Surovtsev</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>J. Coord. Chem</title>
+			<authors>
+				<author>N Golovnev</author>
+				<author>M Molokeev</author>
+				<author>S Vereshchagin</author>
+				<author>V Atuchin</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Mater. Sci. Eng. B</title>
+			<authors>
+				<author>I Troitskaia</author>
+				<author>T Gavrilova</author>
+				<author>S Gromilov</author>
+				<author>D Sheglov</author>
+				<author>V Atuchin</author>
+				<author>R Vemuri</author>
+				<author>C Ramana</author>
+			</authors>
+			<date>2010</date>
+		</reference>
+		<reference>
+			<title>Ceram. Int</title>
+			<authors>
+				<author>B Wen</author>
+				<author>D Zhang</author>
+				<author>N Zhang</author>
+				<author>J Feng</author>
+				<author>B Jiang</author>
+				<author>F Pan</author>
+				<author>Y Zhang</author>
+				<author>L Yang</author>
+			</authors>
+			<date>2020</date>
+		</reference>
+		<reference>
+			<title>Chem. Mater</title>
+			<authors>
+				<author>W Wang</author>
+				<author>W Widiyastuti</author>
+				<author>T Ogi</author>
+				<author>I Lenggoro</author>
+				<author>K Okuyama</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>Sens. Actuators, B</title>
+			<authors>
+				<author>B Dong</author>
+				<author>B Cao</author>
+				<author>Z Feng</author>
+				<author>X Wang</author>
+				<author>Y He</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>J. Alloys Compd</title>
+			<authors>
+				<author>Z Huang</author>
+				<author>M Yi</author>
+				<author>H Gao</author>
+				<author>Z Zhang</author>
+				<author>Y Mao</author>
+			</authors>
+			<date>2017</date>
+		</reference>
+		<reference>
+			<title>Ceram. Int</title>
+			<authors>
+				<author>M Wang</author>
+				<author>S Ding</author>
+				<author>C Zhang</author>
+				<author>H Ren</author>
+				<author>Y Zou</author>
+				<author>X Tang</author>
+				<author>Q Zhang</author>
+			</authors>
+			<date>2023</date>
+		</reference>
+		<reference>
+			<title>Sens. Actua. B: Chem</title>
+			<authors>
+				<author>R Yadav</author>
+				<author>S Dhoble</author>
+				<author>S Rai</author>
+			</authors>
+			<date>2018</date>
+		</reference>
+		<reference>
+			<title>J. Alloys Compd</title>
+			<authors>
+				<author>P Singh</author>
+				<author>R Yadav</author>
+				<author>P Singh</author>
+				<author>S Rai</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title>Ceram. Int</title>
+			<authors>
+				<author>M Dong</author>
+				<author>T Yin</author>
+				<author>G Guo</author>
+				<author>Z Liu</author>
+				<author>F Wang</author>
+				<author>C Wang</author>
+				<author>L Guan</author>
+				<author>X Li</author>
+			</authors>
+			<date>2024</date>
+		</reference>
+		<reference>
+			<title>Phys. Scripta</title>
+			<authors>
+				<author>I Kumar</author>
+				<author>A Kumar</author>
+				<author>S Kumar</author>
+				<author>G Nair</author>
+				<author>H Swart</author>
+				<author>A Gathania</author>
+			</authors>
+			<date>2023</date>
+		</reference>
+		<reference>
+			<title>Ceram. Int</title>
+			<authors>
+				<author>D Song</author>
+				<author>W Liu</author>
+				<author>Z Yin</author>
+				<author>X Li</author>
+				<author>Q Wang</author>
+				<author>X Yan</author>
+				<author>X Zhang</author>
+				<author>F Wang</author>
+				<author>Y Qin</author>
+				<author>Y Shen</author>
+				<author>Z Zhang</author>
+				<author>Y Zhao</author>
+				<author>T Cheng</author>
+			</authors>
+			<date>2023</date>
+		</reference>
+		<reference>
+			<title>Ceram. Int</title>
+			<authors>
+				<author>S Samal</author>
+				<author>J Pushpendra</author>
+				<author>B Yadav</author>
+				<author>Naidu</author>
+			</authors>
+			<date>2023</date>
+		</reference>
+		<reference>
+			<title>Mater. Today Commun</title>
+			<authors>
+				<author>J Huang</author>
+				<author>Z Han</author>
+				<author>B Fu</author>
+				<author>H Yan</author>
+				<author>J Liao</author>
+				<author>G Gong</author>
+				<author>H Wen</author>
+			</authors>
+			<date>2022</date>
+		</reference>
+		<reference>
+			<title>ACS Appl. Mater. Interfaces</title>
+			<authors>
+				<author>Y Wang</author>
+				<author>L Lei</author>
+				<author>R Ye</author>
+				<author>G Jia</author>
+				<author>Y Hua</author>
+				<author>D Deng</author>
+				<author>S Xu</author>
+			</authors>
+			<date>2021</date>
+		</reference>
+		<reference>
+			<title>Appl. Phys. A: Mater. Sci. Process</title>
+			<authors>
+				<author>S Wang</author>
+				<author>S Zheng</author>
+				<author>H Zhou</author>
+				<author>A Pan</author>
+				<author>G Wu</author>
+				<author>J Liu</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Appl. Phys. B Laser Opt</title>
+			<authors>
+				<author>G Sui</author>
+				<author>X Li</author>
+				<author>L Cheng</author>
+				<author>J Zhang</author>
+				<author>J Sun</author>
+				<author>H Zhong</author>
+				<author>Y Tian</author>
+				<author>S Fu</author>
+				<author>B Chen</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>Ceram. Inter</title>
+			<authors>
+				<author>I Kumar</author>
+				<author>A Kumar</author>
+				<author>S Kumar</author>
+				<author>H Thakur</author>
+				<author>N Dhiman</author>
+				<author>A Gathania</author>
+			</authors>
+			<date>2023</date>
+		</reference>
+		<reference>
+			<title>IEEE Photon. J</title>
+			<authors>
+				<author>I Kumar</author>
+				<author>A Kumar</author>
+				<author>S Kumar</author>
+				<author>V Sangwan</author>
+				<author>A Gathania</author>
+			</authors>
+			<date>2024</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1016/j.cej.2023.144550</number>
+		<number>DOI-10.1021/acs.inorgchem.9b00646</number>
+		<number>DOI-10.1016/j.sna.2020.112321</number>
+		<number>DOI-10.3390/photonics9110805</number>
+		<number>DOI-10.1002/advs.202303527</number>
+		<number>DOI-10.1021/acs.inorgchem.0c01543</number>
+		<number>DOI-10.1016/j.snb.2012.01.068</number>
+		<number>DOI-10.1016/j.jallcom.2019.152691</number>
+		<number>DOI-10.1016/j.jallcom.2021.162516</number>
+		<number>DOI-10.1016/j.jallcom.2017.04.060</number>
+		<number>DOI-10.1016/j.ceramint.2020.11.195</number>
+		<number>DOI-10.1063/1.5010698</number>
+		<number>DOI-10.1016/j.sna.2020.112302</number>
+		<number>DOI-10.1016/j.jallcom.2021.162673</number>
+		<number>DOI-10.1016/j.cis.2023.102890</number>
+		<number>DOI-10.1016/j.cis.2023.103013</number>
+		<number>DOI-10.1039/D2NR06795A</number>
+		<number>DOI-10.1021/acsanm.2c04358</number>
+		<number>DOI-10.3390/ijms24043446</number>
+		<number>DOI-10.1039/D3SC05344J</number>
+		<number>DOI-10.1016/j.colsurfa.2020.125223</number>
+		<number>DOI-10.1016/j.msec.2021.112387</number>
+		<number>DOI-10.1016/j.jinorgbio.2019.110884</number>
+		<number>DOI-10.1016/j.matchemphys.2021.124752</number>
+		<number>DOI-10.1016/j.cej.2013.02.037</number>
+		<number>DOI-10.1016/j.msec.2016.10.047</number>
+		<number>DOI-10.1016/j.dental.2016.02.002</number>
+		<number>DOI-10.1016/j.msec.2010.11.025</number>
+		<number>DOI-10.1039/D0NJ04847J</number>
+		<number>DOI-10.1016/j.jallcom.2021.159483</number>
+		<number>DOI-10.1016/j.jallcom.2020.154288</number>
+		<number>DOI-10.1016/j.ceramint.2010.08.021</number>
+		<number>DOI-10.1021/acsabm.9b00488</number>
+		<number>DOI-10.1016/j.biomaterials.2010.03.058</number>
+		<number>DOI-10.1016/j.actbio.2019.02.045</number>
+		<number>DOI-10.1016/j.rinp.2016.11.064</number>
+		<number>DOI-10.1016/j.actamat.2018.07.059</number>
+		<number>DOI-10.1039/C7RA11408G</number>
+		<number>DOI-10.1016/j.mseb.2020.114794</number>
+		<number>DOI-10.1039/C9NJ00760A</number>
+		<number>DOI-10.1039/C5NR04125B</number>
+		<number>DOI-10.1002/bio.3257</number>
+		<number>DOI-10.1016/j.jallcom.2020.157188</number>
+		<number>DOI-10.1016/j.jlumin.2019.01.005</number>
+		<number>DOI-10.1016/j.jcrysgro.2010.10.149</number>
+		<number>DOI-10.1080/00958972.2013.860450</number>
+		<number>DOI-10.1016/j.mseb.2010.05.016</number>
+		<number>DOI-10.1016/j.ceramint.2020.01.044</number>
+		<number>DOI-10.1021/cm062887p</number>
+		<number>DOI-10.1016/j.snb.2012.01.068</number>
+		<number>DOI-10.1016/j.jallcom.2016.09.322</number>
+		<number>DOI-10.1016/j.ceramint.2023.09.092</number>
+		<number>DOI-10.1016/j.snb.2018.07.049</number>
+		<number>DOI-10.1016/j.jallcom.2020.157452</number>
+		<number>DOI-10.1088/1402-4896/acfa2b</number>
+		<number>DOI-10.1016/j.ceramint.2023.06.156</number>
+		<number>DOI-10.1016/j.ceramint.2023.03.127</number>
+		<number>DOI-10.1021/acsami.1c05611</number>
+		<number>DOI-10.1007/s00339-015-9480-x</number>
+		<number>DOI-10.1007/s00340-012-5281-5</number>
+		<number>DOI-10.1016/j.ceramint.2023.09.030</number>
+		<number>DOI-10.1109/JPHOT.2024.3392566</number>
+	</reference_dois>
+</document>

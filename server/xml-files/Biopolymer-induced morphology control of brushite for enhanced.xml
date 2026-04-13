@@ -1,0 +1,593 @@
+<document>
+	<file>./pdf-files/Biopolymer-induced morphology control of brushite for enhanced.pdf</file>
+	<title>Biopolymer-induced morphology control of brushite for enhanced defluorination of drinking water</title>
+	<date>2017</date>
+	<doi_number>10.1016/j.jcis.2016.12.032</doi_number>
+	<img_preview_path>./pdf-preview-images/Biopolymer-induced morphology control of brushite for enhanced.jpeg</img_preview_path>
+	<authors>
+		<author>Yanhong Chen</author>
+		<author>Chensi Shen</author>
+		<author>Sadia Rashid</author>
+		<author>Su Li</author>
+		<author>Babar Aijaz Ali</author>
+		<author>Jianshe Liu</author>
+	</authors>
+	<abstract>Due to the relatively lower potential health risks as well as the good affinity for fluoride anion, calciumbased minerals have been widely carried out for the adsorption of fluoride. The improvement of adsorption capacity can be accomplished by regulation of particle size, shape and structure. Thus, here we report the controllable synthesis of petal-like nanosheets of brushite by using chitosan as a regulator. The addition of chitosan polymer in calcium precursor not only could serve ideal nucleation sites but also could play a vital role in confining the calcium phosphate aggregates and thus controlling the size of the brushite flakes. When the concentration of chitosan was 0.01 wt%, the as-synthesized brushite showed nanosheet-structured with the dimensions ranged from 100 to 200 nm and displayed outstanding fluoride adsorption capacity of 231.5 mg/g according to the fitted Langmuir model, which was comparatively higher than that of the previously reported calcium-based adsorbents. Moreover, the pH change and common co-existing anions in solution almost presented less negative effect on the F À adsorption onto petallike brushite nanosheets. We hope that these petal-like nanosheets based on green nanotechnology can help to achieve the intention of safe drinking water.</abstract>
+	<methods>
+		<method>
+			<heading>Materials</heading>
+			<text>Chitosan (medium molecular weight) was bought from Sigma-Aldrich. NaF, CaCl 2 , NaCl, NaH 2 PO 4 Á2H 2 O, Na 2 SO 4 , Na 2 CO 3 , NaHCO 3 , NaNO 3 and NaOH was purchased from National Medicines Corporation Ltd. of China. All chemicals were of analytical grade. Double distilled water was used during all experiments and other chemicals were used without any further purification.</text>
+		</method>
+		<method>
+			<heading>Synthesis of brushite</heading>
+			<text>The procedure employed for the synthesis of brushite nanosheet is as follows. The CaCl 2 and NaH 2 PO 4 were used as Ca and P sources, respectively. 0.108 M CaCl 2 and 0.5 M NaOH solution were obtained by dissolving CaCl 2 and NaOH in distilled water, respectively. First, chitosan solution of 0-1 wt% was prepared by dissolving chitosan powder in 50 mL 2% (v/v) acetic acid solution. Then, 50 mL of CaCl 2 solution was transferred into the chitosan solution and stirring for 1 h at the room temperature. Then NaH 2 -PO 4 was dissolved in calcium precursor. The reactant molar ratio of Ca/P was kept at 0.108. While, the solution of NaOH was dropped slowly to adjust the pH at 12. After homogenous mixing, the solution was left for 24 h. At last, the suspensions were obtained and washed with doubly distilled water. The synthesized compound was formed by freeze drying technology.</text>
+		</method>
+		<method>
+			<heading>Adsorption experiment</heading>
+			<text>Batchwise experiments were conducted in 50 mL conical flask. The reaction mixture was initiated with 20 mL of F À solution at 10 mg/L, after the addition of as-synthesized brushite (0.05 g), the flasks were sealed and shaken at 200 rpm for predetermined time intervals in a constant temperature. To study the effect of pH on defluorination, the F À solution pH value was adjusted from 3 to 10 by using 0.1 mol/L HCl and 0.1 mol/L NaOH, respectively. The concentration of flouride were analyzed by using the fluoride ion selective electrode (MettlerToledo, perfectION TM ).
+
+F À adsorption isotherms of as-synthesized brushite nanosheets were carried out using the batch slurry method. The slurry, containing 0.05 g of as-synthesized brushite and 20 mL of F À solution at various concentrations, and they was agitated at 200 rpm in a thermostatic shaker until the equilibrium was reached at temperatures of 25 °C, respectively. The amount of adsorbed F À , q e , was calculated by Eq. ( 1):
+
+where q e is the F À capacity in the sorbent at equilibrium (mg/g), C 0 is the initial F À concentration in the liquid phase (mg/L), C e is the liquid-phase F À concentration at equilibrium (mg/L), V is the volume of solution (L), and M is the mass of sorbent used (g) [20].</text>
+		</method>
+		<method>
+			<heading>Materials characterization</heading>
+			<text>X-ray Diffraction (XRD) patterns of different samples were measured using aD/MAX-2550/PC diffractometer (Rigaku, Japan) with a Cu K a ray source (k = 1.54 Å). The scanning diffraction angle range was set at 10-90°and the scan rate was 2°(2h) per minute with the spectra being recorded at 40 kV and 36 mA.
+
+Scanning Electron Microscope (SEM) micrographs were taken on a field emission scanning electron microscope Quanta 250 (FEI, SIRON) at a voltage of 25.0 kV to test the morphological characterization of samples. The sample surfaces were gold-coated before analysis.
+
+Transmission Electron Microscopy (TEM) and High-resolution Transmission Electron Microscopy (HRTEM) (JEM-2100, Japan) were used to analyze the microstructure of the brushite nanosheet.
+
+Brunauer-Emmett-Teller (BET) surface area and Barrett-Joyner-Halenda (BJH) (JW-BK132F, China) pore size distribution analysis of the optimized sample were measured through N 2 adsorptiondesorption isotherms to analyze the microstructure of the brushite nanosheet.
+
+Thermo gravimetric analysis (TGA) was carried out using NETZSCH (TG 209 F1 Libra) with a heating rate of 10 °C min À1 , under nitrogen flow at a rate of 60 mL min À1 .
+
+X-ray absorption spectroscopy (XAS) was measured at the beam lines BL08U1A of the Shanghai Synchrotron Irradiation Facility (SSRF) with stored electron energy of 3.5 GeV and ring currents of 200 mA. The Ca L-edge XAS measurements were performed in total electron yield (TEY) mode at room temperature.</text>
+		</method>
+	</methods>
+	<full_text>Fluoride is an essential element for animals and humans, but the ingestion of elevated fluoride concentrations via drinking water will cause a number of diseases, such as fetal cerebral func-tion, neurotransmitter and dental/skeletal fluorosis [1][2][3]. Among various methods used for defluorination of water, the adsorption process is widely used and offers satisfactory results and seems to be a more attractive method for the removal of fluoride in terms of cost, simplicity of design and operation [4][5][6].
+
+Due to the relatively lower potential health risks along with good affinity for fluoride anion, calcium-based minerals including calcite [7], brushite [8], hydroxyapatite and apatite [9,10] have been extensively used for deflourination [4,11]. Various researchers have used calcium-based minerals to synthesize miscellaneous adsorbents by different ways in order to improve their potential for defluorination. Development of novel nanostructures allows optimization of known properties and, in some cases, development of entirely new properties or behaviors [12]. For example, Pandi et al., prepared the alginate bioencapsulating nano-hydroxyapatite to overcome the significant pressure and it drops during field applications [13], Chen et al., synthesized the sulfate-doped hydroxyapatite hierarchical hollow microspheres to enhance the fluoride removal in water [14] and He et al., prepared ultra-long hydroxyapatite nanowires as adsorbents with enhanced adsorption capacity for fluoride removal [3]. Although the adsorption ability of calcium-based minerals have been improved a lot through these technologies, it still exists a vast promotion roomage.
+
+In nature, mineralized material nucleation and growth are often controlled via organic macromolecules such as protein and polysaccharides [15]. Chitosan, containing abundant reactive hydroxyl and amine groups, is the second most abundant polysaccharide in the world after cellulose [16]. It has been published that chitosan had significant effects on zeolite nucleation and growth [17][18][19]. In these cases, the small crystal sizes are due to space confinement of the polymer hydrogel networks and structures depend on the interaction between the polymer chains with the zeolite gels [17][18][19]. These results suggest that chitosan polymer might be a good candidate for confining the aggregates of calciumbased minerals and thus controlling the size of the minerals which providing an environmental friendly and simple method for morphology and control of mineralized material for the enhancement of defluorination efficiency.
+
+Therefore, in this achievement, chitosan polymer was applied to control the morphology of brushite in order to enhance its defluorination ability. A simple synthesis of petal-like nanosheets of brushite at room temperature without using organic solvents was promulgated. During this study, morphology, structure, thermal and surface area were investigated. Meanwhile, the adsorption capacity, pH, and time for fluoride removal and loading capacity in presence of other anions were evaluated for drinking water purification requires.
+
+Chitosan (medium molecular weight) was bought from Sigma-Aldrich. NaF, CaCl 2 , NaCl, NaH 2 PO 4 Á2H 2 O, Na 2 SO 4 , Na 2 CO 3 , NaHCO 3 , NaNO 3 and NaOH was purchased from National Medicines Corporation Ltd. of China. All chemicals were of analytical grade. Double distilled water was used during all experiments and other chemicals were used without any further purification.
+
+The procedure employed for the synthesis of brushite nanosheet is as follows. The CaCl 2 and NaH 2 PO 4 were used as Ca and P sources, respectively. 0.108 M CaCl 2 and 0.5 M NaOH solution were obtained by dissolving CaCl 2 and NaOH in distilled water, respectively. First, chitosan solution of 0-1 wt% was prepared by dissolving chitosan powder in 50 mL 2% (v/v) acetic acid solution. Then, 50 mL of CaCl 2 solution was transferred into the chitosan solution and stirring for 1 h at the room temperature. Then NaH 2 -PO 4 was dissolved in calcium precursor. The reactant molar ratio of Ca/P was kept at 0.108. While, the solution of NaOH was dropped slowly to adjust the pH at 12. After homogenous mixing, the solution was left for 24 h. At last, the suspensions were obtained and washed with doubly distilled water. The synthesized compound was formed by freeze drying technology.
+
+Batchwise experiments were conducted in 50 mL conical flask. The reaction mixture was initiated with 20 mL of F À solution at 10 mg/L, after the addition of as-synthesized brushite (0.05 g), the flasks were sealed and shaken at 200 rpm for predetermined time intervals in a constant temperature. To study the effect of pH on defluorination, the F À solution pH value was adjusted from 3 to 10 by using 0.1 mol/L HCl and 0.1 mol/L NaOH, respectively. The concentration of flouride were analyzed by using the fluoride ion selective electrode (MettlerToledo, perfectION TM ).
+
+F À adsorption isotherms of as-synthesized brushite nanosheets were carried out using the batch slurry method. The slurry, containing 0.05 g of as-synthesized brushite and 20 mL of F À solution at various concentrations, and they was agitated at 200 rpm in a thermostatic shaker until the equilibrium was reached at temperatures of 25 °C, respectively. The amount of adsorbed F À , q e , was calculated by Eq. ( 1):
+
+where q e is the F À capacity in the sorbent at equilibrium (mg/g), C 0 is the initial F À concentration in the liquid phase (mg/L), C e is the liquid-phase F À concentration at equilibrium (mg/L), V is the volume of solution (L), and M is the mass of sorbent used (g) [20].
+
+X-ray Diffraction (XRD) patterns of different samples were measured using aD/MAX-2550/PC diffractometer (Rigaku, Japan) with a Cu K a ray source (k = 1.54 Å). The scanning diffraction angle range was set at 10-90°and the scan rate was 2°(2h) per minute with the spectra being recorded at 40 kV and 36 mA.
+
+Scanning Electron Microscope (SEM) micrographs were taken on a field emission scanning electron microscope Quanta 250 (FEI, SIRON) at a voltage of 25.0 kV to test the morphological characterization of samples. The sample surfaces were gold-coated before analysis.
+
+Transmission Electron Microscopy (TEM) and High-resolution Transmission Electron Microscopy (HRTEM) (JEM-2100, Japan) were used to analyze the microstructure of the brushite nanosheet.
+
+Brunauer-Emmett-Teller (BET) surface area and Barrett-Joyner-Halenda (BJH) (JW-BK132F, China) pore size distribution analysis of the optimized sample were measured through N 2 adsorptiondesorption isotherms to analyze the microstructure of the brushite nanosheet.
+
+Thermo gravimetric analysis (TGA) was carried out using NETZSCH (TG 209 F1 Libra) with a heating rate of 10 °C min À1 , under nitrogen flow at a rate of 60 mL min À1 .
+
+X-ray absorption spectroscopy (XAS) was measured at the beam lines BL08U1A of the Shanghai Synchrotron Irradiation Facility (SSRF) with stored electron energy of 3.5 GeV and ring currents of 200 mA. The Ca L-edge XAS measurements were performed in total electron yield (TEY) mode at room temperature.
+
+Tremendous difference in the morphology of brushite which was prepared with different content of chitosan was shown in Fig. 1. It shows that structures were mainly controlled by the content of chitosan in the composites. In the absence of chitosan, brushite was in a typical large tabular habit (Fig. 1A1 andA2), which was the most common crystal morphology of brushite [21]. Once the chitosan was added into the calcium precursor during the preparation, the patterns of powders produced the formation of other brushite phases. When the content of chitosan was 0.01 wt%, a fine structure presented under SEM image with higher magnification. The image shows that the petal-like nanosheets overflow the whole composites. Their side lengths ranged from 100 to 200 nm and the thicknesses were less than 10 nm, while the dimensions of common brushite was larger than 10 lm. When the chitosan content in precursor were more than 0.09 wt% (Fig. 1E1, E2, F1 and F2), the brushites were no longer uniform and the amorphous part like chitosan were found. Then, these composites were tested for defluorination efficiency by normal adsorption process (Fig. 1G). The sample which was prepared by the calcium precursor with 0.01 wt% chitosan displayed the best defluorination efficiency of 99.48%. Meanwhile, the initial chitosan powder was also applied for F À removal under the same adsorption condition in order to investigate the defluorination efficiency. The result shows that only 7.1% of F À was adsorbed by initial chitosan powder. Thus, we regard that the enhanced defluorination ability of brushite was attributed to its unique morphology of nano petal-like flakes.
+
+To further study the control growth of brushite and to discover the relationship between morphology with defluorination activity, the XRD analysis was done. XRD pattern (Fig. 2a) indicates that synthesized sample has structure of brushite and all the observed diffraction peaks were related to brushite. While, no obvious chitosan phases was found in all XRD patterns. It could be associated to the relatively lower content of chitosan in the as-synthesized brushite. The brushite which was prepared without chitosan displayed a very strong (0 2 0) peak with other weaker diffraction peaks. According to the published studies, the products with such XRD patterns usually exhibited a plate-like structure, which was based on a-c plate [22]. When the chitosan was used to control the growth of brushite, the samples also had a strong ð0 2 0Þ peak, but the other diffraction peaks such as ð 1 2 1Þ and ð 1 4 1Þ were of comparable strength. The morphology of these samples displayed the petal-like amorphous structure. These differences in XRD patterns signify the possibility of the structural changes such as reduction in the size on [0 2 0] crystallographic direction [23], which might affect the F À adsorption a lot.
+
+For further confirmation, the petal-like nanosheets of brushite with the highest defluorination efficiency was investigated by TEM and HR-TEM. Fig. 2b B1 and B2 show TEM images of petallike nanostructured brushite, from which one can see the nanosheets with relatively uniform size, corresponding to the SEM images in Fig. 2b A1-A3. Fig. 2b B3 shows the HR-TEM image of brushite nanosheets. The periodic fringe spacing of 0.4247 nm and 0.3046 nm corresponds to the d-spacing of ð 1 2 1Þ and ð 1 4 1Þ planes of brushite.The prepared brushites were also taken for TGA characterization. Upon heating, the samples with or without chitosan show a similar behavior (Fig. 3a). The obtained TGA curve shows that as the temperature increased, there were two stages of weight loss in the samples. First stage is dehydration of brushite crystals with a weight loss of 15-25% between 75 °C and 300
+
+In the second stage, at higher temperature between 300 °C and 500 °C, two molecules of CaHPO 4 combine with each other and they will give the result in the decomposition that occurs with elimination of water molecules, which is leading to the formation of calcium pyrophosphate (c-Ca 2 P 2 O 7 ,
+
+Dm ¼ 6:6%) [24,25]. It is worth noting that the addition of chitosan in calcium precursor did not present negative effect on the stability of brushite. Instead, the change of morphology decreased the dehydration of brushite in both the first and the second stages. The surface area, pore volume, and pore size were obtained using Brunauer-Emmett-Teller (BET) and Barrett-Joyner-Halenda (BJH) methods, which play an important role in the fluoride adsorption [26]. BET multipoint surface area values were calculated to be 4.94, 6.90, 31.16, 17.77 and 3.63 m 2 /g, respectively, for the brushite prepared with 0, 0.005, 0.01, 0.09, 1 wt% chitosan.
+
+Fig. 4a shows the relationship between surface area with defluorination efficiency of as-synthesized brushite. It indicated that the addition of chitosan polymer in calcium precursor played an important role in controlling the surface area of brushite flakes and the defluorination efficiency of brushite was obviously improved with the increase of surface area. The only exception was the brushite prepared without chitosan. Although its surface area (4.94 m 2 /g) was smaller than the brushite prepared with 0.005 wt% chitosan (6.90 m 2 /g), its defluorination efficiency was higher, suggesting that the chitosan polymer might cover the adsorption active site of brushite. Meanwhile, the relationship between pore volume with defluorination efficiency is shown in Fig. 4b, which indicates the similar trend with that of surface area. Additionally, Fig. 4c shows N 2 adsorption-desorption isotherms of synthesized brushite with or without chitosan. For the brushite prepare with 0.01 wt% chitosan, the isotherms shows discrete hysteresis loop starting from P/P 0 $ 0.45 indicating the presence of inter-connected as well as structurally open pores [27]. And the pore size distributions (Fig. 4d) computed on the basis of BJH analysis indicate a distribution with the maximum centered from 2.4 and 3.6 nm for the brushite prepared with 0.01 wt% chitosan, while the pore volume of the brushite prepared without chitosan was smaller. Hence, we regarded that the defluorination efficiency of brushite could be enhanced when the suitable morphology was controlled by tunning the chitosan content in calcium precursor.
+
+Rapid interaction of the pollutants to be separated with the adsorbent is desirable and beneficial for practical adsorption applications [20]. Fig. 5a-c presents the adsorption kinetics for fluoride (F À ) removal at different initial concentrations. It can be observed from Fig. 5a that the uptake of F À on brushite nanosheets was a relatively fast process. The amount of F À adsorption increased rapidly in the first 10 min, which contributed to 90% of the ultimate adsorption amount, and then augmented slowly and approached the adsorption equilibrium in 30 min. Meanwhile, the total amount of adsorbed F À increased with the increasing of initial F À concentrations. To determine the rate-controlling and mass transfer mechanism, kinetic data were correlated to linear forms of the pseudo-first-order rate model and the second-order rate model (Text S1 in supplementary materials). Rate constant values were determined from the intercepts of the curves and are given in Table S1 in supplementary materials. Correlating kinetic data with the above two rate models, and it was found that the plot of t/q t against time using different initial F À concentrations gives straight lines (Fig. 5c), which is higher than the correlation degree of pseudo-firstorder model (Fig. 5b and Table S1 in supplementary materials). This indicates that the present sorption system follows predominantly the pseudo second-order rate model and the overall process appears to be controlled by chemisorption [28]. Secondly, the maximum adsorption capacity also is an indispensable parameter for a new adsorbent. The isotherm models such as Freundlich, Langmuir and Freundlich-Langmuir are frequently used (Text S2 in supplementary materials). The results are shown in Fig. 5d and Table S2 in supplementary materials. The adsorption of F À by brushite nanosheets fits the Langmuir isotherm model (R 2 = 0.9403) best. It suggests that the F À adsorption could be regarded as the monolayer adsorption occurring on an energetically uniform surface, on which the adsorbed molecules are not interactive. According to the parameters of Langmuir model, the maximum adsorption capacity was found to be 231.5 mg/g, which was higher than the previously reported calcium-based adsorbents (Table 1), indicating the advantage of morphology controlled for brushite by appropriate content of chitosan.
+
+Additionally, the pH of solution would make vital effect during the whole adsorption process and particularly on the effectiveness of treatment, influencing the surface charge and the active sites of the adsorbent [29]. As shown in Fig. 5e, although the rate of F À adsorption slowly decreased with the increase of pH, brushite nanosheets could maintain high adsorption efficiency (&gt;99%) after the adsorption time of 60 min under a wide pH condition which ranged from 3 to 10. Under the alkaline conditions, the protonated active sites would decreased and the large amounts of OH À ions might compete with F À ions for the sorption sites through ionexchange [30]. However, in this study, the increase of pH shows relatively less negative effect on adsorption efficiency due to its high defluorination ability.
+
+Further, in natural environment, the coexisting anion ions may imply competition for available adsorption sites in F À adsorption process. Fig. 5f shows the fluoride removal rate by the brushite nanosheets in the presence of different anions (Cl À , SO 4 2À , NO 3 À , HCO 3
+
+À and CO 3
+
+) at the concentrations of 0-500 mg/L. The fluoride removal rate maintained above 90% in the presence of Cl À , NO 3 À , HCO 3
+
+À and SO 4
+
+. The reduction in fluoride removal rate in the presence of CO 3 2À might be attributed to the competition of active sorption sites on the adsorbent [31]. According to the published study, the ratio of charge towards radius (z/r) of the anions are in the order of CO 3 2À &gt; HCO 3 À &gt; SO 4 2À &gt; NO 3 À &gt; Cl À , and this z/r value  of the anions was closely correlated with their affinity to the adsorbent [2]. The higher z/r value led to stronger interaction between the anions and the adsorbent. Thus, the competition of CO 3 2À ions needs urgent attention when this adsorbent is used for practical application.
+
+The above results demonstrated that the morphology of brushite could be controlled successfully using chitosan as a regulator. When the concentration of chitosan was 0.01 wt%, the assynthesized brushite showed flake-like structured with the dimensions ranged from 100 to 200 nm and displayed best fluoride adsorption efficiency. The effect of chitosan on brushite morphology may be related to the complexation properties of chitosan. The abundant amine groups (ANH 2 ) and hydroxyl group (AOH) of chitosan can chelate with Ca 2+ ions, and produce locally a high degree of super-saturation in the solution (Fig. 6a). This process is followed by the attraction of PO 4 3À and OH À towards these uniformly distributed Ca sites, so as to initiate brushite crystallization process on chitosan (Fig. 6b) [15,32]. According to the previous studies, it has also been observed that organic polymers such as chitosan have significant effects on zeolite crystallization [17,33,34]. The addition of water-soluble polymers in the calcium precursor may not only could serve ideal nucleation sites but also could play a role in confining the calcium phosphate aggregates and thus controlling the size of the brushite nanosheets (Fig. 6c) [33]. But, the excess chitosan polymer formed entwined network leading to the formation of amorphous structure. When the content of chitosan in calcium precursor was 0.01 wt%, a fine structure presented under SEM images with higher magnification, which the petal-like nanosheets overflow the whole composites. Further, the surface area and pore volume analyses demonstrate that the brushite synthesized with 0.01 wt% chitosan have the largest surface area (31.16 m 2 /g) and pore volume (0.1545 cm 3 /g) among all as-synthesized brushite, which could provide more active sites for F À adsorption. The defluorination efficiency of brushite was enhanced when the suitable morphology was controlled by tunning the chitosan content in calcium precursor and 0.01 wt% of chitosan in calcium precursor was performed outstanding. The most reported mechanism of fluoride removal by calciumbased minerals was governed by both adsorption and ionexchange. The positively charged Ca 2+ which present in the surface of minerals attracted negatively charged fluoride ions by means of electrostatic attraction. Additionally, the OH À ions of mineral lattice were replaced by F À ions by means of ion-exchange [13,30,35,36]. To provide further evidence of fluoride adsorption mechanism, X-ray absorption near-edge structure (XANES) at the Ca L-edge was conducted in Fig. 6d. The Ca L 3,2 -edge XANES spectra of brushite nanosheets and model compounds consist of two main spin-orbit related peaks, along with smaller peaks which appear to precede the main peaks. The main spin-orbit peaks was located at 348.9 eV (L 3 ) and 352.2 eV (L 3 ), which was most similar to model compound hydroxyapatite, indicating the similar Ca 2+ coordination type of these two calcium-based minerals. Meanwhile, it could be found that the smaller leading peak (labelled as ''⁄&quot;) of brushite nanosheet became sharp and intensive after the adsorption of F À . It is indicated that the coordination symmetry of Ca(II) was changed, according to that the smaller leading peaks is sensitive to the symmetry of atoms surrounding the Ca 2+ ion in the first coordination sphere [37]. Additionally, the peaks of L 3 and L 2 shifted to lower energy by 0.2 eV. It was important indication for the occurrence of ion exchange between brushite nanosheet and fluoride. Further, the L 3,2 -edge spectrum of brushite nanosheet after the adsorption showed totally different splitting in L 3,2 -edge with CaF 2 , indicating that there was almost no CaF 2 precipitation formed in the surface of brushite nanosheets.
+
+In summary, we have demonstrated that the chitosan polymer in calcium precursor not only could serve ideal nucleation sites but also could play an important role in confining the calcium phosphate aggregates and thus controlling the size of the brushite. Due to the unique structure, the as-synthesized petal-like brushite nanosheets showed a high F À adsorption capacity of 231.5 mg/g (Langmuir model), which was found to be relatively higher than that of the previously reported calcium-based adsorbents. Moreover, the pH change and common co-existing anions in solution almost presented less negative effect on the F À adsorption onto petal-like brushite nanosheets.
+
+Y. Chen et al. / Journal of Colloid and Interface Science 491 (2017) 207-215
+
+Y. Chen et al. / Journal of Colloid and Interface Science 491 (2017) 207-215</full_text>
+	<references>
+		<reference>
+			<title>J. Mol. Liq</title>
+			<authors>
+				<author>I Ali</author>
+				<author>Z Alothman</author>
+				<author>M Sanagi</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>D Tang</author>
+				<author>G Zhang</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>J He</author>
+				<author>K Zhang</author>
+				<author>S Wu</author>
+				<author>X Cai</author>
+				<author>K Chen</author>
+				<author>Y Li</author>
+				<author>B Sun</author>
+				<author>Y Jia</author>
+				<author>F Meng</author>
+				<author>Z Jin</author>
+				<author>L Kong</author>
+				<author>J Liu</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>A Bhatnagar</author>
+				<author>E Kumar</author>
+				<author>M Sillanpaa</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>J. Environ. Manage</title>
+			<authors>
+				<author>M Mohapatra</author>
+				<author>S Anand</author>
+				<author>B Mishra</author>
+				<author>D Giles</author>
+				<author>P Singh</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>J. Fluorine Chem</title>
+			<authors>
+				<author>P Miretzky</author>
+				<author>A Cirelli</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Sep. Purif. Technol</title>
+			<authors>
+				<author>S Budyanto</author>
+				<author>Y Kuo</author>
+				<author>J Liu</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>Desalination</title>
+			<authors>
+				<author>M Mourabet</author>
+				<author>H Boujaady</author>
+				<author>A Rhilassi</author>
+				<author>H Ramdane</author>
+				<author>M Bennani-Ziatni</author>
+				<author>R Hamri</author>
+				<author>A Taitai</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>J. Fluorine Chem</title>
+			<authors>
+				<author>S Gao</author>
+				<author>J Cui</author>
+				<author>Z Wei</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Environ. Sci. Technol</title>
+			<authors>
+				<author>V Sternitzke</author>
+				<author>R Kaegi</author>
+				<author>J Audinot</author>
+				<author>E Lewin</author>
+				<author>J Hering</author>
+				<author>C Johnson</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>C Shen</author>
+				<author>L Wu</author>
+				<author>Y Chen</author>
+				<author>S Li</author>
+				<author>S Rashid</author>
+				<author>Y Gao</author>
+				<author>J Liu</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Angew. Chem. Int. Ed</title>
+			<authors>
+				<author>L Qiao</author>
+				<author>W Zhao</author>
+				<author>Y Qin</author>
+				<author>M Swihart</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Carbohyd. Polym</title>
+			<authors>
+				<author>K Pandi</author>
+				<author>N Viswanathan</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Chem. Eng. J</title>
+			<authors>
+				<author>L Chen</author>
+				<author>K.-S Zhang</author>
+				<author>J.-Y He</author>
+				<author>W.-H Xu</author>
+				<author>X.-J Huang</author>
+				<author>J.-H Liu</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Desalination</title>
+			<authors>
+				<author>N Mahmoodi</author>
+				<author>R Salehi</author>
+				<author>M Arami</author>
+				<author>H Bahrami</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Appl. Surf. Sci</title>
+			<authors>
+				<author>D He</author>
+				<author>X Xiao</author>
+				<author>F Liu</author>
+				<author>R Liu</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Angew. Chem. Int. Ed</title>
+			<authors>
+				<author>J Yao</author>
+				<author>D Li</author>
+				<author>X Zhang</author>
+				<author>C Kong</author>
+				<author>W Yue</author>
+				<author>W Zhou</author>
+				<author>H Wang</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Adv. Mater</title>
+			<authors>
+				<author>X Wang</author>
+				<author>B Zhang</author>
+				<author>X Liu</author>
+				<author>J Lin</author>
+			</authors>
+			<date>2006</date>
+		</reference>
+		<reference>
+			<title>Micropor. Mesopor. Mater</title>
+			<authors>
+				<author>D Li</author>
+				<author>Y Huang</author>
+				<author>K Ratinac</author>
+				<author>S Ringer</author>
+				<author>H Wang</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Water Res</title>
+			<authors>
+				<author>C Shen</author>
+				<author>Y Shen</author>
+				<author>Y Wen</author>
+				<author>H Wang</author>
+				<author>W Liu</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Front. Mater. Sci</title>
+			<authors>
+				<author>L He</author>
+				<author>L Yao</author>
+				<author>R Xue</author>
+				<author>J Sun</author>
+				<author>R Song</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>J. Asian Ceram. Soc</title>
+			<authors>
+				<author>T Toshima</author>
+				<author>R Hamai</author>
+				<author>M Tafu</author>
+				<author>Y Takemura</author>
+				<author>S Fujita</author>
+				<author>T Chohji</author>
+				<author>S Tanda</author>
+				<author>S Li</author>
+				<author>G Qin</author>
+			</authors>
+			<date>2014</date>
+		</reference>
+		<reference>
+			<title>Cryst. Eng. Comm</title>
+			<authors>
+				<author>X Yang</author>
+				<author>Z Li</author>
+				<author>G Liu</author>
+				<author>J Xing</author>
+				<author>C Sun</author>
+				<author>H Yang</author>
+				<author>C Li</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Chem. Mater</title>
+			<authors>
+				<author>A Shkilnyy</author>
+				<author>J Brandt</author>
+				<author>A Mantion</author>
+				<author>O Paris</author>
+				<author>H Schlaad</author>
+				<author>A Taubert</author>
+			</authors>
+			<date>2009</date>
+		</reference>
+		<reference>
+			<title>Thermochim. Acta</title>
+			<authors>
+				<author>R Frost</author>
+				<author>S Palmer</author>
+			</authors>
+			<date>2011</date>
+		</reference>
+		<reference>
+			<title>Biomaterials</title>
+			<authors>
+				<author>T Chung</author>
+				<author>S Wu</author>
+				<author>M Yao</author>
+				<author>C Lu</author>
+				<author>Y Lin</author>
+				<author>Y Hung</author>
+				<author>C Mou</author>
+				<author>Y Chen</author>
+				<author>D Huang</author>
+			</authors>
+			<date>2007</date>
+		</reference>
+		<reference>
+			<title>RSC Adv</title>
+			<authors>
+				<author>M Vadiyar</author>
+				<author>S Bhise</author>
+				<author>S Patil</author>
+				<author>S Patil</author>
+				<author>D Pawar</author>
+				<author>A Ghule</author>
+				<author>P Patil</author>
+				<author>S Kolekar</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>J. Colloid Interface Sci</title>
+			<authors>
+				<author>S Chatterjee</author>
+				<author>S Chatterjee</author>
+				<author>B Chatterjee</author>
+				<author>A Das</author>
+				<author>A Guha</author>
+			</authors>
+			<date>2005</date>
+		</reference>
+		<reference>
+			<title>Spectrochim. Acta A</title>
+			<authors>
+				<author>Y Wang</author>
+				<author>L Zhu</author>
+				<author>H Jiang</author>
+				<author>F Hu</author>
+				<author>X Shen</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>Int. J. Biol. Macromol</title>
+			<authors>
+				<author>K Pandi</author>
+				<author>N Viswanathan</author>
+			</authors>
+			<date>2015</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>A Eskandarpour</author>
+				<author>M Onyango</author>
+				<author>A Ochieng</author>
+				<author>S Asai</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>J. Photochem. Photobiol. A</title>
+			<authors>
+				<author>Z Hamden</author>
+				<author>S Bouattour</author>
+				<author>A Ferraria</author>
+				<author>D Ferreira</author>
+				<author>L Ferreira</author>
+				<author>A Rego</author>
+				<author>S Boufi</author>
+			</authors>
+			<date>2016</date>
+		</reference>
+		<reference>
+			<title>J. Am. Chem. Soc</title>
+			<authors>
+				<author>H Wang</author>
+				<author>B Holmberg</author>
+				<author>Y Yan</author>
+			</authors>
+			<date>2003</date>
+		</reference>
+		<reference>
+			<title>J. Mater. Chem</title>
+			<authors>
+				<author>L Han</author>
+				<author>J Yao</author>
+				<author>D Li</author>
+				<author>J Ho</author>
+				<author>X Zhang</author>
+				<author>C Kong</author>
+				<author>Z Zong</author>
+				<author>X Wei</author>
+				<author>H Wang</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>Bioresour. Technol</title>
+			<authors>
+				<author>C Sundaram</author>
+				<author>N Viswanathan</author>
+				<author>S Meenakshi</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>C Sundaram</author>
+				<author>N Viswanathan</author>
+				<author>S Meenakshi</author>
+			</authors>
+			<date>2008</date>
+		</reference>
+		<reference>
+			<title>J. Synchrotron Radiat</title>
+			<authors>
+				<author>S Naftel</author>
+				<author>T Sham</author>
+				<author>Y Yiu</author>
+				<author>B Yates</author>
+			</authors>
+			<date>2001</date>
+		</reference>
+		<reference>
+			<title>Carbohydr. Polym</title>
+			<authors>
+				<author>X Yu</author>
+				<author>S Tong</author>
+				<author>M Ge</author>
+				<author>J Zuo</author>
+			</authors>
+			<date>2013</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>D Zhang</author>
+				<author>H Luo</author>
+				<author>L Zheng</author>
+				<author>K Wang</author>
+				<author>H Li</author>
+				<author>Y Wang</author>
+				<author>H Feng</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+		<reference>
+			<title>J. Hazard. Mater</title>
+			<authors>
+				<author>Y Nie</author>
+				<author>C Hu</author>
+				<author>C Kong</author>
+			</authors>
+			<date>2012</date>
+		</reference>
+	</references>
+	<reference_dois>
+		<number>DOI-10.1016/j.molliq.2015.07.034</number>
+		<number>DOI-10.1016/j.cej.2015.08.019</number>
+		<number>DOI-10.1016/j.jhazmat.2015.10.028</number>
+		<number>DOI-10.1016/j.cej.2011.05.028</number>
+		<number>DOI-10.1016/j.jenvman.2009.08.015</number>
+		<number>DOI-10.1016/j.jfluchem.2011.02.001</number>
+		<number>DOI-10.1016/j.seppur.2015.07.016</number>
+		<number>DOI-10.1016/j.desal.2011.05.068</number>
+		<number>DOI-10.1016/j.jfluchem.2009.09.004</number>
+		<number>DOI-10.1021/es202750t</number>
+		<number>DOI-10.1016/j.cej.2016.05.103</number>
+		<number>DOI-10.1002/ange.201603456</number>
+		<number>DOI-10.1016/j.carbpol.2014.06.029</number>
+		<number>DOI-10.1016/j.cej.2015.10.036</number>
+		<number>DOI-10.1016/j.desal.2010.09.007</number>
+		<number>DOI-10.1016/j.apsusc.2008.06.151</number>
+		<number>DOI-10.1002/anie.200802823</number>
+		<number>DOI-10.1002/adma.200502772</number>
+		<number>DOI-10.1016/j.watres.2011.07.018</number>
+		<number>DOI-10.1007/s11706-011-0140-6</number>
+		<number>DOI-10.1016/j.jascer.2014.01.004</number>
+		<number>DOI-10.1039/C0CE00233J</number>
+		<number>DOI-10.1021/cm803244z</number>
+		<number>DOI-10.1016/j.tca.2011.03.035</number>
+		<number>DOI-10.1016/j.biomaterials.2007.03.006</number>
+		<number>DOI-10.1039/C5RA07588B</number>
+		<number>DOI-10.1016/j.jcis.2005.02.055</number>
+		<number>DOI-10.1016/j.saa.2016.01.042</number>
+		<number>DOI-10.1016/j.ijbiomac.2014.12.004</number>
+		<number>DOI-10.1016/j.jhazmat.2007.07.020</number>
+		<number>DOI-10.1016/j.jphotochem.2016.02.008</number>
+		<number>DOI-10.1021/ja036071q</number>
+		<number>DOI-10.1039/b805133j</number>
+		<number>DOI-10.1016/j.biortech.2008.03.012</number>
+		<number>DOI-10.1016/j.jhazmat.2007.11.048</number>
+		<number>DOI-10.1107/S0909049500019555</number>
+		<number>DOI-10.1016/j.carbpol.2012.09.045</number>
+		<number>DOI-10.1016/j.jhazmat.2012.09.066</number>
+		<number>DOI-10.1016/j.jhazmat.2012.07.020</number>
+	</reference_dois>
+</document>

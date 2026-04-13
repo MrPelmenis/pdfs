@@ -1,0 +1,250 @@
+<document>
+	<file>./pdf-files/Preparation of hydroxyapatite microspheres by interfacial reaction in a multiple emulsion.pdf</file>
+	<title>mêÉé~ê~íáçå çÑ eóÇêçñó~é~íáíÉ jáÅêçëéÜÉêÉë Äó fåíÉêÑ~Åá~ä oÉ~Åíáçå áå jìäíáéäÉ bãìäëáçå</title>
+	<date>Unknown</date>
+	<doi_number/>
+	<img_preview_path>./pdf-preview-images/Preparation of hydroxyapatite microspheres by interfacial reaction in a multiple emulsion.jpeg</img_preview_path>
+	<authors>
+		<author>Isao Kimura</author>
+		<author>Tatsuro Honma</author>
+		<author>Richard Rimanಓ</author>
+	</authors>
+	<abstract>Interfacial reaction in a multiple emulsion, was carried out with the aim of preparing hollow hydroxyapatite HAp microspheres. The multiple emulsion was a WOW emulsion, made of dipotassium hydrogen phosphate solution as an inner aqueous phase, cyclohexane as an oil phase, and calcium nitrate solution as an outer aqueous phase. The phase diagrams of Ca NO 3 2 -K 2 HPO 4 -H 2 O system were drawn by thermodynamic computations and used to simulate the chemical process in a multiple emulsion for determining the experimental conditions. Single phase HAp was synthesized at an initial pH of 12.0. HAp with a CaP ratio was measured by inductively coupled plasma spectroscopy to correspond to 1.49. The product was composed of microspheres of 0.5 to 2 mm in diameter. Each microsphere was composed of acicular particles with an aspect ratio of 2.5-10 with a short axis length of about 20 nm. =Received</abstract>
+	<methods>
+		<method>
+			<heading>Experimental procedure</heading>
+			<text>The sources of HAp were K 2 HPO 4 special grade and calcium nitrate tetrahydrate Ca NO 3 2 4H 2 O, special grade . KOH special grade was used as pH adjuster. Two dispersion stabilizers, sorbitan monooleate Span80, practical grade of an oil-soluble surfactant and polyoxyethylene 20 sorbitan monolaurate Tween20, practical grade of a water-soluble surfactant, were used. The medium of oil phase was cyclohexane special grade . All of the reagents were supplied from Wako Pure Chemical Industries Ltd.
+
+An inner aqueous phase was prepared by dissolving K 2 HPO 4 at 0.30 mol dm 3 in deionized and distilled water, and adjusting the pH in the range of 9.0 to 12.0 with KOH. Span80 as dispersion stabilizer for the inner aqueous phase was dissolved at 5.0 mass! in cyclohexane to prepare an oil phase. Ca NO 3 2 4H 2 O at 0.50 mol dm 3 and Tween20 at 0.50 mass! as suspension stabilizer for the oil phase were dissolved in water to prepare an outer aqueous phase.
+
+The preparation tank was a separable flask of 85 mm in inner diameter and 500 cm 3 in capacity. Four baffles made of stainless steel were installed on the interior wall of the tank to inhibit the appearance of a vortex and air entrainment from the free surface of the dispersion. The inner aqueous phase of 40.5 cm 3 and the oil phase of 94.5 cm 3 were mixed and then agitated at 12000 rpm for 5 min to prepare a WO emulsion. This emulsion was poured into the outer aqueous phase of 315 cm 3 having been stirred with a disk turbine-type impeller with six blades of 40 mm in diameter at 323 K and 300 rpm to prepare a WOW emulsion. The stirring was kept for 24 h to undergo the interfacial reaction.
+
+After stopping the stirring, the dispersion was left for a while to break into two layers. The upper emulsion layer was separated with a separatory funnel and washed with cyclohexane, acetone, and water in turn. The oil phase was substituted by water with a rotary evaporator. Solid products were collected with centrifugation and freeze-dried. Part of the product was calcined in an air stream at 773 K for 1 h.
+
+The phases produced were identified by X-ray powder diffraction XRD with CuKa irradiation and Fourier transform infrared spectroscopy FTIR by the potassium bromide KBr pellet method. The lattice parameters a 0 and c 0 were calculated by the least squares method from diffraction angles of 002 , 211 , and 310 planes with mixing silicon powder as an internal standard material. For the specimen that would be identified as single phase, the crystallite size was calculated by the Scherrer equation using the diffraction data of 310 plane for a-axis and 002 plane for c-axis, and thermal gravimetry-differential thermal analysis TG-DTA was carried out in the range from room temperature to 1073 K at a temperature elevating rate of 5 K min 1 . The product was dissolved in dilute HNO 3 , and then the calcium and phosphorus contents were measured by inductive coupled plasma atomic absorption spectroscopy ICP to calculate the CaP ratio. The morphology was examined with a scanning electron microscope SEM and a transmission electron microscope TEM .</text>
+		</method>
+	</methods>
+	<full_text>Microcapsules are small containers, in which an active core material can be contained and preserved for a while and from which it can be released when users desire. In the area of pharmaceutics, they are commonly used as a drug delivery system. The wall materials of most microcapsules have been generally made of polymers. Inorganic materials can be chosen for specific purposes. Hydroxyapatite Ca 10 PO 4 6 OH 2 , HAp is a main inorganic constituent of hard tissues in the human body such as bones and teeth. Therefore, the development of microcapsules with a HAp wall is being investigated. They are expected to be applied to injectable medicines in orthopedics, prosthodontics, and so on. To achieve it, it is necessary to establish the preparation of porous or hollow HAp microspheres.
+
+Porous HAp microspheres have been prepared in several ways. For instance, Akazawa et al. 1 and Sunny et al. 2 have used a spray drying method. Ribeiro et al. 3 have used a droplet extrusion method. Hashimoto et al. 4 have used a wet chemical method. These porous HAp microspheres were stuffed inside, so that they may be used as microcarriers for the controlled release of a core material. If hollow microspheres are prepared, a higher content of the core material will be attained. The interfacial reaction is known as a method by which hollow silicate microspheres are successfully prepared. 5 -8 Figure 1 illustrates the concept of the interfacial reaction. In the preparation of hollow calcium silicate CaSiO 3 microspheres, calcium nitrate Ca NO 3 2 solution and sodium silicate Na 2 SiO 3 solution are used as the outer and inner aqueous phases, respectively. The mechanism for the formation of hollow microspheres is thought to be most likely as follows. Calcium ion Ca 2 diffuses through the oil phase to the WO interface. It reacts with silicate ion SiO 2 3 there to produce CaSiO 3 . If the reaction is faster than the diffusion of Ca 2 , Ca 2 can react as soon as being reached at the interface to produce hollow microspheres.
+
+In this study, dipotassium hydrogen phosphate K 2 HPO 4 was substituted for Na 2 SiO 3 with the aim of producing HAp according to Eq. 1 .
+
+10Ca  The purpose of this paper is to prove the possibility of producing HAp by the interfacial reaction and to report the characteristics of the products prepared. The Riman research group 9 -11 has used solution thermodynamics to engineer hydrothermal processes to crystallize a wide range of ceramics, including HAp. In this paper, phase equilibrium computations will be used to determine the preparation conditions that ensure production of single phase HAp in the multiple emulsion system.
+
+As described in the previous section, the reaction site in the interfacial reaction system is the WO interface. Ca 2 does not exist there immediately after the beginning of the preparation. It is continuously transferred to the inner aqueous droplets throughout the process. Suppose that each inner aqueous droplet is a discrete reactor, it can be regarded as a semi-batch reactor. This is a dynamic process, and hence equilibrium is not established. Since phase diagrams show the relation between phases at equilibrium, they cannot illustrate the final state in the present system. However, phase diagrams are useful in knowing the chemistry in a given system. Thus, it is believed that they are helpful to choose the experimental conditions also for the interfacial reaction with complementing information on kinetics.
+
+The OLI Stream Analyzer, 12 which executes thermodynamic calculations based on chemical potential data, was used to draw phase diagrams. Figure 2 shows a phase diagram in the system of Ca NO 3 2 -K 2 HPO 4 -H 2 O at a molality of Ca NO 3 2 of 0.5 mol kg 1 and a temperature of 323 K as a function of pH and the molality of K 2 HPO 4 . Potassium hydroxide KOH and nitric acid HNO 3 were used for adjusting pH. It can be seen that no solid is produced at below K 2 HPO 4 concentration of 10 5 mol kg 1 or at too low pH. Dominant solid species are HAp at pH higher than 6 and monetite at pH lower than 6.
+
+The dotted line designates a K 2 HPO 4 concentration of 0.3 mol kg 1 . When Ca 2 is transferred as to be 0.5 mol kg 1 in the inner aqueous phase and the equilibrium is established at a pH of 8, the state will be indicated by the point A. Then the dominant solid species is predicted to be the only HAp. Equation 1 indicates the decrease in pH as the reaction goes on. If the final pH reaches 6 at equilibrium, the state will be indicated by the point B. This point stands in the gray area, in which HAp and monetite coexist. If the final pH reaches 4 at equilibrium, the state will be indicated by the point C. The dominant solid species is monetite at this state. Therefore, it is concluded that pH of the inner aqueous phase at the beginning of the preparation should be high enough to obtain the only HAp.
+
+Figure 3 shows a phase diagram in the system of Ca NO 3 2 -K 2 HPO 4 -H 2 O at 323 K as a function of the molalities of K 2 HPO 4 and Ca NO 3 2 . The amount of KOH was fixed, by which the pH comes into 12.0 at a K 2 HPO 4 concentration of 0.3 mol kg 1 and a Ca NO 3 2 concentration of 0.5 mol kg 1 at equilibrium. Dominant solid species are HAp and calcium hydroxide Ca OH 2 at higher and lower K2HPO4 concentrations. HAp and Ca OH 2 coexist in the gray area. The dotted line designates a K 2 HPO 4 concentration of 0.3 mol kg 1 .
+
+When the preparation is initiated at a K 2 HPO 4 concentration of 0.3 mol kg 1 , the inner aqueous phase contains HPO 2 4 at 0.3 mol kg 1 and no Ca 2 . As Ca 2 diffuses to the interface, the Ca 2 concentration is increased. This situation can be illustrated by the arrow in the figure. When the Ca 2 concentration goes up along this arrow and exceeds ca. 2j 10 5 mol kg 1 corresponding to the point D, HAp will start to precipitate. While Ca 2 is transferred to the inner aqueous phase and the concentration is increased up to 0.5 mol kg 1 designated by the point E, HAp is produced as dominant solid species. When the Ca 2 concentration goes beyond 0.7 mol kg 1 , Ca OH 2 will be produced. Therefore, Ca NO 3 2 concentration in the outer aqueous phase should be below this value.
+
+From the modeling described above, the concentration of aqueous phases were determined at 0.3 mol kg 1 for K 2 HPO 4 and 0.5 mol kg 1 for Ca NO 3 2 , respectively. These concentrations are almost at a maximum in actuality. Solutions condensed more than these concentrations were so viscous that they could not be used easily in emulsion.
+
+The sources of HAp were K 2 HPO 4 special grade and calcium nitrate tetrahydrate Ca NO 3 2 4H 2 O, special grade . KOH special grade was used as pH adjuster. Two dispersion stabilizers, sorbitan monooleate Span80, practical grade of an oil-soluble surfactant and polyoxyethylene 20 sorbitan monolaurate Tween20, practical grade of a water-soluble surfactant, were used. The medium of oil phase was cyclohexane special grade . All of the reagents were supplied from Wako Pure Chemical Industries Ltd.
+
+An inner aqueous phase was prepared by dissolving K 2 HPO 4 at 0.30 mol dm 3 in deionized and distilled water, and adjusting the pH in the range of 9.0 to 12.0 with KOH. Span80 as dispersion stabilizer for the inner aqueous phase was dissolved at 5.0 mass! in cyclohexane to prepare an oil phase. Ca NO 3 2 4H 2 O at 0.50 mol dm 3 and Tween20 at 0.50 mass! as suspension stabilizer for the oil phase were dissolved in water to prepare an outer aqueous phase.
+
+The preparation tank was a separable flask of 85 mm in inner diameter and 500 cm 3 in capacity. Four baffles made of stainless steel were installed on the interior wall of the tank to inhibit the appearance of a vortex and air entrainment from the free surface of the dispersion. The inner aqueous phase of 40.5 cm 3 and the oil phase of 94.5 cm 3 were mixed and then agitated at 12000 rpm for 5 min to prepare a WO emulsion. This emulsion was poured into the outer aqueous phase of 315 cm 3 having been stirred with a disk turbine-type impeller with six blades of 40 mm in diameter at 323 K and 300 rpm to prepare a WOW emulsion. The stirring was kept for 24 h to undergo the interfacial reaction.
+
+After stopping the stirring, the dispersion was left for a while to break into two layers. The upper emulsion layer was separated with a separatory funnel and washed with cyclohexane, acetone, and water in turn. The oil phase was substituted by water with a rotary evaporator. Solid products were collected with centrifugation and freeze-dried. Part of the product was calcined in an air stream at 773 K for 1 h.
+
+The phases produced were identified by X-ray powder diffraction XRD with CuKa irradiation and Fourier transform infrared spectroscopy FTIR by the potassium bromide KBr pellet method. The lattice parameters a 0 and c 0 were calculated by the least squares method from diffraction angles of 002 , 211 , and 310 planes with mixing silicon powder as an internal standard material. For the specimen that would be identified as single phase, the crystallite size was calculated by the Scherrer equation using the diffraction data of 310 plane for a-axis and 002 plane for c-axis, and thermal gravimetry-differential thermal analysis TG-DTA was carried out in the range from room temperature to 1073 K at a temperature elevating rate of 5 K min 1 . The product was dissolved in dilute HNO 3 , and then the calcium and phosphorus contents were measured by inductive coupled plasma atomic absorption spectroscopy ICP to calculate the CaP ratio. The morphology was examined with a scanning electron microscope SEM and a transmission electron microscope TEM .
+
+The XRD patterns of the as-prepared products are shown in Fig. 4, in which the JCPDS data of HAp s1 , 13 monetite CaHPO 4 , s2 , 14 and brushite CaHPO 4 2H 2 O, s3 15 are also illustrated. For the specimens prepared at an initial pH of the inner aqueous phase of 9.0 to 12.0, HAp is recognized as a principal product, as shown in Figs. 1 a to 1 d . The diffraction lines marked with a triangle reveal the co-existence of monetite andor brushite in the specimens prepared at initial pH's of 9.0 and 10.0. The specimen prepared at an initial pH of 11.0 may contain a trace of them also. As seen in Fig. 2, the only HAp is produced while the pH in the inner aqueous phase is over 6. After pH is decreased to 6, monetite starts to be produced. Brushite should be produced by reaction of monetite with water. Even though the final pH reached below 6 at which monetite was a dominant solid species, HAp which had been produced before the pH did so can coexist. These results suggest that the dissolution rate of the HAp having been produced was slow enough and that the equilibrium has not been established.
+
+Single phase HAp was obtained at an initial pH of 12.0. This means that the final pH was not down to 6 and left in the area of HAp.
+
+Figure 1 e shows the XRD pattern of the specimen pre-   pared at an initial pH of 12.0 and calcined at 773 K. All diffraction lines were detected at respective diffraction angles as the same as in Fig. 1 d . This proves that crystalline HAp can be produced even at 323 K. Each diffraction line became more intense, indicating an increase just in the crystallinity.
+
+Figure 5 shows the FTIR spectrum of the specimen prepared at an initial pH of 12.0. In Fig. 5 a , clearly separated bands were observed at wave numbers of below 1200 cm 1 . The bands at 473, 563, 602, 962, 1036, and 1091 cm 1 are assigned to PO  . 16 -18 The band at 629 cm 1 is assigned to OH . 16 ,18 Therefore, this can be regarded as a typical spectrum of HAp.
+
+HPO 2 4 reveals infrared absorption at 872-879 and 1094 cm 1 . 19 -21 The shoulder band around 875-885 cm 1 is most likely assigned to HPO 2 4 , because this is one of the dominant constituents of the inner aqueous phase. If the decomposition of HPO 2 4 in Eq. 1 is insufficient, it will be incorporated in HAp, for instance, as , which is substituted for the PO 3 4 site, reveals infrared absorption at 872, 1420, 1460, and 1470 cm 1 . 19 ,22 Among these, the bands at 1420 and 1470 cm 1 cannot be found. On the other hand, A-type CO 2 3 , which is substituted for the OH site, reveals infrared absorption at 882, 1500, and 1545 cm 1 . 19 ,22 All of them can be recognized to exist in the spectrum. A band at 825, 1382, or 1763 cm 1 assigned to NO 3 23 was not detected. Thus, it is found that nitrate ion in the outer aqueous phase was not taken in the HAp lattice. A lot of finely dentate bands were observed in the range over 1300 cm 1 in Fig. 5 a . Several papers have reported that broad absorption band exists in this range. 16 -18 This is thought to be assigned to water molecules incorporated in the HAp lattice. 18 It is found that the calcination did not affect the spectrum as seen in Fig. 5 b , although the finely dentate bands below 1300 cm 1 seem to be reduced.
+
+Figure 6 shows the TG-DTA curves of the product prepared at an initial pH of 12.0. A very small endothermic peak together with weight loss of 8! was observed in a temperature range of 370-420 K. This is thought to be due to the exhalation of water. An exothermic peak together with weight loss of 20! was observed in the temperature range of 550-620 K. No change in crystalline phase was observed before and after calcination, as shown in Fig. 4. Therefore, it is thought that this change is attributed to the decomposition of Span80 molecules adsorbed on the surface of HAp microspheres. The change in the CaP ratio with the initial pH is shown in Fig. 7. It was smaller than 1.4 for the specimen prepared at initial pH's of 11.0 and less, whereas the theoretical value of HAp is 1.67. These specimens may probably contain a considerable amount of monetite or brushite, for which the CaP ratio is unity. Since the relative amount of them shown in Fig. 4 seems too low, it is found that they are almost amorphous.  The crystallite size was estimated by the Scherrer equation to be 22 nm for a-axis and 55 nm for c-axis. These results are almost consistent with the sizes observed on the TEM micrograph. It is expected that the HAp microspheres prepared in the present study have both chemical activity as nanoparticles and easiness for handling as microspheres.
+
+The products prepared at an initial pH of 11.0 and less contain irregular particles in shape besides microspheres, as shown in Figs. 8 a to 8 c . These may be monetite or brushite. To obtain only microspheres, it is necessary to adopt the condition under which the only HAp is produced.
+
+The interfacial reaction in a multiple emulsion was carried out. The product prepared at an initial pH of 12.0 was recognized as Ca-deficient HAp. The HAp microspheres were composed of nano-sized acicular particles, so that the surface was quite rough. The surface is desirable to be dense and smooth for the application to microcapsules. In order to search the optimum experimental conditions in the future, it should be useful to refer the phase diagrams drawn by thermodynamic calculation.</full_text>
+	<references>
+		<reference>
+			<title>Bull. Chem. Soc. Jpn</title>
+			<authors>
+				<author>T Akazawa</author>
+				<author>M Kobayashi</author>
+				<author>K Kodaira</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>J. Mater. Sci. Mater. Med</title>
+			<authors>
+				<author>M Sunny</author>
+				<author>P Ramesh</author>
+				<author>H Varma</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>J. Mater. Sci. Mater. Med</title>
+			<authors>
+				<author>C Ribeiro</author>
+				<author>C Barrias</author>
+				<author>M Barbosa</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>Inorg. Mater</title>
+			<authors>
+				<author>K Hashimoto</author>
+				<author>Y Toda</author>
+				<author>T Saitoh</author>
+				<author>S Udagawa</author>
+				<author>T Kanazawa</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>Prog. Organic Coating</title>
+			<authors>
+				<author>K Miyata</author>
+				<author>Y Nakahara</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>Adv. Powder Technol</title>
+			<authors>
+				<author>S Kimura</author>
+				<author>N Ikarashi</author>
+				<author>M Saito</author>
+				<author>Tanaka</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>Chem. Mater</title>
+			<authors>
+				<author>M Fujiwara</author>
+				<author>K Shiokawa</author>
+				<author>Y Tanaka</author>
+				<author>Y Nakahara</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>J. Microencapsul</title>
+			<authors>
+				<author>T Morishige</author>
+				<author>E Toorisaka</author>
+				<author>M Hirata</author>
+				<author>T Ohtake</author>
+				<author>T Hano</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>Solid State Ionics</title>
+			<authors>
+				<author>R Riman</author>
+				<author>W Suchanek</author>
+				<author>K Byrappa</author>
+				<author>C.-W Chen</author>
+				<author>P Shuk</author>
+				<author>C Oakes</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>J. Eur. Ceram Soc</title>
+			<authors>
+				<author>S.-B Cho</author>
+				<author>J.-S Noh</author>
+				<author>M Lencka</author>
+				<author>R Riman</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>J. Cryst. Growth</title>
+			<authors>
+				<author>M Gelabert</author>
+				<author>R Laudise</author>
+				<author>R Riman</author>
+			</authors>
+			<date>1999</date>
+		</reference>
+		<reference>
+			<title>Spectrochim. Acta</title>
+			<authors>
+				<author>C Baddiel</author>
+				<author>E Berry</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>Spectrochim. Acta</title>
+			<authors>
+				<author>P Gonz Áales-Dfaz</author>
+				<author>A Hidalgo</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>Scann. Microsc</title>
+			<authors>
+				<author>R Legeros</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>Calcif. Tissue Int</title>
+			<authors>
+				<author>D Holcomb</author>
+				<author>R Young</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>Calcif. Tissue Int</title>
+			<authors>
+				<author>R Young</author>
+				<author>D Holcomb</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>J. Mater. Sci. Mater. Med</title>
+			<authors>
+				<author>A Siddharthan</author>
+				<author>S Seshadri</author>
+				<author>T Kumar</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>Calcif. Tissue Int</title>
+			<authors>
+				<author>M Vignoles</author>
+				<author>G Bonel</author>
+				<author>D Holcomb</author>
+				<author>R Young</author>
+			</authors>
+			<date/>
+		</reference>
+		<reference>
+			<title>Mater. Chem. Phys</title>
+			<authors>
+				<author>T Anee</author>
+				<author>M Ashok</author>
+				<author>M Palanichamy</author>
+				<author>S Kalkura</author>
+			</authors>
+			<date/>
+		</reference>
+	</references>
+</document>
