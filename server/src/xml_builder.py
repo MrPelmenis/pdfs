@@ -15,11 +15,19 @@ def extract_fallback_text(pdf_path: str) -> str:
     return "\n\n".join(text)
 
 
-def is_bad_parse(grobid_info: dict | None) -> bool:
-    if not grobid_info:
-        return True
-    g = grobid_info
-    return not g.get("title") and not g.get("authors") and not g.get("abstract")
+def grobid_confidence(info: dict) -> tuple[str, list[str]]:
+    if not info:
+        return "bad", ["all"]
+
+    mandatory = ["title", "authors", "abstract", "doi", "full_text", "references"]
+    missing   = [f for f in mandatory if not info.get(f)]
+
+    if len(missing) == 0:
+        return "good", []
+    if len(missing) <= 2:
+        return "partial", missing
+    return "bad", missing
+
 
 def strip_jats(text: str) -> str:
     if not text:

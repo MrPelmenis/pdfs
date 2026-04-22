@@ -1,9 +1,17 @@
 PEDOFIILI TODO 2:
-Ja var atrast no bildes:
-imge/image anotaion lai var grobid dabuut info no bildes + mekleesaan
-So autoru DOI nummuri..
+
+pachekot vai dabuu visu full text ja grobid neatrod
+kko izdariit ar LLM lai precizak meklee, vai vismaz atfiltree pareizaak
+jo vainu ir loti liidziigi raksti peec title (var pielikt autorus filtresanai)
+
+chart datus saakt taisiit
+
+
+
+
 
 front end lai pasaka ka ""processing in background might take a while""
++ charts
 
 CHART:
 kraasa peec vecuma
@@ -11,11 +19,3 @@ izmeers ir basltoties uz citaitons (log vai sqrt)
 autorus var dabuut no DOI
 slideri vecumam
 forma nav aplis bet rounded rectangle :|
-
-
-
-atrast dooi preciizaak
-skatities ko genereja klaudija
-
-    veelaak:
-chatinam dot top 5 dokumentus un taad lai vins raksta kko par viniem arii

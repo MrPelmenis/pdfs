@@ -1,8 +1,9 @@
 "use client";
 
 export default function SearchCard({ result, apiUrl, onOpenPdf }) {
-  const { title, file, date, authors, abstract, preview, full_text } = result;
+  const { title, file, date, authors: rawAuthors, abstract, preview, full_text } = result;
 
+    const authors = rawAuthors ?? [];
   const displayAuthors = authors.length <= 3
     ? authors.join(", ")
     : `${authors.slice(0, 3).join(", ")} +${authors.length - 3} more`;

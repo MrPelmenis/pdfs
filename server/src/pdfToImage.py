@@ -12,7 +12,7 @@ def generate_preview(pdf_path: str, output_dir: str = OUTPUT_DIR) -> str:
     output_name = os.path.splitext(basename)[0] + ".jpeg"
     output_path = os.path.join(output_dir, output_name)
 
-    pages = convert_from_path(pdf_path, dpi=150, first_page=1, last_page=1)
+    pages = convert_from_path(pdf_path, dpi=180, first_page=1, last_page=1)
     img = pages[0]
 
     if img.width > MAX_W or img.height > MAX_H:

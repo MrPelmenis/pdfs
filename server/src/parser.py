@@ -4,14 +4,16 @@ from grobid_client.grobid_client import GrobidClient
 
 _client = None
 
-def get_client(config_path="./parser/config.json"):
+CONFIG_PATH = "./grobid/config.json"
+
+def get_client(config_path=CONFIG_PATH):
     global _client
     if _client is None:
         _client = GrobidClient(config_path=config_path)
     return _client
 
 
-def extract_paper_data(pdf_path: str, config_path: str = "./parser/config.json") -> dict:
+def extract_paper_data(pdf_path: str, config_path: str =CONFIG_PATH) -> dict:
     client = get_client(config_path)
 
     _, status, rsp = client.process_pdf(

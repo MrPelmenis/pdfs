@@ -7,12 +7,15 @@ import sys
 import json
 
 from concurrent.futures import ThreadPoolExecutor
-background_executor = ThreadPoolExecutor(max_workers=10)
+background_executor = ThreadPoolExecutor(max_workers=1)
 
 
-from pdfToImage import generate_preview
-from parser import extract_paper_data
-from xml_builder import build_xml, save_xml, upload_xml, is_bad_parse, extract_fallback_text
+from src.pdfToImage import generate_preview
+from src.parser import extract_paper_data
+from src.xml_builder import build_xml, save_xml, upload_xml, extract_fallback_text, grobid_confidence
+
+from src.vision_extractor import extract_title_authors_from_image
+from src.crossref         import crossref_by_doi, crossref_by_title
 
 
 load_dotenv()
@@ -24,9 +27,9 @@ CP_PASS = os.getenv("CP_PASS")
 app = Flask(__name__)
 CORS(app)
 
-PREVIEW_DIR  = "./pdf-preview-images"
-PDF_DIR      = "./pdf-files"
-XML_OUT_PATH = "./xml-files"   
+PREVIEW_DIR  = "./files/pdf-preview-images"
+PDF_DIR      = "./files/pdf-files"
+XML_OUT_PATH = "./files/xml-files"   
 
 os.makedirs(PDF_DIR,      exist_ok=True)
 os.makedirs(PREVIEW_DIR,  exist_ok=True)
@@ -45,46 +48,74 @@ def graph_authors():
     return jsonify(())
 
 def process_file_background(filename, save_path):
+    pdf_type   = "unknown"
+    confidence = "unknown"
+    missing    = []
+
     try:
         image_path  = generate_preview(save_path, PREVIEW_DIR)
         grobid_info = extract_paper_data(save_path)
 
-        print(grobid_info)
+        print(f"[{filename[:20]}] Grobid done — "
+              f"full_text={'OK' if grobid_info.get('full_text') else 'MISSING'}")
 
-        if is_bad_parse(grobid_info):
-            fallback_text = extract_fallback_text(save_path)
-            grobid_info = {
-                "file":       f"./pdf-files/{filename}",
-                "full_text":  fallback_text,
-                "title":      os.path.splitext(filename)[0],
-                "authors":    [],
-                "abstract":   "",
-                "methods":    [],
-                "references": [],
-                "doi":        None,
-            }
+        vision = extract_title_authors_from_image(image_path)
 
-        grobid_doi = grobid_info.get("doi")
-        doi_info   = None
+        if vision.get("title"):
+            grobid_info["title"]   = vision["title"]
+            print(f"[{filename[:20]}] Vision title: {vision['title']}")
+        if vision.get("authors"):
+            grobid_info["authors"] = vision["authors"]
+
+        #ja grobid neko neatrod taa palubom ir bilde ko mees lasisim prieks full text
+        if len((grobid_info.get("full_text") or "").split()) < 100:
+            print(f"[{filename[:20]}] No full text from Grobid, running OCR...")
+            ocr_text = extract_fallback_text(save_path)
+            if ocr_text.strip():
+                grobid_info["full_text"] = ocr_text
+
+        crossref_info = {}
+        grobid_doi    = grobid_info.get("doi")
 
         if grobid_doi:
-            #doi_info = get_crossref_metadata(grobid_doi)
-            if not doi_info:
-                doi_info = {"doi": grobid_doi}
+            crossref_info = crossref_by_doi(grobid_doi)
 
-        xml_string = build_xml(doi_info, grobid_info, image_path)
+        if not crossref_info:
+            crossref_info = crossref_by_title(
+                title   = grobid_info.get("title", ""),
+                authors = grobid_info.get("authors", []),  
+            )
+
+
+        # ── Merge Crossref into grobid_info before scoring ───────────────
+        if crossref_info and not crossref_info.get("low_confidence"):
+            if crossref_info.get("doi"):
+                grobid_info["doi"] = crossref_info["doi"]
+            if crossref_info.get("abstract") and not grobid_info.get("abstract"):
+                grobid_info["abstract"] = crossref_info["abstract"]
+            if crossref_info.get("authors") and not grobid_info.get("authors"):
+                grobid_info["authors"] = crossref_info["authors"]
+
+        # ── Score AFTER enrichment so missing fields reflect reality ──────
+        confidence, missing = grobid_confidence(grobid_info)
+
+
+
+        # ── Build and upload ──────────────────────────────────────────────
+        xml_string     = build_xml(crossref_info or None, grobid_info, image_path)
         final_xml_name = f"{XML_OUT_PATH}/{os.path.splitext(filename)[0]}.xml"
         save_xml(xml_string, final_xml_name)
 
         upload_result = upload_xml(xml_string, CP_URL, CP_USER, CP_PASS)
 
         if upload_result["success"]:
-            print(f"SUCCESS: [{filename[:10]}] XML uploaded.")
+            print(f"SUCCESS: [{filename[:20]}] confidence={confidence}")
+            print("\n\n\n\n\n")
         else:
-            print(f"ERROR: [{filename}] Upload failed: {upload_result['error']}")
+            print(f"ERROR: [{filename}] {upload_result['error']}")
 
     except Exception as e:
-        print(f"FATAL: [{filename}] {str(e)}")        
+        print(f"FATAL: [{filename}] {str(e)}")
 
 
 @app.route("/upload", methods=["POST"])
