@@ -158,7 +158,7 @@ def clean_filename(file_path):
 
 
 def do_search(query):
-    fullQ = f"<query>{query}*</query><relevance>decending</relevance>"
+    fullQ = f"<query>{query}*</query><relevance>decending</relevance><docs>100</docs>"
     resp = requests.post(
         CP_URL + "/api/databases/pdfs/search/json",
         data=fullQ,
@@ -185,6 +185,13 @@ def do_search(query):
             a = raw_authors.get("author", [])
             authors = [a] if isinstance(a, str) else a
 
+        raw_ref_dois = doc.get("references_doi")
+        if raw_ref_dois is None:
+            reference_dois = []
+        else:
+            r = raw_ref_dois.get("reference_doi", [])
+            reference_dois = [r] if isinstance(r, str) else r
+
         file_path    = doc.get("file")
         filename     = clean_filename(file_path)
         preview_name = get_preview_filename(file_path) if file_path else None
@@ -193,13 +200,15 @@ def do_search(query):
         )
 
         results.append({
-            "title":    doc.get("title"),
-            "file":     filename,
-            "date":     doc.get("date"),
-            "full_text": doc.get("full_text"),
-            "authors":  authors,
-            "abstract": doc.get("abstract"),
-            "preview":  f"/previews/{preview_name}" if preview_exists else None,
+            "title":          doc.get("title"),
+            "file":           filename,
+            "date":           doc.get("date"),
+            "full_text":      doc.get("full_text"),
+            "authors":        authors,
+            "abstract":       doc.get("abstract"),
+            "preview":        f"/previews/{preview_name}" if preview_exists else None,
+            "doi_number":     doc.get("doi_number", ""),
+            "reference_dois": reference_dois,
         })
 
     return results
@@ -211,7 +220,35 @@ def search():
     if not query:
         return jsonify({"error": "query is required"}), 400
     try:
-        return jsonify({"query": query, "results": do_search(query)})
+        results = do_search(query)
+        
+        nodes = []
+        links = []
+        
+        doi_to_id = {r["doi_number"]: r["doi_number"] for r in results if r["doi_number"]}
+        
+        for r in results:
+            if not r["doi_number"]:
+                continue
+            nodes.append({
+                "id": r["doi_number"],
+                "loaded": True,
+                "style": { "label": r["title"] or r["doi_number"] }
+            })
+            for ref_doi in r["reference_dois"]:
+                if ref_doi in doi_to_id:
+                    links.append({
+                        "id": f"{r['doi_number']}->{ref_doi}",
+                        "from": r["doi_number"],
+                        "to": ref_doi,
+                        "style": { "toDecoration": "arrow" }
+                    })
+
+        return jsonify({
+            "query":      query,
+            "results":    results,
+            "chart_data": { "nodes": nodes, "links": links }
+        })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
