@@ -22,6 +22,8 @@ PROMPT = (
     "For authors leave only their name as Name Surname or N. Surname, skip institution, university labaratory... names"
     "Include any part numbers or series numbers in the title if present "
     "(e.g. '...Part 1', '...I.', '...3. Solubility Studies'). "
+    "Do NOT include page numbers, article numbers, volume numbers, or journal identifiers in the title. "
+    "These appear as standalone numbers printed near the title (e.g. '6118', '283', '2659') — ignore them completely. "
     "STRICT RULES: "
     "Return a single JSON object: "
     '{"title": "...", "authors": ["First Last", "First Last"]}. '
@@ -74,7 +76,7 @@ def extract_title_authors_from_image(image_path: str) -> dict:
 
     
     raw = resp.json().get("response", "")
-    print(raw)
+    #print(raw)
     result = _parse_json_safe(raw)
 
     return {

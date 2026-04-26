@@ -1,21 +1,9 @@
-PEDOFIILI TODO 2:
+ne id bet doi ID vai titlear "_" kaa ID nevis incremental
 
-pachekot vai dabuu visu full text ja grobid neatrod
-kko izdariit ar LLM lai precizak meklee, vai vismaz atfiltree pareizaak
-jo vainu ir loti liidziigi raksti peec title (var pielikt autorus filtresanai)
+chart ne lielo bet search based kaa wikisearch + gray articles kas nav db ielikti vel
+NE ID
+ID ir doi vai title ar underscore ja vajag references  ja nav doi koda konstruet pec kkada algotirma
 
-chart datus saakt taisiit
+IZMERS ATKARIGS NO CITATION COUNT
 
-
-
-
-
-front end lai pasaka ka ""processing in background might take a while""
-+ charts
-
-CHART:
-kraasa peec vecuma
-izmeers ir basltoties uz citaitons (log vai sqrt)
-autorus var dabuut no DOI
-slideri vecumam
-forma nav aplis bet rounded rectangle :|
+saglabaat tipu article/gramata

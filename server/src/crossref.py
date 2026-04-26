@@ -1,13 +1,14 @@
 import re
 import requests
+import json
 
-CROSSREF_BASE       = "https://api.crossref.org/works"
+CROSSREF_BASE        = "https://api.crossref.org/works"
 USER_AGENT           = "pdf-magic/1.0 (mailto:normunds@email.com)"
 TIMEOUT              = 10
-MIN_SCORE_ABSOLUTE   = 80    # accept unconditionally above this
-MIN_SCORE_FLOOR      = 15    # minimum score to consider anything
-SMALL_GAP_THRESH     = 0.05  # gap below this → retry with authors
-TITLE_OVERLAP_THRESH = 0.85  # title word overlap above this → retry with authors
+MIN_SCORE_ABSOLUTE   = 80
+MIN_SCORE_FLOOR      = 15
+SMALL_GAP_THRESH     = 0.05
+TITLE_OVERLAP_THRESH = 0.85
 
 
 def crossref_by_doi(doi: str) -> dict:
@@ -21,23 +22,23 @@ def crossref_by_doi(doi: str) -> dict:
             timeout=TIMEOUT,
         )
     except requests.exceptions.RequestException as e:
-        print(f"[crossref] DOI request failed: {e}")
+        #print(f"[crossref] DOI request failed: {e}")
         return {}
     if resp.status_code == 404:
-        print(f"[crossref] DOI not found: {doi}")
+        #print(f"[crossref] DOI not found: {doi}")
         return {}
     if resp.status_code != 200:
-        print(f"[crossref] DOI lookup returned {resp.status_code}")
+        #print(f"[crossref] DOI lookup returned {resp.status_code}")
         return {}
-    return _parse_item(resp.json().get("message", {}))
+
+    #print(json.dumps(resp.json().get("message", {}), indent=2))
+    return _parse_item(resp.json().get("message", {}), full=True)
 
 
 def crossref_by_title(title: str, authors: list) -> dict:
-    #saakumaa title, tad ar autoriem, nu ja slikti tad vecaako peec gada, ja VISPAAR tad do kuram lielaks score
     if not title:
         return {}
 
-    # ── Attempt 1: title only ─────────────────────────────────────────────────
     result = _search(title, "")
 
     needs_retry = (
@@ -49,9 +50,7 @@ def crossref_by_title(title: str, authors: list) -> dict:
     if not needs_retry:
         return result
 
-    # ── Attempt 2: title + author surnames ────────────────────────────────────
     if not authors:
-        print(f"[crossref] Would retry but no authors available")
         return result
 
     author_terms = " ".join(_extract_surname(a) for a in authors[:2]).strip()
@@ -60,8 +59,8 @@ def crossref_by_title(title: str, authors: list) -> dict:
         "small gap"      if result.get("small_gap")      else
         "low confidence"
     )
-    print(f"[crossref] Retrying with authors ({reason}): {title[:80]}")
-    print(f"[crossref] Author terms: {author_terms}")
+    #print(f"[crossref] Retrying with authors ({reason}): {title[:80]}")
+    #print(f"[crossref] Author terms: {author_terms}")
 
     result_with_authors = _search(title, author_terms)
 
@@ -71,22 +70,20 @@ def crossref_by_title(title: str, authors: list) -> dict:
     ):
         return result_with_authors
 
-    print(f"[crossref] Both attempts uncertain — applying year tiebreak")
+    # Both uncertain — year tiebreak
+    #print(f"[crossref] Both attempts uncertain — applying year tiebreak")
     items = _fetch_items(title, author_terms)
-
     if items:
         best, reason = _tiebreak_by_year(items)
-        print(f"[crossref] Accepted after year tiebreak — {reason} — doi: {best.get('DOI')}")
+        #print(f"[crossref] Accepted after year tiebreak — {reason} — doi: {best.get('DOI')}")
         return _parse_item(best)
 
     score_1 = result.get("score", 0)             if result             else 0
     score_2 = result_with_authors.get("score", 0) if result_with_authors else 0
-    print(f"[crossref] Fallback — picking higher score ({score_1:.1f} vs {score_2:.1f})")
     return result_with_authors if score_2 > score_1 else (result or {})
 
 
 def _fetch_items(title: str, author_terms: str) -> list:
-    """Raw Crossref fetch returning item list, used for year tiebreak."""
     query = f"{title} {author_terms}".strip()
     try:
         resp = requests.get(
@@ -109,18 +106,14 @@ def _tiebreak_by_year(items: list) -> tuple:
     def get_year(item):
         parts = item.get("published", {}).get("date-parts", [[9999]])
         return parts[0][0] if parts and parts[0] else 9999
-
-    candidates = items[:2]
-    oldest     = min(candidates, key=get_year)
-    year       = get_year(oldest)
-
-    print(f"[crossref] Year tiebreak → {year} — doi: {oldest.get('DOI')}")
+    oldest = min(items[:2], key=get_year)
+    year   = get_year(oldest)
+    #print(f"[crossref] Year tiebreak → {year} — doi: {oldest.get('DOI')}")
     return oldest, f"oldest publication ({year})"
 
 
 def _search(title: str, author_terms: str) -> dict:
     query = f"{title} {author_terms}".strip()
-
     try:
         resp = requests.get(
             CROSSREF_BASE,
@@ -134,16 +127,16 @@ def _search(title: str, author_terms: str) -> dict:
         )
         resp.raise_for_status()
     except requests.exceptions.RequestException as e:
-        print(f"[crossref] Search request failed: {e}")
+        #print(f"[crossref] Search request failed: {e}")
         return {}
 
     items = resp.json().get("message", {}).get("items", [])
 
-    print(f"\n[crossref] query: {query}")
-    for i, item in enumerate(items[:5]):
-        print(f"  [{i+1}] score={item.get('score', 0):.2f} | "
-              f"doi={item.get('DOI', 'n/a')} | "
-              f"title={item.get('title', [''])[0]}")
+    #print(f"\n[crossref] query: {query}")
+    #for i, item in enumerate(items[:5]):
+        #print(f"  [{i+1}] score={item.get('score', 0):.2f} | "
+              #f"doi={item.get('DOI', 'n/a')} | "
+              #f"title={item.get('title', [''])[0]}")
 
     if not items:
         print(f"[crossref] No results")
@@ -152,15 +145,15 @@ def _search(title: str, author_terms: str) -> dict:
     best, reason = _pick_best_result(items)
 
     if reason.startswith("similar_titles"):
-        print(f"[crossref] Similar titles — need authors to disambiguate")
+        #print(f"[crossref] Similar titles — need authors to disambiguate")
         return {"similar_titles": True, "score": items[0].get("score", 0)}
 
     if reason.startswith("small_gap"):
-        print(f"[crossref] Small gap — need authors to disambiguate")
+        #print(f"[crossref] Small gap — need authors to disambiguate")
         return {"small_gap": True, "score": items[0].get("score", 0)}
 
     if best is None:
-        print(f"[crossref] Rejected — {reason}")
+        #print(f"[crossref] Rejected — {reason}")
         return {"low_confidence": True, "score": items[0].get("score", 0)}
 
     print(f"[crossref] Accepted — {reason} — doi: {best.get('DOI')}")
@@ -176,10 +169,8 @@ def _pick_best_result(items: list) -> tuple:
 
     if score < MIN_SCORE_FLOOR:
         return None, f"score={score:.1f} too low"
-
     if score >= MIN_SCORE_ABSOLUTE:
         return top, f"absolute score {score:.1f}"
-
     if len(items) < 2:
         return top, f"only result, score {score:.1f}"
 
@@ -197,14 +188,13 @@ def _pick_best_result(items: list) -> tuple:
 
     if title_overlap > TITLE_OVERLAP_THRESH:
         return None, f"similar_titles (overlap={title_overlap:.0%}, gap={gap:.0%})"
-
     if gap < SMALL_GAP_THRESH:
         return None, f"small_gap (score={score:.1f}, gap={gap:.0%})"
 
     return top, f"gap dominant ({score:.1f} vs {second:.1f}, gap={gap:.0%})"
 
 
-def _parse_item(item: dict) -> dict:
+def _parse_item(item: dict, full: bool = False) -> dict:
     authors = [
         f"{a.get('given', '')} {a.get('family', '')}".strip()
         for a in item.get("author", [])
@@ -216,7 +206,8 @@ def _parse_item(item: dict) -> dict:
     title      = title_list[0] if title_list else None
     abstract   = _strip_jats(item.get("abstract", ""))
     doi        = re.sub(r"^https?://doi\.org/", "", item.get("DOI", "")).strip()
-    return {
+
+    result = {
         "doi":      doi      or None,
         "title":    title    or None,
         "authors":  authors,
@@ -224,6 +215,19 @@ def _parse_item(item: dict) -> dict:
         "year":     year,
     }
 
+    if full:
+        reference_dois = []
+        for ref in item.get("reference", []):
+            ref_doi = ref.get("DOI")
+            if ref_doi:
+                ref_doi_clean = re.sub(r"^https?://doi\.org/", "", ref_doi).strip().lower()
+                if ref_doi_clean:
+                    reference_dois.append(ref_doi_clean)
+
+        result["reference_dois"]  = reference_dois
+        result["cited_by_count"]  = item.get("is-referenced-by-count", 0)
+
+    return result
 
 def _extract_surname(full_name: str) -> str:
     parts = full_name.strip().split()

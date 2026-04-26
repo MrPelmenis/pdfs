@@ -1,19 +1,44 @@
 import re
+import unicodedata
 import os
 from xml.etree.ElementTree import Element, SubElement, tostring
 import xml.dom.minidom
 import pdfplumber
 
 #siis divas ir gadijumaa ja acc kkads random vajadziigs pdf tad prosta extract text ar jau zinamiem lidzekliem
-def extract_fallback_text(pdf_path: str) -> str:
-    text = []
-    with pdfplumber.open(pdf_path) as pdf:
-        for page in pdf.pages:
-            page_text = page.extract_text()
-            if page_text:
-                text.append(page_text)
-    return "\n\n".join(text)
+import pytesseract
+from pdf2image import convert_from_path
 
+import pytesseract
+from pdf2image import convert_from_path
+
+def extract_fallback_text(pdf_path: str) -> str:
+    try:
+        from pdf2image import convert_from_path
+        import pytesseract
+        
+        custom_config = r'--oem 3 --psm 6'
+        
+        pages = convert_from_path(pdf_path, dpi=250)
+        text = []
+        for page_img in pages:
+            page_text = pytesseract.image_to_string(page_img, config=custom_config)
+            if page_text.strip():
+                text.append(page_text.strip())
+        result = "\n\n".join(text)
+        if len(result.split()) < 50:
+            raise ValueError("OCR returned too little text")
+        return result
+    except Exception as e:
+        print(f"[OCR] pytesseract failed: {e}, falling back to pdfplumber")
+        import pdfplumber
+        text = []
+        with pdfplumber.open(pdf_path) as pdf:
+            for page in pdf.pages:
+                page_text = page.extract_text()
+                if page_text:
+                    text.append(page_text)
+        return "\n\n".join(text)
 
 def grobid_confidence(info: dict) -> tuple[str, list[str]]:
     if not info:
@@ -43,15 +68,32 @@ def get_preview_path(image_path: str) -> str:
     return image_path if image_path.startswith("./") else f"./{image_path}"
 
 
+
+import re
+import unicodedata
+
+def slugify(text: str) -> str:
+    """Convert title to ASCII slug with underscores, Wikipedia-style."""
+    # Normalize unicode → ASCII as close as possible
+    text = unicodedata.normalize("NFKD", text)
+    text = text.encode("ascii", "ignore").decode("ascii")
+    text = text.strip()
+    # Replace any non-alphanumeric (except spaces) with nothing
+    text = re.sub(r"[^\w\s]", "", text)
+    # Replace whitespace runs with single underscore
+    text = re.sub(r"\s+", "_", text)
+    return text
+
+
 def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str) -> str:
     doi   = doi_info   or {}
     grobi = grobid_info or {}
-
     title    = doi.get("title")    or grobi.get("title")    or "Unknown"
     abstract = doi.get("abstract") or grobi.get("abstract") or ""
     abstract = strip_jats(abstract)
+    doi_number = doi.get("doi", "") or grobi.get("doi", "")  # ← also check grobi
 
-    doi_number = doi.get("doi", "")
+    doc_id = doi_number if doi_number else slugify(title)
 
     date_val = ""
     if doi.get("year"):
@@ -69,9 +111,8 @@ def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str) 
         authors = []
 
     file_path = grobi.get("file", "")
-
     doc = Element("document")
-
+    SubElement(doc, "id").text              = doc_id         
     SubElement(doc, "file").text            = file_path
     SubElement(doc, "title").text           = title
     SubElement(doc, "date").text            = date_val
@@ -101,15 +142,12 @@ def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str) 
             SubElement(ref_authors_el, "author").text = ra
         SubElement(ref_el, "date").text = str(ref.get("date") or "")
 
-
-    doi_refs = doi.get("references", [])
-    if doi_refs:
-        ref_dois_el = SubElement(doc, "reference_dois")
-        for doi_ref in doi_refs:
-            raw_doi = doi_ref.get("DOI", "")
+    ref_dois = grobi.get("reference_dois", [])   
+    if ref_dois:
+        ref_dois_el = SubElement(doc, "references_doi")
+        for raw_doi in ref_dois:
             if raw_doi:
-                SubElement(ref_dois_el, "number").text = f"DOI-{raw_doi}"
-
+                SubElement(ref_dois_el, "reference_doi").text = raw_doi
 
     raw_xml = tostring(doc, encoding="unicode", xml_declaration=False)
     pretty  = xml.dom.minidom.parseString(raw_xml).toprettyxml(indent="\t")
