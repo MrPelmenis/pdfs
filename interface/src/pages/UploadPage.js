@@ -1,9 +1,8 @@
-"use client";
 import { useRef, useState } from "react";
 import { useUploadStore, STATUS } from "../store/uploadStore";
-import FileRow from "./FileRow";
+import FileRow from "../components/FileRow";
 
-const UPLOAD_URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/upload`;
+const UPLOAD_URL = `${process.env.REACT_APP_SERVER_URL}/upload`;
 const SECONDS_PER_FILE = 25;
 
 function formatTime(seconds) {
@@ -68,8 +67,6 @@ export default function UploadPage() {
       display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
       padding: "2rem", fontFamily: "sans-serif",
     }}>
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-
       <div style={{ width: "100%", maxWidth: "30rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
 
         {/* Drop zone */}
@@ -110,7 +107,6 @@ export default function UploadPage() {
             background: "#303134", borderRadius: "0.75rem",
             padding: "0.75rem 1rem", display: "flex", flexDirection: "column", gap: "0.5rem",
           }}>
-            {/* Top row: count + time estimate + expand toggle */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <span style={{ fontSize: 13, color: "#9aa0a6" }}>
                 {allDone
@@ -133,10 +129,7 @@ export default function UploadPage() {
               </button>
             </div>
 
-            {/* Progress bar */}
-            <div style={{
-              height: 4, background: "#3c3f43", borderRadius: 2, overflow: "hidden",
-            }}>
+            <div style={{ height: 4, background: "#3c3f43", borderRadius: 2, overflow: "hidden" }}>
               <div style={{
                 height: "100%", width: `${progress}%`,
                 background: barColor,
@@ -147,10 +140,10 @@ export default function UploadPage() {
 
             {totalCount > 0 && (
               <p style={{ fontSize: 14, color: "#5f6368", margin: 0 }}>
-                Files are processed in the background  {formatTime(estimatedSeconds)} for all {totalCount} file{totalCount !== 1 ? "s" : ""}. You can leave this page.
+                Files are processed in the background — {formatTime(estimatedSeconds)} for all {totalCount} file{totalCount !== 1 ? "s" : ""}. You can leave this page.
               </p>
             )}
-            {/* Expandable file list */}
+
             {expanded && (
               <div style={{
                 display: "flex", flexDirection: "column", gap: "0.25rem",
@@ -162,7 +155,6 @@ export default function UploadPage() {
               </div>
             )}
 
-            {/* Clear button */}
             {allDone && (
               <button
                 onClick={() => { clearQueue(); setExpanded(false); }}

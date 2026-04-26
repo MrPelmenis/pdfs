@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono&display=swap');
+
+body {
+  margin: 0;
+  background-color: #202124;
+  color: #e8eaed;
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.cp-snippet b {
+  color: #e8eaed;
+  font-weight: 600;
+  background: rgba(138, 180, 248, 0.15);
+  border-radius: 2px;
+  padding: 0 2px;
+}

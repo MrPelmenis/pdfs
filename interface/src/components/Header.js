@@ -1,22 +1,19 @@
-"use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, useLocation } from "react-router-dom";
 
 const links = [
   { href: "/search", label: "Search" },
   { href: "/upload", label: "Upload" },
 ];
 
-export default function ConditionalHeader() {
-  const pathname = usePathname();
+export default function Header() {
+  const { pathname } = useLocation();
 
   if (pathname === "/") return null;
 
   return (
     <header className="sticky top-0 z-40 w-full bg-surface border-b border-border">
       <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-
-        <Link href="/" className="flex items-center gap-2 group">
+        <Link to="/" className="flex items-center gap-2 group">
           <div className="w-7 h-7 rounded-lg bg-accent/20 flex items-center justify-center">
             <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round"
@@ -24,7 +21,7 @@ export default function ConditionalHeader() {
             </svg>
           </div>
           <span className="text-sm font-semibold text-ink group-hover:text-accent transition-colors duration-150">
-                PDF 
+            PDF
           </span>
         </Link>
 
@@ -34,7 +31,7 @@ export default function ConditionalHeader() {
             return (
               <Link
                 key={href}
-                href={href}
+                to={href}
                 className={`
                   relative px-4 py-1.5 rounded-lg text-sm font-medium
                   transition-colors duration-150
@@ -49,7 +46,6 @@ export default function ConditionalHeader() {
             );
           })}
         </nav>
-
       </div>
     </header>
   );

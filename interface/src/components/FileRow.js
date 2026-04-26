@@ -1,12 +1,11 @@
-import { useRef } from "react";
-import { useUploadStore, STATUS } from "../store/uploadStore";
-
+import { STATUS } from "../store/uploadStore";
 
 export default function FileRow({ name, status, message }) {
   return (
     <div style={{
       display: "flex", alignItems: "center", gap: "0.75rem",
-      background: "#303134", border: `1px solid ${
+      background: "#303134",
+      border: `1px solid ${
         status === STATUS.ERROR   ? "#5c2d2d" :
         status === STATUS.SUCCESS ? "#1e3a2a" : "#3c3f43"
       }`,
@@ -62,4 +61,3 @@ export default function FileRow({ name, status, message }) {
     </div>
   );
 }
-
