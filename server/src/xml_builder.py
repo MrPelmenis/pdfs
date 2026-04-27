@@ -86,12 +86,14 @@ def slugify(text: str) -> str:
 
 
 def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str) -> str:
+    #print(doi_info)
     doi   = doi_info   or {}
     grobi = grobid_info or {}
     title    = doi.get("title")    or grobi.get("title")    or "Unknown"
     abstract = doi.get("abstract") or grobi.get("abstract") or ""
     abstract = strip_jats(abstract)
     doi_number = doi.get("doi", "") or grobi.get("doi", "")  # ← also check grobi
+    cited_by_count = doi.get("cited_by_count", 0) or 0
 
     doc_id = doi_number if doi_number else slugify(title)
 
@@ -115,6 +117,7 @@ def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str) 
     SubElement(doc, "id").text              = doc_id         
     SubElement(doc, "file").text            = file_path
     SubElement(doc, "title").text           = title
+    SubElement(doc, "cited_by_count").text     = str(cited_by_count)
     SubElement(doc, "date").text            = date_val
     SubElement(doc, "doi_number").text      = doi_number
     SubElement(doc, "img_preview_path").text = get_preview_path(image_path)
@@ -124,6 +127,9 @@ def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str) 
         SubElement(authors_el, "author").text = author
 
     SubElement(doc, "abstract").text = abstract
+
+    category_el = SubElement(doc, "category")
+    SubElement(category_el, "name").text = ""
 
     methods_el = SubElement(doc, "methods")
     for method in grobi.get("methods", []):

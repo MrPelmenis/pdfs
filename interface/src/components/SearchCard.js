@@ -6,6 +6,7 @@ export default function SearchCard({ result, apiUrl, onOpenPdf }) {
     ? authors.join(", ")
     : `${authors.slice(0, 3).join(", ")} +${authors.length - 3} more`;
 
+
   const previewUrl = preview ? `${apiUrl}${preview}` : null;
 
   return (

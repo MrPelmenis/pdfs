@@ -7,6 +7,8 @@ import sys
 import json
 import random
 import re
+import math
+
 
 
 from concurrent.futures import ThreadPoolExecutor
@@ -158,7 +160,7 @@ def clean_filename(file_path):
 
 
 def do_search(query):
-    fullQ = f"<query>{query}*</query><relevance>decending</relevance><docs>100</docs>"
+    fullQ = f"<query>{query}*</query><relevance>decending</relevance><docs>10</docs>"
     resp = requests.post(
         CP_URL + "/api/databases/pdfs/search/json",
         data=fullQ,
@@ -199,6 +201,9 @@ def do_search(query):
             os.path.join(PREVIEW_DIR, preview_name)
         )
 
+        category = doc.get("category", {}).get("name") if isinstance(doc.get("category"), dict) else doc.get("category"),
+
+
         results.append({
             "title":          doc.get("title"),
             "file":           filename,
@@ -208,11 +213,24 @@ def do_search(query):
             "abstract":       doc.get("abstract"),
             "preview":        f"/previews/{preview_name}" if preview_exists else None,
             "doi_number":     doc.get("doi_number", ""),
+            "cited_by_count": doc.get("cited_by_count"),
             "reference_dois": reference_dois,
+            "category": category,
         })
 
     return results
 
+
+
+
+CATEGORIES = [
+    {"cat-name": "crystals",   "cat-color": "rgba(239,68,68,0.92)"},     # vivid red
+    {"cat-name": "bones",      "cat-color": "rgba(59,130,246,0.92)"},    # vivid blue
+    {"cat-name": "teeth",      "cat-color": "rgba(16,185,129,0.92)"},    # vivid green
+    {"cat-name": "implants",   "cat-color": "rgba(245,158,11,0.92)"},    # vivid amber
+    {"cat-name": "coatings",   "cat-color": "rgba(168,85,247,0.92)"},    # vivid purple
+    {"cat-name": "composites", "cat-color": "rgba(236,72,153,0.92)"},    # vivid pink
+]
 
 @app.route("/search")
 def search():
@@ -221,36 +239,101 @@ def search():
         return jsonify({"error": "query is required"}), 400
     try:
         results = do_search(query)
-        
+
         nodes = []
         links = []
-        
+
+        # ── query node ────────────────────────────────────────────────────────
+        nodes.append({
+            "id":     "query",
+            "loaded": True,
+            "style":  { "label": (query[:50] + "…") if len(query) > 50 else query },
+            "data": {
+                "title":     query,
+                "authors":   [],
+                "doi":       "",
+                "cited":     0,
+                "radius":    20,
+                "fillColor": "rgba(255,220,0,0.95)",
+                "preview":   None,
+                "category":  None,
+            },
+        })
+
         doi_to_id = {r["doi_number"]: r["doi_number"] for r in results if r["doi_number"]}
-        
+
         for r in results:
             if not r["doi_number"]:
                 continue
+
+            cited = r["cited_by_count"]
+            try:
+                cited = int(cited) if cited is not None else 0
+            except (ValueError, TypeError):
+                cited = 0
+
+            radius      = round(20 + math.sqrt(cited)*2, 1)
+            title       = r["title"] or r["doi_number"]
+            short_label = (title[:50] + "…") if len(title) > 50 else title
+            authors     = r["authors"] or []
+
+            # TODO: replace with real category lookup once field is populated:
+            # cat_raw  = r.get("category")
+            # category = next((c for c in CATEGORIES if c["cat-name"] == cat_raw), random.choice(CATEGORIES))
+            category = random.choice(CATEGORIES)
+
             nodes.append({
-                "id": r["doi_number"],
+                "id":     r["doi_number"],
                 "loaded": True,
-                "style": { "label": r["title"] or r["doi_number"] }
+                "style":  { "label": short_label },
+                "data": {
+                    "title":     title,
+                    "authors":   authors,
+                    "doi":       r["doi_number"],
+                    "cited":     cited,
+                    "radius":    radius,
+                    "fillColor": category["cat-color"],
+                    "preview":   r["preview"],
+                    "category":  category,
+                },
             })
+
+            # q-link
+            links.append({
+                "id":   f"q->{r['doi_number']}",
+                "from": "query",
+                "to":   r["doi_number"],
+                "style": {
+                    "fillColor": "rgba(99,102,241,0.35)",
+                    "radius":    1,
+                },
+            })
+
+            # reference links (only within result set)
             for ref_doi in r["reference_dois"]:
                 if ref_doi in doi_to_id:
                     links.append({
-                        "id": f"{r['doi_number']}->{ref_doi}",
+                        "id":   f"{r['doi_number']}->{ref_doi}",
                         "from": r["doi_number"],
-                        "to": ref_doi,
-                        "style": { "toDecoration": "arrow" }
+                        "to":   ref_doi,
+                        "style": {
+                            "fillColor":    "rgba(255,200,50,0.6)",
+                            "radius":       2,
+                            "toDecoration": "arrow",
+                        },
                     })
 
         return jsonify({
             "query":      query,
             "results":    results,
-            "chart_data": { "nodes": nodes, "links": links }
+            "chart_data": {"nodes": nodes, "links": links},
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+
+
 
 
 @app.route("/pdf-file/<path:filename>")
