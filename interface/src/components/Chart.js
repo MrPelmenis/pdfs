@@ -1,15 +1,11 @@
-const API = process.env.REACT_APP_SERVER_URL;
-
 const SEARCH_ICON = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/500px-Search_Icon.svg.png?_=20181016161702";
 
-// ─── strip HTML tags (handles tags + encoded entities like &amp; &nbsp;) ──────
 function stripHtml(str) {
     if (!str) return str;
     const doc = new DOMParser().parseFromString(str, "text/html");
     return doc.body.textContent ?? "";
 }
 
-// ─── tooltip singleton ────────────────────────────────────────────────────────
 let _tooltip = null;
 
 function getTooltip() {
@@ -38,7 +34,6 @@ function getTooltip() {
 
 function showTooltip(d, x, y) {
     const tip     = getTooltip();
-    // tooltip title: render HTML tags as actual HTML (sub/sup will render natively)
     const title   = d.title   || "—";
     const doi     = d.doi     || "—";
     const cited   = d.cited   ?? "—";
@@ -46,14 +41,20 @@ function showTooltip(d, x, y) {
         ? d.authors.join(", ")
         : "—";
 
+    const abstractFull  = d.abstract || "";
+    const abstractWords = abstractFull.trim().split(/\s+/);
+    const abstractSnip  = abstractWords.slice(0, 20).join(" ")
+        + (abstractWords.length > 20 ? "…" : "");
+
     tip.innerHTML = `
         <div style="font-weight:600;font-size:12px;color:#fff;margin-bottom:5px">${title}</div>
         <div style="color:#94a3b8;margin-bottom:2px"><span style="color:#64748b">Authors </span>${authors}</div>
         <div style="color:#94a3b8;margin-bottom:2px"><span style="color:#64748b">DOI </span><span style="color:#7dd3fc">${doi}</span></div>
         <div style="color:#94a3b8;margin-bottom:5px"><span style="color:#64748b">Cited by </span>${cited}</div>
+        ${abstractSnip ? `<div style="color:#94a3b8;margin-bottom:5px;font-style:italic;font-size:12px">${abstractSnip}</div>` : ""}
         <div style="color:#475569;font-size:10px;border-top:1px solid rgba(255,255,255,0.07);padding-top:5px">
-            <span style="margin-right:12px">🖱 Click to see more</span>
-            <span>⎆ Double-click to view PDF</span>
+            <span style="margin-right:12px">Click to see more</span>
+            <span>Double-click to view PDF</span>
         </div>
     `.trim();
 
@@ -83,8 +84,8 @@ function hideTooltip() {
     if (_tooltip) _tooltip.style.display = "none";
 }
 
-// ─── chart factory ────────────────────────────────────────────────────────────
-const CreateChart = (data = null) => {
+
+const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
     const container = document.getElementById("megachart");
     if (!container) return null;
 
@@ -108,8 +109,8 @@ const CreateChart = (data = null) => {
         interaction: { resizing: { enabled: false } },
         data:        { preloaded: chartData },
         navigation: {
-            initialNodes:             ["query"],
-            mode:                     "focusnodes",
+            initialNodes:             initialNodes,
+            mode:                     "manual",
             focusNodeExpansionRadius: 4,
         },
         style: {
@@ -119,7 +120,6 @@ const CreateChart = (data = null) => {
                 radius:    28,
                 lineColor: "rgba(0,0,0,0.15)",
                 lineWidth: 1,
-                padding:   10,
             },
 
             nodeStyleFunction: function (node) {
@@ -133,14 +133,18 @@ const CreateChart = (data = null) => {
                     ? (d.title || "Search")
                     : (d.title || node.id);
 
+                if (node.id === "query") {
+                    node.display    = "text";
+                    node.image      = SEARCH_ICON;
+                    node.fillColor  = "#ffffff";
+                    return;
+                }
+
                 const converted = stripHtml(raw);
-                node.label = converted.length > 50
-                    ? converted.slice(0, 50) + "…"
-                    : converted;
+                node.label = converted;
             },
 
             nodeLabel: {
-                enabled: true,
                 textStyle: {
                     font:      "bold 12px Poppins, sans-serif",
                     fillColor: "#000000",
@@ -167,7 +171,11 @@ const CreateChart = (data = null) => {
             onHoverChange: function (event) {
                 if (event.hoverNode && event.hoverNode.id !== "query") {
                     const d = event.hoverNode.data?.data;
-                    if (d) showTooltip(d, pointerX, pointerY);
+                    if (d && !d.isGray) {
+                        showTooltip(d, pointerX, pointerY);
+                    } else {
+                        hideTooltip();
+                    }
                 } else {
                     hideTooltip();
                 }
@@ -176,15 +184,16 @@ const CreateChart = (data = null) => {
             onClick: function (event) {
                 if (event.clickNode && event.clickNode.id !== "query") {
                     const doi = event.clickNode.data?.data?.doi || event.clickNode.id;
-                    alert(`See more: ${doi}`);
+                    console.log(`clicked on: ${doi}`);
                 }
             },
 
             onDoubleClick: function (event) {
-                if (event.clickNode && event.clickNode.id !== "query") {
-                    const doi = event.clickNode.data?.data?.doi || event.clickNode.id;
-                    alert(`View PDF for: ${doi}`);
-                }
+                if (!event.clickNode || event.clickNode.id === "query") return;
+                const d = event.clickNode.data?.data;
+                if (!d || d.isGray || !onOpenPdf) return;
+                hideTooltip();
+                onOpenPdf(d);
             },
         },
     });

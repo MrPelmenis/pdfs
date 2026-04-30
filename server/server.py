@@ -21,6 +21,7 @@ from src.xml_builder import build_xml, save_xml, upload_xml, extract_fallback_te
 from src.vision_extractor import extract_title_authors_from_image
 from src.crossref         import crossref_by_doi, crossref_by_title
 
+from categories import (get_all_categories,create_category, edit_category, delete_category, get_random_category, assign_category_to_document, get_category_by_id, NONE_CATEGORY)
 load_dotenv()
 
 CP_URL  = os.getenv("CP_URL")
@@ -201,11 +202,16 @@ def do_search(query):
             os.path.join(PREVIEW_DIR, preview_name)
         )
 
-        category = doc.get("category", {}).get("name") if isinstance(doc.get("category"), dict) else doc.get("category"),
-
-
+        try:
+            cat_id_raw = doc.get("category_id")
+            category = get_category_by_id(int(cat_id_raw)) if cat_id_raw is not None else None
+            if not category:
+                category = NONE_CATEGORY
+        except (TypeError, ValueError):
+            category = NONE_CATEGORY
         results.append({
             "title":          doc.get("title"),
+            "id":             doc.get("id"),
             "file":           filename,
             "date":           doc.get("date"),
             "full_text":      doc.get("full_text"),
@@ -223,28 +229,27 @@ def do_search(query):
 
 
 
-CATEGORIES = [
-    {"cat-name": "crystals",   "cat-color": "rgba(239,68,68,0.92)"},     # vivid red
-    {"cat-name": "bones",      "cat-color": "rgba(59,130,246,0.92)"},    # vivid blue
-    {"cat-name": "teeth",      "cat-color": "rgba(16,185,129,0.92)"},    # vivid green
-    {"cat-name": "implants",   "cat-color": "rgba(245,158,11,0.92)"},    # vivid amber
-    {"cat-name": "coatings",   "cat-color": "rgba(168,85,247,0.92)"},    # vivid purple
-    {"cat-name": "composites", "cat-color": "rgba(236,72,153,0.92)"},    # vivid pink
-]
+def filterGrayNodes(reference_dois):
+    return reference_dois[:5]
 
 @app.route("/search")
 def search():
     query = request.args.get("query", "").strip()
     if not query:
         return jsonify({"error": "query is required"}), 400
+    #1. initial nodes prieks chart (results)
+    #2. pievienojam query node pie initial
+    #3. linki no query uz initial
+    #4. iepushojam allnodes visus reference dois 
+        #4.1 vienkarsi funkciju kas atlasiis pagaidaam iedodam pirmos 5.
+    #5. for for linkojam visu ko varam, ja jau ir tad nevajag :D
     try:
         results = do_search(query)
-
-        nodes = []
+        all_nodes = []
+        initial_nodes = [] 
         links = []
 
-        # ── query node ────────────────────────────────────────────────────────
-        nodes.append({
+        query_node = {
             "id":     "query",
             "loaded": True,
             "style":  { "label": (query[:50] + "…") if len(query) > 50 else query },
@@ -254,84 +259,121 @@ def search():
                 "doi":       "",
                 "cited":     0,
                 "radius":    20,
-                "fillColor": "rgba(255,220,0,0.95)",
+                "fillColor": "#ffffff",
                 "preview":   None,
                 "category":  None,
             },
-        })
+        }
+        initial_nodes.append("query")
+        all_nodes.append(query_node)
 
-        doi_to_id = {r["doi_number"]: r["doi_number"] for r in results if r["doi_number"]}
+        for doc in results:
+            cited = int(doc["cited_by_count"] or 0)
+            title = doc["title"]
+            radius   = round(40 + math.sqrt(cited) * 2, 1)
+            title    = doc["title"] or doc["doi_number"]
+            authors  = doc["authors"] or []
+            abstract = doc["abstract"] or ""
+            category = doc["category"]
+ 
 
-        for r in results:
-            if not r["doi_number"]:
-                continue
-
-            cited = r["cited_by_count"]
-            try:
-                cited = int(cited) if cited is not None else 0
-            except (ValueError, TypeError):
-                cited = 0
-
-            radius      = round(20 + math.sqrt(cited)*2, 1)
-            title       = r["title"] or r["doi_number"]
-            short_label = (title[:50] + "…") if len(title) > 50 else title
-            authors     = r["authors"] or []
-
-            # TODO: replace with real category lookup once field is populated:
-            # cat_raw  = r.get("category")
-            # category = next((c for c in CATEGORIES if c["cat-name"] == cat_raw), random.choice(CATEGORIES))
-            category = random.choice(CATEGORIES)
-
-            nodes.append({
-                "id":     r["doi_number"],
+            result_node =({
+                "id":     doc["doi_number"],
                 "loaded": True,
-                "style":  { "label": short_label },
+                "style":  { "label": title },
                 "data": {
                     "title":     title,
                     "authors":   authors,
-                    "doi":       r["doi_number"],
+                    "doi":       doc["doi_number"],
                     "cited":     cited,
+                    "id":        doc["id"], 
+                    "file":      doc["file"],
                     "radius":    radius,
-                    "fillColor": category["cat-color"],
-                    "preview":   r["preview"],
+                    "abstract":  abstract,
+                    "fillColor": category["color"],
+                    "preview":   doc["preview"],
                     "category":  category,
-                },
-            })
+                    "isGray":    False,
+                }})
+            initial_nodes.append(result_node["id"])
+            all_nodes.append(result_node)
 
-            # q-link
-            links.append({
-                "id":   f"q->{r['doi_number']}",
-                "from": "query",
-                "to":   r["doi_number"],
-                "style": {
-                    "fillColor": "rgba(99,102,241,0.35)",
-                    "radius":    1,
-                },
-            })
+        for node in all_nodes:
+            if node["id"] != "query":
+                links.append({
+                    "from":"query",
+                    "to":node["id"],
+                    "style": {
+                        "fillColor": "rgba(99,102,241,0.35)",
+                        "radius":    2,
+                        "toDecoration": "arrow",
+                    }
+                })
 
-            # reference links (only within result set)
-            for ref_doi in r["reference_dois"]:
-                if ref_doi in doi_to_id:
+
+        result_doi_set = set(doc["doi_number"] for doc in results if doc["doi_number"])
+        for doc in results:
+            for ref_doi in doc["reference_dois"]:
+                if ref_doi in result_doi_set and ref_doi != doc["doi_number"]:
                     links.append({
-                        "id":   f"{r['doi_number']}->{ref_doi}",
-                        "from": r["doi_number"],
+                        "from": doc["doi_number"],
                         "to":   ref_doi,
                         "style": {
-                            "fillColor":    "rgba(255,200,50,0.6)",
-                            "radius":       2,
+                            "fillColor": "rgba(99,102,241,0.35)",
+                            "radius":    2,
                             "toDecoration": "arrow",
-                        },
+                        }
                     })
 
+
+        #pievienojam sitos graynodes  filtreti (pagaidam pirmie 5 ) katru vienreiz 
+        seen_ids = set(node["id"] for node in all_nodes)  
+        for node in results:
+            reference_dois = filterGrayNodes(node["reference_dois"])
+            for reference_doi in reference_dois: 
+                if reference_doi not in seen_ids:  
+                    gray_node = {
+                        "id":     reference_doi,
+                        "loaded": False,
+                        "style":  { "label": reference_doi },
+                        "data": {
+                            "title":     reference_doi,
+                            "authors":   [],
+                            "doi":       reference_doi,
+                            "cited":     0,
+                            "radius":    15,
+                            "abstract":  "",
+                            "fillColor": "rgba(120,120,120,0.7)",
+                            "preview":   None,
+                            "category":  None,
+                            "isGray":    True,
+                        }
+                    }
+                    all_nodes.append(gray_node)
+                    seen_ids.add(reference_doi)  
+
+                links.append({
+                    "from":node["id"],
+                    "to":reference_doi,
+                    "style": {
+                        "fillColor": "rgba(99,102,241,0.35)",
+                        "radius":    2,
+                        "toDecoration": "arrow",
+                    }
+                })
+
+
+        #porno
+
         return jsonify({
-            "query":      query,
-            "results":    results,
-            "chart_data": {"nodes": nodes, "links": links},
+            "query":         query,
+            "results":       results,
+            "chart_data":    {"nodes": all_nodes, "links": links},
+            "initial_nodes": initial_nodes,
         })
     except Exception as e:
+        print(str(e))
         return jsonify({"error": str(e)}), 500
-
-
 
 
 
@@ -350,6 +392,68 @@ def serve_pdf(filename):
 @app.route("/previews/<path:filename>")
 def preview(filename):
     return send_from_directory(PREVIEW_DIR, filename)
+
+@app.route("/get-all-categories", methods=["GET"])
+def route_get_all_categories():
+    return jsonify(get_all_categories()), 200
+ 
+ 
+@app.route("/create-category", methods=["POST"])
+def route_create_category():
+    body = request.get_json(silent=True) or {}
+    name  = body.get("name", "").strip()
+    color = body.get("color", "").strip()
+    if not name:
+        return jsonify({"error": "name is required"}), 400
+    if not color:
+        return jsonify({"error": "color is required"}), 400
+    cat = create_category(name, color)
+    return jsonify(cat), 201
+ 
+ 
+@app.route("/edit-category/<int:cat_id>", methods=["PATCH"])
+def route_edit_category(cat_id):
+    body  = request.get_json(silent=True) or {}
+    name  = body.get("name")  
+    color = body.get("color")
+    if name is not None:
+        name = name.strip()
+    if color is not None:
+        color = color.strip()
+    updated = edit_category(cat_id, name or None, color or None)
+    if updated is None:
+        return jsonify({"error": f"Category id={cat_id} not found"}), 404
+    return jsonify(updated), 200
+ 
+ 
+@app.route("/delete-category/<int:cat_id>", methods=["DELETE"])
+def route_delete_category(cat_id):
+    if cat_id == 0:
+        return jsonify({"error": "Cannot delete the 'none' category"}), 400
+    deleted = delete_category(cat_id)
+    if not deleted:
+        return jsonify({"error": f"Category id={cat_id} not found"}), 404
+    return jsonify({"success": True, "deleted_id": cat_id}), 200
+ 
+ 
+@app.route("/assign-category", methods=["POST"])
+def route_assign_category():
+    body   = request.get_json(silent=True) or {}
+    doc_id = body.get("document_id", "").strip()
+    cat_id = body.get("category_id")
+    if not doc_id:
+        return jsonify({"error": "document_id is required"}), 400
+    if cat_id is None:
+        return jsonify({"error": "category_id is required"}), 400
+    try:
+        cat_id = int(cat_id)
+    except (TypeError, ValueError):
+        return jsonify({"error": "category_id must be an integer"}), 400
+ 
+    result = assign_category_to_document(doc_id, cat_id, CP_URL, CP_USER, CP_PASS)
+    if not result["success"]:
+        return jsonify({"error": result["error"]}), 500
+    return jsonify(result), 200
 
 
 if __name__ == "__main__":

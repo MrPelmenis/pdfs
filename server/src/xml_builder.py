@@ -128,8 +128,7 @@ def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str) 
 
     SubElement(doc, "abstract").text = abstract
 
-    category_el = SubElement(doc, "category")
-    SubElement(category_el, "name").text = ""
+    SubElement(doc, "category_id").text = "0"
 
     methods_el = SubElement(doc, "methods")
     for method in grobi.get("methods", []):

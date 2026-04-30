@@ -1,24 +1,35 @@
 export default function SearchCard({ result, apiUrl, onOpenPdf }) {
-  const { title, file, date, authors: rawAuthors, abstract, preview, full_text } = result;
 
+    function stripHtml(str) {
+        if (!str) return str;
+        const doc = new DOMParser().parseFromString(str, "text/html");
+        return doc.body.textContent ?? "";
+    }
+
+
+  const { title, file, date, authors: rawAuthors, abstract, preview, full_text, category } = result;
   const authors = rawAuthors ?? [];
   const displayAuthors = authors.length <= 3
     ? authors.join(", ")
     : `${authors.slice(0, 3).join(", ")} +${authors.length - 3} more`;
-
-
   const previewUrl = preview ? `${apiUrl}${preview}` : null;
 
+  const borderColor = category?.color ?? "var(--color-border)";
+
   return (
-    <article className="group flex gap-5 bg-surface border border-border rounded-2xl p-5 hover:border-raised transition-colors duration-150">
+    <article
+      className="group flex gap-5 bg-surface rounded-2xl p-5 transition-colors duration-150"
+      style={{
+        border: `1px solid ${borderColor}`,
+      }}
+    >
       <div className="flex-1 min-w-0 flex flex-col gap-2">
         <h2
           onClick={(e) => onOpenPdf(e, result)}
           className="text-base font-semibold text-ink leading-snug group-hover:text-accent transition-colors duration-150 cursor-default"
         >
-          {title || "Untitled"}
+          {stripHtml(title) || "Untitled"}
         </h2>
-
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-ink-muted">
           {authors.length > 0 && (
             <span className="text-ink-dim">{displayAuthors}</span>
@@ -36,7 +47,6 @@ export default function SearchCard({ result, apiUrl, onOpenPdf }) {
             </>
           )}
         </div>
-
         {(abstract || full_text) && (
           <p
             className="cp-snippet text-sm text-ink-dim leading-relaxed line-clamp-4 mt-1"
@@ -44,7 +54,6 @@ export default function SearchCard({ result, apiUrl, onOpenPdf }) {
           />
         )}
       </div>
-
       {previewUrl && (
         <button
           onClick={(e) => onOpenPdf(e, result)}
