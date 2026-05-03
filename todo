@@ -1,7 +1,26 @@
-salinkot visu ko var
-izdomaat kaa kategorijas + gray nodes metainfo dabuut
+LIELA HUJNA
+nomainiit DOI uz OPENALEX ID tas ir daudz labaaks
 
-tiem ir tikai doi so tie in background jakliek CP ieksaa
 
-double click paraada atvancetaaku logu ar pdf-u, var pielikt kategorju/nodzest...
+data populizators todo:
+saprast kas tiesi notiek jo manskiet viss uz knapi pamatiem iet
 pelekajiem double click atver logu lai var uploadot to dokumentu db
+krasas smukakas
+
+
+LELIE TODO:
+
+LLM kategorijas
+llm tiek iebaroti visi dokumenti (ieladetie) (vinu title doi authors abstract) un prasa uztaisiit 10-15 kategorijas siem dokumentiem
+pec tam for loop (kuraa no siem, piederetu sis dokuments) 
+katream nakamajam ieladetajam arii iedot kategoriju
+
+LLM chatbots
+querijo chatinu par dokumentiem
+chatins uztaisa sieta queriju balstoties uz chata tekstu
+querijo sietu 
+iebaro resultatu abstractus titles klat lai uztaisa response
+pec tam ja turpina chatot tad ar kontekstu.... (mos dereetu sqllite palaist blakus lmao)
+
+
+toggle authors (man max galax sito velaak)

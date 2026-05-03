@@ -85,14 +85,13 @@ def slugify(text: str) -> str:
     return text
 
 
-def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str) -> str:
-    #print(doi_info)
+def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str, stub: bool = False) -> str:
     doi   = doi_info   or {}
     grobi = grobid_info or {}
     title    = doi.get("title")    or grobi.get("title")    or "Unknown"
     abstract = doi.get("abstract") or grobi.get("abstract") or ""
     abstract = strip_jats(abstract)
-    doi_number = doi.get("doi", "") or grobi.get("doi", "")  # ← also check grobi
+    doi_number = doi.get("doi", "") or grobi.get("doi", "")
     cited_by_count = doi.get("cited_by_count", 0) or 0
 
     doc_id = doi_number if doi_number else slugify(title)
@@ -114,20 +113,20 @@ def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str) 
 
     file_path = grobi.get("file", "")
     doc = Element("document")
-    SubElement(doc, "id").text              = doc_id         
-    SubElement(doc, "file").text            = file_path
-    SubElement(doc, "title").text           = title
-    SubElement(doc, "cited_by_count").text     = str(cited_by_count)
-    SubElement(doc, "date").text            = date_val
-    SubElement(doc, "doi_number").text      = doi_number
+    SubElement(doc, "id").text               = doc_id
+    SubElement(doc, "file").text             = file_path
+    SubElement(doc, "title").text            = title
+    SubElement(doc, "cited_by_count").text   = str(cited_by_count)
+    SubElement(doc, "date").text             = date_val
+    SubElement(doc, "doi_number").text       = doi_number
     SubElement(doc, "img_preview_path").text = get_preview_path(image_path)
+    SubElement(doc, "stub_document").text    = "yes" if stub else "no"
 
     authors_el = SubElement(doc, "authors")
     for author in authors:
         SubElement(authors_el, "author").text = author
 
     SubElement(doc, "abstract").text = abstract
-
     SubElement(doc, "category_id").text = "0"
 
     methods_el = SubElement(doc, "methods")
@@ -147,12 +146,13 @@ def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str) 
             SubElement(ref_authors_el, "author").text = ra
         SubElement(ref_el, "date").text = str(ref.get("date") or "")
 
-    ref_dois = grobi.get("reference_dois", [])   
-    if ref_dois:
-        ref_dois_el = SubElement(doc, "references_doi")
-        for raw_doi in ref_dois:
-            if raw_doi:
-                SubElement(ref_dois_el, "reference_doi").text = raw_doi
+    if not stub:
+        ref_dois = grobi.get("reference_dois", [])
+        if ref_dois:
+            ref_dois_el = SubElement(doc, "references_doi")
+            for raw_doi in ref_dois:
+                if raw_doi:
+                    SubElement(ref_dois_el, "reference_doi").text = raw_doi
 
     raw_xml = tostring(doc, encoding="unicode", xml_declaration=False)
     pretty  = xml.dom.minidom.parseString(raw_xml).toprettyxml(indent="\t")
@@ -160,7 +160,6 @@ def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str) 
     if lines[0].startswith("<?xml"):
         lines = lines[1:]
     return "\n".join(lines)
-
 
 def upload_xml(xml_string: str, cp_url: str, cp_user: str, cp_pass: str) -> dict:
     import requests

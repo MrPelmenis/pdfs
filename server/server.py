@@ -21,7 +21,15 @@ from src.xml_builder import build_xml, save_xml, upload_xml, extract_fallback_te
 from src.vision_extractor import extract_title_authors_from_image
 from src.crossref         import crossref_by_doi, crossref_by_title
 
-from categories import (get_all_categories,create_category, edit_category, delete_category, get_random_category, assign_category_to_document, get_category_by_id, NONE_CATEGORY)
+from src.categories import (get_all_categories,create_category, edit_category, delete_category, get_random_category, assign_category_to_document, get_category_by_id, NONE_CATEGORY)
+
+from src.queue_manager import add_dois_to_queue
+from src.stub_worker import start_stub_worker, set_pdf_processing, cp_document_exists, fetch_cp_document, delete_cp_document
+import xml.etree.ElementTree as ET
+from xml.sax.saxutils import escape
+
+
+
 load_dotenv()
 
 CP_URL  = os.getenv("CP_URL")
@@ -40,40 +48,32 @@ os.makedirs(PREVIEW_DIR,  exist_ok=True)
 os.makedirs(XML_OUT_PATH,  exist_ok=True)
 
 def process_file_background(filename, save_path):
-    confidence = "unknown"
-    missing    = []
- 
+    set_pdf_processing(True)
     try:
+        confidence = "unknown"
+        missing    = []
+ 
         image_path  = generate_preview(save_path, PREVIEW_DIR)
         grobid_info = extract_paper_data(save_path)
  
-        #print(f"[{filename[:20]}] Grobid done — "f"full_text={'OK' if grobid_info.get('full_text') else 'MISSING'}")
- 
-        # ── Vision LLM for title + authors ───────────────────────────────────
         vision = extract_title_authors_from_image(image_path)
         if vision.get("title"):
             grobid_info["title"]   = vision["title"]
-            #print(f"[{filename[:20]}] Vision title: {vision['title']}")
         if vision.get("authors"):
             grobid_info["authors"] = vision["authors"]
  
-        # ── OCR fallback for full text ────────────────────────────────────────
         if len((grobid_info.get("full_text") or "").split()) < 100:
-            #print(f"[{filename[:20]}] No full text from Grobid, running OCR...")
             ocr_text = extract_fallback_text(save_path)
             if ocr_text.strip():
                 grobid_info["full_text"] = ocr_text
  
-        # ── Crossref ──────────────────────────────────────────────────────────
         crossref_info = {}
         grobid_doi    = grobid_info.get("doi")
  
         if grobid_doi:
-            # Full fetch — includes reference_dois and cited_by_count
             crossref_info = crossref_by_doi(grobid_doi)
  
         if not crossref_info:
-            # Title search first (lightweight), then full fetch if DOI found
             search_result = crossref_by_title(
                 title   = grobid_info.get("title", ""),
                 authors = grobid_info.get("authors", []),
@@ -84,37 +84,44 @@ def process_file_background(filename, save_path):
             else:
                 crossref_info = search_result
  
-        # ── Merge Crossref into grobid_info ──────────────────────────────────
         if crossref_info and not crossref_info.get("low_confidence"):
             if crossref_info.get("doi"):
                 grobid_info["doi"] = crossref_info["doi"]
-            if crossref_info.get("abstract"): 
+            if crossref_info.get("abstract"):
                 grobid_info["abstract"] = crossref_info["abstract"]
-            if crossref_info.get("authors"): 
+            if crossref_info.get("authors"):
                 grobid_info["authors"] = crossref_info["authors"]
             if crossref_info.get("reference_dois"):
                 grobid_info["reference_dois"] = crossref_info["reference_dois"]
-        
-        print(f"DEBUG reference_dois: {grobid_info.get('reference_dois', [])[:5]}")
-        #print(grobid_info["doi"], "\n",grobid_info["title"],"\n", grobid_info["abstract"],"\n", grobid_info["authors"], "\n\n\n\n", crossref_info)
-
-        # ── Build XML and upload ──────────────────────────────────────────────
-        xml_string     = build_xml(crossref_info or None, grobid_info, image_path)
+ 
+        final_doi = grobid_info.get("doi") or (crossref_info or {}).get("doi")
+        if final_doi:
+            existing = fetch_cp_document(final_doi, CP_URL, CP_USER, CP_PASS)
+            if existing and existing.get("stub_document") == "yes":
+                print(f"[app] Replacing stub for DOI: {final_doi}")
+                delete_cp_document(final_doi, CP_URL, CP_USER, CP_PASS)
+ 
+        xml_string     = build_xml(crossref_info or None, grobid_info, image_path, stub=False)
         final_xml_name = f"{XML_OUT_PATH}/{os.path.splitext(filename)[0]}.xml"
         save_xml(xml_string, final_xml_name)
  
         upload_result = upload_xml(xml_string, CP_URL, CP_USER, CP_PASS)
  
         if upload_result["success"]:
-            print(f"SUCCESS: [{filename[:20]}]") 
+            print(f"SUCCESS: [{filename[:20]}]")
             print("\n\n\n")
+ 
+            ref_dois = grobid_info.get("reference_dois", [])
+            if ref_dois:
+                added = add_dois_to_queue(ref_dois)
+                print(f"[app] Added {added} DOIs to stub queue")
         else:
             print(f"ERROR: [{filename}] {upload_result['error']}")
  
     except Exception as e:
         print(f"FATAL: [{filename}] {str(e)}")
-
-
+    finally:
+        set_pdf_processing(False) 
 
 
 def make_unique_filename(original_filename: str) -> str:
@@ -161,7 +168,7 @@ def clean_filename(file_path):
 
 
 def do_search(query):
-    fullQ = f"<query>{query}*</query><relevance>decending</relevance><docs>10</docs>"
+    fullQ = f"<query><stub_document>no</stub_document>{query}*</query><relevance>decending</relevance><docs>10</docs>"
     resp = requests.post(
         CP_URL + "/api/databases/pdfs/search/json",
         data=fullQ,
@@ -222,27 +229,67 @@ def do_search(query):
             "cited_by_count": doc.get("cited_by_count"),
             "reference_dois": reference_dois,
             "category": category,
+            "stub_document":  doc.get("stub_document", "no"),
+
         })
 
     return results
 
 
-
-
 def filterGrayNodes(reference_dois):
     return reference_dois[:5]
+
+
+def lookup_gray_node(doi: str) -> dict | None:
+    if not doi:
+        return None
+    body = (
+        f"<document><id>{escape(doi)}</id></document>"
+        f"<list>"
+        f"<title>yes</title>"
+        f"<cited_by_count>yes</cited_by_count>"
+        f"<authors>yes</authors>"
+        f"<abstract>yes</abstract>"
+        f"<stub_document>yes</stub_document>"
+        f"</list>"
+    )
+    try:
+        resp = requests.post(
+            CP_URL.rstrip("/") + "/api/databases/pdfs/lookup",
+            data=body,
+            auth=(CP_USER, CP_PASS),
+            timeout=10,
+        )
+        resp.raise_for_status()
+        if "<found>1</found>" not in resp.text:
+            return None
+        root = ET.fromstring(resp.text)
+        doc  = root.find(".//document")
+        if doc is None:
+            return None
+
+        title   = (doc.findtext("title") or "").strip()
+        cited   = int(doc.findtext("cited_by_count") or 0)
+        abstract = (doc.findtext("abstract") or "").strip()
+        stub    = (doc.findtext("stub_document") or "no").strip() == "yes"
+        authors = [a.text.strip() for a in doc.findall(".//authors/author") if a.text]
+
+        return {
+            "title":     title,
+            "cited":     cited,
+            "abstract":  abstract,
+            "authors":   authors,
+            "stub_document": stub,
+        }
+    except Exception as e:
+        print(f"[lookup_gray_node] failed for {doi}: {e}")
+        return None
 
 @app.route("/search")
 def search():
     query = request.args.get("query", "").strip()
     if not query:
         return jsonify({"error": "query is required"}), 400
-    #1. initial nodes prieks chart (results)
-    #2. pievienojam query node pie initial
-    #3. linki no query uz initial
-    #4. iepushojam allnodes visus reference dois 
-        #4.1 vienkarsi funkciju kas atlasiis pagaidaam iedodam pirmos 5.
-    #5. for for linkojam visu ko varam, ja jau ir tad nevajag :D
     try:
         results = do_search(query)
         all_nodes = []
@@ -331,27 +378,34 @@ def search():
         for node in results:
             reference_dois = filterGrayNodes(node["reference_dois"])
             for reference_doi in reference_dois: 
-                if reference_doi not in seen_ids:  
+                if reference_doi not in seen_ids:
+                    enriched = lookup_gray_node(reference_doi)
+                    
+                    if not enriched:
+                        print("not in CP: ", reference_doi)
+                        add_dois_to_queue([reference_doi])
+
+                    cited    = enriched["cited"] if enriched else 0
                     gray_node = {
                         "id":     reference_doi,
                         "loaded": False,
-                        "style":  { "label": reference_doi },
+                        "style":  { "label": enriched["title"] if enriched else reference_doi },
                         "data": {
-                            "title":     reference_doi,
-                            "authors":   [],
-                            "doi":       reference_doi,
-                            "cited":     0,
-                            "radius":    15,
-                            "abstract":  "",
-                            "fillColor": "rgba(120,120,120,0.7)",
-                            "preview":   None,
-                            "category":  None,
-                            "isGray":    True,
+                            "title":         enriched["title"]    if enriched else reference_doi,
+                            "authors":       enriched["authors"]  if enriched else [],
+                            "abstract":      enriched["abstract"] if enriched else "",
+                            "cited":         cited,
+                            "doi":           reference_doi,
+                            "radius":        round(40 + math.sqrt(cited) * 2, 1) if enriched else 15,
+                            "fillColor":     "rgba(120,120,120,0.7)",
+                            "preview":       None,
+                            "category":      None,
+                            "isGray":        True,
+                            "stub_document": enriched["stub_document"] if enriched else False,
                         }
                     }
                     all_nodes.append(gray_node)
-                    seen_ids.add(reference_doi)  
-
+                    seen_ids.add(reference_doi)
                 links.append({
                     "from":node["id"],
                     "to":reference_doi,
@@ -362,8 +416,6 @@ def search():
                     }
                 })
 
-
-        #porno
 
         return jsonify({
             "query":         query,
@@ -441,6 +493,7 @@ def route_assign_category():
     body   = request.get_json(silent=True) or {}
     doc_id = body.get("document_id", "").strip()
     cat_id = body.get("category_id")
+
     if not doc_id:
         return jsonify({"error": "document_id is required"}), 400
     if cat_id is None:
@@ -449,13 +502,13 @@ def route_assign_category():
         cat_id = int(cat_id)
     except (TypeError, ValueError):
         return jsonify({"error": "category_id must be an integer"}), 400
- 
+
     result = assign_category_to_document(doc_id, cat_id, CP_URL, CP_USER, CP_PASS)
     if not result["success"]:
-        return jsonify({"error": result["error"]}), 500
+        return jsonify({"error": result.get("error"), "detail": result.get("response")}), 500
     return jsonify(result), 200
 
-
 if __name__ == "__main__":
+    start_stub_worker(CP_URL, CP_USER, CP_PASS)
     app.run(host="0.0.0.0", port=3002, debug=True, threaded=True)
 

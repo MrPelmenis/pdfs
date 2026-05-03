@@ -1,0 +1,200 @@
+import time
+import random
+import threading
+import requests
+
+from src.crossref      import crossref_by_doi
+from src.xml_builder   import build_xml, upload_xml
+from src.queue_manager import peek_next_doi, remove_first_doi
+from xml.sax.saxutils import escape
+
+
+_pdf_processing = False
+_flag_lock       = threading.Lock()
+
+
+def set_pdf_processing(value: bool):
+    global _pdf_processing
+    with _flag_lock:
+        _pdf_processing = value
+
+
+def is_pdf_processing() -> bool:
+    with _flag_lock:
+        return _pdf_processing
+
+
+def cp_document_exists(doi: str, cp_url: str, cp_user: str, cp_pass: str) -> bool:
+    if not doi:
+        return False
+    body = (
+        f"<document><id>{escape(doi)}</id></document>"
+        f"<list>"
+        f"<file>no</file><title>no</title><date>no</date>"
+        f"<doi_number>no</doi_number><img_preview_path>no</img_preview_path>"
+        f"<stub_document>no</stub_document><authors>no</authors>"
+        f"<abstract>no</abstract><cited_by_count>no</cited_by_count>"
+        f"<references_doi>no</references_doi><category_id>no</category_id>"
+        f"</list>"
+    )
+    try:
+        resp = requests.post(
+            cp_url.rstrip("/") + "/api/databases/pdfs/lookup",
+            data=body,
+            auth=(cp_user, cp_pass),
+            timeout=10,
+        )
+        resp.raise_for_status()
+        return "<found>1</found>" in resp.text
+    except Exception as e:
+        print(f"[stub_worker] CP existence check failed for {doi}: {e}")
+        return False
+
+def fetch_cp_document(doi: str, cp_url: str, cp_user: str, cp_pass: str) -> dict | None:
+    if not doi:
+        return None
+    body = f"<document><id>{escape(doi)}</id></document>"
+    try:
+        resp = requests.post(
+            cp_url.rstrip("/") + "/api/databases/pdfs/lookup",
+            data=body,
+            auth=(cp_user, cp_pass),
+            timeout=10,
+        )
+        resp.raise_for_status()
+        if "<found>0</found>" in resp.text:
+            return None
+        return _parse_lookup_response(resp.text)
+    except Exception as e:
+        print(f"[stub_worker] CP fetch failed for {doi}: {e}")
+        return None
+
+
+def delete_cp_document(doc_id: str, cp_url: str, cp_user: str, cp_pass: str) -> bool:
+    body = f"<document><id>{escape(doc_id)}</id></document>"
+    try:
+        resp = requests.post(
+            cp_url.rstrip("/") + "/api/databases/pdfs/delete",
+            data=body,
+            auth=(cp_user, cp_pass),
+            headers={"Content-Type": "text/xml"},
+            timeout=10,
+        )
+        resp.raise_for_status()
+        return True
+    except Exception as e:
+        print(f"[stub_worker] CP delete failed for {doc_id}: {e}")
+        return False
+
+
+def _parse_lookup_response(xml_text: str) -> dict | None:
+    import xml.etree.ElementTree as ET
+    try:
+        root = ET.fromstring(xml_text)
+    except ET.ParseError as e:
+        print(f"[stub_worker] Failed to parse CP response: {e}")
+        return None
+
+    doc_el = root.find(".//document")
+    if doc_el is None:
+        return None
+
+    def text(tag):
+        el = doc_el.find(tag)
+        return el.text.strip() if el is not None and el.text else None
+
+    authors = []
+    for a in doc_el.findall(".//authors/author"):
+        if a.text:
+            authors.append(a.text.strip())
+
+    reference_dois = []
+    for r in doc_el.findall(".//references_doi/reference_doi"):
+        if r.text:
+            reference_dois.append(r.text.strip())
+
+    cited_raw = text("cited_by_count")
+    try:
+        cited = int(cited_raw) if cited_raw else 0
+    except ValueError:
+        cited = 0
+
+    return {
+        "id":             text("id"),
+        "file":           text("file"),
+        "title":          text("title"),
+        "date":           text("date"),
+        "doi_number":     text("doi_number"),
+        "stub_document":  text("stub_document") or "no",
+        "abstract":       text("abstract"),
+        "cited_by_count": cited,
+        "authors":        authors,
+        "reference_dois": reference_dois,
+        "category_id":    text("category_id"),
+    }
+
+
+def build_stub_xml(crossref_data: dict) -> str:
+    return build_xml(
+        doi_info    = crossref_data,
+        grobid_info = {},
+        image_path  = "",
+        stub        = True,
+    )
+
+
+def run_stub_worker(cp_url: str, cp_user: str, cp_pass: str):
+    print("[stub_worker] Started.")
+    while True:
+        try:
+            if is_pdf_processing():
+                time.sleep(5)
+                continue
+
+            doi = peek_next_doi()
+            if not doi:
+                time.sleep(10)
+                continue
+
+            if cp_document_exists(doi, cp_url, cp_user, cp_pass):
+                print(f"[stub_worker] Already in CP, skipping: {doi}")
+                remove_first_doi()
+                _throttle()
+                continue
+
+            crossref_data = crossref_by_doi(doi)
+            if not crossref_data:
+                print(f"[stub_worker] Crossref returned nothing for: {doi}")
+                remove_first_doi()
+                _throttle()
+                continue
+
+            xml_string    = build_stub_xml(crossref_data)
+            upload_result = upload_xml(xml_string, cp_url, cp_user, cp_pass)
+
+            if upload_result["success"]:
+                print(f"[stub_worker] Stub uploaded: {doi}")
+            else:
+                print(f"[stub_worker] Upload failed for {doi}: {upload_result['error']}")
+
+            remove_first_doi()
+            _throttle()
+
+        except Exception as e:
+            print(f"[stub_worker] Unexpected error: {e}")
+            time.sleep(5)
+
+
+def _throttle():
+    time.sleep(random.uniform(1.0, 3.0))
+
+
+def start_stub_worker(cp_url: str, cp_user: str, cp_pass: str) -> threading.Thread:
+    t = threading.Thread(
+        target = run_stub_worker,
+        args   = (cp_url, cp_user, cp_pass),
+        daemon = True,
+        name   = "stub-worker",
+    )
+    t.start()
+    return t

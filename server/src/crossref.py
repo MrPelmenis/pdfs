@@ -22,13 +22,10 @@ def crossref_by_doi(doi: str) -> dict:
             timeout=TIMEOUT,
         )
     except requests.exceptions.RequestException as e:
-        #print(f"[crossref] DOI request failed: {e}")
         return {}
     if resp.status_code == 404:
-        #print(f"[crossref] DOI not found: {doi}")
         return {}
     if resp.status_code != 200:
-        #print(f"[crossref] DOI lookup returned {resp.status_code}")
         return {}
 
     #print(json.dumps(resp.json().get("message", {}), indent=2))

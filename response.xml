@@ -1,0 +1,44 @@
+<cps:reply xmlns:cps="www.contextprime.com">
+	<cps:database>pdfs</cps:database>
+	<cps:command>list-last</cps:command>
+	<cps:content>
+		<results>
+			<document>
+				<id>10.1002/(sici)1097-4636(199708)36:2&lt;233::aid-jbm12&gt;3.0.co;2-h</id>
+				<file>./files/pdf-files/0203_3175.pdf</file>
+				<title>Variations in solution chemistry during calcium-deficient and stoichiometric hydroxyapatite formation from CaHPO4 � 2H2O and Ca4(PO4)2O</title>
+				<cited_by_count>27</cited_by_count>
+				<date>1997</date>
+				<doi_number>10.1002/(sici)1097-4636(199708)36:2&lt;233::aid-jbm12&gt;3.0.co;2-h</doi_number>
+				<img_preview_path>./files/pdf-preview-images/0203_3175.jpeg</img_preview_path>
+				<authors>
+					<author>Kevor S. TenHuisen</author>
+					<author>Paul W. Brown</author>
+				</authors>
+				<abstract>This study explores the mechanistic paths taken when calcium-deficient hydroxyapatite, CDHAp (Ca/P = 1.50), and stoichiometric hydroxyapatite, SHAp (Ca/P = 1.67), form by reaction between particulate calcium phosphate salts. The acidic reactant was CaHPO 4 ⅐ 2H 2 O (DCPD) and the basic reactant was Ca 4 (PO 4 ) 2 O (TetCP). Variations in pH, calcium and phosphate concentrations, and the solids present during apatite formation, were determined as functions of reaction temperature (25.0°, 37.4°, and 50.0°C) and time. It was found that the dissolution of TetCP was rate limiting for both hydroxyapatite (HAp) compositions at all three temperatures. However, the retrograde solubility and incongruent disso-lution of DCPD became increasingly important in influencing the kinetics as the reaction temperature was increased. An amorphous intermediate phase was observed regardless of the HAp stoichiometry. The solutions from which the SHAp formed approached equilibrium at much shorter reaction times (1-2 days) than those from which the CDHAp formed. The latter continued to display changes in pH and in calcium and phosphate concentrations for 6 months. CD-HAp was shown to be a thermodynamically stable phase. The dissolution of CDHAp is incongruent, showing a Ca/P molar ratio in solution less than 0.5.</abstract>
+				<category_id>0</category_id>
+				<full_text>Calcium phosphates, specifically apatites, are suitable for a number of biomedical applications involving hard tissue replacement, augmentation, and defect filling. From the standpoint of biological compatibility and minimal immune response, apatites are ideal candidates as biomaterials due to their similarities in composition to native hard tissues. The mineral phase of hard tissue is formed of apatites that contain varying amounts of CO 3 2-, F -, Mg 2+ , Sr 2+ , K + , and Na + ; 1 the amount of each ion depends on the species, age, and type of hard tissue as well as on the region sampled. 2 HAp exists over a range of compositions typically characterized by the Ca/P molar ratio. For unsubstituted apatites (the CaO-P 2 O 5 -H 2 O system) this is believed to range between 1.50 and 1.67. 3,4</full_text>
+				<references_doi>
+					<reference_doi>10.1111/j.1151-2916.1992.tb05435.x</reference_doi>
+					<reference_doi>10.1016/0021-9797(90)90286-w</reference_doi>
+					<reference_doi>10.1007/bf00121697</reference_doi>
+					<reference_doi>10.1007/bf00154541</reference_doi>
+					<reference_doi>10.1007/bf00151034</reference_doi>
+					<reference_doi>10.1007/bf02012548</reference_doi>
+					<reference_doi>10.6028/jres.081a.017</reference_doi>
+					<reference_doi>10.1016/0022-0248(90)90108-w</reference_doi>
+					<reference_doi>10.6028/jres.070a.047</reference_doi>
+					<reference_doi>10.6028/jres.074a.036</reference_doi>
+					<reference_doi>10.1021/ic50097a037</reference_doi>
+					<reference_doi>10.2109/jcersj.99.954</reference_doi>
+					<reference_doi>10.1016/0021-9797(90)90285-v</reference_doi>
+					<reference_doi>10.1016/0022-4596(89)90099-6</reference_doi>
+				</references_doi>
+			</document>
+		</results>
+		<from>0</from>
+		<to>1</to>
+	</cps:content>
+	<cps:seconds>0.0039</cps:seconds>
+</cps:reply>
+

@@ -3,12 +3,13 @@ import os
 import random
 import threading
 import requests
+from xml.sax.saxutils import escape
 
-CATEGORIES_FILE = os.path.join(os.path.dirname(__file__), "categories.json")
+
+#LLM rakstija so, man bija galax, vienkarsi uztur kategorijaam konstantu sarakstu 
+CATEGORIES_FILE = os.path.join(os.path.dirname(__file__), "../files/categories.json")
 _lock = threading.Lock()
 
-
-# ── File helpers ──────────────────────────────────────────────────────────────
 
 def _read() -> list:
     with open(CATEGORIES_FILE, "r", encoding="utf-8") as f:
@@ -23,8 +24,6 @@ def _write(data: list) -> None:
 def _next_id(categories: list) -> int:
     return max((c["id"] for c in categories), default=-1) + 1
 
-
-# ── CRUD ──────────────────────────────────────────────────────────────────────
 
 def get_all_categories() -> list:
     with _lock:
@@ -71,7 +70,7 @@ def delete_category(cat_id: int) -> bool:
 def get_random_category() -> dict:
     with _lock:
         categories = _read()
-    choices = [c for c in categories if c["id"] != 0]  # exclude "none"
+    choices = [c for c in categories if c["id"] != 0]  
     if not choices:
         return {"id": 0, "name": "none", "color": "rgba(170,170,170,0.92)"}
     return random.choice(choices)
@@ -86,12 +85,8 @@ def get_category_by_id(cat_id: int) -> dict | None:
 NONE_CATEGORY = {"id": 0, "name": "none", "color": "rgba(170,170,170,0.92)"}
 
 def get_category_by_name(name) -> dict:
-    """Look up a category by name. Returns the 'none' category if not found.
-    Accepts a plain string or a dict like {"name": "teeth"} from CP.
-    """
     if not name:
         return NONE_CATEGORY
-    # CP sometimes returns {"name": "teeth"} instead of a plain string
     if isinstance(name, dict):
         name = name.get("name") or ""
     if not name:
@@ -102,7 +97,6 @@ def get_category_by_name(name) -> dict:
     return found if found else NONE_CATEGORY
 
 
-# ── Assign to document via CP partial-replace ─────────────────────────────────
 
 def assign_category_to_document(
     doc_id: str,
@@ -116,7 +110,7 @@ def assign_category_to_document(
         return {"success": False, "error": f"Category id={cat_id} not found"}
 
     xml_body = f"""<document>
-  <id>{doc_id}</id>
+  <id>{escape(doc_id)}</id>
   <category_id>{cat['id']}</category_id>
 </document>"""
 

@@ -46,6 +46,10 @@ function showTooltip(d, x, y) {
     const abstractSnip  = abstractWords.slice(0, 20).join(" ")
         + (abstractWords.length > 20 ? "…" : "");
 
+    const isStub    = !!d.stub_document;
+    const clickHint = isStub ? "Click to open on DOI.org" : "Click to see more";
+    const dblHint   = isStub ? "Double-click for DOI info" : "Double-click to view PDF";
+
     tip.innerHTML = `
         <div style="font-weight:600;font-size:12px;color:#fff;margin-bottom:5px">${title}</div>
         <div style="color:#94a3b8;margin-bottom:2px"><span style="color:#64748b">Authors </span>${authors}</div>
@@ -53,8 +57,8 @@ function showTooltip(d, x, y) {
         <div style="color:#94a3b8;margin-bottom:5px"><span style="color:#64748b">Cited by </span>${cited}</div>
         ${abstractSnip ? `<div style="color:#94a3b8;margin-bottom:5px;font-style:italic;font-size:12px">${abstractSnip}</div>` : ""}
         <div style="color:#475569;font-size:10px;border-top:1px solid rgba(255,255,255,0.07);padding-top:5px">
-            <span style="margin-right:12px">Click to see more</span>
-            <span>Double-click to view PDF</span>
+            <span style="margin-right:12px">${clickHint}</span>
+            <span>${dblHint}</span>
         </div>
     `.trim();
 
@@ -129,19 +133,15 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
                 if (d.radius    !== undefined) node.radius    = d.radius;
                 if (d.fillColor !== undefined) node.fillColor = d.fillColor;
 
-                const raw = node.id === "query"
-                    ? (d.title || "Search")
-                    : (d.title || node.id);
-
                 if (node.id === "query") {
-                    node.display    = "text";
-                    node.image      = SEARCH_ICON;
-                    node.fillColor  = "#ffffff";
+                    node.display   = "text";
+                    node.image     = SEARCH_ICON;
+                    node.fillColor = "#ffffff";
                     return;
                 }
 
-                const converted = stripHtml(raw);
-                node.label = converted;
+                const raw       = d.title || node.id;
+                node.label      = stripHtml(raw);
             },
 
             nodeLabel: {
@@ -171,7 +171,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
             onHoverChange: function (event) {
                 if (event.hoverNode && event.hoverNode.id !== "query") {
                     const d = event.hoverNode.data?.data;
-                    if (d && !d.isGray) {
+                    if (d && (!d.isGray || d.stub_document)) {
                         showTooltip(d, pointerX, pointerY);
                     } else {
                         hideTooltip();
@@ -182,8 +182,13 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
             },
 
             onClick: function (event) {
-                if (event.clickNode && event.clickNode.id !== "query") {
-                    const doi = event.clickNode.data?.data?.doi || event.clickNode.id;
+                if (!event.clickNode || event.clickNode.id === "query") return;
+                const d = event.clickNode.data?.data;
+                if (!d) return;
+                if (d.stub_document) {
+                    window.open(`https://doi.org/${d.doi}`, "_blank");
+                } else if (!d.isGray) {
+                    const doi = d.doi || event.clickNode.id;
                     console.log(`clicked on: ${doi}`);
                 }
             },
@@ -191,9 +196,13 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
             onDoubleClick: function (event) {
                 if (!event.clickNode || event.clickNode.id === "query") return;
                 const d = event.clickNode.data?.data;
-                if (!d || d.isGray || !onOpenPdf) return;
-                hideTooltip();
-                onOpenPdf(d);
+                if (!d) return;
+                if (d.stub_document) {
+                    alert(`stub double click + doi: ${d.doi}`);
+                } else if (!d.isGray && onOpenPdf) {
+                    hideTooltip();
+                    onOpenPdf(d);
+                }
             },
         },
     });
