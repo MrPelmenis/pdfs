@@ -18,8 +18,8 @@ from src.pdfToImage import generate_preview
 from src.parser import extract_paper_data
 from src.xml_builder import build_xml, save_xml, upload_xml, extract_fallback_text, grobid_confidence
 
-from src.vision_extractor import extract_title_authors_from_image
-from src.crossref         import crossref_by_doi, crossref_by_title
+from src.vision_extractor   import extract_title_authors_from_image
+from src.metadata_analyser  import openalex_by_id, openalex_by_title
 
 from src.categories import (get_all_categories,create_category, edit_category, delete_category, get_random_category, assign_category_to_document, get_category_by_id, NONE_CATEGORY)
 
@@ -52,76 +52,92 @@ def process_file_background(filename, save_path):
     try:
         confidence = "unknown"
         missing    = []
- 
+
         image_path  = generate_preview(save_path, PREVIEW_DIR)
         grobid_info = extract_paper_data(save_path)
- 
+
         vision = extract_title_authors_from_image(image_path)
         if vision.get("title"):
             grobid_info["title"]   = vision["title"]
         if vision.get("authors"):
             grobid_info["authors"] = vision["authors"]
- 
+
         if len((grobid_info.get("full_text") or "").split()) < 100:
             ocr_text = extract_fallback_text(save_path)
             if ocr_text.strip():
                 grobid_info["full_text"] = ocr_text
- 
-        crossref_info = {}
+
+        openalex_info = {}
         grobid_doi    = grobid_info.get("doi")
- 
+
         if grobid_doi:
-            crossref_info = crossref_by_doi(grobid_doi)
- 
-        if not crossref_info:
-            search_result = crossref_by_title(
+            openalex_info = openalex_by_id(grobid_doi)
+
+        if not openalex_info:
+            openalex_info = openalex_by_title(
                 title   = grobid_info.get("title", ""),
                 authors = grobid_info.get("authors", []),
             )
-            found_doi = search_result.get("doi")
-            if found_doi and not search_result.get("low_confidence"):
-                crossref_info = crossref_by_doi(found_doi)
-            else:
-                crossref_info = search_result
- 
-        if crossref_info and not crossref_info.get("low_confidence"):
-            if crossref_info.get("doi"):
-                grobid_info["doi"] = crossref_info["doi"]
-            if crossref_info.get("abstract"):
-                grobid_info["abstract"] = crossref_info["abstract"]
-            if crossref_info.get("authors"):
-                grobid_info["authors"] = crossref_info["authors"]
-            if crossref_info.get("reference_dois"):
-                grobid_info["reference_dois"] = crossref_info["reference_dois"]
- 
-        final_doi = grobid_info.get("doi") or (crossref_info or {}).get("doi")
-        if final_doi:
-            existing = fetch_cp_document(final_doi, CP_URL, CP_USER, CP_PASS)
+
+        if openalex_info:
+            if openalex_info.get("openalex_id"):
+                grobid_info["openalex_id"] = openalex_info["openalex_id"]
+            if openalex_info.get("doi"):
+                grobid_info["doi"] = openalex_info["doi"]
+            if openalex_info.get("abstract"):
+                grobid_info["abstract"] = openalex_info["abstract"]
+            if openalex_info.get("authors"):
+                grobid_info["authors"] = openalex_info["authors"]
+            if openalex_info.get("referenced_work_ids"):
+                grobid_info["referenced_work_ids"] = openalex_info["referenced_work_ids"]
+            if openalex_info.get("related_work_ids"):
+                grobid_info["related_work_ids"] = openalex_info["related_work_ids"]
+            if openalex_info.get("topics"):
+                grobid_info["topics"] = openalex_info["topics"]
+
+
+        final_id = grobid_info.get("openalex_id") or slugify(grobid_info.get("title", ""))
+        if final_id:
+            existing = fetch_cp_document(final_id, CP_URL, CP_USER, CP_PASS)
+            #ja dokuments jau bija kip stub tad izdzesam un ieliekam pilno
             if existing and existing.get("stub_document") == "yes":
-                print(f"[app] Replacing stub for DOI: {final_doi}")
-                delete_cp_document(final_doi, CP_URL, CP_USER, CP_PASS)
- 
-        xml_string     = build_xml(crossref_info or None, grobid_info, image_path, stub=False)
+                print(f"[app] Replacing stub for ID: {final_id}")
+                delete_cp_document(final_id, CP_URL, CP_USER, CP_PASS)
+
+        xml_string     = build_xml(openalex_info or None, grobid_info, image_path, stub=False)
         final_xml_name = f"{XML_OUT_PATH}/{os.path.splitext(filename)[0]}.xml"
         save_xml(xml_string, final_xml_name)
- 
+
         upload_result = upload_xml(xml_string, CP_URL, CP_USER, CP_PASS)
- 
+
         if upload_result["success"]:
             print(f"SUCCESS: [{filename[:20]}]")
             print("\n\n\n")
- 
-            ref_dois = grobid_info.get("reference_dois", [])
-            if ref_dois:
-                added = add_dois_to_queue(ref_dois)
-                print(f"[app] Added {added} DOIs to stub queue")
+
+            #pievienojm bacgkround procesam sito
+            ref_ids = grobid_info.get("referenced_work_ids", [])
+            rel_ids = grobid_info.get("related_work_ids", [])
+            all_ids = list(set(ref_ids + rel_ids))
+            if all_ids:
+                added = add_dois_to_queue(all_ids)
+                print(f"[app] Added {added} OpenAlex IDs to stub queue")
         else:
             print(f"ERROR: [{filename}] {upload_result['error']}")
- 
+
     except Exception as e:
         print(f"FATAL: [{filename}] {str(e)}")
     finally:
-        set_pdf_processing(False) 
+        set_pdf_processing(False)
+
+
+def slugify(text: str) -> str:
+    import unicodedata
+    text = unicodedata.normalize("NFKD", text)
+    text = text.encode("ascii", "ignore").decode("ascii")
+    text = text.strip()
+    text = re.sub(r"[^\w\s]", "", text)
+    text = re.sub(r"\s+", "_", text)
+    return text
 
 
 def make_unique_filename(original_filename: str) -> str:
@@ -157,9 +173,11 @@ def upload():
         "filename": unique_filename
     }), 200
 
+
 def get_preview_filename(file_path):
     basename = os.path.basename(file_path)
     return os.path.splitext(basename)[0] + ".jpeg"
+
 
 def clean_filename(file_path):
     if not file_path:
@@ -168,7 +186,31 @@ def clean_filename(file_path):
 
 
 def do_search(query):
-    fullQ = f"<query><stub_document>no</stub_document>{query}*</query><relevance>decending</relevance><docs>10</docs>"
+    fullQ = (
+        f"<query><stub_document>no</stub_document>{query}*</query>"
+        f"<relevance>decending</relevance>"
+        f"<docs>10</docs>"
+        f"<list>"
+        f"<id>yes</id>"
+        f"<openalex_id>yes</openalex_id>"
+        f"<title>yes</title>"
+        f"<abstract>yes</abstract>"
+        f"<authors>yes</authors>"
+        f"<date>yes</date>"
+        f"<doi_number>yes</doi_number>"
+        f"<cited_by_count>yes</cited_by_count>"
+        f"<file>yes</file>"
+        f"<img_preview_path>yes</img_preview_path>"
+        f"<full_text>yes</full_text>"
+        f"<stub_document>yes</stub_document>"
+        f"<category_id>yes</category_id>"
+        f"<topics>yes</topics>"
+        f"<concepts>yes</concepts>"
+        f"<keywords>yes</keywords>"
+        f"<referenced_work_ids>yes</referenced_work_ids>"
+        f"<related_work_ids>yes</related_work_ids>"
+        f"</list>"
+    )
     resp = requests.post(
         CP_URL + "/api/databases/pdfs/search/json",
         data=fullQ,
@@ -176,7 +218,7 @@ def do_search(query):
     )
     resp.raise_for_status()
     data = resp.json()
-
+ 
     documents = (
         data.get("cps:reply", {})
             .get("cps:content", {})
@@ -185,7 +227,7 @@ def do_search(query):
     )
     if isinstance(documents, dict):
         documents = [documents]
-
+ 
     results = []
     for doc in documents:
         raw_authors = doc.get("authors")
@@ -194,21 +236,38 @@ def do_search(query):
         else:
             a = raw_authors.get("author", [])
             authors = [a] if isinstance(a, str) else a
-
-        raw_ref_dois = doc.get("references_doi")
-        if raw_ref_dois is None:
-            reference_dois = []
+ 
+        # Topics
+        raw_topics = doc.get("topics")
+        if raw_topics is None:
+            topics = []
         else:
-            r = raw_ref_dois.get("reference_doi", [])
-            reference_dois = [r] if isinstance(r, str) else r
-
+            t = raw_topics.get("topic", [])
+            topics = [t] if isinstance(t, str) else t
+ 
+        # Referenced work IDs
+        raw_ref_ids = doc.get("referenced_work_ids")
+        if raw_ref_ids is None:
+            referenced_work_ids = []
+        else:
+            r = raw_ref_ids.get("referenced_work_id", [])
+            referenced_work_ids = [r] if isinstance(r, str) else r
+ 
+        # Related work IDs
+        raw_rel_ids = doc.get("related_work_ids")
+        if raw_rel_ids is None:
+            related_work_ids = []
+        else:
+            r = raw_rel_ids.get("related_work_id", [])
+            related_work_ids = [r] if isinstance(r, str) else r
+ 
         file_path    = doc.get("file")
         filename     = clean_filename(file_path)
         preview_name = get_preview_filename(file_path) if file_path else None
         preview_exists = preview_name and os.path.exists(
             os.path.join(PREVIEW_DIR, preview_name)
         )
-
+ 
         try:
             cat_id_raw = doc.get("category_id")
             category = get_category_by_id(int(cat_id_raw)) if cat_id_raw is not None else None
@@ -216,41 +275,54 @@ def do_search(query):
                 category = NONE_CATEGORY
         except (TypeError, ValueError):
             category = NONE_CATEGORY
+ 
         results.append({
-            "title":          doc.get("title"),
-            "id":             doc.get("id"),
-            "file":           filename,
-            "date":           doc.get("date"),
-            "full_text":      doc.get("full_text"),
-            "authors":        authors,
-            "abstract":       doc.get("abstract"),
-            "preview":        f"/previews/{preview_name}" if preview_exists else None,
-            "doi_number":     doc.get("doi_number", ""),
-            "cited_by_count": doc.get("cited_by_count"),
-            "reference_dois": reference_dois,
-            "category": category,
-            "stub_document":  doc.get("stub_document", "no"),
-
+            "title":               doc.get("title"),
+            "id":                  doc.get("id"),          # OpenAlex ID (primary key)
+            "openalex_id":         doc.get("openalex_id", ""),
+            "file":                filename,
+            "date":                doc.get("date"),
+            "full_text":           doc.get("full_text"),
+            "authors":             authors,
+            "abstract":            doc.get("abstract"),
+            "preview":             f"/previews/{preview_name}" if preview_exists else None,
+            "doi_number":          doc.get("doi_number", ""),
+            "cited_by_count":      doc.get("cited_by_count"),
+            "topics":              topics,
+            "referenced_work_ids": referenced_work_ids,
+            "related_work_ids":    related_work_ids,
+            "category":            category,
+            "stub_document":       doc.get("stub_document", "no"),
         })
-
+ 
     return results
-
-
-def filterGrayNodes(reference_dois):
-    return reference_dois[:5]
-
-
-def lookup_gray_node(doi: str) -> dict | None:
-    if not doi:
+ 
+ 
+def _enrich_and_sort(work_ids: list, limit: int) -> list[tuple[str, dict | None]]:
+    enriched_map = {}
+    for wid in work_ids:
+        enriched_map[wid] = lookup_gray_node(wid)
+ 
+    def cited_count(item):
+        _, enriched = item
+        return enriched["cited"] if enriched else 0
+ 
+    sorted_items = sorted(enriched_map.items(), key=cited_count, reverse=True)
+    return sorted_items[:limit]
+ 
+ 
+def lookup_gray_node(openalex_id: str) -> dict | None:
+    if not openalex_id:
         return None
     body = (
-        f"<document><id>{escape(doi)}</id></document>"
+        f"<document><id>{escape(openalex_id)}</id></document>"
         f"<list>"
         f"<title>yes</title>"
         f"<cited_by_count>yes</cited_by_count>"
         f"<authors>yes</authors>"
         f"<abstract>yes</abstract>"
         f"<stub_document>yes</stub_document>"
+        f"<doi_number>yes</doi_number>"
         f"</list>"
     )
     try:
@@ -267,24 +339,25 @@ def lookup_gray_node(doi: str) -> dict | None:
         doc  = root.find(".//document")
         if doc is None:
             return None
-
-        title   = (doc.findtext("title") or "").strip()
-        cited   = int(doc.findtext("cited_by_count") or 0)
+ 
+        title    = (doc.findtext("title") or "").strip()
+        cited    = int(doc.findtext("cited_by_count") or 0)
         abstract = (doc.findtext("abstract") or "").strip()
-        stub    = (doc.findtext("stub_document") or "no").strip() == "yes"
-        authors = [a.text.strip() for a in doc.findall(".//authors/author") if a.text]
-
+        stub     = (doc.findtext("stub_document") or "no").strip() == "yes"
+        authors  = [a.text.strip() for a in doc.findall(".//authors/author") if a.text]
+ 
         return {
-            "title":     title,
-            "cited":     cited,
-            "abstract":  abstract,
-            "authors":   authors,
+            "title":         title,
+            "cited":         cited,
+            "abstract":      abstract,
+            "authors":       authors,
             "stub_document": stub,
         }
     except Exception as e:
-        print(f"[lookup_gray_node] failed for {doi}: {e}")
+        print(f"[lookup_gray_node] failed for {openalex_id}: {e}")
         return None
-
+ 
+ 
 @app.route("/search")
 def search():
     query = request.args.get("query", "").strip()
@@ -292,14 +365,14 @@ def search():
         return jsonify({"error": "query is required"}), 400
     try:
         results = do_search(query)
-        all_nodes = []
-        initial_nodes = [] 
-        links = []
-
+        all_nodes     = []
+        initial_nodes = []
+        links         = []
+ 
         query_node = {
             "id":     "query",
             "loaded": True,
-            "style":  { "label": (query[:50] + "…") if len(query) > 50 else query },
+            "style":  {"label": (query[:50] + "…") if len(query) > 50 else query},
             "data": {
                 "title":     query,
                 "authors":   [],
@@ -313,110 +386,174 @@ def search():
         }
         initial_nodes.append("query")
         all_nodes.append(query_node)
-
+ 
         for doc in results:
-            cited = int(doc["cited_by_count"] or 0)
-            title = doc["title"]
-            radius   = round(40 + math.sqrt(cited) * 2, 1)
+            cited    = int(doc["cited_by_count"] or 0)
             title    = doc["title"] or doc["doi_number"]
             authors  = doc["authors"] or []
             abstract = doc["abstract"] or ""
             category = doc["category"]
+            radius   = round(40 + math.sqrt(cited) * 2, 1)
  
-
-            result_node =({
-                "id":     doc["doi_number"],
+            # Use OpenAlex ID as node id (falls back to id which is also OA ID)
+            node_id = doc["openalex_id"] or doc["id"] or doc["doi_number"]
+ 
+            result_node = {
+                "id":     node_id,
                 "loaded": True,
-                "style":  { "label": title },
+                "style":  {"label": title},
                 "data": {
-                    "title":     title,
-                    "authors":   authors,
-                    "doi":       doc["doi_number"],
-                    "cited":     cited,
-                    "id":        doc["id"], 
-                    "file":      doc["file"],
-                    "radius":    radius,
-                    "abstract":  abstract,
-                    "fillColor": category["color"],
-                    "preview":   doc["preview"],
-                    "category":  category,
-                    "isGray":    False,
-                }})
-            initial_nodes.append(result_node["id"])
+                    "title":       title,
+                    "authors":     authors,
+                    "doi":         doc["doi_number"],
+                    "openalex_id": doc["openalex_id"],
+                    "cited":       cited,
+                    "id":          doc["id"],
+                    "file":        doc["file"],
+                    "radius":      radius,
+                    "abstract":    abstract,
+                    "fillColor":   category["color"],
+                    "preview":     doc["preview"],
+                    "category":    category,
+                    "isGray":      False,
+                },
+            }
+            initial_nodes.append(node_id)
             all_nodes.append(result_node)
-
+ 
+        # Query → result links
         for node in all_nodes:
             if node["id"] != "query":
                 links.append({
-                    "from":"query",
-                    "to":node["id"],
+                    "from": "query",
+                    "to":   node["id"],
                     "style": {
-                        "fillColor": "rgba(99,102,241,0.35)",
-                        "radius":    2,
+                        "fillColor":    "rgba(99,102,241,0.35)",
+                        "radius":       2,
                         "toDecoration": "arrow",
-                    }
+                    },
                 })
-
-
-        result_doi_set = set(doc["doi_number"] for doc in results if doc["doi_number"])
+ 
+        # Result → result reference links (within search results)
+        seen_ids = set(node["id"] for node in all_nodes)
         for doc in results:
-            for ref_doi in doc["reference_dois"]:
-                if ref_doi in result_doi_set and ref_doi != doc["doi_number"]:
+            doc_node_id = doc["openalex_id"] or doc["id"]
+            for ref_id in doc["referenced_work_ids"]:
+                if ref_id in seen_ids and ref_id != doc_node_id:
                     links.append({
-                        "from": doc["doi_number"],
-                        "to":   ref_doi,
+                        "from": doc_node_id,
+                        "to":   ref_id,
                         "style": {
-                            "fillColor": "rgba(99,102,241,0.35)",
-                            "radius":    2,
+                            "fillColor":    "rgba(99,102,241,0.35)",
+                            "radius":       2,
                             "toDecoration": "arrow",
-                        }
+                        },
                     })
-
-
-        #pievienojam sitos graynodes  filtreti (pagaidam pirmie 5 ) katru vienreiz 
-        seen_ids = set(node["id"] for node in all_nodes)  
-        for node in results:
-            reference_dois = filterGrayNodes(node["reference_dois"])
-            for reference_doi in reference_dois: 
-                if reference_doi not in seen_ids:
-                    enriched = lookup_gray_node(reference_doi)
-                    
+ 
+        # Related works links — orange, dashed
+        for doc in results:
+            doc_node_id = doc["openalex_id"] or doc["id"]
+            for rel_id in doc["related_work_ids"]:
+                if rel_id in seen_ids and rel_id != doc_node_id:
+                    links.append({
+                        "from": doc_node_id,
+                        "to":   rel_id,
+                        "style": {
+                            "fillColor":    "rgba(251,146,60,0.45)",
+                            "radius":       1.5,
+                            "toDecoration": "arrow",
+                        },
+                    })
+ 
+        # Gray nodes for referenced works — top 5 by citation count
+        for doc in results:
+            doc_node_id = doc["openalex_id"] or doc["id"]
+            enriched_refs = _enrich_and_sort(doc["referenced_work_ids"], limit=5)
+ 
+            for ref_id, enriched in enriched_refs:
+                if ref_id not in seen_ids:
                     if not enriched:
-                        print("not in CP: ", reference_doi)
-                        add_dois_to_queue([reference_doi])
-
-                    cited    = enriched["cited"] if enriched else 0
+                        print("not in CP: ", ref_id)
+                        add_dois_to_queue([ref_id])
+ 
+                    cited = enriched["cited"] if enriched else 0
                     gray_node = {
-                        "id":     reference_doi,
+                        "id":     ref_id,
                         "loaded": False,
-                        "style":  { "label": enriched["title"] if enriched else reference_doi },
+                        "style":  {"label": enriched["title"] if enriched else ref_id},
                         "data": {
-                            "title":         enriched["title"]    if enriched else reference_doi,
+                            "title":         enriched["title"]    if enriched else ref_id,
                             "authors":       enriched["authors"]  if enriched else [],
                             "abstract":      enriched["abstract"] if enriched else "",
                             "cited":         cited,
-                            "doi":           reference_doi,
+                            "doi":           enriched.get("doi_number", "") if enriched else "",
+                            "openalex_id":   ref_id,
                             "radius":        round(40 + math.sqrt(cited) * 2, 1) if enriched else 15,
                             "fillColor":     "rgba(120,120,120,0.7)",
                             "preview":       None,
                             "category":      None,
                             "isGray":        True,
                             "stub_document": enriched["stub_document"] if enriched else False,
-                        }
+                        },
                     }
                     all_nodes.append(gray_node)
-                    seen_ids.add(reference_doi)
+                    seen_ids.add(ref_id)
+ 
                 links.append({
-                    "from":node["id"],
-                    "to":reference_doi,
+                    "from": doc_node_id,
+                    "to":   ref_id,
                     "style": {
-                        "fillColor": "rgba(99,102,241,0.35)",
-                        "radius":    2,
+                        "fillColor":    "rgba(99,102,241,0.35)",
+                        "radius":       2,
                         "toDecoration": "arrow",
-                    }
+                    },
                 })
-
-
+ 
+        # Gray nodes for related works — top 3 by citation count, warm gray/brown
+        for doc in results:
+            doc_node_id   = doc["openalex_id"] or doc["id"]
+            enriched_rels = _enrich_and_sort(doc["related_work_ids"], limit=3)
+ 
+            for rel_id, enriched in enriched_rels:
+                if rel_id not in seen_ids:
+                    if not enriched:
+                        print("not in CP (related): ", rel_id)
+                        add_dois_to_queue([rel_id])
+ 
+                    cited = enriched["cited"] if enriched else 0
+                    gray_node = {
+                        "id":     rel_id,
+                        "loaded": False,
+                        "style":  {"label": enriched["title"] if enriched else rel_id},
+                        "data": {
+                            "title":         enriched["title"]    if enriched else rel_id,
+                            "authors":       enriched["authors"]  if enriched else [],
+                            "abstract":      enriched["abstract"] if enriched else "",
+                            "cited":         cited,
+                            "doi":           enriched.get("doi_number", "") if enriched else "",
+                            "openalex_id":   rel_id,
+                            "radius":        round(40 + math.sqrt(cited) * 2, 1) if enriched else 15,
+                            "fillColor":     "rgba(180,120,60,0.6)",
+                            "preview":       None,
+                            "category":      None,
+                            "isGray":        True,
+                            "stub_document": enriched["stub_document"] if enriched else False,
+                        },
+                    }
+                    all_nodes.append(gray_node)
+                    seen_ids.add(rel_id)
+ 
+                links.append({
+                    "from": doc_node_id,
+                    "to":   rel_id,
+                    "style": {
+                        "fillColor":    "rgba(251,146,60,0.45)",
+                        "radius":       1.5,
+                        "toDecoration": "arrow",
+                        "dashSize":     4,
+                    },
+                })
+ 
         return jsonify({
             "query":         query,
             "results":       results,
@@ -445,11 +582,12 @@ def serve_pdf(filename):
 def preview(filename):
     return send_from_directory(PREVIEW_DIR, filename)
 
+
 @app.route("/get-all-categories", methods=["GET"])
 def route_get_all_categories():
     return jsonify(get_all_categories()), 200
- 
- 
+
+
 @app.route("/create-category", methods=["POST"])
 def route_create_category():
     body = request.get_json(silent=True) or {}
@@ -461,12 +599,12 @@ def route_create_category():
         return jsonify({"error": "color is required"}), 400
     cat = create_category(name, color)
     return jsonify(cat), 201
- 
- 
+
+
 @app.route("/edit-category/<int:cat_id>", methods=["PATCH"])
 def route_edit_category(cat_id):
     body  = request.get_json(silent=True) or {}
-    name  = body.get("name")  
+    name  = body.get("name")
     color = body.get("color")
     if name is not None:
         name = name.strip()
@@ -476,8 +614,8 @@ def route_edit_category(cat_id):
     if updated is None:
         return jsonify({"error": f"Category id={cat_id} not found"}), 404
     return jsonify(updated), 200
- 
- 
+
+
 @app.route("/delete-category/<int:cat_id>", methods=["DELETE"])
 def route_delete_category(cat_id):
     if cat_id == 0:
@@ -486,8 +624,8 @@ def route_delete_category(cat_id):
     if not deleted:
         return jsonify({"error": f"Category id={cat_id} not found"}), 404
     return jsonify({"success": True, "deleted_id": cat_id}), 200
- 
- 
+
+
 @app.route("/assign-category", methods=["POST"])
 def route_assign_category():
     body   = request.get_json(silent=True) or {}
@@ -508,7 +646,7 @@ def route_assign_category():
         return jsonify({"error": result.get("error"), "detail": result.get("response")}), 500
     return jsonify(result), 200
 
+
 if __name__ == "__main__":
     start_stub_worker(CP_URL, CP_USER, CP_PASS)
     app.run(host="0.0.0.0", port=3002, debug=True, threaded=True)
-

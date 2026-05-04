@@ -1,0 +1,457 @@
+# OpenAlex Migration — Full Project Brief
+
+## What you are doing
+Migrating a scientific PDF ingestion and search pipeline from Crossref to OpenAlex as the primary metadata source. You will write one new file (`metadata_analyser.py`) and make targeted edits to three existing files. No other files change.
+
+---
+
+## Project overview
+
+A Flask backend (`app.py`) accepts PDF uploads. Each PDF goes through:
+1. **GROBID** (`parser.py`) — extracts title, authors, DOI, abstract, references, full text from PDF
+2. **Vision extractor** (`vision_extractor.py`) — local LLM (qwen2.5vl via Ollama) reads the first page image and returns clean `{title, authors}` — this overrides GROBID's title/authors
+3. **Metadata lookup** (`crossref.py` → being replaced) — looks up full metadata by DOI or title search
+4. **XML builder** (`xml_builder.py`) — assembles everything into XML and uploads to ClusterPoint (CP) database
+5. **Stub worker** (`stub_worker.py`) — background thread that creates lightweight "stub" records for referenced papers not yet in the database, so they appear as gray nodes in the graph
+
+The frontend is Next.js/React. It queries `/search` which returns both result documents and a graph structure (`nodes` + `links`) for a network chart.
+
+---
+
+## What changes and why
+
+### Primary change: `crossref.py` → `metadata_analyser.py`
+Crossref has a critical flaw: reference data depends on publisher deposits. Many papers (especially older/non-English) return `reference-count: 0` even though they have 100 references. OpenAlex independently extracts references and also provides:
+- `referenced_works` — OpenAlex IDs of papers this paper cites
+- `related_works` — algorithmically similar papers (useful for graph)
+- `topics` — ML-classified topic tags (useful for search engine)
+- `concepts` — broader concept tags
+- Better abstract coverage than Crossref
+
+### Document ID change
+Currently document `<id>` in ClusterPoint = DOI string.
+New: document `<id>` = OpenAlex ID (e.g. `W2031190677`, stripped of `https://openalex.org/` prefix).
+DOI is still stored as `<doi_number>` — nothing changes there.
+**Database will be cleared and rebuilt fresh** — no migration of existing records needed.
+
+### Why OpenAlex ID as primary key
+- ~50% of OpenAlex works have no DOI (preprints, grey literature) — they can now be stubbed and linked
+- `referenced_works` and `related_works` are already OpenAlex IDs — no resolution step needed
+- Stub queue now carries OpenAlex IDs instead of DOIs
+
+---
+
+## File inventory
+
+You will receive these files attached:
+- `crossref.py` — the file being replaced (read it for logic to port)
+- `app.py` — main Flask app (minimal changes: import line + parse new XML fields + related_works chart links)
+- `stub_worker.py` — background stub creator (moderate changes: use OpenAlex ID, new import)
+- `xml_builder.py` — XML assembler (moderate changes: new fields in XML output)
+- `parser.py` — GROBID extractor (NO changes)
+- `vision_extractor.py` — LLM title/author extractor (NO changes)
+
+---
+
+## New file to write: `metadata_analyser.py`
+
+### API details
+Base URL: `https://api.openalex.org/works`
+Polite pool (10 req/s): send `mailto:YOUR_EMAIL` in User-Agent header
+No auth needed for basic use (free API key available but optional)
+
+### Lookup by OpenAlex ID or DOI
+```
+GET /works/W2031190677          # by OpenAlex ID
+GET /works/doi:10.xxxx/yyyy     # by DOI
+```
+Both return the same full work object.
+
+### Search
+```
+GET /works?search=TITLE&per_page=5&select=id,display_name,authorships,publication_year,relevance_score,doi
+```
+
+### Batch resolve OpenAlex IDs → full records (for referenced_works)
+```
+GET /works?filter=openalex:W123|W456|W789&per_page=50&select=id,doi
+```
+Up to 50 IDs per call using pipe-separated values.
+
+### Key fields in OpenAlex work object
+```json
+{
+  "id": "https://openalex.org/W2031190677",
+  "doi": "https://doi.org/10.2138/am.2011.3544",
+  "display_name": "Thermal decomposition of brushite...",
+  "publication_year": 2011,
+  "authorships": [
+    {
+      "author": {"display_name": "Anja Došen"}
+    }
+  ],
+  "primary_topic": {
+    "display_name": "Calcium Carbonate Crystallization",
+    "subfield": {"display_name": "Biomaterials"},
+    "field": {"display_name": "Materials Science"},
+    "domain": {"display_name": "Physical Sciences"}
+  },
+  "topics": [
+    {"display_name": "Calcium Carbonate Crystallization", "score": 0.999},
+    {"display_name": "Chemical Synthesis", "score": 0.998}
+  ],
+  "concepts": [
+    {"display_name": "Brushite", "level": 3, "score": 0.982},
+    {"display_name": "Chemistry", "level": 0, "score": 0.499}
+  ],
+  "abstract_inverted_index": {"Brushite,": [0], "CaHPO4": [1]},
+  "cited_by_count": 98,
+  "referenced_works": [
+    "https://openalex.org/W1765072828",
+    "https://openalex.org/W1965883247"
+  ],
+  "related_works": [
+    "https://openalex.org/W2899084033",
+    "https://openalex.org/W2748952813"
+  ]
+}
+```
+
+Note: abstract is stored as `abstract_inverted_index` (inverted index format). Must be reconstructed:
+```python
+def _reconstruct_abstract(inverted_index: dict) -> str:
+    if not inverted_index:
+        return ""
+    words = {}
+    for word, positions in inverted_index.items():
+        for pos in positions:
+            words[pos] = word
+    return " ".join(words[i] for i in sorted(words))
+```
+
+### Functions to implement
+
+```python
+def openalex_by_id(openalex_id: str) -> dict:
+    """Primary lookup. openalex_id can be bare 'W123' or full URL or a DOI string."""
+
+def openalex_by_title(title: str, authors: list) -> dict:
+    """Two-pass title search. Same return shape as openalex_by_id."""
+```
+
+Both return a dict with these keys (all optional/None if not found):
+```python
+{
+    "openalex_id":       "W2031190677",        # bare ID, no URL prefix
+    "doi":               "10.2138/am.2011.3544", # bare DOI, no https://doi.org/
+    "title":             "Thermal decomposition...",
+    "authors":           ["Anja Došen", "R. F. Giese"],
+    "abstract":          "Brushite, CaHPO4...",
+    "year":              2011,
+    "cited_by_count":    98,
+    "topics":            ["Calcium Carbonate Crystallization", "Chemical Synthesis"],
+    "concepts":          ["Brushite", "Amorphous solid", "Chemistry"],
+    "referenced_work_ids": ["W1765072828", "W1965883247"],  # bare IDs
+    "related_work_ids":    ["W2899084033", "W2748952813"],  # bare IDs
+}
+```
+
+### Search strategy (two-pass)
+
+**Pass 1 — broad search:**
+```
+?search=TITLE&per_page=5&select=...
+```
+Decision logic:
+- No results → return `{}`
+- `top_score < MIN_SCORE_FLOOR (40)` → return `{}`
+- `top_score >= MIN_SCORE_ABSOLUTE (1000)` AND `title_overlap >= 0.30` → accept
+- `top_score >= MIN_SCORE_ABSOLUTE (1000)` AND `title_overlap < 0.30` → return `{}`
+- `gap < SMALL_GAP_THRESH (0.60)` → go to Pass 2
+- `gap >= 0.60` AND `overlap >= 0.30` → accept
+- `gap >= 0.60` AND `overlap < 0.30` → return `{}`
+
+Title overlap = `len(query_words ∩ result_title_words) / len(query_words)`
+
+**Pass 2 — strict title filter + soft author check:**
+```
+?filter=title.search:TITLE&per_page=5&select=...
+```
+- No results → return `{}`
+- Has results:
+  - Extract surnames from `authors` list (last word of each name)
+  - Check if any surname appears in any author's display_name (case-insensitive)
+  - Surname match found → accept top result
+  - No surname match AND gap > 0.80 → accept top result (soft gate)
+  - No surname match AND gap <= 0.80 → return `{}`
+
+**IMPORTANT: Do NOT append author surnames to the `?search=` query.** Testing showed this destroys scores (13060 → 171 for "Attention is all you need Vaswani"). Author matching is client-side only.
+
+### Calibrated thresholds (from empirical testing)
+```python
+MIN_SCORE_FLOOR       = 40      # below this = no match
+MIN_SCORE_ABSOLUTE    = 1000    # above this = immediate accept (with overlap check)
+SMALL_GAP_THRESH      = 0.60    # gap between rank1 and rank2 scores
+TITLE_OVERLAP_THRESH  = 0.30    # word overlap between query and result title
+PASS2_SOFT_GAP        = 0.80    # accept without author match if gap this large
+```
+
+### Rate limiting
+Stub worker currently sleeps 1-3s between requests. Tighten to 0.5-1.0s — OpenAlex polite pool allows ~10 req/s.
+
+---
+
+## Changes to `xml_builder.py`
+
+### New XML fields to add to `build_xml()`
+
+```xml
+<openalex_id>W2031190677</openalex_id>
+
+<topics>
+  <topic>Calcium Carbonate Crystallization</topic>
+  <topic>Chemical Synthesis and Characterization</topic>
+</topics>
+
+<referenced_work_ids>
+  <referenced_work_id>W1765072828</referenced_work_id>
+  <referenced_work_id>W1965883247</referenced_work_id>
+</referenced_work_ids>
+
+<related_work_ids>
+  <related_work_id>W2899084033</related_work_id>
+  <related_work_id>W2748952813</related_work_id>
+</related_work_ids>
+```
+
+### Field that changes
+`<id>` is now the OpenAlex ID (bare, e.g. `W2031190677`), not the DOI.
+`<doi_number>` stays exactly the same.
+
+### Existing `<references_doi>` block
+Remove entirely. Replaced by `<referenced_work_ids>`.
+
+### `doc_id` logic in `build_xml()`
+```python
+# OLD:
+doc_id = doi_number if doi_number else slugify(title)
+
+# NEW:
+doc_id = openalex_id if openalex_id else slugify(title)
+```
+
+---
+
+## Changes to `stub_worker.py`
+
+### Import change
+```python
+# OLD:
+from src.crossref import crossref_by_doi
+
+# NEW:
+from src.metadata_analyser import openalex_by_id
+```
+
+### Stub queue now carries OpenAlex IDs
+The queue previously held DOI strings. Now holds bare OpenAlex IDs (`W2031190677`).
+
+### `run_stub_worker` loop change
+```python
+# OLD:
+crossref_data = crossref_by_doi(doi)
+
+# NEW:
+openalex_data = openalex_by_id(openalex_id)
+```
+
+### CP existence check
+`cp_document_exists()` checks by document `<id>`. Since `<id>` is now OpenAlex ID, pass OpenAlex ID (not DOI) to all CP lookup/delete/exists calls.
+
+### Throttle
+Change `_throttle()` sleep from `random.uniform(1.0, 3.0)` to `random.uniform(0.5, 1.0)`.
+
+---
+
+## Changes to `app.py`
+
+### Import line
+```python
+# OLD:
+from src.crossref import crossref_by_doi, crossref_by_title
+
+# NEW:
+from src.metadata_analyser import openalex_by_id, openalex_by_title
+```
+
+### `process_file_background()` — lookup flow
+```python
+# OLD:
+if grobid_doi:
+    crossref_info = crossref_by_doi(grobid_doi)
+if not crossref_info:
+    search_result = crossref_by_title(title=..., authors=...)
+    found_doi = search_result.get("doi")
+    if found_doi and not search_result.get("low_confidence"):
+        crossref_info = crossref_by_doi(found_doi)
+
+# NEW:
+openalex_info = {}
+grobid_doi = grobid_info.get("doi")
+if grobid_doi:
+    openalex_info = openalex_by_id(grobid_doi)   # accepts DOI too
+if not openalex_info:
+    openalex_info = openalex_by_title(
+        title=grobid_info.get("title", ""),
+        authors=grobid_info.get("authors", []),
+    )
+```
+
+### Field merging — replace `crossref_info` references
+```python
+# OLD fields: doi, abstract, authors, reference_dois
+# NEW fields: openalex_id, doi, abstract, authors, referenced_work_ids, related_work_ids, topics
+
+if openalex_info and not openalex_info.get("low_confidence"):
+    if openalex_info.get("openalex_id"):
+        grobid_info["openalex_id"] = openalex_info["openalex_id"]
+    if openalex_info.get("doi"):
+        grobid_info["doi"] = openalex_info["doi"]
+    if openalex_info.get("abstract"):
+        grobid_info["abstract"] = openalex_info["abstract"]
+    if openalex_info.get("authors"):
+        grobid_info["authors"] = openalex_info["authors"]
+    if openalex_info.get("referenced_work_ids"):
+        grobid_info["referenced_work_ids"] = openalex_info["referenced_work_ids"]
+    if openalex_info.get("related_work_ids"):
+        grobid_info["related_work_ids"] = openalex_info["related_work_ids"]
+    if openalex_info.get("topics"):
+        grobid_info["topics"] = openalex_info["topics"]
+```
+
+### Stub queue — enqueue referenced + related work IDs
+```python
+# OLD:
+ref_dois = grobid_info.get("reference_dois", [])
+if ref_dois:
+    added = add_dois_to_queue(ref_dois)
+
+# NEW:
+ref_ids = grobid_info.get("referenced_work_ids", [])
+rel_ids = grobid_info.get("related_work_ids", [])
+all_ids = list(set(ref_ids + rel_ids))
+if all_ids:
+    added = add_dois_to_queue(all_ids)   # rename queue fn later if desired
+```
+
+### Existing stub replacement check
+```python
+# OLD:
+final_doi = grobid_info.get("doi") or (crossref_info or {}).get("doi")
+if final_doi:
+    existing = fetch_cp_document(final_doi, ...)
+
+# NEW:
+final_id = grobid_info.get("openalex_id") or slugify(grobid_info.get("title",""))
+if final_id:
+    existing = fetch_cp_document(final_id, ...)
+```
+
+### `do_search()` — parse new XML fields from ClusterPoint
+```python
+# Add to each result dict:
+openalex_id = doc.get("openalex_id", "")
+
+raw_topics = doc.get("topics")
+if raw_topics is None:
+    topics = []
+else:
+    t = raw_topics.get("topic", [])
+    topics = [t] if isinstance(t, str) else t
+
+raw_ref_ids = doc.get("referenced_work_ids")
+if raw_ref_ids is None:
+    referenced_work_ids = []
+else:
+    r = raw_ref_ids.get("referenced_work_id", [])
+    referenced_work_ids = [r] if isinstance(r, str) else r
+
+raw_rel_ids = doc.get("related_work_ids")
+if raw_rel_ids is None:
+    related_work_ids = []
+else:
+    r = raw_rel_ids.get("related_work_id", [])
+    related_work_ids = [r] if isinstance(r, str) else r
+```
+
+### Chart building — add related_works links (orange, distinct style)
+In the chart building section, after the existing reference link loop, add:
+
+```python
+# Related works links — orange, dashed style
+for doc in results:
+    for rel_id in doc.get("related_work_ids", []):
+        target_id = rel_id  # bare OpenAlex ID
+        if target_id in seen_ids and target_id != doc["openalex_id"]:
+            links.append({
+                "from": doc["openalex_id"],
+                "to":   target_id,
+                "style": {
+                    "fillColor":    "rgba(251,146,60,0.45)",  # orange
+                    "radius":       1.5,
+                    "toDecoration": "arrow",
+                    "dashSize":     4,   # dashed line
+                }
+            })
+```
+
+Gray nodes for related works use the same `lookup_gray_node` function (now looks up by OpenAlex ID since `<id>` is OpenAlex ID). Related work gray nodes get a slightly different fill to distinguish from reference gray nodes:
+```python
+"fillColor": "rgba(180,120,60,0.6)",   # warm gray/brown for related works
+```
+
+### `lookup_gray_node()` 
+No logic change needed — it already looks up by `<id>` which is now OpenAlex ID. Just rename the parameter from `doi` to `openalex_id` for clarity.
+
+---
+
+## What does NOT change
+- `parser.py` — zero changes
+- `vision_extractor.py` — zero changes  
+- `queue_manager.py` — zero changes (just holds strings, now OpenAlex IDs instead of DOIs)
+- `categories.py` — zero changes
+- Frontend (Next.js) — zero changes (chart node IDs were already arbitrary strings)
+- ClusterPoint schema — additive only (new fields, existing fields unchanged except `<id>` and removal of `<references_doi>`)
+
+---
+
+## Example OpenAlex API response (real, from project domain)
+See attached `openalex_example_response.json`
+
+---
+
+## Empirically calibrated search thresholds
+
+From test runs against real papers in the collection:
+
+| Query type | Score range | Gap | Decision |
+|---|---|---|---|
+| Exact title match | 1149–13060 | >186% | ACCEPT absolute |
+| Truncated title (line break) | 1230 | >1340% | ACCEPT absolute |
+| OCR cleaned old paper | 39.91 | 383% | REJECT (below floor=40) |
+| Wrong author appended | 4.57 | 345% | REJECT (below floor) |
+| Generic chemistry title | 1559 | 13% | RETRY pass2 |
+| Ambiguous short title | 3076 | 223% | ACCEPT absolute |
+| OCR garbage | no results | — | return {} |
+
+**Critical insight:** Do NOT append author surnames to `?search=` query. "Attention is all you need" scores 13060. "Attention is all you need Vaswani" scores 171 (rank 1 is a wrong paper). Author matching must be client-side only, in Pass 2 using `filter=title.search:`.
+
+---
+
+## Order of implementation
+1. Write `metadata_analyser.py` (new file, most complex)
+2. Edit `xml_builder.py` (new fields)
+3. Edit `stub_worker.py` (new import + OpenAlex ID)
+4. Edit `app.py` (import + flow + chart)
+
+Test after step 1 before proceeding to steps 2-4.

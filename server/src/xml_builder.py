@@ -17,6 +17,7 @@ def extract_fallback_text(pdf_path: str) -> str:
         from pdf2image import convert_from_path
         import pytesseract
         
+        #prieks jobaniem dokumentiem kur var but kkads "P H O S P H A T E"
         custom_config = r'--oem 3 --psm 6'
         
         pages = convert_from_path(pdf_path, dpi=250)
@@ -68,52 +69,49 @@ def get_preview_path(image_path: str) -> str:
     return image_path if image_path.startswith("./") else f"./{image_path}"
 
 
-
-import re
-import unicodedata
-
 def slugify(text: str) -> str:
     """Convert title to ASCII slug with underscores, Wikipedia-style."""
-    # Normalize unicode → ASCII as close as possible
     text = unicodedata.normalize("NFKD", text)
     text = text.encode("ascii", "ignore").decode("ascii")
     text = text.strip()
-    # Replace any non-alphanumeric (except spaces) with nothing
     text = re.sub(r"[^\w\s]", "", text)
-    # Replace whitespace runs with single underscore
     text = re.sub(r"\s+", "_", text)
     return text
 
 
-def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str, stub: bool = False) -> str:
-    doi   = doi_info   or {}
-    grobi = grobid_info or {}
-    title    = doi.get("title")    or grobi.get("title")    or "Unknown"
-    abstract = doi.get("abstract") or grobi.get("abstract") or ""
-    abstract = strip_jats(abstract)
-    doi_number = doi.get("doi", "") or grobi.get("doi", "")
-    cited_by_count = doi.get("cited_by_count", 0) or 0
+def build_xml(metadata_info: dict | None, grobid_info: dict | None, image_path: str, stub: bool = False) -> str:
+    meta  = metadata_info or {}
+    grobi = grobid_info   or {}
 
-    doc_id = doi_number if doi_number else slugify(title)
+    title      = meta.get("title")    or grobi.get("title")    or "Unknown"
+    abstract   = meta.get("abstract") or grobi.get("abstract") or ""
+    abstract   = strip_jats(abstract)
+    doi_number = meta.get("doi", "")  or grobi.get("doi", "")
+    cited_by_count = meta.get("cited_by_count", 0) or 0
+
+    openalex_id = meta.get("openalex_id") or grobi.get("openalex_id") or ""
+    doc_id      = openalex_id if openalex_id else slugify(title)
 
     date_val = ""
-    if doi.get("year"):
-        date_val = str(doi["year"])
+    if meta.get("year"):
+        date_val = str(meta["year"])
     elif grobi.get("date"):
         date_val = grobi["date"]
     else:
         date_val = "Unknown"
 
-    if doi.get("authors"):
-        authors = doi["authors"]
+    if meta.get("authors"):
+        authors = meta["authors"]
     elif grobi.get("authors"):
         authors = grobi["authors"]
     else:
         authors = []
 
     file_path = grobi.get("file", "")
+
     doc = Element("document")
     SubElement(doc, "id").text               = doc_id
+    SubElement(doc, "openalex_id").text      = openalex_id
     SubElement(doc, "file").text             = file_path
     SubElement(doc, "title").text            = title
     SubElement(doc, "cited_by_count").text   = str(cited_by_count)
@@ -126,8 +124,29 @@ def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str, 
     for author in authors:
         SubElement(authors_el, "author").text = author
 
-    SubElement(doc, "abstract").text = abstract
+    SubElement(doc, "abstract").text    = abstract
     SubElement(doc, "category_id").text = "0"
+
+    # Topics from OpenAlex
+    topics = meta.get("topics") or grobi.get("topics") or []
+    if topics:
+        topics_el = SubElement(doc, "topics")
+        for topic in topics:
+            SubElement(topics_el, "topic").text = topic
+
+    # Concepts from OpenAlex (level > 0, score > 0.3)
+    concepts = meta.get("concepts") or grobi.get("concepts") or []
+    if concepts:
+        concepts_el = SubElement(doc, "concepts")
+        for concept in concepts:
+            SubElement(concepts_el, "concept").text = concept
+
+    # Keywords from OpenAlex
+    keywords = meta.get("keywords") or grobi.get("keywords") or []
+    if keywords:
+        keywords_el = SubElement(doc, "keywords")
+        for keyword in keywords:
+            SubElement(keywords_el, "keyword").text = keyword
 
     methods_el = SubElement(doc, "methods")
     for method in grobi.get("methods", []):
@@ -147,12 +166,21 @@ def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str, 
         SubElement(ref_el, "date").text = str(ref.get("date") or "")
 
     if not stub:
-        ref_dois = grobi.get("reference_dois", [])
-        if ref_dois:
-            ref_dois_el = SubElement(doc, "references_doi")
-            for raw_doi in ref_dois:
-                if raw_doi:
-                    SubElement(ref_dois_el, "reference_doi").text = raw_doi
+        # Referenced works (OpenAlex IDs — replaces old references_doi block)
+        ref_ids = grobi.get("referenced_work_ids") or meta.get("referenced_work_ids") or []
+        if ref_ids:
+            ref_ids_el = SubElement(doc, "referenced_work_ids")
+            for wid in ref_ids:
+                if wid:
+                    SubElement(ref_ids_el, "referenced_work_id").text = wid
+
+        # Related works (OpenAlex IDs)
+        rel_ids = grobi.get("related_work_ids") or meta.get("related_work_ids") or []
+        if rel_ids:
+            rel_ids_el = SubElement(doc, "related_work_ids")
+            for wid in rel_ids:
+                if wid:
+                    SubElement(rel_ids_el, "related_work_id").text = wid
 
     raw_xml = tostring(doc, encoding="unicode", xml_declaration=False)
     pretty  = xml.dom.minidom.parseString(raw_xml).toprettyxml(indent="\t")
@@ -161,9 +189,10 @@ def build_xml(doi_info: dict | None, grobid_info: dict | None, image_path: str, 
         lines = lines[1:]
     return "\n".join(lines)
 
+
 def upload_xml(xml_string: str, cp_url: str, cp_user: str, cp_pass: str) -> dict:
     import requests
- 
+
     url = f"{cp_url.rstrip('/')}/api/databases/pdfs/insert"
     try:
         resp = requests.post(
@@ -179,7 +208,6 @@ def upload_xml(xml_string: str, cp_url: str, cp_user: str, cp_pass: str) -> dict
         return {"success": False, "status_code": resp.status_code, "response": resp.text, "error": str(e)}
     except requests.exceptions.RequestException as e:
         return {"success": False, "status_code": None, "response": None, "error": str(e)}
- 
 
 
 def save_xml(xml_string: str, output_path: str) -> None:

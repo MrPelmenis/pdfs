@@ -33,11 +33,12 @@ function getTooltip() {
 }
 
 function showTooltip(d, x, y) {
-    const tip     = getTooltip();
-    const title   = d.title   || "—";
-    const doi     = d.doi     || "—";
-    const cited   = d.cited   ?? "—";
-    const authors = Array.isArray(d.authors) && d.authors.length
+    const tip        = getTooltip();
+    const title      = d.title      || "—";
+    const oaId       = d.openalex_id || "—";
+    const doi        = d.doi        || "—";
+    const cited      = d.cited      ?? "—";
+    const authors    = Array.isArray(d.authors) && d.authors.length
         ? d.authors.join(", ")
         : "—";
 
@@ -46,19 +47,25 @@ function showTooltip(d, x, y) {
     const abstractSnip  = abstractWords.slice(0, 20).join(" ")
         + (abstractWords.length > 20 ? "…" : "");
 
+    const isGray    = !!d.isGray;
     const isStub    = !!d.stub_document;
-    const clickHint = isStub ? "Click to open on DOI.org" : "Click to see more";
-    const dblHint   = isStub ? "Double-click for DOI info" : "Double-click to view PDF";
+    const clickHint = isGray
+        ? "Click to open on OpenAlex"
+        : "Click to see more";
+    const dblHint   = isGray
+        ? ""
+        : (isStub ? "Double-click for DOI info" : "Double-click to view PDF");
 
     tip.innerHTML = `
         <div style="font-weight:600;font-size:12px;color:#fff;margin-bottom:5px">${title}</div>
         <div style="color:#94a3b8;margin-bottom:2px"><span style="color:#64748b">Authors </span>${authors}</div>
-        <div style="color:#94a3b8;margin-bottom:2px"><span style="color:#64748b">DOI </span><span style="color:#7dd3fc">${doi}</span></div>
+        <div style="color:#94a3b8;margin-bottom:2px"><span style="color:#64748b">OpenAlex </span><span style="color:#7dd3fc">${oaId}</span></div>
+        ${doi !== "—" ? `<div style="color:#94a3b8;margin-bottom:2px"><span style="color:#64748b">DOI </span><span style="color:#7dd3fc">${doi}</span></div>` : ""}
         <div style="color:#94a3b8;margin-bottom:5px"><span style="color:#64748b">Cited by </span>${cited}</div>
         ${abstractSnip ? `<div style="color:#94a3b8;margin-bottom:5px;font-style:italic;font-size:12px">${abstractSnip}</div>` : ""}
         <div style="color:#475569;font-size:10px;border-top:1px solid rgba(255,255,255,0.07);padding-top:5px">
             <span style="margin-right:12px">${clickHint}</span>
-            <span>${dblHint}</span>
+            ${dblHint ? `<span>${dblHint}</span>` : ""}
         </div>
     `.trim();
 
@@ -115,7 +122,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
         navigation: {
             initialNodes:             initialNodes,
             mode:                     "manual",
-            focusNodeExpansionRadius: 4,
+            focusNodeExpansionRadius: 8,
         },
         style: {
             node: {
@@ -140,8 +147,8 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
                     return;
                 }
 
-                const raw       = d.title || node.id;
-                node.label      = stripHtml(raw);
+                const raw  = d.title || node.id;
+                node.label = stripHtml(raw);
             },
 
             nodeLabel: {
@@ -164,6 +171,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
                 if (s.fillColor    !== undefined) link.fillColor    = s.fillColor;
                 if (s.radius       !== undefined) link.radius       = s.radius;
                 if (s.toDecoration !== undefined) link.toDecoration = s.toDecoration;
+                if (s.dashSize     !== undefined) link.dashSize     = s.dashSize;
             },
         },
 
@@ -171,7 +179,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
             onHoverChange: function (event) {
                 if (event.hoverNode && event.hoverNode.id !== "query") {
                     const d = event.hoverNode.data?.data;
-                    if (d && (!d.isGray || d.stub_document)) {
+                    if (d) {
                         showTooltip(d, pointerX, pointerY);
                     } else {
                         hideTooltip();
@@ -185,9 +193,16 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
                 if (!event.clickNode || event.clickNode.id === "query") return;
                 const d = event.clickNode.data?.data;
                 if (!d) return;
-                if (d.stub_document) {
-                    window.open(`https://doi.org/${d.doi}`, "_blank");
-                } else if (!d.isGray) {
+
+                if (d.isGray) {
+                    // Gray nodes (referenced/related) → open OpenAlex
+                    const oaId = d.openalex_id || event.clickNode.id;
+                    window.open(`https://openalex.org/${oaId}`, "_blank");
+                } else if (d.stub_document) {
+                    // Stub full docs — open OpenAlex too
+                    const oaId = d.openalex_id || event.clickNode.id;
+                    window.open(`https://openalex.org/${oaId}`, "_blank");
+                } else {
                     const doi = d.doi || event.clickNode.id;
                     console.log(`clicked on: ${doi}`);
                 }
@@ -197,8 +212,9 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
                 if (!event.clickNode || event.clickNode.id === "query") return;
                 const d = event.clickNode.data?.data;
                 if (!d) return;
-                if (d.stub_document) {
-                    alert(`stub double click + doi: ${d.doi}`);
+                if (d.isGray || d.stub_document) {
+                    // Already handled by single click — nothing extra
+                    return;
                 } else if (!d.isGray && onOpenPdf) {
                     hideTooltip();
                     onOpenPdf(d);

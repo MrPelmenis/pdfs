@@ -1,9 +1,17 @@
-LIELA HUJNA
-nomainiit DOI uz OPENALEX ID tas ir daudz labaaks
+LIELA HUJNA:
+uzlabot title->id metadata_analyser.py
+ir vairaak info bet vajag labaaku veidu kaa atrast no title
+chartam taisiit ar addData() nevis visu uzreiz
++aizbidit chart logiku citaa failaa man zb
+
+
+
+
+
+
 
 
 data populizators todo:
-saprast kas tiesi notiek jo manskiet viss uz knapi pamatiem iet
 pelekajiem double click atver logu lai var uploadot to dokumentu db
 krasas smukakas
 
