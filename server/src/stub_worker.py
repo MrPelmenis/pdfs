@@ -181,10 +181,10 @@ def run_stub_worker(cp_url: str, cp_user: str, cp_pass: str):
             xml_string    = build_stub_xml(openalex_data)
             upload_result = upload_xml(xml_string, cp_url, cp_user, cp_pass)
 
-            if upload_result["success"]:
-                print(f"[stub_worker] Stub uploaded: {openalex_id}")
-            else:
+            if not upload_result["success"]:
                 print(f"[stub_worker] Upload failed for {openalex_id}: {upload_result['error']}")
+            #else:
+                #print(f"[stub_worker] Stub uploaded: {openalex_id}")
 
             remove_first_doi()
             _throttle()

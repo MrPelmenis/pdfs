@@ -4,7 +4,7 @@ import re
 import requests
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
-#gemma4:e4b bija ok, no 0001 lidz 0010 8/1  0
+#gemma4:e4b bija ok, no 0001 lidz 0010 8/10
 #MODEL      = "qwen2.5vl:7b"   
 #MODEL =     "gemma4:e4b"
 #MODEL = "minicpm-v:latest"
@@ -13,29 +13,24 @@ MODEL =     "qwen2.5vl:7b"
 TIMEOUT    = 60           
 
 PROMPT = (
-    "You are given an image of a single scientific paper PDF page. "
-    "Your task is to extract the EXACT title and author names. "
- 
-    "TITLE RULES: "
-    "- Copy the title EXACTLY as printed — do not paraphrase, correct, or reword anything. "
-    "- Old papers use typewriter fonts — transcribe every word carefully, even if it looks unusual. "
-    "- The real title is usually the largest or most prominent text near the top of the page. "
-    "- If there is a short general header or journal section name before the real title, skip it — "
-    "  the real title is more specific and longer. "
-    "- Skip journal names, volume numbers, issue numbers, and page numbers. "
-    "- Standalone numbers near the title (e.g. '6118', '283', '864') are article or page identifiers — ignore them completely. "
-    "- Include subtitle or part numbers if they are part of the title "
-    "  (e.g. '3. Solubility Studies', 'Part II', 'I. Introduction'). "
- 
-    "AUTHOR RULES: "
-    "- Include only personal names in the format 'First Last' or 'F. Last'. "
-    "- Skip institutions, universities, laboratories, and introduced-by credits. "
- 
-    "OUTPUT RULES: "
-    "- Return a single JSON object with exactly this structure: "
+    "I am giving you an image of a single scientific paper PDF"
+    "I need to find the title and authors for querying crossref later"
+    "Keep in mind that these documents can be old and sometimes theres some text or fake title before the actual title"
+    "You can notice that this fake title might be more general or shorter than the real one"
+    "If you find more than \"main title\" pick the first one, keep in mind to SKIP JOURNAL NAMES I need the given documetns title, not the journal it was relead in"
+    "Skip references citations... I need the title and author names only"
+    "For authors leave only their name as Name Surname or N. Surname, skip institution, university labaratory... names"
+    "Include any part numbers or series numbers in the title if present "
+    "(e.g. '...Part 1', '...I.', '...3. Solubility Studies'). "
+    "Do NOT include page numbers, article numbers, volume numbers, or journal identifiers in the title. "
+    "These appear as standalone numbers printed near the title (e.g. '6118', '283', '2659') — ignore them completely. "
+    "STRICT RULES: "
+    "Return a single JSON object: "
     '{"title": "...", "authors": ["First Last", "First Last"]}. '
-    "- No markdown, no code fences, no explanation. JSON only."
+    'Not some {"papers":{"paprer":....}} NO i need the exact structure i just gave you, the rest of the code depends on it '
+    "No markdown, no code fences, no explanation. JSON only."
 )
+
 def extract_title_authors_from_image(image_path: str) -> dict:
     try:
         with open(image_path, "rb") as f:

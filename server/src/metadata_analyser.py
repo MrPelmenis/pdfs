@@ -1,29 +1,24 @@
 import re
 import requests
 
-OPENALEX_BASE        = "https://api.openalex.org/works"
-USER_AGENT           = "pdf-magic/1.0 (mailto:normunds@email.com)"
-TIMEOUT              = 10
+OPENALEX_BASE  = "https://api.openalex.org/works"
+CROSSREF_BASE  = "https://api.crossref.org/works"
+USER_AGENT     = "pdf-magic/1.0 (mailto:normunds@email.com)"
+TIMEOUT        = 10
 
-MIN_SCORE_FLOOR      = 40
-MIN_SCORE_ABSOLUTE   = 1000
-SMALL_GAP_THRESH     = 0.60
-TITLE_OVERLAP_THRESH = 0.30
-PASS2_SOFT_GAP       = 0.80
+SELECT_FIELDS = (
+    "id,display_name,authorships,publication_year,doi,"
+    "abstract_inverted_index,cited_by_count,topics,concepts,"
+    "keywords,referenced_works,related_works"
+)
 
-SELECT_FIELDS = "id,display_name,authorships,publication_year,relevance_score,doi,abstract_inverted_index,cited_by_count,topics,concepts,keywords,referenced_works,related_works"
+CR_MIN_SCORE_ABSOLUTE   = 80
+CR_MIN_SCORE_FLOOR      = 15
+CR_SMALL_GAP_THRESH     = 0.05
+CR_TITLE_OVERLAP_THRESH = 0.85
 
-
-# ── Public API ────────────────────────────────────────────────────────────────
 
 def openalex_by_id(openalex_id: str) -> dict:
-    """
-    Primary lookup. openalex_id can be:
-      - bare OpenAlex ID:  'W2031190677'
-      - full OpenAlex URL: 'https://openalex.org/W2031190677'
-      - DOI string:        '10.2138/am.2011.3544'  (with or without https://doi.org/ prefix)
-    Returns parsed dict or {} if not found.
-    """
     if not openalex_id:
         return {}
 
@@ -45,234 +40,92 @@ def openalex_by_id(openalex_id: str) -> dict:
         print(f"[metadata_analyser] HTTP {resp.status_code} for: {openalex_id}")
         return {}
 
-    return _parse_work(resp.json())
+    result = _parse_work(resp.json())
+    #if result.get("openalex_id"):
+        #print(f"[metadata_analyser] found by id: {result['openalex_id']} → {(result.get('title') or '')[:70]}")
+    return result
 
 
 def openalex_by_title(title: str, authors: list) -> dict:
-    """
-    Two-pass title search.
-    Pass 1: broad ?search=TITLE  (scored)
-    Pass 2: ?filter=title.search:TITLE + client-side author surname check
-    Returns parsed dict or {}.
-    """
     if not title:
         return {}
 
-    result, needs_pass2 = _pass1(title)
-    if not needs_pass2:
-        return result
+    result = _cr_search(title, "")
 
-    return _pass2(title, authors)
+    needs_retry = (
+        result.get("similar_titles") or
+        result.get("small_gap")      or
+        result.get("low_confidence")
+    )
+
+    if not needs_retry:
+        return _resolve_doi(result)
+
+    if not authors:
+        return _resolve_doi(result)
+
+    author_terms = " ".join(_extract_surname(a) for a in authors[:2]).strip()
+    result_with_authors = _cr_search(title, author_terms)
+
+    if result_with_authors and not any(
+        result_with_authors.get(k)
+        for k in ("low_confidence", "similar_titles", "small_gap")
+    ):
+        return _resolve_doi(result_with_authors)
+
+    # Both uncertain — year tiebreak
+    items = _cr_fetch_items(title, author_terms)
+    if items:
+        best, _ = _cr_tiebreak_by_year(items)
+        return _resolve_doi(_cr_parse_item(best))
+
+    score_1 = result.get("score", 0)              if result              else 0
+    score_2 = result_with_authors.get("score", 0) if result_with_authors else 0
+    return _resolve_doi(result_with_authors if score_2 > score_1 else (result or {}))
 
 
-# ── Endpoint builder ──────────────────────────────────────────────────────────
+def _resolve_doi(crossref_result: dict) -> dict:
+    if not crossref_result:
+        return {}
+    if crossref_result.get("low_confidence") or \
+       crossref_result.get("similar_titles") or \
+       crossref_result.get("small_gap"):
+        return {}
+    doi = crossref_result.get("doi")
+    if not doi:
+        return {}
+    return openalex_by_id(doi)
+
+
 
 def _build_id_endpoint(raw: str) -> str:
-    """Return the correct OpenAlex works endpoint for a bare ID, full URL, or DOI."""
     raw = raw.strip()
 
-    # Full OpenAlex URL → extract bare ID
     if raw.lower().startswith("https://openalex.org/"):
         bare = raw.replace("https://openalex.org/", "").replace("https://OPENALEX.ORG/", "")
         return f"{OPENALEX_BASE}/{bare.upper()}"
 
-    # Bare OpenAlex ID (W followed by digits) — case-insensitive match, always uppercase
     if re.match(r"^[Ww]\d+$", raw):
         return f"{OPENALEX_BASE}/{raw.upper()}"
 
-    # DOI — strip any https://doi.org/ prefix
     doi = re.sub(r"^https?://doi\.org/", "", raw)
     return f"{OPENALEX_BASE}/doi:{doi}"
 
 
-# ── Pass 1: broad search ──────────────────────────────────────────────────────
-
-def _pass1(title: str) -> tuple[dict, bool]:
-    """
-    Returns (result_dict, needs_pass2).
-    result_dict is {} if rejected, parsed dict if accepted.
-    needs_pass2 is True when we should try Pass 2.
-    """
-    try:
-        resp = requests.get(
-            OPENALEX_BASE,
-            params={
-                "search":   title,
-                "per_page": 5,
-                "select":   SELECT_FIELDS,
-            },
-            headers={"User-Agent": USER_AGENT},
-            timeout=TIMEOUT,
-        )
-        resp.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        print(f"[metadata_analyser] Pass1 request failed: {e}")
-        return {}, False
-
-    results = resp.json().get("results", [])
-
-    print(f"[metadata_analyser] Pass1 query: {title[:80]}")
-    if not results:
-        print(f"[metadata_analyser] Pass1: NO RESULTS")
-        return {}, False
-
-    s2_score = (results[1].get("relevance_score", 0) or 0) if len(results) >= 2 else 0
-    for i, r in enumerate(results):
-        score   = r.get("relevance_score", 0) or 0
-        rtitle  = (r.get("display_name") or "")
-        year    = r.get("publication_year", "?")
-        oa_id   = (r.get("id") or "").replace("https://openalex.org/", "")
-        overlap = _title_overlap(title, rtitle)
-        gap_str = f"  gap={((score - s2_score) / s2_score * 100):.0f}%" if i == 0 and s2_score > 0 else ""
-        print(f"  [{i+1}] score={score:>8.2f} | overlap={overlap:.0%} | {year} | {oa_id}{gap_str}")
-        print(f"       {rtitle[:90]}")
-
-    top    = results[0]
-    s1     = top.get("relevance_score", 0) or 0
-    title1 = top.get("display_name") or ""
-    ov1    = _title_overlap(title, title1)
-
-    # Below floor → hard reject
-    if s1 < MIN_SCORE_FLOOR:
-        print(f"[metadata_analyser] Pass1 REJECT: score {s1:.1f} < floor {MIN_SCORE_FLOOR}")
-        return {}, False
-
-    # Above absolute threshold
-    if s1 >= MIN_SCORE_ABSOLUTE:
-        if ov1 < TITLE_OVERLAP_THRESH:
-            print(f"[metadata_analyser] Pass1 REJECT: absolute score but overlap {ov1:.0%} too low")
-            return {}, False
-        oa_id = (top.get("id") or "").replace("https://openalex.org/", "").upper()
-        print(f"[metadata_analyser] found: {oa_id} → {title1[:70]}")
-        return _fetch_full(top), False
-
-    # Between floor and absolute — check gap
-    if len(results) >= 2:
-        s2  = results[1].get("relevance_score", 0) or 0
-        gap = (s1 - s2) / s2 if s2 > 0 else 1.0
-    else:
-        gap = 1.0
-
-    if gap < SMALL_GAP_THRESH:
-        print(f"[metadata_analyser] Pass1 → RETRY pass2: gap={gap:.1%} too small")
-        return {}, True  # needs pass2
-
-    # Gap is large enough — check overlap
-    if ov1 < TITLE_OVERLAP_THRESH:
-        print(f"[metadata_analyser] Pass1 REJECT: gap={gap:.1%} ok but overlap {ov1:.0%} too low")
-        return {}, False
-
-    oa_id = (top.get("id") or "").replace("https://openalex.org/", "").upper()
-    print(f"[metadata_analyser] found: {oa_id} → {title1[:70]}")
-    return _fetch_full(top), False
-
-
-# ── Pass 2: strict title filter + author check ────────────────────────────────
-
-def _pass2(title: str, authors: list) -> dict:
-    """
-    Strict ?filter=title.search:TITLE + client-side surname check.
-    """
-    try:
-        resp = requests.get(
-            OPENALEX_BASE,
-            params={
-                "filter":   f"title.search:{title}",
-                "per_page": 5,
-                "select":   SELECT_FIELDS,
-            },
-            headers={"User-Agent": USER_AGENT},
-            timeout=TIMEOUT,
-        )
-        resp.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        print(f"[metadata_analyser] Pass2 request failed: {e}")
-        return {}
-
-    results = resp.json().get("results", [])
-
-    print(f"[metadata_analyser] Pass2 filter=title.search: {title[:80]}")
-    if not results:
-        print(f"[metadata_analyser] Pass2: NO RESULTS")
-        return {}
-
-    s2_score = (results[1].get("relevance_score", 0) or 0) if len(results) >= 2 else 0
-    for i, r in enumerate(results):
-        score      = r.get("relevance_score", 0) or 0
-        rtitle     = (r.get("display_name") or "")
-        year       = r.get("publication_year", "?")
-        oa_id      = (r.get("id") or "").replace("https://openalex.org/", "")
-        gap_str    = f"  gap={((score - s2_score) / s2_score * 100):.0f}%" if i == 0 and s2_score > 0 else ""
-        auth_names = [a["author"]["display_name"] for a in r.get("authorships", [])[:3] if a.get("author", {}).get("display_name")]
-        print(f"  [{i+1}] score={score:>8.2f} | {year} | {oa_id}{gap_str}")
-        print(f"       {rtitle[:90]}")
-        print(f"       authors: {auth_names}")
-
-    top = results[0]
-
-    # Client-side surname check
-    surnames = [_extract_surname(a) for a in (authors or []) if a]
-    all_result_authors = " ".join(
-        a["author"]["display_name"]
-        for a in top.get("authorships", [])
-        if a.get("author", {}).get("display_name")
-    ).lower()
-
-    print(f"[metadata_analyser] Pass2 checking surnames {surnames} against: {all_result_authors[:120]}")
-    matched = [s for s in surnames if s.lower() in all_result_authors]
-
-    if matched:
-        oa_id  = (top.get("id") or "").replace("https://openalex.org/", "").upper()
-        title1 = top.get("display_name") or ""
-        print(f"[metadata_analyser] found: {oa_id} → {title1[:70]}")
-        return _fetch_full(top)
-
-    # Soft gap gate — accept without author match if gap is large
-    if len(results) >= 2:
-        s1  = results[0].get("relevance_score", 0) or 0
-        s2  = results[1].get("relevance_score", 0) or 0
-        gap = (s1 - s2) / s2 if s2 > 0 else 1.0
-    else:
-        gap = 1.0
-
-    if gap > PASS2_SOFT_GAP:
-        oa_id  = (top.get("id") or "").replace("https://openalex.org/", "").upper()
-        title1 = top.get("display_name") or ""
-        print(f"[metadata_analyser] found: {oa_id} → {title1[:70]}")
-        return _fetch_full(top)
-
-    print(f"[metadata_analyser] Pass2 REJECT: no author match, gap={gap:.1%} <= {PASS2_SOFT_GAP:.0%}")
-    return {}
-
-
-# ── Full record fetch ─────────────────────────────────────────────────────────
-
-def _fetch_full(slim_work: dict) -> dict:
-    """
-    The search SELECT already includes all fields we need — parse directly.
-    No second HTTP call needed since SELECT_FIELDS covers everything.
-    """
-    return _parse_work(slim_work)
-
-
-# ── Parser ────────────────────────────────────────────────────────────────────
 
 def _parse_work(work: dict) -> dict:
-    """Convert raw OpenAlex work object → normalised dict."""
     if not work:
         return {}
 
-    # OpenAlex ID — bare, no URL prefix
     raw_id      = work.get("id") or ""
     openalex_id = raw_id.replace("https://openalex.org/", "").strip().upper() or None
 
-    # DOI — bare, no https://doi.org/ prefix
     raw_doi = work.get("doi") or ""
     doi     = re.sub(r"^https?://doi\.org/", "", raw_doi).strip() or None
 
-    title   = work.get("display_name") or work.get("title") or None
-    year    = work.get("publication_year") or None
-    cited   = work.get("cited_by_count") or 0
+    title  = work.get("display_name") or work.get("title") or None
+    year   = work.get("publication_year") or None
+    cited  = work.get("cited_by_count") or 0
 
     authors = [
         a["author"]["display_name"]
@@ -329,8 +182,115 @@ def _parse_work(work: dict) -> dict:
     }
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
 
+def _cr_search(title: str, author_terms: str) -> dict:
+    query = f"{title} {author_terms}".strip()
+    try:
+        resp = requests.get(
+            CROSSREF_BASE,
+            params={
+                "query.bibliographic": query,
+                "rows":   5,
+                "select": "DOI,title,author,abstract,published,score",
+            },
+            headers={"User-Agent": USER_AGENT},
+            timeout=TIMEOUT,
+        )
+        resp.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        print(f"[metadata_analyser] Crossref search failed: {e}")
+        return {}
+
+    items = resp.json().get("message", {}).get("items", [])
+
+    #print(f"[metadata_analyser] Crossref query: {query[:80]}")
+    if not items:
+        print(f"[metadata_analyser] Crossref: no results")
+        return {}
+
+    #for i, item in enumerate(items[:5]):
+        #print(f"  [{i+1}] score={item.get('score', 0):.2f} | "
+        #      f"doi={item.get('DOI', 'n/a')} | "
+        #      f"title={(item.get('title') or [''])[0][:70]}")
+
+    best, reason = _cr_pick_best(items)
+
+    if reason.startswith("similar_titles"):
+        #print(f"[metadata_analyser] Crossref: similar titles — need authors")
+        return {"similar_titles": True, "score": items[0].get("score", 0)}
+    if reason.startswith("small_gap"):
+        #print(f"[metadata_analyser] Crossref: small gap — need authors")
+        return {"small_gap": True, "score": items[0].get("score", 0)}
+    if best is None:
+        print(f"[metadata_analyser] Crossref: rejected — {reason}")
+        return {"low_confidence": True, "score": items[0].get("score", 0)}
+
+    print(f"[metadata_analyser] Crossref accepted: title: {title}, {reason} — doi: {best.get('DOI')}")
+    return _cr_parse_item(best)
+
+
+#heavy:
+def _cr_pick_best(items: list) -> tuple:
+    if not items:
+        return None, "no results"
+    top   = items[0]
+    score = top.get("score", 0)
+    if score < CR_MIN_SCORE_FLOOR:
+        return None, f"score={score:.1f} too low"
+    if score >= CR_MIN_SCORE_ABSOLUTE:
+        return top, f"absolute score {score:.1f}"
+    if len(items) < 2:
+        return top, f"only result, score {score:.1f}"
+    second = items[1].get("score", 0)
+    gap    = (score - second) / second if second > 0 else 1.0
+    top_title    = (items[0].get("title") or [""])[0].lower()
+    second_title = (items[1].get("title") or [""])[0].lower()
+    top_words    = set(top_title.split())
+    second_words = set(second_title.split())
+    title_overlap = (
+        len(top_words & second_words) / max(len(top_words), 1)
+        if top_words else 0
+    )
+    if title_overlap > CR_TITLE_OVERLAP_THRESH:
+        return None, f"similar_titles (overlap={title_overlap:.0%}, gap={gap:.0%})"
+    if gap < CR_SMALL_GAP_THRESH:
+        return None, f"small_gap (score={score:.1f}, gap={gap:.0%})"
+    return top, f"gap dominant ({score:.1f} vs {second:.1f}, gap={gap:.0%})"
+
+
+def _cr_fetch_items(title: str, author_terms: str) -> list:
+    query = f"{title} {author_terms}".strip()
+    try:
+        resp = requests.get(
+            CROSSREF_BASE,
+            params={
+                "query.bibliographic": query,
+                "rows":   5,
+                "select": "DOI,title,author,abstract,published,score",
+            },
+            headers={"User-Agent": USER_AGENT},
+            timeout=TIMEOUT,
+        )
+        resp.raise_for_status()
+        return resp.json().get("message", {}).get("items", [])
+    except requests.exceptions.RequestException:
+        return []
+
+
+def _cr_tiebreak_by_year(items: list) -> tuple:
+    def get_year(item):
+        parts = item.get("published", {}).get("date-parts", [[9999]])
+        return parts[0][0] if parts and parts[0] else 9999
+    oldest = min(items[:2], key=get_year)
+    return oldest, f"oldest publication ({get_year(oldest)})"
+
+
+def _cr_parse_item(item: dict) -> dict:
+    doi = re.sub(r"^https?://doi\.org/", "", item.get("DOI", "")).strip()
+    return {"doi": doi or None}
+
+
+#abstracts no openalex
 def _reconstruct_abstract(inverted_index: dict) -> str:
     if not inverted_index:
         return ""
@@ -339,14 +299,6 @@ def _reconstruct_abstract(inverted_index: dict) -> str:
         for pos in positions:
             words[pos] = word
     return " ".join(words[i] for i in sorted(words))
-
-
-def _title_overlap(query: str, result_title: str) -> float:
-    query_words  = set(query.lower().split())
-    result_words = set((result_title or "").lower().split())
-    if not query_words:
-        return 0.0
-    return len(query_words & result_words) / len(query_words)
 
 
 def _extract_surname(full_name: str) -> str:

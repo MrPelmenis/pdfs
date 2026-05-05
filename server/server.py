@@ -120,7 +120,7 @@ def process_file_background(filename, save_path):
             all_ids = list(set(ref_ids + rel_ids))
             if all_ids:
                 added = add_dois_to_queue(all_ids)
-                print(f"[app] Added {added} OpenAlex IDs to stub queue")
+                #print(f"[app] Added {added} OpenAlex IDs to stub queue")
         else:
             print(f"ERROR: [{filename}] {upload_result['error']}")
 
@@ -299,6 +299,11 @@ def do_search(query):
  
  
 def _enrich_and_sort(work_ids: list, limit: int) -> list[tuple[str, dict | None]]:
+    """
+    Look up all work_ids in CP, sort by cited_by_count desc, return top `limit`
+    as list of (openalex_id, enriched_or_None) tuples.
+    Unknown/missing nodes get cited=0 and sort to the bottom.
+    """
     enriched_map = {}
     for wid in work_ids:
         enriched_map[wid] = lookup_gray_node(wid)
@@ -435,19 +440,25 @@ def search():
                 })
  
         # Result → result reference links (within search results)
-        seen_ids = set(node["id"] for node in all_nodes)
+        seen_ids   = set(node["id"] for node in all_nodes)
+        seen_links = set()  # track (from, to) pairs to avoid duplicates
+ 
+        def add_link(from_id, to_id, style):
+            key = (from_id, to_id)
+            if key in seen_links:
+                return
+            seen_links.add(key)
+            links.append({"from": from_id, "to": to_id, "style": style})
+ 
         for doc in results:
             doc_node_id = doc["openalex_id"] or doc["id"]
             for ref_id in doc["referenced_work_ids"]:
                 if ref_id in seen_ids and ref_id != doc_node_id:
-                    links.append({
-                        "from": doc_node_id,
-                        "to":   ref_id,
-                        "style": {
-                            "fillColor":    "rgba(99,102,241,0.35)",
-                            "radius":       2,
-                            "toDecoration": "arrow",
-                        },
+                    print(f"[chart] CROSS-LINK {doc_node_id} → {ref_id}")
+                    add_link(doc_node_id, ref_id, {
+                        "fillColor":    "rgba(99,102,241,0.35)",
+                        "radius":       2,
+                        "toDecoration": "arrow",
                     })
  
         # Related works links — orange, dashed
@@ -455,14 +466,11 @@ def search():
             doc_node_id = doc["openalex_id"] or doc["id"]
             for rel_id in doc["related_work_ids"]:
                 if rel_id in seen_ids and rel_id != doc_node_id:
-                    links.append({
-                        "from": doc_node_id,
-                        "to":   rel_id,
-                        "style": {
-                            "fillColor":    "rgba(251,146,60,0.45)",
-                            "radius":       1.5,
-                            "toDecoration": "arrow",
-                        },
+                    add_link(doc_node_id, rel_id, {
+                        "fillColor":    "rgba(251,146,60,0.45)",
+                        "radius":       1.5,
+                        "toDecoration": "arrow",
+                        "dashSize":     4,
                     })
  
         # Gray nodes for referenced works — top 5 by citation count
@@ -499,14 +507,10 @@ def search():
                     all_nodes.append(gray_node)
                     seen_ids.add(ref_id)
  
-                links.append({
-                    "from": doc_node_id,
-                    "to":   ref_id,
-                    "style": {
-                        "fillColor":    "rgba(99,102,241,0.35)",
-                        "radius":       2,
-                        "toDecoration": "arrow",
-                    },
+                add_link(doc_node_id, ref_id, {
+                    "fillColor":    "rgba(99,102,241,0.35)",
+                    "radius":       2,
+                    "toDecoration": "arrow",
                 })
  
         # Gray nodes for related works — top 3 by citation count, warm gray/brown
@@ -543,15 +547,11 @@ def search():
                     all_nodes.append(gray_node)
                     seen_ids.add(rel_id)
  
-                links.append({
-                    "from": doc_node_id,
-                    "to":   rel_id,
-                    "style": {
-                        "fillColor":    "rgba(251,146,60,0.45)",
-                        "radius":       1.5,
-                        "toDecoration": "arrow",
-                        "dashSize":     4,
-                    },
+                add_link(doc_node_id, rel_id, {
+                    "fillColor":    "rgba(251,146,60,0.45)",
+                    "radius":       1.5,
+                    "toDecoration": "arrow",
+                    "dashSize":     4,
                 })
  
         return jsonify({

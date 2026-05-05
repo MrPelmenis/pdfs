@@ -172,6 +172,8 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
                 if (s.radius       !== undefined) link.radius       = s.radius;
                 if (s.toDecoration !== undefined) link.toDecoration = s.toDecoration;
                 if (s.dashSize     !== undefined) link.dashSize     = s.dashSize;
+                console.log("link:", link.from, "→", link.to, "color:", link.fillColor);
+
             },
         },
 
