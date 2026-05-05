@@ -34,7 +34,7 @@ def cp_document_exists(openalex_id: str, cp_url: str, cp_user: str, cp_pass: str
         f"<doi_number>no</doi_number><img_preview_path>no</img_preview_path>"
         f"<stub_document>no</stub_document><authors>no</authors>"
         f"<abstract>no</abstract><cited_by_count>no</cited_by_count>"
-        f"<referenced_work_ids>no</referenced_work_ids><related_work_ids>no</related_work_ids>"
+        f"<referenced_work_ids>yes</referenced_work_ids><related_work_ids>yes</related_work_ids>"
         f"<category_id>no</category_id>"
         f"</list>"
     )
@@ -56,6 +56,10 @@ def fetch_cp_document(openalex_id: str, cp_url: str, cp_user: str, cp_pass: str)
     if not openalex_id:
         return None
     body = f"<document><id>{escape(openalex_id)}</id></document>"
+    f"<list>"
+    f"<id>yes</id>"
+    f"</list>"
+
     try:
         resp = requests.post(
             cp_url.rstrip("/") + "/api/databases/pdfs/lookup",

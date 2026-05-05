@@ -165,22 +165,21 @@ def build_xml(metadata_info: dict | None, grobid_info: dict | None, image_path: 
             SubElement(ref_authors_el, "author").text = ra
         SubElement(ref_el, "date").text = str(ref.get("date") or "")
 
-    if not stub:
-        # Referenced works (OpenAlex IDs — replaces old references_doi block)
-        ref_ids = grobi.get("referenced_work_ids") or meta.get("referenced_work_ids") or []
-        if ref_ids:
-            ref_ids_el = SubElement(doc, "referenced_work_ids")
-            for wid in ref_ids:
-                if wid:
-                    SubElement(ref_ids_el, "referenced_work_id").text = wid
+    # Referenced works (OpenAlex IDs — replaces old references_doi block)
+    ref_ids = grobi.get("referenced_work_ids") or meta.get("referenced_work_ids") or []
+    if ref_ids:
+        ref_ids_el = SubElement(doc, "referenced_work_ids")
+        for wid in ref_ids:
+            if wid:
+                SubElement(ref_ids_el, "referenced_work_id").text = wid
 
-        # Related works (OpenAlex IDs)
-        rel_ids = grobi.get("related_work_ids") or meta.get("related_work_ids") or []
-        if rel_ids:
-            rel_ids_el = SubElement(doc, "related_work_ids")
-            for wid in rel_ids:
-                if wid:
-                    SubElement(rel_ids_el, "related_work_id").text = wid
+    # Related works (OpenAlex IDs)
+    rel_ids = grobi.get("related_work_ids") or meta.get("related_work_ids") or []
+    if rel_ids:
+        rel_ids_el = SubElement(doc, "related_work_ids")
+        for wid in rel_ids:
+            if wid:
+                SubElement(rel_ids_el, "related_work_id").text = wid
 
     raw_xml = tostring(doc, encoding="unicode", xml_declaration=False)
     pretty  = xml.dom.minidom.parseString(raw_xml).toprettyxml(indent="\t")

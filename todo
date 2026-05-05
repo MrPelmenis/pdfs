@@ -1,13 +1,12 @@
+
+mini pirms dinamiskaa:
+1. dokuments no gustava, pareizo doi atrod bet openalex querijojot to doi 404 url formatesanas deel
+2. kad stub dokumentus pievieno cp vini "neatrodas" un konsoli piepilda ar 422 erroru - duplicate primary key
+
 LIELA HUJNA:
-uzlabot title->id metadata_analyser.py
-ir vairaak info bet vajag labaaku veidu kaa atrast no title
 chartam taisiit ar addData() nevis visu uzreiz
 +aizbidit chart logiku citaa failaa man zb
-
-
-
-
-
+protams uzlabot metadata_analyser
 
 
 

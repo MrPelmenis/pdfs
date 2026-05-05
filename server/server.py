@@ -122,6 +122,7 @@ def process_file_background(filename, save_path):
                 added = add_dois_to_queue(all_ids)
                 #print(f"[app] Added {added} OpenAlex IDs to stub queue")
         else:
+            print(upload_result)
             print(f"ERROR: [{filename}] {upload_result['error']}")
 
     except Exception as e:
@@ -328,6 +329,8 @@ def lookup_gray_node(openalex_id: str) -> dict | None:
         f"<abstract>yes</abstract>"
         f"<stub_document>yes</stub_document>"
         f"<doi_number>yes</doi_number>"
+        f"<referenced_work_ids>yes</referenced_work_ids>"
+        f"<related_work_ids>yes</related_work_ids>"
         f"</list>"
     )
     try:
@@ -369,12 +372,39 @@ def search():
     if not query:
         return jsonify({"error": "query is required"}), 400
     try:
-        results = do_search(query)
+        results       = do_search(query)
         all_nodes     = []
-        initial_nodes = []
+        initial_nodes = ["query"]
         links         = []
- 
-        query_node = {
+        seen_ids      = set()
+        seen_links    = set()
+        # openalex_id -> {referenced_work_ids, related_work_ids} for all nodes on screen
+        node_edge_map = {}
+
+        def add_link(from_id, to_id, style):
+            key = (from_id, to_id)
+            if key in seen_links or from_id == to_id:
+                return
+            seen_links.add(key)
+            links.append({"from": from_id, "to": to_id, "style": style})
+
+        def node_radius(cited, fallback=15):
+            return min(100, round(40 + math.sqrt(cited) * 2, 1)) if cited else fallback
+
+        REF_STYLE = {
+            "fillColor":    "rgba(99,102,241,0.35)",
+            "radius":       2,
+            "toDecoration": "arrow",
+        }
+        REL_STYLE = {
+            "fillColor":    "rgba(251,146,60,0.45)",
+            "radius":       1.5,
+            "toDecoration": "arrow",
+            "dashSize":     4,
+        }
+
+        # ── Query node ──────────────────────────────────────────────────────
+        all_nodes.append({
             "id":     "query",
             "loaded": True,
             "style":  {"label": (query[:50] + "…") if len(query) > 50 else query},
@@ -388,172 +418,210 @@ def search():
                 "preview":   None,
                 "category":  None,
             },
-        }
-        initial_nodes.append("query")
-        all_nodes.append(query_node)
- 
+        })
+        seen_ids.add("query")
+
+        # ── Result nodes ─────────────────────────────────────────────────────
         for doc in results:
-            cited    = int(doc["cited_by_count"] or 0)
-            title    = doc["title"] or doc["doi_number"]
-            authors  = doc["authors"] or []
-            abstract = doc["abstract"] or ""
-            category = doc["category"]
-            radius   = round(40 + math.sqrt(cited) * 2, 1)
- 
-            # Use OpenAlex ID as node id (falls back to id which is also OA ID)
+            cited   = int(doc["cited_by_count"] or 0)
+            title   = doc["title"] or doc["doi_number"]
             node_id = doc["openalex_id"] or doc["id"] or doc["doi_number"]
- 
-            result_node = {
+            if not node_id or node_id in seen_ids:
+                continue
+            category = doc["category"]
+
+            all_nodes.append({
                 "id":     node_id,
                 "loaded": True,
                 "style":  {"label": title},
                 "data": {
-                    "title":       title,
-                    "authors":     authors,
-                    "doi":         doc["doi_number"],
-                    "openalex_id": doc["openalex_id"],
-                    "cited":       cited,
-                    "id":          doc["id"],
-                    "file":        doc["file"],
-                    "radius":      radius,
-                    "abstract":    abstract,
-                    "fillColor":   category["color"],
-                    "preview":     doc["preview"],
-                    "category":    category,
-                    "isGray":      False,
+                    "title":                title,
+                    "authors":              doc["authors"] or [],
+                    "doi":                  doc["doi_number"],
+                    "openalex_id":          doc["openalex_id"],
+                    "cited":                cited,
+                    "id":                   doc["id"],
+                    "file":                 doc["file"],
+                    "radius":               node_radius(cited),
+                    "abstract":             doc["abstract"] or "",
+                    "fillColor":            category["color"],
+                    "preview":              doc["preview"],
+                    "category":             category,
+                    "isGray":               False,
+                    "referenced_work_ids":  doc["referenced_work_ids"],
+                    "related_work_ids":     doc["related_work_ids"],
                 },
-            }
+            })
+            seen_ids.add(node_id)
             initial_nodes.append(node_id)
-            all_nodes.append(result_node)
- 
-        # Query → result links
-        for node in all_nodes:
-            if node["id"] != "query":
-                links.append({
-                    "from": "query",
-                    "to":   node["id"],
-                    "style": {
-                        "fillColor":    "rgba(99,102,241,0.35)",
-                        "radius":       2,
-                        "toDecoration": "arrow",
-                    },
-                })
- 
-        # Result → result reference links (within search results)
-        seen_ids   = set(node["id"] for node in all_nodes)
-        seen_links = set()  # track (from, to) pairs to avoid duplicates
- 
-        def add_link(from_id, to_id, style):
-            key = (from_id, to_id)
-            if key in seen_links:
-                return
-            seen_links.add(key)
-            links.append({"from": from_id, "to": to_id, "style": style})
- 
-        for doc in results:
-            doc_node_id = doc["openalex_id"] or doc["id"]
-            for ref_id in doc["referenced_work_ids"]:
-                if ref_id in seen_ids and ref_id != doc_node_id:
-                    print(f"[chart] CROSS-LINK {doc_node_id} → {ref_id}")
-                    add_link(doc_node_id, ref_id, {
-                        "fillColor":    "rgba(99,102,241,0.35)",
-                        "radius":       2,
-                        "toDecoration": "arrow",
-                    })
- 
-        # Related works links — orange, dashed
-        for doc in results:
-            doc_node_id = doc["openalex_id"] or doc["id"]
-            for rel_id in doc["related_work_ids"]:
-                if rel_id in seen_ids and rel_id != doc_node_id:
-                    add_link(doc_node_id, rel_id, {
-                        "fillColor":    "rgba(251,146,60,0.45)",
-                        "radius":       1.5,
-                        "toDecoration": "arrow",
-                        "dashSize":     4,
-                    })
- 
-        # Gray nodes for referenced works — top 5 by citation count
-        for doc in results:
-            doc_node_id = doc["openalex_id"] or doc["id"]
-            enriched_refs = _enrich_and_sort(doc["referenced_work_ids"], limit=5)
- 
-            for ref_id, enriched in enriched_refs:
+            node_edge_map[node_id] = {
+                "ref_ids": doc["referenced_work_ids"],
+                "rel_ids": doc["related_work_ids"],
+            }
+            add_link("query", node_id, REF_STYLE)
+
+        # ── Batch lookup gray nodes ──────────────────────────────────────────
+        # Collect all ref/rel IDs from result nodes, deduplicated
+        gray_candidates = {}  # id -> "ref" | "rel" | "both"
+        for node_id, edges in node_edge_map.items():
+            for ref_id in edges["ref_ids"]:
                 if ref_id not in seen_ids:
-                    if not enriched:
-                        print("not in CP: ", ref_id)
-                        add_dois_to_queue([ref_id])
- 
+                    gray_candidates[ref_id] = "ref"
+            for rel_id in edges["rel_ids"]:
+                if rel_id not in seen_ids:
+                    gray_candidates[rel_id] = "rel" if rel_id not in gray_candidates else "both"
+
+        # Batch fetch all candidates in one CP call
+        def batch_lookup(ids: list) -> dict:
+            if not ids:
+                return {}
+            body = "".join(f"<document><id>{escape(wid)}</id></document>" for wid in ids)
+            body += (
+                "<list>"
+                "<title>yes</title>"
+                "<cited_by_count>yes</cited_by_count>"
+                "<authors>yes</authors>"
+                "<abstract>yes</abstract>"
+                "<stub_document>yes</stub_document>"
+                "<doi_number>yes</doi_number>"
+                "<referenced_work_ids>yes</referenced_work_ids>"
+                "<related_work_ids>yes</related_work_ids>"
+                "</list>"
+            )
+            try:
+                resp = requests.post(
+                    CP_URL.rstrip("/") + "/api/databases/pdfs/lookup/json",
+                    data=body,
+                    auth=(CP_USER, CP_PASS),
+                    timeout=15,
+                )
+                resp.raise_for_status()
+                docs = resp.json().get("cps:reply", {}).get("cps:content", {}).get("document", [])
+                if isinstance(docs, dict):
+                    docs = [docs]
+                result = {}
+                for doc in docs:
+                    wid = doc.get("id") or doc.get("openalex_id")
+                    if not wid:
+                        continue
+
+                    raw_authors = doc.get("authors") or {}
+                    a = raw_authors.get("author", [])
+                    authors = [a] if isinstance(a, str) else a
+
+                    raw_ref = doc.get("referenced_work_ids") or {}
+                    r = raw_ref.get("referenced_work_id", [])
+                    ref_ids = [r] if isinstance(r, str) else r
+
+                    raw_rel = doc.get("related_work_ids") or {}
+                    r = raw_rel.get("related_work_id", [])
+                    rel_ids = [r] if isinstance(r, str) else r
+
+                    result[wid] = {
+                        "title":               (doc.get("title") or "").strip(),
+                        "cited":               int(doc.get("cited_by_count") or 0),
+                        "abstract":            (doc.get("abstract") or "").strip(),
+                        "authors":             authors,
+                        "stub_document":       (doc.get("stub_document") or "no") == "yes",
+                        "doi_number":          doc.get("doi_number", ""),
+                        "referenced_work_ids": ref_ids,
+                        "related_work_ids":    rel_ids,
+                    }
+                return result
+            except Exception as e:
+                print(f"[batch_lookup] failed: {e}")
+                return {}
+
+        enriched_map = batch_lookup(list(gray_candidates.keys()))
+
+        # Sort ref candidates by cited desc, take top 5; rel top 3
+        def sorted_ids(id_list, kind):
+            limit = 5 if kind == "ref" else 3
+            scored = [(wid, enriched_map.get(wid, {}).get("cited", 0)) for wid in id_list]
+            scored.sort(key=lambda x: x[1], reverse=True)
+            return [wid for wid, _ in scored[:limit]]
+
+        # Build gray nodes and links from result nodes
+        for node_id, edges in list(node_edge_map.items()):
+            for ref_id in sorted_ids(edges["ref_ids"], "ref"):
+                enriched = enriched_map.get(ref_id)
+                if not enriched:
+                    add_dois_to_queue([ref_id])
+                if ref_id not in seen_ids:
                     cited = enriched["cited"] if enriched else 0
-                    gray_node = {
+                    all_nodes.append({
                         "id":     ref_id,
                         "loaded": False,
                         "style":  {"label": enriched["title"] if enriched else ref_id},
                         "data": {
-                            "title":         enriched["title"]    if enriched else ref_id,
-                            "authors":       enriched["authors"]  if enriched else [],
-                            "abstract":      enriched["abstract"] if enriched else "",
-                            "cited":         cited,
-                            "doi":           enriched.get("doi_number", "") if enriched else "",
-                            "openalex_id":   ref_id,
-                            "radius":        round(40 + math.sqrt(cited) * 2, 1) if enriched else 15,
-                            "fillColor":     "rgba(120,120,120,0.7)",
-                            "preview":       None,
-                            "category":      None,
-                            "isGray":        True,
-                            "stub_document": enriched["stub_document"] if enriched else False,
+                            "title":               enriched["title"]               if enriched else ref_id,
+                            "authors":             enriched["authors"]             if enriched else [],
+                            "abstract":            enriched["abstract"]            if enriched else "",
+                            "cited":               cited,
+                            "doi":                 enriched.get("doi_number", "")  if enriched else "",
+                            "openalex_id":         ref_id,
+                            "radius":              node_radius(cited),
+                            "fillColor":           "rgba(120,120,120,0.7)",
+                            "preview":             None,
+                            "category":            None,
+                            "isGray":              True,
+                            "stub_document":       enriched["stub_document"]       if enriched else False,
+                            "referenced_work_ids": enriched["referenced_work_ids"] if enriched else [],
+                            "related_work_ids":    enriched["related_work_ids"]    if enriched else [],
                         },
-                    }
-                    all_nodes.append(gray_node)
+                    })
                     seen_ids.add(ref_id)
- 
-                add_link(doc_node_id, ref_id, {
-                    "fillColor":    "rgba(99,102,241,0.35)",
-                    "radius":       2,
-                    "toDecoration": "arrow",
-                })
- 
-        # Gray nodes for related works — top 3 by citation count, warm gray/brown
-        for doc in results:
-            doc_node_id   = doc["openalex_id"] or doc["id"]
-            enriched_rels = _enrich_and_sort(doc["related_work_ids"], limit=3)
- 
-            for rel_id, enriched in enriched_rels:
+                    node_edge_map[ref_id] = {
+                        "ref_ids": enriched["referenced_work_ids"] if enriched else [],
+                        "rel_ids": enriched["related_work_ids"]    if enriched else [],
+                    }
+                add_link(node_id, ref_id, REF_STYLE)
+
+            for rel_id in sorted_ids(edges["rel_ids"], "rel"):
+                enriched = enriched_map.get(rel_id)
+                if not enriched:
+                    add_dois_to_queue([rel_id])
                 if rel_id not in seen_ids:
-                    if not enriched:
-                        print("not in CP (related): ", rel_id)
-                        add_dois_to_queue([rel_id])
- 
                     cited = enriched["cited"] if enriched else 0
-                    gray_node = {
+                    all_nodes.append({
                         "id":     rel_id,
                         "loaded": False,
                         "style":  {"label": enriched["title"] if enriched else rel_id},
                         "data": {
-                            "title":         enriched["title"]    if enriched else rel_id,
-                            "authors":       enriched["authors"]  if enriched else [],
-                            "abstract":      enriched["abstract"] if enriched else "",
-                            "cited":         cited,
-                            "doi":           enriched.get("doi_number", "") if enriched else "",
-                            "openalex_id":   rel_id,
-                            "radius":        round(40 + math.sqrt(cited) * 2, 1) if enriched else 15,
-                            "fillColor":     "rgba(180,120,60,0.6)",
-                            "preview":       None,
-                            "category":      None,
-                            "isGray":        True,
-                            "stub_document": enriched["stub_document"] if enriched else False,
+                            "title":               enriched["title"]               if enriched else rel_id,
+                            "authors":             enriched["authors"]             if enriched else [],
+                            "abstract":            enriched["abstract"]            if enriched else "",
+                            "cited":               cited,
+                            "doi":                 enriched.get("doi_number", "")  if enriched else "",
+                            "openalex_id":         rel_id,
+                            "radius":              node_radius(cited),
+                            "fillColor":           "rgba(180,120,60,0.6)",
+                            "preview":             None,
+                            "category":            None,
+                            "isGray":              True,
+                            "stub_document":       enriched["stub_document"]       if enriched else False,
+                            "referenced_work_ids": enriched["referenced_work_ids"] if enriched else [],
+                            "related_work_ids":    enriched["related_work_ids"]    if enriched else [],
                         },
-                    }
-                    all_nodes.append(gray_node)
+                    })
                     seen_ids.add(rel_id)
- 
-                add_link(doc_node_id, rel_id, {
-                    "fillColor":    "rgba(251,146,60,0.45)",
-                    "radius":       1.5,
-                    "toDecoration": "arrow",
-                    "dashSize":     4,
-                })
- 
+                    node_edge_map[rel_id] = {
+                        "ref_ids": enriched["referenced_work_ids"] if enriched else [],
+                        "rel_ids": enriched["related_work_ids"]    if enriched else [],
+                    }
+                add_link(node_id, rel_id, REL_STYLE)
+
+        # ── Final pass — link any two nodes already on screen ────────────────
+        for node_id, edges in node_edge_map.items():
+            if node_id == "query":
+                continue
+            for ref_id in edges["ref_ids"]:
+                if ref_id in seen_ids:
+                    add_link(node_id, ref_id, REF_STYLE)
+            for rel_id in edges["rel_ids"]:
+                if rel_id in seen_ids:
+                    add_link(node_id, rel_id, REL_STYLE)
+
         return jsonify({
             "query":         query,
             "results":       results,
@@ -563,7 +631,6 @@ def search():
     except Exception as e:
         print(str(e))
         return jsonify({"error": str(e)}), 500
-
 
 
 
@@ -648,5 +715,6 @@ def route_assign_category():
 
 
 if __name__ == "__main__":
+    print(CP_URL)
     start_stub_worker(CP_URL, CP_USER, CP_PASS)
     app.run(host="0.0.0.0", port=3002, debug=True, threaded=True)
