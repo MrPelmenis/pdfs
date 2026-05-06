@@ -371,15 +371,15 @@ def search():
     query = request.args.get("query", "").strip()
     if not query:
         return jsonify({"error": "query is required"}), 400
+
     try:
-        results       = do_search(query)
+        results = do_search(query)
+
         all_nodes     = []
-        initial_nodes = ["query"]
         links         = []
+        initial_nodes = ["query"]
         seen_ids      = set()
         seen_links    = set()
-        # openalex_id -> {referenced_work_ids, related_work_ids} for all nodes on screen
-        node_edge_map = {}
 
         def add_link(from_id, to_id, style):
             key = (from_id, to_id)
@@ -403,31 +403,39 @@ def search():
             "dashSize":     4,
         }
 
-        # ── Query node ──────────────────────────────────────────────────────
+        # ── Query node ───────────────────────────────────────────────────────
         all_nodes.append({
             "id":     "query",
             "loaded": True,
             "style":  {"label": (query[:50] + "…") if len(query) > 50 else query},
             "data": {
-                "title":     query,
-                "authors":   [],
-                "doi":       "",
-                "cited":     0,
-                "radius":    20,
-                "fillColor": "#ffffff",
-                "preview":   None,
-                "category":  None,
+                "title":        query,
+                "authors":      [],
+                "doi":          "",
+                "cited":        0,
+                "radius":       20,
+                "fillColor":    "#ffffff",
+                "preview":      None,
+                "category":     None,
+                "is_stub_node": False,
             },
         })
         seen_ids.add("query")
 
         # ── Result nodes ─────────────────────────────────────────────────────
+        # Collect ref/rel ID sets per node for cross-link pass below.
+        # These are NOT embedded in node.data — only used server-side here.
+        result_node_ids = []   # ordered list of node IDs from search results
+        ref_ids_by_node = {}   # node_id -> [referenced_work_ids]
+        rel_ids_by_node = {}   # node_id -> [related_work_ids]
+
         for doc in results:
             cited   = int(doc["cited_by_count"] or 0)
             title   = doc["title"] or doc["doi_number"]
             node_id = doc["openalex_id"] or doc["id"] or doc["doi_number"]
             if not node_id or node_id in seen_ids:
                 continue
+
             category = doc["category"]
 
             all_nodes.append({
@@ -435,191 +443,41 @@ def search():
                 "loaded": True,
                 "style":  {"label": title},
                 "data": {
-                    "title":                title,
-                    "authors":              doc["authors"] or [],
-                    "doi":                  doc["doi_number"],
-                    "openalex_id":          doc["openalex_id"],
-                    "cited":                cited,
-                    "id":                   doc["id"],
-                    "file":                 doc["file"],
-                    "radius":               node_radius(cited),
-                    "abstract":             doc["abstract"] or "",
-                    "fillColor":            category["color"],
-                    "preview":              doc["preview"],
-                    "category":             category,
-                    "isGray":               False,
-                    "referenced_work_ids":  doc["referenced_work_ids"],
-                    "related_work_ids":     doc["related_work_ids"],
+                    "title":        title,
+                    "authors":      doc["authors"] or [],
+                    "doi":          doc["doi_number"],
+                    "openalex_id":  doc["openalex_id"],
+                    "cited":        cited,
+                    "id":           doc["id"],
+                    "file":         doc["file"],
+                    "radius":       node_radius(cited),
+                    "abstract":     doc["abstract"] or "",
+                    "fillColor":    category["color"],
+                    "preview":      doc["preview"],
+                    "category":     category,
+                    "stub_document": doc["stub_document"] == "yes" if isinstance(doc["stub_document"], str) else bool(doc["stub_document"]),
+                    "is_stub_node": False,
                 },
             })
             seen_ids.add(node_id)
             initial_nodes.append(node_id)
-            node_edge_map[node_id] = {
-                "ref_ids": doc["referenced_work_ids"],
-                "rel_ids": doc["related_work_ids"],
-            }
+            result_node_ids.append(node_id)
+            ref_ids_by_node[node_id] = doc["referenced_work_ids"] or []
+            rel_ids_by_node[node_id] = doc["related_work_ids"]    or []
+
             add_link("query", node_id, REF_STYLE)
 
-        # ── Batch lookup gray nodes ──────────────────────────────────────────
-        # Collect all ref/rel IDs from result nodes, deduplicated
-        gray_candidates = {}  # id -> "ref" | "rel" | "both"
-        for node_id, edges in node_edge_map.items():
-            for ref_id in edges["ref_ids"]:
-                if ref_id not in seen_ids:
-                    gray_candidates[ref_id] = "ref"
-            for rel_id in edges["rel_ids"]:
-                if rel_id not in seen_ids:
-                    gray_candidates[rel_id] = "rel" if rel_id not in gray_candidates else "both"
+        # ── Cross-links between result nodes ─────────────────────────────────
+        # Check every result node's full ref/rel lists against the result ID set.
+        # No limit — we want all connections between the 10 results visible.
+        result_id_set = set(result_node_ids)
 
-        # Batch fetch all candidates in one CP call
-        def batch_lookup(ids: list) -> dict:
-            if not ids:
-                return {}
-            body = "".join(f"<document><id>{escape(wid)}</id></document>" for wid in ids)
-            body += (
-                "<list>"
-                "<title>yes</title>"
-                "<cited_by_count>yes</cited_by_count>"
-                "<authors>yes</authors>"
-                "<abstract>yes</abstract>"
-                "<stub_document>yes</stub_document>"
-                "<doi_number>yes</doi_number>"
-                "<referenced_work_ids>yes</referenced_work_ids>"
-                "<related_work_ids>yes</related_work_ids>"
-                "</list>"
-            )
-            try:
-                resp = requests.post(
-                    CP_URL.rstrip("/") + "/api/databases/pdfs/lookup/json",
-                    data=body,
-                    auth=(CP_USER, CP_PASS),
-                    timeout=15,
-                )
-                resp.raise_for_status()
-                docs = resp.json().get("cps:reply", {}).get("cps:content", {}).get("document", [])
-                if isinstance(docs, dict):
-                    docs = [docs]
-                result = {}
-                for doc in docs:
-                    wid = doc.get("id") or doc.get("openalex_id")
-                    if not wid:
-                        continue
-
-                    raw_authors = doc.get("authors") or {}
-                    a = raw_authors.get("author", [])
-                    authors = [a] if isinstance(a, str) else a
-
-                    raw_ref = doc.get("referenced_work_ids") or {}
-                    r = raw_ref.get("referenced_work_id", [])
-                    ref_ids = [r] if isinstance(r, str) else r
-
-                    raw_rel = doc.get("related_work_ids") or {}
-                    r = raw_rel.get("related_work_id", [])
-                    rel_ids = [r] if isinstance(r, str) else r
-
-                    result[wid] = {
-                        "title":               (doc.get("title") or "").strip(),
-                        "cited":               int(doc.get("cited_by_count") or 0),
-                        "abstract":            (doc.get("abstract") or "").strip(),
-                        "authors":             authors,
-                        "stub_document":       (doc.get("stub_document") or "no") == "yes",
-                        "doi_number":          doc.get("doi_number", ""),
-                        "referenced_work_ids": ref_ids,
-                        "related_work_ids":    rel_ids,
-                    }
-                return result
-            except Exception as e:
-                print(f"[batch_lookup] failed: {e}")
-                return {}
-
-        enriched_map = batch_lookup(list(gray_candidates.keys()))
-
-        # Sort ref candidates by cited desc, take top 5; rel top 3
-        def sorted_ids(id_list, kind):
-            limit = 5 if kind == "ref" else 3
-            scored = [(wid, enriched_map.get(wid, {}).get("cited", 0)) for wid in id_list]
-            scored.sort(key=lambda x: x[1], reverse=True)
-            return [wid for wid, _ in scored[:limit]]
-
-        # Build gray nodes and links from result nodes
-        for node_id, edges in list(node_edge_map.items()):
-            for ref_id in sorted_ids(edges["ref_ids"], "ref"):
-                enriched = enriched_map.get(ref_id)
-                if not enriched:
-                    add_dois_to_queue([ref_id])
-                if ref_id not in seen_ids:
-                    cited = enriched["cited"] if enriched else 0
-                    all_nodes.append({
-                        "id":     ref_id,
-                        "loaded": False,
-                        "style":  {"label": enriched["title"] if enriched else ref_id},
-                        "data": {
-                            "title":               enriched["title"]               if enriched else ref_id,
-                            "authors":             enriched["authors"]             if enriched else [],
-                            "abstract":            enriched["abstract"]            if enriched else "",
-                            "cited":               cited,
-                            "doi":                 enriched.get("doi_number", "")  if enriched else "",
-                            "openalex_id":         ref_id,
-                            "radius":              node_radius(cited),
-                            "fillColor":           "rgba(120,120,120,0.7)",
-                            "preview":             None,
-                            "category":            None,
-                            "isGray":              True,
-                            "stub_document":       enriched["stub_document"]       if enriched else False,
-                            "referenced_work_ids": enriched["referenced_work_ids"] if enriched else [],
-                            "related_work_ids":    enriched["related_work_ids"]    if enriched else [],
-                        },
-                    })
-                    seen_ids.add(ref_id)
-                    node_edge_map[ref_id] = {
-                        "ref_ids": enriched["referenced_work_ids"] if enriched else [],
-                        "rel_ids": enriched["related_work_ids"]    if enriched else [],
-                    }
-                add_link(node_id, ref_id, REF_STYLE)
-
-            for rel_id in sorted_ids(edges["rel_ids"], "rel"):
-                enriched = enriched_map.get(rel_id)
-                if not enriched:
-                    add_dois_to_queue([rel_id])
-                if rel_id not in seen_ids:
-                    cited = enriched["cited"] if enriched else 0
-                    all_nodes.append({
-                        "id":     rel_id,
-                        "loaded": False,
-                        "style":  {"label": enriched["title"] if enriched else rel_id},
-                        "data": {
-                            "title":               enriched["title"]               if enriched else rel_id,
-                            "authors":             enriched["authors"]             if enriched else [],
-                            "abstract":            enriched["abstract"]            if enriched else "",
-                            "cited":               cited,
-                            "doi":                 enriched.get("doi_number", "")  if enriched else "",
-                            "openalex_id":         rel_id,
-                            "radius":              node_radius(cited),
-                            "fillColor":           "rgba(180,120,60,0.6)",
-                            "preview":             None,
-                            "category":            None,
-                            "isGray":              True,
-                            "stub_document":       enriched["stub_document"]       if enriched else False,
-                            "referenced_work_ids": enriched["referenced_work_ids"] if enriched else [],
-                            "related_work_ids":    enriched["related_work_ids"]    if enriched else [],
-                        },
-                    })
-                    seen_ids.add(rel_id)
-                    node_edge_map[rel_id] = {
-                        "ref_ids": enriched["referenced_work_ids"] if enriched else [],
-                        "rel_ids": enriched["related_work_ids"]    if enriched else [],
-                    }
-                add_link(node_id, rel_id, REL_STYLE)
-
-        # ── Final pass — link any two nodes already on screen ────────────────
-        for node_id, edges in node_edge_map.items():
-            if node_id == "query":
-                continue
-            for ref_id in edges["ref_ids"]:
-                if ref_id in seen_ids:
+        for node_id in result_node_ids:
+            for ref_id in ref_ids_by_node[node_id]:
+                if ref_id in result_id_set:
                     add_link(node_id, ref_id, REF_STYLE)
-            for rel_id in edges["rel_ids"]:
-                if rel_id in seen_ids:
+            for rel_id in rel_ids_by_node[node_id]:
+                if rel_id in result_id_set:
                     add_link(node_id, rel_id, REL_STYLE)
 
         return jsonify({
@@ -628,10 +486,239 @@ def search():
             "chart_data":    {"nodes": all_nodes, "links": links},
             "initial_nodes": initial_nodes,
         })
+
     except Exception as e:
         print(str(e))
         return jsonify({"error": str(e)}), 500
 
+
+def batch_lookup(ids: list) -> dict:
+    if not ids:
+        return {}
+    body = "".join(f"<document><id>{escape(wid)}</id></document>" for wid in ids)
+    body += (
+        "<list>"
+        "<title>yes</title>"
+        "<cited_by_count>yes</cited_by_count>"
+        "<authors>yes</authors>"
+        "<abstract>yes</abstract>"
+        "<stub_document>yes</stub_document>"
+        "<doi_number>yes</doi_number>"
+        "<referenced_work_ids>yes</referenced_work_ids>"
+        "<related_work_ids>yes</related_work_ids>"
+        "</list>"
+    )
+    try:
+        resp = requests.post(
+            CP_URL.rstrip("/") + "/api/databases/pdfs/lookup/json",
+            data=body,
+            auth=(CP_USER, CP_PASS),
+            timeout=15,
+        )
+        resp.raise_for_status()
+        docs = resp.json().get("cps:reply", {}).get("cps:content", {}).get("document", [])
+        if isinstance(docs, dict):
+            docs = [docs]
+        result = {}
+        for doc in docs:
+            wid = doc.get("id") or doc.get("openalex_id")
+            if not wid:
+                continue
+
+            raw_authors = doc.get("authors") or {}
+            a = raw_authors.get("author", [])
+            authors = [a] if isinstance(a, str) else a
+
+            raw_ref = doc.get("referenced_work_ids") or {}
+            r = raw_ref.get("referenced_work_id", [])
+            ref_ids = [r] if isinstance(r, str) else r
+
+            raw_rel = doc.get("related_work_ids") or {}
+            r = raw_rel.get("related_work_id", [])
+            rel_ids = [r] if isinstance(r, str) else r
+
+            result[wid] = {
+                "title":               (doc.get("title") or "").strip(),
+                "cited":               int(doc.get("cited_by_count") or 0),
+                "abstract":            (doc.get("abstract") or "").strip(),
+                "authors":             authors,
+                "stub_document":       (doc.get("stub_document") or "no") == "yes",
+                "doi_number":          doc.get("doi_number", ""),
+                "referenced_work_ids": ref_ids,
+                "related_work_ids":    rel_ids,
+            }
+        return result
+    except Exception as e:
+        print(f"[batch_lookup] failed: {e}")
+        return {}
+
+
+@app.route("/expand", methods=["POST"])
+def expand():
+    body = request.get_json(force=True)
+
+    openalex_id   = (body.get("openalex_id") or "").strip()
+    shown_node_ids = set(body.get("shown_node_ids") or [])
+    shown_ref_ids  = set(body.get("shown_ref_ids")  or [])
+    shown_rel_ids  = set(body.get("shown_rel_ids")  or [])
+
+    if not openalex_id:
+        return jsonify({"error": "openalex_id is required"}), 400
+
+    # ── 1. Look up the target node to get its edge lists ────────────────────
+    node_data = lookup_gray_node(openalex_id)
+    if node_data is None:
+        return jsonify({"error": f"Node {openalex_id} not found in ClusterPoint"}), 404
+
+    # lookup_gray_node doesn't return edge lists — do a full lookup here
+    body_xml = (
+        f"<document><id>{escape(openalex_id)}</id></document>"
+        f"<list>"
+        f"<title>yes</title>"
+        f"<cited_by_count>yes</cited_by_count>"
+        f"<referenced_work_ids>yes</referenced_work_ids>"
+        f"<related_work_ids>yes</related_work_ids>"
+        f"</list>"
+    )
+    try:
+        resp = requests.post(
+            CP_URL.rstrip("/") + "/api/databases/pdfs/lookup",
+            data=body_xml,
+            auth=(CP_USER, CP_PASS),
+            timeout=10,
+        )
+        resp.raise_for_status()
+        root = ET.fromstring(resp.text)
+        doc  = root.find(".//document")
+        if doc is None:
+            return jsonify({"error": "Node document not found"}), 404
+
+        raw_ref = doc.find("referenced_work_ids")
+        all_ref_ids = []
+        if raw_ref is not None:
+            r = [el.text for el in raw_ref.findall("referenced_work_id") if el.text]
+            all_ref_ids = r
+
+        raw_rel = doc.find("related_work_ids")
+        all_rel_ids = []
+        if raw_rel is not None:
+            r = [el.text for el in raw_rel.findall("related_work_id") if el.text]
+            all_rel_ids = r
+
+    except Exception as e:
+        return jsonify({"error": f"CP lookup failed: {e}"}), 500
+
+    # ── 2. Filter out already-shown, then batch-lookup remaining candidates ──
+    candidate_ref_ids = [i for i in all_ref_ids if i not in shown_ref_ids]
+    candidate_rel_ids = [i for i in all_rel_ids if i not in shown_rel_ids]
+
+    all_candidates = list(set(candidate_ref_ids + candidate_rel_ids))
+
+    # Reuse the same batch_lookup defined in /search
+    enriched_map = batch_lookup(all_candidates)
+
+    # ── 3. Sort by cited_by_count desc, take next 5 refs / 3 rels ───────────
+    def sorted_candidates(id_list, limit):
+        scored = [
+            (wid, enriched_map.get(wid, {}).get("cited", 0))
+            for wid in id_list
+        ]
+        scored.sort(key=lambda x: x[1], reverse=True)
+        return [wid for wid, _ in scored[:limit]]
+
+    new_ref_ids = sorted_candidates(candidate_ref_ids, 5)
+    new_rel_ids = sorted_candidates(candidate_rel_ids, 3)
+
+    # ── 4. Build new nodes and links ─────────────────────────────────────────
+    new_nodes      = []
+    new_links      = []
+    seen_new       = set()
+    seen_links_set = set()
+
+    def node_radius(cited, fallback=15):
+        return min(100, round(40 + math.sqrt(cited) * 2, 1)) if cited else fallback
+
+    REF_STYLE = {
+        "fillColor":    "rgba(120,120,120,0.7)",
+        "radius":       2,
+        "toDecoration": "arrow",
+    }
+    REL_STYLE = {
+        "fillColor":    "rgba(180,120,60,0.6)",
+        "radius":       1.5,
+        "toDecoration": "arrow",
+        "dashSize":     4,
+    }
+
+    def add_link(from_id, to_id, style):
+        key = (from_id, to_id)
+        if key in seen_links_set or from_id == to_id:
+            return
+        seen_links_set.add(key)
+        new_links.append({"from": from_id, "to": to_id, "style": style})
+
+    def make_stub_node(wid, enriched, fill_color):
+        cited = enriched["cited"] if enriched else 0
+        return {
+            "id":     wid,
+            "loaded": False,
+            "style":  {"label": enriched["title"] if enriched else wid},
+            "data": {
+                "title":                enriched["title"]               if enriched else wid,
+                "authors":              enriched["authors"]             if enriched else [],
+                "abstract":             enriched["abstract"]            if enriched else "",
+                "cited":                cited,
+                "doi":                  enriched.get("doi_number", "")  if enriched else "",
+                "openalex_id":          wid,
+                "radius":               node_radius(cited),
+                "fillColor":            fill_color,
+                "preview":              None,
+                "category":             None,
+                "is_stub_node":         True,
+                "stub_document":        enriched["stub_document"]       if enriched else False,
+                "referenced_work_ids":  enriched["referenced_work_ids"] if enriched else [],
+                "related_work_ids":     enriched["related_work_ids"]    if enriched else [],
+            },
+        }
+
+    # New ref nodes
+    for wid in new_ref_ids:
+        if wid not in shown_node_ids and wid not in seen_new:
+            enriched = enriched_map.get(wid)
+            new_nodes.append(make_stub_node(wid, enriched, "rgba(120,120,120,0.7)"))
+            seen_new.add(wid)
+        add_link(openalex_id, wid, REF_STYLE)
+
+    # New rel nodes
+    for wid in new_rel_ids:
+        if wid not in shown_node_ids and wid not in seen_new:
+            enriched = enriched_map.get(wid)
+            new_nodes.append(make_stub_node(wid, enriched, "rgba(180,120,60,0.6)"))
+            seen_new.add(wid)
+        add_link(openalex_id, wid, REL_STYLE)
+
+    # ── 5. Cross-links: connect new nodes to any already on the graph ────────
+    # Collect all edge info for newly added nodes
+    all_now_visible = shown_node_ids | seen_new | {openalex_id}
+
+    for node in new_nodes:
+        wid      = node["id"]
+        enriched = enriched_map.get(wid)
+        if not enriched:
+            continue
+        for ref_id in enriched.get("referenced_work_ids", []):
+            if ref_id in all_now_visible and ref_id != wid:
+                add_link(wid, ref_id, REF_STYLE)
+        for rel_id in enriched.get("related_work_ids", []):
+            if rel_id in all_now_visible and rel_id != wid:
+                add_link(wid, rel_id, REL_STYLE)
+
+    return jsonify({
+        "nodes":        new_nodes,
+        "links":        new_links,
+        "new_ref_ids":  new_ref_ids,
+        "new_rel_ids":  new_rel_ids,
+    })
 
 
 @app.route("/pdf-file/<path:filename>")
