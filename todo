@@ -1,7 +1,6 @@
 
 mini pirms dinamiskaa:
-1. dokuments no gustava, pareizo doi atrod bet openalex querijojot to doi 404 url formatesanas deel
-2. kad stub dokumentus pievieno cp vini "neatrodas" un konsoli piepilda ar 422 erroru - duplicate primary key
+1. 1. dokuments no gustava, pareizo doi atrod bet openalex querijojot to doi 404 url formatesanas deel
 
 LIELA HUJNA:
 chartam taisiit ar addData() nevis visu uzreiz

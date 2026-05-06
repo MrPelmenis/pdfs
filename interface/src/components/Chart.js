@@ -122,7 +122,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
         navigation: {
             initialNodes:             initialNodes,
             mode:                     "manual",
-            focusNodeExpansionRadius: 8,
+            focusNodeExpansionRadius: 1,
         },
         style: {
             node: {

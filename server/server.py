@@ -122,7 +122,7 @@ def process_file_background(filename, save_path):
                 added = add_dois_to_queue(all_ids)
                 #print(f"[app] Added {added} OpenAlex IDs to stub queue")
         else:
-            print(upload_result)
+            #print(upload_result)
             print(f"ERROR: [{filename}] {upload_result['error']}")
 
     except Exception as e:
@@ -715,6 +715,5 @@ def route_assign_category():
 
 
 if __name__ == "__main__":
-    print(CP_URL)
     start_stub_worker(CP_URL, CP_USER, CP_PASS)
     app.run(host="0.0.0.0", port=3002, debug=True, threaded=True)
