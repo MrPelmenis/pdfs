@@ -1,5 +1,4 @@
 const SEARCH_ICON = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/500px-Search_Icon.svg.png?_=20181016161702";
-
 const API = process.env.REACT_APP_SERVER_URL;
 
 function stripHtml(str) {
@@ -97,7 +96,7 @@ function hideTooltip() {
 }
 
 
-const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
+const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadStub = null) => {
     const container = document.getElementById("megachart");
     if (!container) return null;
 
@@ -132,6 +131,10 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
         shownRefsByNode.set(node.id, new Set());
         shownRelsByNode.set(node.id, new Set());
     }
+
+    // No link seeding needed — /search only returns query→result and
+    // result→result cross-links. Pagination cursors start at offset 0
+    // for all result nodes; /expand will fetch from the beginning.
 
     // ── Expand a node ────────────────────────────────────────────────────────
     async function expandNode(nodeId) {
@@ -243,11 +246,8 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
         data:        { preloaded: chartData },
         navigation: {
             initialNodes:             initialNodes,
-            focusNodeExpansionRadius: 1,
-        },
-        layout:{
-            mode:"focusnode",
-            nodeSpacing: 10
+            mode:                     "",
+            focusNodeExpansionRadius: 8,
         },
         style: {
             node: {
@@ -342,8 +342,16 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null) => {
                 const d = event.clickNode.data?.data;
                 if (!d) return;
 
-                // Stub and gray nodes: already opened by single click, nothing extra
-                if (d.is_stub_node || d.stub_document) return;
+                if (d.is_stub_node) {
+                    // Stub nodes (gray/orange) → open upload modal
+                    if (onUploadStub) {
+                        hideTooltip();
+                        onUploadStub(d);
+                    }
+                    return;
+                }
+
+                if (d.stub_document) return;
 
                 if (onOpenPdf) {
                     hideTooltip();

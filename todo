@@ -1,17 +1,11 @@
-
-mini pirms dinamiskaa:
+MINI TASKS:
 1. 1. dokuments no gustava, pareizo doi atrod bet openalex querijojot to doi 404 url formatesanas deel
-
-LIELA HUJNA:
-chartam taisiit ar addData() nevis visu uzreiz
-+aizbidit chart logiku citaa failaa man zb
-protams uzlabot metadata_analyser
-
+protams uzlabot metadata_analyser, biezi atrod ne-to dokumentu
+salabot animacijas pdf un upload, vai kko citu izdomat
 
 
 data populizators todo:
 pelekajiem double click atver logu lai var uploadot to dokumentu db
-krasas smukakas
 
 
 LELIE TODO:

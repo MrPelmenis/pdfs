@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import SearchCard from "../components/SearchCard";
 import PdfModal from "../components/PdfModal";
+import UploadModal from "../components/UploadModal";
 import CreateChart from "../components/Chart";
 
 const API = process.env.REACT_APP_SERVER_URL;
@@ -21,9 +22,13 @@ export default function SearchPage() {
   const [modal,       setModal]       = useState(null);
   const [modalStage,  setModalStage]  = useState("closed");
 
+  // ── Upload modal state ─────────────────────────────────────────────────────
+  const [uploadNode, setUploadNode] = useState(null);
+  const [uploadModalStage, setUploadModalStage] = useState("closed");
+
   const chartRef = useRef(null);
 
-  // ── Modal openers — defined first so fetchResults can close over them ──────
+  // ── Modal openers ──────────────────────────────────────────────────────────
 
   const openPdf = useCallback((e, r) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -56,7 +61,20 @@ export default function SearchPage() {
     setTimeout(() => setModalStage("open"), 30);
   }, []);
 
+  // Called from chart on stub node double-click
+  const openUploadFromChart = useCallback((d) => {
+    setUploadNode(d);
+    setUploadModalStage("expanding");
+    setTimeout(() => setUploadModalStage("open"), 30);
+  }, []);
 
+  const closeUploadModal = useCallback(() => {
+    setUploadModalStage("closing");
+    setTimeout(() => {
+      setUploadNode(null);
+      setUploadModalStage("closed");
+    }, 300);
+  }, []);
 
   const fetchResults = useCallback(async (q) => {
     if (!q.trim()) return;
@@ -71,7 +89,12 @@ export default function SearchPage() {
         chartRef.current = null;
       }
       if (document.getElementById("megachart")) {
-        chartRef.current = CreateChart(data.chart_data ?? null, data.initial_nodes, openPdfFromChart);
+        chartRef.current = CreateChart(
+          data.chart_data ?? null,
+          data.initial_nodes,
+          openPdfFromChart,
+          openUploadFromChart,
+        );
       } else {
         chartRef._pendingData  = data.chart_data ?? null;
         chartRef._pendingQuery = q;
@@ -81,28 +104,26 @@ export default function SearchPage() {
     } finally {
       setLoading(false);
     }
-  }, [openPdfFromChart]);
+  }, [openPdfFromChart, openUploadFromChart]);
 
-    const [categoryChanged, setCategoryChanged] = useState(false);
-    const closeModal = useCallback(() => {
-      setModalStage("closing");
-      setTimeout(() => {
-        setModal(null);
-        setModalStage("closed");
-        if (categoryChanged) {
-          setCategoryChanged(false);
-          fetchResults(searched);
-        }
-      }, 300);
-    }, [categoryChanged, searched, fetchResults]);
-
-
+  const [categoryChanged, setCategoryChanged] = useState(false);
+  const closeModal = useCallback(() => {
+    setModalStage("closing");
+    setTimeout(() => {
+      setModal(null);
+      setModalStage("closed");
+      if (categoryChanged) {
+        setCategoryChanged(false);
+        fetchResults(searched);
+      }
+    }, 300);
+  }, [categoryChanged, searched, fetchResults]);
 
   useEffect(() => {
     if (!hasSearched || chartRef.current) return;
-    chartRef.current = CreateChart(undefined, undefined, openPdfFromChart);
+    chartRef.current = CreateChart(undefined, undefined, openPdfFromChart, openUploadFromChart);
     chartRef._pendingData = null;
-  }, [hasSearched, openPdfFromChart]);
+  }, [hasSearched, openPdfFromChart, openUploadFromChart]);
 
   useEffect(() => {
     setInputVal(urlQuery);
@@ -193,7 +214,7 @@ export default function SearchPage() {
       {hasSearched && (
         <div className="flex flex-1 min-h-0">
 
-          {/* Left panel — only this scrolls */}
+          {/* Left panel */}
           <div className="w-[550px] min-w-[420px] shrink-0 flex flex-col bg-main min-h-0">
             <div className="flex-1 overflow-y-auto px-5 pb-5 flex flex-col gap-3 pt-3">
 
@@ -229,12 +250,24 @@ export default function SearchPage() {
             </div>
           </div>
 
-          {/* Right panel — ZoomCharts, no scroll */}
+          {/* Right panel — ZoomCharts */}
           <div id="megachart" className="flex-1 bg-main overflow-hidden" />
         </div>
       )}
 
-        <PdfModal modal={modal} modalStage={modalStage} onClose={closeModal} onCategoryChange={() => setCategoryChanged(true)} />
+      <PdfModal
+        modal={modal}
+        modalStage={modalStage}
+        onClose={closeModal}
+        onCategoryChange={() => setCategoryChanged(true)}
+      />
+
+      {/* Upload modal — shown on stub node double-click */}
+      <UploadModal
+        node={uploadNode}
+        modalStage={uploadModalStage}
+        onClose={closeUploadModal}
+      />
     </main>
   );
 }

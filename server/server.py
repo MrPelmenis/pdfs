@@ -147,32 +147,222 @@ def make_unique_filename(original_filename: str) -> str:
     return f"{stem}_{rand}.pdf"
 
 
+def retrieve_cp_document(doc_id: str) -> dict | None:
+    """
+    Fetch a full document from CP by ID using /retrieve.
+    Returns a flat dict with all fields, or None if not found.
+    """
+    body = (
+        f"<document><id>{escape(doc_id)}</id></document>"
+        f"<list>"
+        f"<title>yes</title>"
+        f"<openalex_id>yes</openalex_id>"
+        f"<doi_number>yes</doi_number>"
+        f"<abstract>yes</abstract>"
+        f"<authors>yes</authors>"
+        f"<date>yes</date>"
+        f"<cited_by_count>yes</cited_by_count>"
+        f"<topics>yes</topics>"
+        f"<concepts>yes</concepts>"
+        f"<keywords>yes</keywords>"
+        f"<referenced_work_ids>yes</referenced_work_ids>"
+        f"<related_work_ids>yes</related_work_ids>"
+        f"<stub_document>yes</stub_document>"
+        f"<category_id>yes</category_id>"
+        f"<img_preview_path>yes</img_preview_path>"
+        f"<file>yes</file>"
+        f"</list>"
+    )
+    try:
+        resp = requests.post(
+            CP_URL.rstrip("/") + "/api/databases/pdfs/retrieve",
+            data=body,
+            auth=(CP_USER, CP_PASS),
+            timeout=10,
+        )
+        resp.raise_for_status()
+        root = ET.fromstring(resp.text)
+        doc  = root.find(".//document")
+        if doc is None:
+            return None
+
+        def text(tag):
+            el = doc.find(tag)
+            return (el.text or "").strip() if el is not None else ""
+
+        def text_list(parent_tag, child_tag):
+            parent = doc.find(parent_tag)
+            if parent is None:
+                return []
+            return [el.text.strip() for el in parent.findall(child_tag) if el.text]
+
+        return {
+            "openalex_id":         text("openalex_id"),
+            "title":               text("title"),
+            "doi":                 text("doi_number"),
+            "abstract":            text("abstract"),
+            "date":                text("date"),
+            "cited_by_count":      int(text("cited_by_count") or 0),
+            "authors":             text_list("authors", "author"),
+            "topics":              text_list("topics", "topic"),
+            "concepts":            text_list("concepts", "concept"),
+            "keywords":            text_list("keywords", "keyword"),
+            "referenced_work_ids": text_list("referenced_work_ids", "referenced_work_id"),
+            "related_work_ids":    text_list("related_work_ids", "related_work_id"),
+            "category_id":         text("category_id"),
+            "img_preview_path":    text("img_preview_path"),
+            "file":                text("file"),
+        }
+    except Exception as e:
+        print(f"[retrieve_cp_document] failed for {doc_id}: {e}")
+        return None
+
+
+def process_stub_upgrade(filename: str, save_path: str, openalex_id: str = "", doi: str = ""):
+    """
+    Upgrade a stub document to a full document.
+    Skips all LLM/metadata extraction — just extracts full text,
+    fetches existing stub metadata from CP, rebuilds XML and re-uploads.
+    No threading — called directly since it's a targeted single-doc operation.
+    """
+    try:
+        print(f"[stub_upgrade] Starting for openalex_id={openalex_id} doi={doi} file={filename}")
+
+        # ── 1. Resolve the document ID ────────────────────────────────────────
+        resolved_id = openalex_id
+
+        if not resolved_id and doi:
+            print(f"[stub_upgrade] No openalex_id, looking up by DOI: {doi}")
+            openalex_info = openalex_by_id(doi)
+            if openalex_info and openalex_info.get("openalex_id"):
+                resolved_id = openalex_info["openalex_id"]
+                print(f"[stub_upgrade] Resolved to: {resolved_id}")
+            else:
+                print(f"[stub_upgrade] Could not resolve DOI to openalex_id, aborting")
+                return
+
+        if not resolved_id:
+            print(f"[stub_upgrade] No openalex_id or doi provided, aborting")
+            return
+
+        # ── 2. Fetch existing stub metadata from CP ───────────────────────────
+        stub_data = retrieve_cp_document(resolved_id)
+        if not stub_data:
+            print(f"[stub_upgrade] No stub found in CP for {resolved_id}, aborting")
+            return
+
+        print(f"[stub_upgrade] Found stub: {stub_data['title'][:60]}")
+
+        # ── 3. Generate preview image ─────────────────────────────────────────
+        image_path = generate_preview(save_path, PREVIEW_DIR)
+
+        # ── 4. Extract full text only (GROBID → OCR fallback) ─────────────────
+        grobid_info = extract_paper_data(save_path)
+
+        if len((grobid_info.get("full_text") or "").split()) < 100:
+            ocr_text = extract_fallback_text(save_path)
+            if ocr_text.strip():
+                grobid_info["full_text"] = ocr_text
+
+        # ── 5. Build merged grobid_info from stub metadata + new full text ─────
+        # stub_data is the source of truth for all metadata fields.
+        # grobid_info only contributes full_text, references, methods.
+        merged_grobid = {
+            "openalex_id":         stub_data["openalex_id"],
+            "doi":                 stub_data["doi"],
+            "title":               stub_data["title"],
+            "abstract":            stub_data["abstract"],
+            "authors":             stub_data["authors"],
+            "date":                stub_data["date"],
+            "topics":              stub_data["topics"],
+            "concepts":            stub_data["concepts"],
+            "keywords":            stub_data["keywords"],
+            "referenced_work_ids": stub_data["referenced_work_ids"],
+            "related_work_ids":    stub_data["related_work_ids"],
+            "file":                filename,
+            # new content from GROBID
+            "full_text":           grobid_info.get("full_text", ""),
+            "references":          grobid_info.get("references", []),
+            "methods":             grobid_info.get("methods", []),
+        }
+
+        # ── 6. Delete old stub, rebuild and upload full document ──────────────
+        print(f"[stub_upgrade] Deleting stub {resolved_id} from CP")
+        delete_cp_document(resolved_id, CP_URL, CP_USER, CP_PASS)
+
+        # cited_by_count lives in metadata_info in build_xml's eyes,
+        # so pass a minimal metadata_info dict with just that field.
+        # Everything else comes from merged_grobid.
+        xml_string = build_xml(
+            metadata_info = {"cited_by_count": stub_data["cited_by_count"]},
+            grobid_info   = merged_grobid,
+            image_path    = image_path,
+            stub          = False,
+        )
+
+        final_xml_name = f"{XML_OUT_PATH}/{os.path.splitext(filename)[0]}.xml"
+        save_xml(xml_string, final_xml_name)
+
+        upload_result = upload_xml(xml_string, CP_URL, CP_USER, CP_PASS)
+
+        if upload_result["success"]:
+            print(f"[stub_upgrade] SUCCESS: {resolved_id} upgraded to full document")
+            all_ids = list(set(
+                merged_grobid.get("referenced_work_ids", []) +
+                merged_grobid.get("related_work_ids", [])
+            ))
+            if all_ids:
+                add_dois_to_queue(all_ids)
+        else:
+            print(f"[stub_upgrade] UPLOAD ERROR: {upload_result['error']}")
+
+    except Exception as e:
+        print(f"[stub_upgrade] FATAL: {e}")
+
+
 @app.route("/upload", methods=["POST"])
 def upload():
     if "file" not in request.files:
         return jsonify({"error": "No file part in request"}), 400
+
     file = request.files["file"]
     if file.filename == "":
         return jsonify({"error": "No file selected"}), 400
+
     filename = file.filename
     if not filename.lower().endswith(".pdf"):
         return jsonify({"error": f"'{filename}' is not a PDF (wrong extension)"}), 400
+
     if file.mimetype not in ("application/pdf", "application/octet-stream"):
         header = file.stream.read(4)
         file.stream.seek(0)
         if header != b"%PDF":
             return jsonify({"error": f"'{filename}' is not a valid PDF file"}), 400
 
+    # ── Check for stub upgrade params ────────────────────────────────────────
+    openalex_id = (request.form.get("openalex_id") or "").strip()
+    doi         = (request.form.get("doi")         or "").strip()
+    is_upgrade  = bool(openalex_id or doi)
+
     unique_filename = make_unique_filename(filename)
-    save_path = os.path.join(PDF_DIR, unique_filename)
+    save_path       = os.path.join(PDF_DIR, unique_filename)
     file.save(save_path)
 
-    background_executor.submit(process_file_background, unique_filename, save_path)
-
-    return jsonify({
-        "message": "Upload successful. Processing in background.",
-        "filename": unique_filename
-    }), 200
+    if is_upgrade:
+        # Targeted stub upgrade — skip all LLM/metadata, run synchronously
+        # (fast enough for a single doc, no need for thread pool)
+        process_stub_upgrade(unique_filename, save_path, openalex_id=openalex_id, doi=doi)
+        return jsonify({
+            "message":  "Stub upgraded. Processing in background.",
+            "filename": unique_filename,
+        }), 200
+    else:
+        # Normal upload — full pipeline in background thread
+        background_executor.submit(process_file_background, unique_filename, save_path)
+        return jsonify({
+            "message":  "Upload successful. Processing in background.",
+            "filename": unique_filename,
+        }), 200
 
 
 def get_preview_filename(file_path):
@@ -389,7 +579,7 @@ def search():
             links.append({"from": from_id, "to": to_id, "style": style})
 
         def node_radius(cited, fallback=15):
-            return min(100, round(40 + math.sqrt(cited) * 2, 1)) if cited else fallback
+            return min(100, round(70 + math.sqrt(cited) * 2, 1)) if cited else fallback
 
         REF_STYLE = {
             "fillColor":    "rgba(99,102,241,0.35)",
@@ -504,6 +694,9 @@ def batch_lookup(ids: list) -> dict:
         "<abstract>yes</abstract>"
         "<stub_document>yes</stub_document>"
         "<doi_number>yes</doi_number>"
+        "<file>yes</file>"
+        "<category_id>yes</category_id>"
+        "<img_preview_path>yes</img_preview_path>"
         "<referenced_work_ids>yes</referenced_work_ids>"
         "<related_work_ids>yes</related_work_ids>"
         "</list>"
@@ -546,6 +739,8 @@ def batch_lookup(ids: list) -> dict:
                 "doi_number":          doc.get("doi_number", ""),
                 "referenced_work_ids": ref_ids,
                 "related_work_ids":    rel_ids,
+                "file":        doc.get("file", ""),
+                "category_id": doc.get("category_id"),
             }
         return result
     except Exception as e:
@@ -557,7 +752,7 @@ def batch_lookup(ids: list) -> dict:
 def expand():
     body = request.get_json(force=True)
 
-    openalex_id   = (body.get("openalex_id") or "").strip()
+    openalex_id    = (body.get("openalex_id") or "").strip()
     shown_node_ids = set(body.get("shown_node_ids") or [])
     shown_ref_ids  = set(body.get("shown_ref_ids")  or [])
     shown_rel_ids  = set(body.get("shown_rel_ids")  or [])
@@ -565,17 +760,10 @@ def expand():
     if not openalex_id:
         return jsonify({"error": "openalex_id is required"}), 400
 
-    # ── 1. Look up the target node to get its edge lists ────────────────────
-    node_data = lookup_gray_node(openalex_id)
-    if node_data is None:
-        return jsonify({"error": f"Node {openalex_id} not found in ClusterPoint"}), 404
-
-    # lookup_gray_node doesn't return edge lists — do a full lookup here
+    # ── 1. Fetch edge lists for the target node ──────────────────────────────
     body_xml = (
         f"<document><id>{escape(openalex_id)}</id></document>"
         f"<list>"
-        f"<title>yes</title>"
-        f"<cited_by_count>yes</cited_by_count>"
         f"<referenced_work_ids>yes</referenced_work_ids>"
         f"<related_work_ids>yes</related_work_ids>"
         f"</list>"
@@ -593,62 +781,46 @@ def expand():
         if doc is None:
             return jsonify({"error": "Node document not found"}), 404
 
-        raw_ref = doc.find("referenced_work_ids")
-        all_ref_ids = []
-        if raw_ref is not None:
-            r = [el.text for el in raw_ref.findall("referenced_work_id") if el.text]
-            all_ref_ids = r
+        def _ids(parent_tag, child_tag):
+            parent = doc.find(parent_tag)
+            if parent is None:
+                return []
+            return [el.text for el in parent.findall(child_tag) if el.text]
 
-        raw_rel = doc.find("related_work_ids")
-        all_rel_ids = []
-        if raw_rel is not None:
-            r = [el.text for el in raw_rel.findall("related_work_id") if el.text]
-            all_rel_ids = r
+        all_ref_ids = _ids("referenced_work_ids", "referenced_work_id")
+        all_rel_ids = _ids("related_work_ids",    "related_work_id")
 
     except Exception as e:
         return jsonify({"error": f"CP lookup failed: {e}"}), 500
 
-    # ── 2. Filter out already-shown, then batch-lookup remaining candidates ──
+    # ── 2. Filter already-shown, batch-lookup candidates ────────────────────
     candidate_ref_ids = [i for i in all_ref_ids if i not in shown_ref_ids]
     candidate_rel_ids = [i for i in all_rel_ids if i not in shown_rel_ids]
+    all_candidates    = list(set(candidate_ref_ids + candidate_rel_ids))
 
-    all_candidates = list(set(candidate_ref_ids + candidate_rel_ids))
-
-    # Reuse the same batch_lookup defined in /search
+    # batch_lookup returns full CP data including stub_document and file fields
     enriched_map = batch_lookup(all_candidates)
 
     # ── 3. Sort by cited_by_count desc, take next 5 refs / 3 rels ───────────
     def sorted_candidates(id_list, limit):
-        scored = [
-            (wid, enriched_map.get(wid, {}).get("cited", 0))
-            for wid in id_list
-        ]
+        scored = [(wid, enriched_map.get(wid, {}).get("cited", 0)) for wid in id_list]
         scored.sort(key=lambda x: x[1], reverse=True)
         return [wid for wid, _ in scored[:limit]]
 
     new_ref_ids = sorted_candidates(candidate_ref_ids, 5)
     new_rel_ids = sorted_candidates(candidate_rel_ids, 3)
 
-    # ── 4. Build new nodes and links ─────────────────────────────────────────
+    # ── 4. Build nodes ───────────────────────────────────────────────────────
     new_nodes      = []
     new_links      = []
     seen_new       = set()
     seen_links_set = set()
 
     def node_radius(cited, fallback=15):
-        return min(100, round(40 + math.sqrt(cited) * 2, 1)) if cited else fallback
+        return min(100, round(70 + math.sqrt(cited) * 2, 1)) if cited else fallback
 
-    REF_STYLE = {
-        "fillColor":    "rgba(120,120,120,0.7)",
-        "radius":       2,
-        "toDecoration": "arrow",
-    }
-    REL_STYLE = {
-        "fillColor":    "rgba(180,120,60,0.6)",
-        "radius":       1.5,
-        "toDecoration": "arrow",
-        "dashSize":     4,
-    }
+    REF_STYLE = {"fillColor": "rgba(99,102,241,0.35)",  "radius": 2,   "toDecoration": "arrow"}
+    REL_STYLE = {"fillColor": "rgba(251,146,60,0.45)",  "radius": 1.5, "toDecoration": "arrow", "dashSize": 4}
 
     def add_link(from_id, to_id, style):
         key = (from_id, to_id)
@@ -657,48 +829,123 @@ def expand():
         seen_links_set.add(key)
         new_links.append({"from": from_id, "to": to_id, "style": style})
 
-    def make_stub_node(wid, enriched, fill_color):
-        cited = enriched["cited"] if enriched else 0
-        return {
-            "id":     wid,
-            "loaded": False,
-            "style":  {"label": enriched["title"] if enriched else wid},
-            "data": {
-                "title":                enriched["title"]               if enriched else wid,
-                "authors":              enriched["authors"]             if enriched else [],
-                "abstract":             enriched["abstract"]            if enriched else "",
-                "cited":                cited,
-                "doi":                  enriched.get("doi_number", "")  if enriched else "",
-                "openalex_id":          wid,
-                "radius":               node_radius(cited),
-                "fillColor":            fill_color,
-                "preview":              None,
-                "category":             None,
-                "is_stub_node":         True,
-                "stub_document":        enriched["stub_document"]       if enriched else False,
-                "referenced_work_ids":  enriched["referenced_work_ids"] if enriched else [],
-                "related_work_ids":     enriched["related_work_ids"]    if enriched else [],
-            },
-        }
+    def make_node(wid, enriched, link_style):
+        """
+        Build a node dict. If the CP record is a full document (stub_document=no),
+        treat it as a real node with category colour and full click behaviour.
+        Otherwise build a stub node (gray for ref, orange for rel).
+        """
+        if not enriched:
+            # Nothing in CP at all — minimal gray stub
+            return {
+                "id":     wid,
+                "loaded": False,
+                "style":  {"label": wid},
+                "data": {
+                    "title":                wid,
+                    "authors":              [],
+                    "abstract":             "",
+                    "cited":                0,
+                    "doi":                  "",
+                    "openalex_id":          wid,
+                    "radius":               15,
+                    "fillColor":            "rgba(120,120,120,0.7)",
+                    "preview":              None,
+                    "category":             None,
+                    "is_stub_node":         True,
+                    "stub_document":        False,
+                    "referenced_work_ids":  [],
+                    "related_work_ids":     [],
+                },
+            }
 
-    # New ref nodes
+        cited      = enriched.get("cited", 0)
+        is_stub_doc = enriched.get("stub_document", True)
+
+        if not is_stub_doc:
+            # ── Full document in our DB ──────────────────────────────────────
+            # Fetch complete data (category, file, preview) via do_search-style
+            # lookup so it renders exactly like a search result node.
+            file_path    = enriched.get("file", "")
+            filename     = clean_filename(file_path)
+            preview_name = get_preview_filename(file_path) if file_path else None
+            preview_exists = preview_name and os.path.exists(
+                os.path.join(PREVIEW_DIR, preview_name)
+            )
+
+            try:
+                cat_id_raw = enriched.get("category_id")
+                category   = get_category_by_id(int(cat_id_raw)) if cat_id_raw is not None else None
+                if not category:
+                    category = NONE_CATEGORY
+            except (TypeError, ValueError):
+                category = NONE_CATEGORY
+
+            return {
+                "id":     wid,
+                "loaded": True,
+                "style":  {"label": enriched.get("title", wid)},
+                "data": {
+                    "title":                enriched.get("title",    wid),
+                    "authors":              enriched.get("authors",  []),
+                    "abstract":             enriched.get("abstract", ""),
+                    "cited":                cited,
+                    "doi":                  enriched.get("doi_number", ""),
+                    "openalex_id":          wid,
+                    "id":                   wid,
+                    "file":                 filename,
+                    "radius":               node_radius(cited),
+                    "fillColor":            category["color"],
+                    "preview":              f"/previews/{preview_name}" if preview_exists else None,
+                    "category":             category,
+                    "is_stub_node":         False,
+                    "stub_document":        False,
+                    "referenced_work_ids":  enriched.get("referenced_work_ids", []),
+                    "related_work_ids":     enriched.get("related_work_ids",    []),
+                },
+            }
+        else:
+            # ── Stub node (metadata only) ────────────────────────────────────
+            fill_color = (
+                "rgba(120,120,120,0.7)"
+                if link_style is REF_STYLE
+                else "rgba(180,120,60,0.6)"
+            )
+            return {
+                "id":     wid,
+                "loaded": False,
+                "style":  {"label": enriched.get("title", wid)},
+                "data": {
+                    "title":                enriched.get("title",    wid),
+                    "authors":              enriched.get("authors",  []),
+                    "abstract":             enriched.get("abstract", ""),
+                    "cited":                cited,
+                    "doi":                  enriched.get("doi_number", ""),
+                    "openalex_id":          wid,
+                    "radius":               node_radius(cited),
+                    "fillColor":            fill_color,
+                    "preview":              None,
+                    "category":             None,
+                    "is_stub_node":         True,
+                    "stub_document":        True,
+                    "referenced_work_ids":  enriched.get("referenced_work_ids", []),
+                    "related_work_ids":     enriched.get("related_work_ids",    []),
+                },
+            }
+
     for wid in new_ref_ids:
         if wid not in shown_node_ids and wid not in seen_new:
-            enriched = enriched_map.get(wid)
-            new_nodes.append(make_stub_node(wid, enriched, "rgba(120,120,120,0.7)"))
+            new_nodes.append(make_node(wid, enriched_map.get(wid), REF_STYLE))
             seen_new.add(wid)
         add_link(openalex_id, wid, REF_STYLE)
 
-    # New rel nodes
     for wid in new_rel_ids:
         if wid not in shown_node_ids and wid not in seen_new:
-            enriched = enriched_map.get(wid)
-            new_nodes.append(make_stub_node(wid, enriched, "rgba(180,120,60,0.6)"))
+            new_nodes.append(make_node(wid, enriched_map.get(wid), REL_STYLE))
             seen_new.add(wid)
         add_link(openalex_id, wid, REL_STYLE)
 
-    # ── 5. Cross-links: connect new nodes to any already on the graph ────────
-    # Collect all edge info for newly added nodes
+    # ── 5. Cross-links ───────────────────────────────────────────────────────
     all_now_visible = shown_node_ids | seen_new | {openalex_id}
 
     for node in new_nodes:
@@ -714,11 +961,12 @@ def expand():
                 add_link(wid, rel_id, REL_STYLE)
 
     return jsonify({
-        "nodes":        new_nodes,
-        "links":        new_links,
-        "new_ref_ids":  new_ref_ids,
-        "new_rel_ids":  new_rel_ids,
+        "nodes":       new_nodes,
+        "links":       new_links,
+        "new_ref_ids": new_ref_ids,
+        "new_rel_ids": new_rel_ids,
     })
+
 
 
 @app.route("/pdf-file/<path:filename>")
