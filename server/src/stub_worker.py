@@ -5,7 +5,7 @@ import requests
 
 from src.metadata_analyser import openalex_by_id
 from src.xml_builder        import build_xml, upload_xml
-from src.queue_manager      import peek_next_doi, remove_first_doi
+from src.queue_manager      import peek_next_id, remove_first_id
 from xml.sax.saxutils       import escape
 
 
@@ -28,7 +28,7 @@ def cp_document_exists(openalex_id: str, cp_url: str, cp_user: str, cp_pass: str
     if not openalex_id:
         return False
     body = (
-        f"<document><id>{escape(openalex_id)}</id></document>"
+        f"<document><id>{escape(openalex_id).upper()}</id></document>"
         f"<list>"
         f"<file>no</file><title>no</title><date>no</date>"
         f"<doi_number>no</doi_number><img_preview_path>no</img_preview_path>"
@@ -45,6 +45,7 @@ def cp_document_exists(openalex_id: str, cp_url: str, cp_user: str, cp_pass: str
             auth=(cp_user, cp_pass),
             timeout=10,
         )
+
         resp.raise_for_status()
         return "<found>1</found>" in resp.text
     except Exception as e:
@@ -55,7 +56,7 @@ def cp_document_exists(openalex_id: str, cp_url: str, cp_user: str, cp_pass: str
 def fetch_cp_document(openalex_id: str, cp_url: str, cp_user: str, cp_pass: str) -> dict | None:
     if not openalex_id:
         return None
-    body = f"<document><id>{escape(openalex_id)}</id></document>"
+    body = f"<document><id>{escape(openalex_id).upper()}</id></document>"
     f"<list>"
     f"<id>yes</id>"
     f"</list>"
@@ -77,7 +78,7 @@ def fetch_cp_document(openalex_id: str, cp_url: str, cp_user: str, cp_pass: str)
 
 
 def delete_cp_document(doc_id: str, cp_url: str, cp_user: str, cp_pass: str) -> bool:
-    body = f"<document><id>{escape(doc_id)}</id></document>"
+    body = f"<document><id>{escape(doc_id).upper()}</id></document>"
     try:
         resp = requests.post(
             cp_url.rstrip("/") + "/api/databases/pdfs/delete",
@@ -164,33 +165,35 @@ def run_stub_worker(cp_url: str, cp_user: str, cp_pass: str):
                 time.sleep(5)
                 continue
 
-            openalex_id = peek_next_doi()
+            openalex_id = peek_next_id()
             if not openalex_id:
                 time.sleep(10)
                 continue
 
+            remove_first_id()
             if cp_document_exists(openalex_id, cp_url, cp_user, cp_pass):
                 print(f"[stub_worker] Already in CP, skipping: {openalex_id}")
-                remove_first_doi()
                 _throttle()
                 continue
 
             openalex_data = openalex_by_id(openalex_id)
             if not openalex_data:
                 print(f"[stub_worker] OpenAlex returned nothing for: {openalex_id}")
-                remove_first_doi()
                 _throttle()
                 continue
 
             xml_string    = build_stub_xml(openalex_data)
             upload_result = upload_xml(xml_string, cp_url, cp_user, cp_pass)
+            
+            status_code = upload_result.get("status_code")
+            if status_code == 422:
+                print(f"[stub_worker] ID {openalex_id} already exists. Skipping.")
+            elif upload_result.get("success"):
+                print(f"[stub_worker] Successfully uploaded {openalex_id}", flush=True)
+            else:
+                print(f"[stub_worker] Failed: {upload_result.get('error')}")
 
-            if not upload_result["success"] and not ["status_code"] == 422:
-                print(f"[stub_worker] Upload failed for {openalex_id}: {upload_result['error']}")
-            #else:
-                #print(f"[stub_worker] Stub uploaded: {openalex_id}")
 
-            remove_first_doi()
             _throttle()
 
         except Exception as e:

@@ -9,25 +9,22 @@ import random
 import re
 import math
 
-
-
 from concurrent.futures import ThreadPoolExecutor
 background_executor = ThreadPoolExecutor(max_workers=1)
 
 from src.pdfToImage import generate_preview
 from src.parser import extract_paper_data
-from src.xml_builder import build_xml, save_xml, upload_xml, extract_fallback_text, grobid_confidence
+from src.xml_builder import build_xml, save_xml, upload_xml, extract_fallback_text
 
 from src.vision_extractor   import extract_title_authors_from_image
 from src.metadata_analyser  import openalex_by_id, openalex_by_title
 
-from src.categories import (get_all_categories,create_category, edit_category, delete_category, get_random_category, assign_category_to_document, get_category_by_id, NONE_CATEGORY)
+from src.categories import (get_all_categories,create_category, edit_category, delete_category, get_random_category, assign_category_to_document, get_category_by_id, find_or_create_by_field,NONE_CATEGORY)
 
 from src.queue_manager import add_dois_to_queue
 from src.stub_worker import start_stub_worker, set_pdf_processing, cp_document_exists, fetch_cp_document, delete_cp_document
 import xml.etree.ElementTree as ET
 from xml.sax.saxutils import escape
-
 
 
 load_dotenv()
@@ -54,57 +51,60 @@ def process_file_background(filename, save_path):
         missing    = []
 
         image_path  = generate_preview(save_path, PREVIEW_DIR)
-        grobid_info = extract_paper_data(save_path)
+        parser_info = extract_paper_data(save_path)
 
         vision = extract_title_authors_from_image(image_path)
         if vision.get("title"):
-            grobid_info["title"]   = vision["title"]
+            parser_info["title"]   = vision["title"]
         if vision.get("authors"):
-            grobid_info["authors"] = vision["authors"]
+            parser_info["authors"] = vision["authors"]
 
-        if len((grobid_info.get("full_text") or "").split()) < 100:
+        if len((parser_info.get("full_text") or "").split()) < 100:
             ocr_text = extract_fallback_text(save_path)
             if ocr_text.strip():
-                grobid_info["full_text"] = ocr_text
+                parser_info["full_text"] = ocr_text
 
         openalex_info = {}
-        grobid_doi    = grobid_info.get("doi")
+        parser_doi    = parser_info.get("doi")
 
-        if grobid_doi:
-            openalex_info = openalex_by_id(grobid_doi)
+        if parser_doi:
+            openalex_info = openalex_by_id(parser_doi)
 
         if not openalex_info:
             openalex_info = openalex_by_title(
-                title   = grobid_info.get("title", ""),
-                authors = grobid_info.get("authors", []),
+                title   = parser_info.get("title", ""),
+                authors = parser_info.get("authors", []),
             )
 
         if openalex_info:
             if openalex_info.get("openalex_id"):
-                grobid_info["openalex_id"] = openalex_info["openalex_id"]
+                parser_info["openalex_id"] = openalex_info["openalex_id"]
             if openalex_info.get("doi"):
-                grobid_info["doi"] = openalex_info["doi"]
+                parser_info["doi"] = openalex_info["doi"]
             if openalex_info.get("abstract"):
-                grobid_info["abstract"] = openalex_info["abstract"]
+                parser_info["abstract"] = openalex_info["abstract"]
             if openalex_info.get("authors"):
-                grobid_info["authors"] = openalex_info["authors"]
+                parser_info["authors"] = openalex_info["authors"]
             if openalex_info.get("referenced_work_ids"):
-                grobid_info["referenced_work_ids"] = openalex_info["referenced_work_ids"]
+                parser_info["referenced_work_ids"] = openalex_info["referenced_work_ids"]
             if openalex_info.get("related_work_ids"):
-                grobid_info["related_work_ids"] = openalex_info["related_work_ids"]
+                parser_info["related_work_ids"] = openalex_info["related_work_ids"]
             if openalex_info.get("topics"):
-                grobid_info["topics"] = openalex_info["topics"]
+                parser_info["topics"] = openalex_info["topics"]
 
 
-        final_id = grobid_info.get("openalex_id") or slugify(grobid_info.get("title", ""))
+        field    = (openalex_info or {}).get("field")
+        category = find_or_create_by_field(field) if field else NONE_CATEGORY
+        category_id = category["id"]
+
+        final_id = parser_info.get("openalex_id") or slugify(parser_info.get("title", ""))
         if final_id:
             existing = fetch_cp_document(final_id, CP_URL, CP_USER, CP_PASS)
-            #ja dokuments jau bija kip stub tad izdzesam un ieliekam pilno
             if existing and existing.get("stub_document") == "yes":
                 print(f"[app] Replacing stub for ID: {final_id}")
                 delete_cp_document(final_id, CP_URL, CP_USER, CP_PASS)
 
-        xml_string     = build_xml(openalex_info or None, grobid_info, image_path, stub=False)
+        xml_string = build_xml(openalex_info or None, parser_info, image_path, stub=False, category_id=category_id)
         final_xml_name = f"{XML_OUT_PATH}/{os.path.splitext(filename)[0]}.xml"
         save_xml(xml_string, final_xml_name)
 
@@ -112,18 +112,24 @@ def process_file_background(filename, save_path):
 
         if upload_result["success"]:
             print(f"SUCCESS: [{filename[:20]}]")
-            print("\n\n\n")
+            process_references = True
+        else:
+            if upload_result.get("status_code") == 422 and "2626" in upload_result.get("response", ""):
+                print(f"SKIP: [{filename[:20]}] Already exists in database.")
+                process_references = True 
+            else:
+                print(f"ERROR: [{filename}] {upload_result['error']}")
+                print(upload_result)
+                process_references = False
 
-            #pievienojm bacgkround procesam sito
-            ref_ids = grobid_info.get("referenced_work_ids", [])
-            rel_ids = grobid_info.get("related_work_ids", [])
+        if process_references:
+            ref_ids = parser_info.get("referenced_work_ids", [])
+            rel_ids = parser_info.get("related_work_ids", [])
             all_ids = list(set(ref_ids + rel_ids))
             if all_ids:
                 added = add_dois_to_queue(all_ids)
-                #print(f"[app] Added {added} OpenAlex IDs to stub queue")
-        else:
-            #print(upload_result)
-            print(f"ERROR: [{filename}] {upload_result['error']}")
+                print(f"[app] Added {added} OpenAlex IDs to stub queue")
+
 
     except Exception as e:
         print(f"FATAL: [{filename}] {str(e)}")
@@ -148,12 +154,8 @@ def make_unique_filename(original_filename: str) -> str:
 
 
 def retrieve_cp_document(doc_id: str) -> dict | None:
-    """
-    Fetch a full document from CP by ID using /retrieve.
-    Returns a flat dict with all fields, or None if not found.
-    """
     body = (
-        f"<document><id>{escape(doc_id)}</id></document>"
+        f"<document><id>{escape(doc_id).upper()}</id></document>"
         f"<list>"
         f"<title>yes</title>"
         f"<openalex_id>yes</openalex_id>"
@@ -219,12 +221,6 @@ def retrieve_cp_document(doc_id: str) -> dict | None:
 
 
 def process_stub_upgrade(filename: str, save_path: str, openalex_id: str = "", doi: str = ""):
-    """
-    Upgrade a stub document to a full document.
-    Skips all LLM/metadata extraction — just extracts full text,
-    fetches existing stub metadata from CP, rebuilds XML and re-uploads.
-    No threading — called directly since it's a targeted single-doc operation.
-    """
     try:
         print(f"[stub_upgrade] Starting for openalex_id={openalex_id} doi={doi} file={filename}")
 
@@ -256,18 +252,14 @@ def process_stub_upgrade(filename: str, save_path: str, openalex_id: str = "", d
         # ── 3. Generate preview image ─────────────────────────────────────────
         image_path = generate_preview(save_path, PREVIEW_DIR)
 
-        # ── 4. Extract full text only (GROBID → OCR fallback) ─────────────────
-        grobid_info = extract_paper_data(save_path)
+        parser_info = extract_paper_data(save_path)
 
-        if len((grobid_info.get("full_text") or "").split()) < 100:
+        if len((parser_info.get("full_text") or "").split()) < 100:
             ocr_text = extract_fallback_text(save_path)
             if ocr_text.strip():
-                grobid_info["full_text"] = ocr_text
+                parser_info["full_text"] = ocr_text
 
-        # ── 5. Build merged grobid_info from stub metadata + new full text ─────
-        # stub_data is the source of truth for all metadata fields.
-        # grobid_info only contributes full_text, references, methods.
-        merged_grobid = {
+        merged_info = {
             "openalex_id":         stub_data["openalex_id"],
             "doi":                 stub_data["doi"],
             "title":               stub_data["title"],
@@ -280,22 +272,17 @@ def process_stub_upgrade(filename: str, save_path: str, openalex_id: str = "", d
             "referenced_work_ids": stub_data["referenced_work_ids"],
             "related_work_ids":    stub_data["related_work_ids"],
             "file":                filename,
-            # new content from GROBID
-            "full_text":           grobid_info.get("full_text", ""),
-            "references":          grobid_info.get("references", []),
-            "methods":             grobid_info.get("methods", []),
+            "full_text":           parser_info.get("full_text", ""),
+            "references":          parser_info.get("references", []),
+            "methods":             parser_info.get("methods", []),
         }
 
-        # ── 6. Delete old stub, rebuild and upload full document ──────────────
         print(f"[stub_upgrade] Deleting stub {resolved_id} from CP")
         delete_cp_document(resolved_id, CP_URL, CP_USER, CP_PASS)
 
-        # cited_by_count lives in metadata_info in build_xml's eyes,
-        # so pass a minimal metadata_info dict with just that field.
-        # Everything else comes from merged_grobid.
         xml_string = build_xml(
             metadata_info = {"cited_by_count": stub_data["cited_by_count"]},
-            grobid_info   = merged_grobid,
+            grobid_info   = merged_info,
             image_path    = image_path,
             stub          = False,
         )
@@ -308,8 +295,8 @@ def process_stub_upgrade(filename: str, save_path: str, openalex_id: str = "", d
         if upload_result["success"]:
             print(f"[stub_upgrade] SUCCESS: {resolved_id} upgraded to full document")
             all_ids = list(set(
-                merged_grobid.get("referenced_work_ids", []) +
-                merged_grobid.get("related_work_ids", [])
+                merged_info.get("referenced_work_ids", []) +
+                merged_info.get("related_work_ids", [])
             ))
             if all_ids:
                 add_dois_to_queue(all_ids)
@@ -375,6 +362,40 @@ def clean_filename(file_path):
         return None
     return os.path.basename(file_path)
 
+def extract_snippet(doc: dict) -> str | None:
+    for text in doc.values():
+        if not isinstance(text, str):
+            continue
+        match = re.search(r'%%HLB%%.+?%%HLE%%', text)
+        if not match:
+            continue
+
+        start, end = match.start(), match.end()
+        before_words = [w for w in re.split(r'\s+', text[:start].strip()) if w]
+        after_words  = [w for w in re.split(r'\s+', text[end:].strip())   if w]
+
+        prefix = " ".join(before_words[-10:])
+        suffix = " ".join(after_words[:10])
+        lead   = "…" if len(before_words) > 10 else ""
+        trail  = "…" if len(after_words)  > 10 else ""
+
+        snippet = f"{lead}{prefix} {text[start:end]} {suffix}{trail}".strip()
+        snippet = snippet.replace("%%HLB%%", "<b>").replace("%%HLE%%", "</b>")
+        return snippet
+
+    # No highlight found anywhere — fall back to abstract, then full_text
+    abstract  = (doc.get("abstract")  or "").strip()
+    full_text = (doc.get("full_text") or "").strip()
+
+    fallback = abstract or full_text
+    if not fallback:
+        return None
+
+    words = fallback.split()
+    trail = "…" if len(words) > 30 else ""
+    return " ".join(words[:30]) + trail
+
+
 
 def do_search(query):
     fullQ = (
@@ -385,19 +406,19 @@ def do_search(query):
         f"<id>yes</id>"
         f"<openalex_id>yes</openalex_id>"
         f"<title>yes</title>"
-        f"<abstract>yes</abstract>"
+        f"<abstract>snippet</abstract>"
         f"<authors>yes</authors>"
         f"<date>yes</date>"
         f"<doi_number>yes</doi_number>"
         f"<cited_by_count>yes</cited_by_count>"
         f"<file>yes</file>"
         f"<img_preview_path>yes</img_preview_path>"
-        f"<full_text>yes</full_text>"
+        f"<full_text>snippet</full_text>"
         f"<stub_document>yes</stub_document>"
         f"<category_id>yes</category_id>"
         f"<topics>yes</topics>"
-        f"<concepts>yes</concepts>"
-        f"<keywords>yes</keywords>"
+        f"<concepts>snippet</concepts>"
+        f"<keywords>snippet</keywords>"
         f"<referenced_work_ids>yes</referenced_work_ids>"
         f"<related_work_ids>yes</related_work_ids>"
         f"</list>"
@@ -484,17 +505,14 @@ def do_search(query):
             "related_work_ids":    related_work_ids,
             "category":            category,
             "stub_document":       doc.get("stub_document", "no"),
+            "snippet": extract_snippet(doc),
+
         })
  
     return results
  
  
 def _enrich_and_sort(work_ids: list, limit: int) -> list[tuple[str, dict | None]]:
-    """
-    Look up all work_ids in CP, sort by cited_by_count desc, return top `limit`
-    as list of (openalex_id, enriched_or_None) tuples.
-    Unknown/missing nodes get cited=0 and sort to the bottom.
-    """
     enriched_map = {}
     for wid in work_ids:
         enriched_map[wid] = lookup_gray_node(wid)
@@ -511,7 +529,7 @@ def lookup_gray_node(openalex_id: str) -> dict | None:
     if not openalex_id:
         return None
     body = (
-        f"<document><id>{escape(openalex_id)}</id></document>"
+        f"<document><id>{escape(openalex_id).upper()}</id></document>"
         f"<list>"
         f"<title>yes</title>"
         f"<cited_by_count>yes</cited_by_count>"
@@ -559,6 +577,7 @@ def lookup_gray_node(openalex_id: str) -> dict | None:
 @app.route("/search")
 def search():
     query = request.args.get("query", "").strip()
+
     if not query:
         return jsonify({"error": "query is required"}), 400
 
@@ -579,7 +598,7 @@ def search():
             links.append({"from": from_id, "to": to_id, "style": style})
 
         def node_radius(cited, fallback=15):
-            return min(100, round(70 + math.sqrt(cited) * 2, 1)) if cited else fallback
+            return min(200, round(70 + math.sqrt(cited) * 2, 1)) if cited else fallback
 
         REF_STYLE = {
             "fillColor":    "rgba(99,102,241,0.35)",
@@ -642,6 +661,7 @@ def search():
                     "file":         doc["file"],
                     "radius":       node_radius(cited),
                     "abstract":     doc["abstract"] or "",
+                    "snippet":  doc["snippet"] or "",   
                     "fillColor":    category["color"],
                     "preview":      doc["preview"],
                     "category":     category,
@@ -670,6 +690,8 @@ def search():
                 if rel_id in result_id_set:
                     add_link(node_id, rel_id, REL_STYLE)
 
+
+
         return jsonify({
             "query":         query,
             "results":       results,
@@ -685,7 +707,7 @@ def search():
 def batch_lookup(ids: list) -> dict:
     if not ids:
         return {}
-    body = "".join(f"<document><id>{escape(wid)}</id></document>" for wid in ids)
+    body = "".join(f"<document><id>{escape(wid).upper()}</id></document>" for wid in ids)
     body += (
         "<list>"
         "<title>yes</title>"
@@ -762,7 +784,7 @@ def expand():
 
     # ── 1. Fetch edge lists for the target node ──────────────────────────────
     body_xml = (
-        f"<document><id>{escape(openalex_id)}</id></document>"
+        f"<document><id>{escape(openalex_id).upper()}</id></document>"
         f"<list>"
         f"<referenced_work_ids>yes</referenced_work_ids>"
         f"<related_work_ids>yes</related_work_ids>"
@@ -817,7 +839,7 @@ def expand():
     seen_links_set = set()
 
     def node_radius(cited, fallback=15):
-        return min(100, round(70 + math.sqrt(cited) * 2, 1)) if cited else fallback
+        return min(200, round(70 + math.sqrt(cited) * 2, 1)) if cited else fallback
 
     REF_STYLE = {"fillColor": "rgba(99,102,241,0.35)",  "radius": 2,   "toDecoration": "arrow"}
     REL_STYLE = {"fillColor": "rgba(251,146,60,0.45)",  "radius": 1.5, "toDecoration": "arrow", "dashSize": 4}

@@ -1,15 +1,15 @@
 import re
 import requests
 
-OPENALEX_BASE  = "https://api.openalex.org/works"
-CROSSREF_BASE  = "https://api.crossref.org/works"
-USER_AGENT     = "pdf-magic/1.0 (mailto:normunds@email.com)"
-TIMEOUT        = 10
+OPENALEX_BASE = "https://api.openalex.org/works"
+CROSSREF_BASE = "https://api.crossref.org/works"
+USER_AGENT    = "pdf-magic/1.0 (mailto:normunds@email.com)"
+TIMEOUT       = 10
 
 SELECT_FIELDS = (
     "id,display_name,authorships,publication_year,doi,"
     "abstract_inverted_index,cited_by_count,topics,concepts,"
-    "keywords,referenced_works,related_works"
+    "keywords,referenced_works,related_works,primary_topic"
 )
 
 CR_MIN_SCORE_ABSOLUTE   = 80
@@ -40,10 +40,7 @@ def openalex_by_id(openalex_id: str) -> dict:
         print(f"[metadata_analyser] HTTP {resp.status_code} for: {openalex_id}")
         return {}
 
-    result = _parse_work(resp.json())
-    #if result.get("openalex_id"):
-        #print(f"[metadata_analyser] found by id: {result['openalex_id']} → {(result.get('title') or '')[:70]}")
-    return result
+    return _parse_work(resp.json())
 
 
 def openalex_by_title(title: str, authors: list) -> dict:
@@ -73,7 +70,6 @@ def openalex_by_title(title: str, authors: list) -> dict:
     ):
         return _resolve_doi(result_with_authors)
 
-    # Both uncertain — year tiebreak
     items = _cr_fetch_items(title, author_terms)
     if items:
         best, _ = _cr_tiebreak_by_year(items)
@@ -97,20 +93,15 @@ def _resolve_doi(crossref_result: dict) -> dict:
     return openalex_by_id(doi)
 
 
-
 def _build_id_endpoint(raw: str) -> str:
     raw = raw.strip()
-
     if raw.lower().startswith("https://openalex.org/"):
         bare = raw.replace("https://openalex.org/", "").replace("https://OPENALEX.ORG/", "")
         return f"{OPENALEX_BASE}/{bare.upper()}"
-
     if re.match(r"^[Ww]\d+$", raw):
         return f"{OPENALEX_BASE}/{raw.upper()}"
-
     doi = re.sub(r"^https?://doi\.org/", "", raw)
     return f"{OPENALEX_BASE}/doi:{doi}"
-
 
 
 def _parse_work(work: dict) -> dict:
@@ -141,7 +132,6 @@ def _parse_work(work: dict) -> dict:
         if t.get("display_name")
     ]
 
-    # Skip level 0 (broadest tags like "Chemistry", "Biology") — too generic
     concepts = [
         c["display_name"]
         for c in work.get("concepts", [])
@@ -166,6 +156,19 @@ def _parse_work(work: dict) -> dict:
         if url
     ]
 
+    # ── Field extraction from primary_topic ──────────────────────────────────
+    # primary_topic.field.display_name → fallback to primary_topic.domain.display_name
+    field = None
+    primary_topic = work.get("primary_topic") or {}
+    if primary_topic:
+        field_obj  = primary_topic.get("field")  or {}
+        domain_obj = primary_topic.get("domain") or {}
+        field = (
+            field_obj.get("display_name")
+            or domain_obj.get("display_name")
+            or None
+        )
+
     return {
         "openalex_id":         openalex_id,
         "doi":                 doi,
@@ -179,8 +182,8 @@ def _parse_work(work: dict) -> dict:
         "keywords":            keywords,
         "referenced_work_ids": referenced_work_ids,
         "related_work_ids":    related_work_ids,
+        "field":               field,          # NEW — used for auto-categorisation
     }
-
 
 
 def _cr_search(title: str, author_terms: str) -> dict:
@@ -202,34 +205,24 @@ def _cr_search(title: str, author_terms: str) -> dict:
         return {}
 
     items = resp.json().get("message", {}).get("items", [])
-
-    #print(f"[metadata_analyser] Crossref query: {query[:80]}")
     if not items:
         print(f"[metadata_analyser] Crossref: no results")
         return {}
 
-    #for i, item in enumerate(items[:5]):
-        #print(f"  [{i+1}] score={item.get('score', 0):.2f} | "
-        #      f"doi={item.get('DOI', 'n/a')} | "
-        #      f"title={(item.get('title') or [''])[0][:70]}")
-
     best, reason = _cr_pick_best(items)
 
     if reason.startswith("similar_titles"):
-        #print(f"[metadata_analyser] Crossref: similar titles — need authors")
         return {"similar_titles": True, "score": items[0].get("score", 0)}
     if reason.startswith("small_gap"):
-        #print(f"[metadata_analyser] Crossref: small gap — need authors")
         return {"small_gap": True, "score": items[0].get("score", 0)}
     if best is None:
         print(f"[metadata_analyser] Crossref: rejected — {reason}")
         return {"low_confidence": True, "score": items[0].get("score", 0)}
 
-    print(f"[metadata_analyser] Crossref accepted: title: {title}, {reason} — doi: {best.get('DOI')}")
+    print(f"[metadata_analyser] Crossref accepted: {title[:60]}, doi: {best.get('DOI')}")
     return _cr_parse_item(best)
 
 
-#heavy:
 def _cr_pick_best(items: list) -> tuple:
     if not items:
         return None, "no results"
@@ -290,7 +283,6 @@ def _cr_parse_item(item: dict) -> dict:
     return {"doi": doi or None}
 
 
-#abstracts no openalex
 def _reconstruct_abstract(inverted_index: dict) -> str:
     if not inverted_index:
         return ""

@@ -1,140 +1,271 @@
 import re
-import xml.etree.ElementTree as ET
-from grobid_client.grobid_client import GrobidClient
+from docling.document_converter import DocumentConverter
+from docling.datamodel.base_models import InputFormat
+from docling.datamodel.pipeline_options import PdfPipelineOptions
+from docling.document_converter import PdfFormatOption
 
-_client = None
+METHOD_KEYWORDS = [
+    "method", "experiment", "material", "procedure",
+    "approach", "protocol", "technique", "setup",
+    "characterization", "synthesis", "preparation",
+    "recovery", "recycling process", "pretreatment",
+]
+CONCLUSION_KEYWORDS = [
+    "conclusion", "summary", "discussion",
+    "future work", "closing remarks",
+]
+ACKNOWLEDGEMENT_KEYWORDS = [
+    "acknowledgement", "acknowledgment", "funding", "support",
+]
+SKIP_LABELS = {"page_header", "page_footer", "footnote"}
 
-CONFIG_PATH = "./grobid/config.json"
 
-def get_client(config_path=CONFIG_PATH):
-    global _client
-    if _client is None:
-        _client = GrobidClient(config_path=config_path)
-    return _client
+# XML 1.0 illegal character pattern
+_ILLEGAL_XML = re.compile(r'[^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFD]')
+def _sanitize(text) -> str:
+    if not text:
+        return ""
+    return _ILLEGAL_XML.sub('', text)
 
-
-def extract_paper_data(pdf_path: str, config_path: str =CONFIG_PATH) -> dict:
-    client = get_client(config_path)
-
-    _, status, rsp = client.process_pdf(
-        "processFulltextDocument",
-        pdf_path,
-        generateIDs=True,
-        consolidate_header=1,
-        consolidate_citations=1,
-        include_raw_citations=False,
-        include_raw_affiliations=False,
-        tei_coordinates=False,
-        segment_sentences=False,
+def _build_converter() -> DocumentConverter:
+    pipeline_options = PdfPipelineOptions()
+    pipeline_options.do_ocr = True
+    pipeline_options.do_table_structure = True
+    return DocumentConverter(
+        format_options={
+            InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)
+        }
     )
 
-    if status != 200:
-        raise RuntimeError(f"GROBID returned status {status} for {pdf_path}")
+_converter = _build_converter()
 
-    root = ET.fromstring(rsp)
-    ns = {"tei": "http://www.tei-c.org/ns/1.0"}
 
-    # DOI (from GROBID header)
-    doi = None
-    doi_el = root.find(".//tei:sourceDesc//tei:idno[@type='DOI']", ns)
-    if doi_el is not None and doi_el.text:
-        doi = doi_el.text.strip().lower()
+def extract_paper_data(pdf_path: str) -> dict:
+    result = _converter.convert(pdf_path)
+    doc    = result.document
+    raw    = doc.export_to_dict()
 
-    # Title
-    title_el = root.find(".//tei:fileDesc//tei:titleStmt//tei:title", ns)
-    title = "".join(title_el.itertext()).strip() if title_el is not None else None
+    # Lookup table: self_ref -> text item
+    texts_by_ref = {t["self_ref"]: t for t in raw.get("texts", [])}
 
-    # Date
-    date_el = (
-        root.find(".//tei:publicationStmt/tei:date", ns)
-        or root.find(".//tei:sourceDesc//tei:date", ns)
-    )
-    pub_date = date_el.get("when") if date_el is not None else None
-    if not pub_date:
-        note = root.find(".//tei:sourceDesc//tei:note[@type='submission']", ns)
-        if note is not None and note.text:
-            match = re.search(r"\d{4}[.\-]\d{2}[.\-]\d{2}", note.text)
-            pub_date = match.group(0) if match else None
+    # ── Title: first level-1 section_header on page 1 ────────────────────────
+    title = None
+    for t in raw.get("texts", []):
+        if (
+            t.get("label") == "section_header"
+            and t.get("level") == 1
+            and t.get("prov")
+            and t["prov"][0].get("page_no") == 1
+        ):
+            title = t["text"].strip()
+            break
 
-    # Authors
+    # ── Authors: heuristic — comma-separated line on page 1 ──────────────────
     authors = []
-    for author in root.findall(".//tei:sourceDesc//tei:author", ns):
-        persName = author.find(".//tei:persName", ns)
-        if persName is not None:
-            surname = persName.find("tei:surname", ns)
-            forename = persName.find("tei:forename", ns)
-            name = f"{forename.text if forename is not None else ''} {surname.text if surname is not None else ''}".strip()
-            if name:
-                authors.append(name)
+    for t in raw.get("texts", []):
+        if (
+            t.get("label") == "text"
+            and t.get("content_layer") == "body"
+            and t.get("prov")
+            and t["prov"][0].get("page_no") == 1
+        ):
+            text = t["text"].strip()
+            if (
+                "," in text
+                and any(c.isupper() for c in text)
+                and len(text) < 200
+                and not any(kw in text.lower() for kw in [
+                    "journal", "elsevier", "springer", "department",
+                    "universidad", "university", "received", "accepted",
+                ])
+            ):
+                authors = [p.strip() for p in text.split(",") if p.strip()]
+                break
 
-    # Abstract
-    abstract_el = root.find(".//tei:profileDesc//tei:abstract//tei:p", ns)
-    abstract = "".join(abstract_el.itertext()).strip() if abstract_el is not None else None
+    # ── Abstract: text item after "Abstract" section_header ──────────────────
+    abstract = None
+    found_abstract_header = False
+    for t in raw.get("texts", []):
+        if found_abstract_header:
+            if t.get("label") == "text" and t.get("content_layer") == "body":
+                abstract = t["text"].strip()
+                break
+        if (
+            t.get("label") == "section_header"
+            and "abstract" in t.get("text", "").lower()
+        ):
+            found_abstract_header = True
 
-    # Methods
-    methods_sections = []
-    for div in root.findall(".//tei:body//tei:div", ns):
-        head = div.find("tei:head", ns)
-        if head is not None and head.text:
-            heading = head.text.strip().lower()
-            if any(k in heading for k in [
-                "method", "experiment", "material", "procedure",
-                "approach", "protocol", "technique", "setup",
-                "characterization", "synthesis", "preparation",
-                "recovery", "recycling process", "pretreatment",
-            ]):
-                paragraphs = [
-                    "".join(p.itertext()).strip()
-                    for p in div.findall(".//tei:p", ns)
-                    if "".join(p.itertext()).strip()
-                ]
-                if paragraphs:
-                    methods_sections.append({
-                        "heading": head.text.strip(),
-                        "text": "\n\n".join(paragraphs),
-                    })
+    # ── DOI and date: regex scan ──────────────────────────────────────────────
+    doi = None
+    pub_date = None
+    doi_pattern  = re.compile(r'10\.\d{4,}/\S+', re.IGNORECASE)
+    date_pattern = re.compile(r'\b(19|20)\d{2}\b')
 
-    # Full text
-    paragraphs = [
-        "".join(p.itertext()).strip()
-        for p in root.findall(".//tei:body//tei:p", ns)
-        if "".join(p.itertext()).strip()
-    ]
-    full_text = "\n\n".join(paragraphs)
+    for t in raw.get("texts", []):
+        text = t.get("text", "")
+        if doi is None:
+            m = doi_pattern.search(text)
+            if m:
+                doi = m.group(0).rstrip(".,)")
+        if pub_date is None and any(
+            kw in text.lower()
+            for kw in ["received", "accepted", "revised", "published"]
+        ):
+            m = date_pattern.search(text)
+            if m:
+                pub_date = m.group(0)
 
-    # References
-    references = []
-    for ref in root.findall(".//tei:listBibl//tei:biblStruct", ns):
-        ref_title_el = ref.find(".//tei:analytic//tei:title", ns) or ref.find(".//tei:monogr//tei:title", ns)
-        ref_title = ref_title_el.text.strip() if ref_title_el is not None and ref_title_el.text else None
+    # ── Journal: first meaningful page_header on page 1 ──────────────────────
+    journal = None
+    for t in raw.get("texts", []):
+        if (
+            t.get("label") == "page_header"
+            and t.get("content_layer") == "furniture"
+            and t.get("prov")
+            and t["prov"][0].get("page_no") == 1
+        ):
+            text = t["text"].strip()
+            if len(text) > 10 and not text.isdigit():
+                journal = text
+                break
 
-        ref_authors = []
-        for author in ref.findall(".//tei:author", ns):
-            persName = author.find(".//tei:persName", ns)
-            if persName is not None:
-                surname = persName.find("tei:surname", ns)
-                forename = persName.find("tei:forename", ns)
-                name = f"{forename.text if forename is not None else ''} {surname.text if surname is not None else ''}".strip()
-                if name:
-                    ref_authors.append(name)
+    keywords_extracted = []
+    for t in raw.get("texts", []):
+        text = t.get("text", "")
+        if re.match(r'keywords?\s*:', text, re.IGNORECASE):
+            raw_kw = re.sub(r'^keywords?\s*:\s*', '', text, flags=re.IGNORECASE)
+            keywords_extracted = [k.strip() for k in re.split(r'[;,]', raw_kw) if k.strip()]
+            break
 
-        ref_date_el = ref.find(".//tei:imprint//tei:date", ns)
-        ref_date = ref_date_el.get("when") if ref_date_el is not None else None
+    full_text_parts      = []
+    sections             = []
+    methods_sections     = []
+    conclusions_sections = []
+    acknowledgements     = None
+    current_heading      = None
+    in_acknowledgements  = False
 
-        references.append({
-            "title": ref_title,
-            "authors": ref_authors,
-            "date": ref_date,
+    for t in raw.get("texts", []):
+        label = t.get("label", "")
+        layer = t.get("content_layer", "")
+        text  = t.get("text", "").strip()
+
+        if not text or label in SKIP_LABELS or layer == "furniture":
+            continue
+
+        if label == "section_header":
+            current_heading     = text
+            in_acknowledgements = any(k in text.lower() for k in ACKNOWLEDGEMENT_KEYWORDS)
+            sections.append(text)
+            continue
+
+        if label in ("text", "paragraph"):
+            if in_acknowledgements:
+                acknowledgements = (acknowledgements + " " + text) if acknowledgements else text
+                continue
+
+            full_text_parts.append(text)
+
+            if current_heading:
+                heading_lower = current_heading.lower()
+
+                if any(k in heading_lower for k in METHOD_KEYWORDS):
+                    if methods_sections and methods_sections[-1]["heading"] == current_heading:
+                        methods_sections[-1]["text"] += "\n\n" + text
+                    else:
+                        methods_sections.append({"heading": current_heading, "text": text})
+
+                if any(k in heading_lower for k in CONCLUSION_KEYWORDS):
+                    if conclusions_sections and conclusions_sections[-1]["heading"] == current_heading:
+                        conclusions_sections[-1]["text"] += "\n\n" + text
+                    else:
+                        conclusions_sections.append({"heading": current_heading, "text": text})
+
+    full_text = "\n\n".join(full_text_parts)
+
+    figures = []
+    for pic in raw.get("pictures", []):
+        page = None
+        if pic.get("prov"):
+            page = pic["prov"][0].get("page_no")
+
+        caption_texts = []
+        for cap_ref in pic.get("captions", []):
+            item = texts_by_ref.get(cap_ref.get("$ref"))
+            if item and item.get("text"):
+                caption_texts.append(item["text"].strip())
+
+        caption = " ".join(caption_texts) if caption_texts else None
+
+        figure_label = None
+        if caption:
+            m = re.match(r'^(Fig\.?\s*\d+\.?|Figure\s*\d+\.?)', caption, re.IGNORECASE)
+            if m:
+                figure_label = m.group(0).strip()
+
+        if caption:
+            figures.append({
+                "figure_label": figure_label,
+                "caption":      caption,
+                "page":         page,
+            })
+
+    tables = []
+    for tbl in raw.get("tables", []):
+        page = None
+        if tbl.get("prov"):
+            page = tbl["prov"][0].get("page_no")
+
+        caption_texts = []
+        for cap_ref in tbl.get("captions", []):
+            item = texts_by_ref.get(cap_ref.get("$ref"))
+            if item and item.get("text"):
+                caption_texts.append(item["text"].strip())
+        caption = " ".join(caption_texts) if caption_texts else None
+
+        grid = []
+        for row in tbl.get("data", {}).get("grid", []):
+            grid.append([cell.get("text", "") for cell in row])
+
+        flat_cells = [cell.strip() for row in grid for cell in row if cell.strip()]
+        content    = " | ".join(flat_cells)
+
+        tables.append({
+            "caption": caption,
+            "page":    page,
+            "content": content,
+            "grid":    grid,
         })
 
+    references = []
+    list_group_refs = set()
+    for group in raw.get("groups", []):
+        if group.get("label") == "list":
+            for child in group.get("children", []):
+                list_group_refs.add(child.get("$ref"))
+
+    for t in raw.get("texts", []):
+        if t.get("self_ref") in list_group_refs:
+            text = t.get("text", "").strip()
+            if text:
+                references.append({"raw": text})
+    #zbl xmbl
     return {
-        "file": pdf_path,
-        "title": title,
-        "date": pub_date,
-        "doi": doi,
-        "authors": authors,
-        "abstract": abstract,
-        "full_text": full_text,
-        "references": references,
-        "methods": methods_sections,
+        "file":       pdf_path,
+        "title":      _sanitize(title),
+        "date":       pub_date,
+        "doi":        doi,
+        "authors":    [_sanitize(a) for a in authors],
+        "abstract":   _sanitize(abstract),
+        "full_text":  _sanitize(full_text),
+        "methods":    [{"heading": _sanitize(m["heading"]), "text": _sanitize(m["text"])} for m in methods_sections],
+        "references": [{"raw": _sanitize(r["raw"])} for r in references],
+        "conclusions":        [{"heading": _sanitize(c["heading"]), "text": _sanitize(c["text"])} for c in conclusions_sections],
+        "sections":           [_sanitize(s) for s in sections],
+        "figures":            [{"figure_label": _sanitize(f["figure_label"]), "caption": _sanitize(f["caption"]), "page": f["page"]} for f in figures],
+        "tables":             [{"caption": _sanitize(t["caption"]), "page": t["page"], "content": _sanitize(t["content"]), "grid": [[_sanitize(c) for c in row] for row in t["grid"]]} for t in tables],
+        "keywords_extracted": [_sanitize(k) for k in keywords_extracted],
+        "journal":            _sanitize(journal),
+        "acknowledgements":   _sanitize(acknowledgements),
     }

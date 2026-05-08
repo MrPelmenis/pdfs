@@ -1,3 +1,0 @@
-docker run --rm --init -p 8070:8070 \
-  -e GROBID_NB_THREAD=10 \
-  grobid/grobid:0.8.0

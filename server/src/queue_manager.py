@@ -27,7 +27,7 @@ def add_dois_to_queue(dois: list[str]) -> int:
         return len(new_dois)
 
 
-def peek_next_doi() -> str | None:
+def peek_next_id() -> str | None:
     with _lock:
         _ensure_file()
         with open(QUEUE_FILE, "r") as f:
@@ -38,7 +38,7 @@ def peek_next_doi() -> str | None:
     return None
 
 
-def remove_first_doi() -> str | None:
+def remove_first_id() -> str | None:
     with _lock:
         _ensure_file()
         with open(QUEUE_FILE, "r") as f:
