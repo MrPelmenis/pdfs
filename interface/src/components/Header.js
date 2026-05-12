@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 const links = [
   { href: "/search", label: "Search" },
   { href: "/upload", label: "Upload" },
+  { href: "/chat", label: "Chat" },
+
 ];
 
 export default function Header() {

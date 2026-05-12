@@ -8,6 +8,7 @@ import json
 import random
 import re
 import math
+import time
 
 from concurrent.futures import ThreadPoolExecutor
 background_executor = ThreadPoolExecutor(max_workers=1)
@@ -25,6 +26,9 @@ from src.queue_manager import add_dois_to_queue
 from src.stub_worker import start_stub_worker, set_pdf_processing, cp_document_exists, fetch_cp_document, delete_cp_document
 import xml.etree.ElementTree as ET
 from xml.sax.saxutils import escape
+
+from src.chatins import register_chat
+
 
 
 load_dotenv()
@@ -401,7 +405,7 @@ def do_search(query):
     fullQ = (
         f"<query><stub_document>no</stub_document>{query}*</query>"
         f"<relevance>decending</relevance>"
-        f"<docs>10</docs>"
+        f"<docs>1000</docs>"
         f"<list>"
         f"<id>yes</id>"
         f"<openalex_id>yes</openalex_id>"
@@ -1070,6 +1074,9 @@ def route_assign_category():
         return jsonify({"error": result.get("error"), "detail": result.get("response")}), 500
     return jsonify(result), 200
 
+
+
+register_chat(app, CP_URL, CP_USER, CP_PASS)
 
 if __name__ == "__main__":
     start_stub_worker(CP_URL, CP_USER, CP_PASS)
