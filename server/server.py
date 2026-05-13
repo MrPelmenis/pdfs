@@ -29,8 +29,6 @@ from xml.sax.saxutils import escape
 
 from src.chatins import register_chat
 
-
-
 load_dotenv()
 
 CP_URL  = os.getenv("CP_URL")
@@ -105,7 +103,6 @@ def process_file_background(filename, save_path):
         if final_id:
             existing = fetch_cp_document(final_id, CP_URL, CP_USER, CP_PASS)
             if existing and existing.get("stub_document") == "yes":
-                print(f"[app] Replacing stub for ID: {final_id}")
                 delete_cp_document(final_id, CP_URL, CP_USER, CP_PASS)
 
         xml_string = build_xml(openalex_info or None, parser_info, image_path, stub=False, category_id=category_id)
@@ -405,7 +402,7 @@ def do_search(query):
     fullQ = (
         f"<query><stub_document>no</stub_document>{query}*</query>"
         f"<relevance>decending</relevance>"
-        f"<docs>1000</docs>"
+        f"<docs>10</docs>"
         f"<list>"
         f"<id>yes</id>"
         f"<openalex_id>yes</openalex_id>"

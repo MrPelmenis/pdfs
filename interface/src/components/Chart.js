@@ -88,7 +88,7 @@ function showTooltip(d, x, y) {
 
     const isStub    = !!d.is_stub_node;
     const clickHint = isStub ? "Click to open on OpenAlex" : "Click to expand references";
-    const dblHint   = isStub ? "" : (d.stub_document ? "Double-click for DOI info" : "Double-click to view PDF");
+    const dblHint   = isStub ? "Double-click to upload this document" : (d.stub_document ? "Double-click for DOI info" : "Double-click to view PDF");
 
     // Category badge — only shown if category exists and isn't "none" (id 0)
     const cat = d.category;

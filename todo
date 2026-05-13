@@ -1,26 +1,20 @@
 MINI TASKS:
 1. 1. dokuments no gustava, pareizo doi atrod bet openalex querijojot to doi 404 url formatesanas deel
 protams uzlabot metadata_analyser, biezi atrod ne-to dokumentu
-salabot animacijas pdf un upload, vai kko citu izdomat
-
-
-data populizators todo:
-pelekajiem double click atver logu lai var uploadot to dokumentu db
-
 
 LELIE TODO:
+snippet labaaku
+show more.....
+faceted search pa abstract methods 
+duplicate faili
+exact search neiet
+publisku adresi
 
-LLM kategorijas
-llm tiek iebaroti visi dokumenti (ieladetie) (vinu title doi authors abstract) un prasa uztaisiit 10-15 kategorijas siem dokumentiem
-pec tam for loop (kuraa no siem, piederetu sis dokuments) 
-katream nakamajam ieladetajam arii iedot kategoriju
 
 LLM chatbots
-querijo chatinu par dokumentiem
-chatins uztaisa sieta queriju balstoties uz chata tekstu
-querijo sietu 
-iebaro resultatu abstractus titles klat lai uztaisa response
-pec tam ja turpina chatot tad ar kontekstu.... (mos dereetu sqllite palaist blakus lmao)
+gudraku modeli querijam
+lai paraada sources labaak
 
 
+TOGGLE AUTHORS CHART:
 toggle authors (man max galax sito velaak)
