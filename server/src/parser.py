@@ -20,7 +20,6 @@ ACKNOWLEDGEMENT_KEYWORDS = [
 SKIP_LABELS = {"page_header", "page_footer", "footnote"}
 
 
-# XML 1.0 illegal character pattern
 _ILLEGAL_XML = re.compile(r'[^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFD]')
 def _sanitize(text) -> str:
     if not text:
@@ -260,7 +259,6 @@ def extract_paper_data(pdf_path: str) -> dict:
         "abstract":   _sanitize(abstract),
         "full_text":  _sanitize(full_text),
         "methods":    [{"heading": _sanitize(m["heading"]), "text": _sanitize(m["text"])} for m in methods_sections],
-        "references": [{"raw": _sanitize(r["raw"])} for r in references],
         "conclusions":        [{"heading": _sanitize(c["heading"]), "text": _sanitize(c["text"])} for c in conclusions_sections],
         "sections":           [_sanitize(s) for s in sections],
         "figures":            [{"figure_label": _sanitize(f["figure_label"]), "caption": _sanitize(f["caption"]), "page": f["page"]} for f in figures],

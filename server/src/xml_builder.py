@@ -56,12 +56,93 @@ def slugify(text: str) -> str:
     return text
 
 
+import re
+import unicodedata
+import os
+from xml.etree.ElementTree import Element, SubElement, tostring
+import xml.dom.minidom
+import pdfplumber
+import pytesseract
+from pdf2image import convert_from_path
+
+
+def extract_fallback_text(pdf_path: str) -> str:
+    try:
+        custom_config = r'--oem 3 --psm 6'
+        pages = convert_from_path(pdf_path, dpi=250)
+        text = []
+        for page_img in pages:
+            page_text = pytesseract.image_to_string(page_img, config=custom_config)
+            if page_text.strip():
+                text.append(page_text.strip())
+        result = "\n\n".join(text)
+        if len(result.split()) < 50:
+            raise ValueError("OCR returned too little text")
+        return result
+    except Exception as e:
+        print(f"[OCR] pytesseract failed: {e}, falling back to pdfplumber")
+        text = []
+        with pdfplumber.open(pdf_path) as pdf:
+            for page in pdf.pages:
+                page_text = page.extract_text()
+                if page_text:
+                    text.append(page_text)
+        return "\n\n".join(text)
+
+
+def grobid_confidence(info: dict) -> tuple[str, list[str]]:
+    if not info:
+        return "bad", ["all"]
+    mandatory = ["title", "authors", "abstract", "doi", "full_text", "references"]
+    missing   = [f for f in mandatory if not info.get(f)]
+    if len(missing) == 0:
+        return "good", []
+    if len(missing) <= 2:
+        return "partial", missing
+    return "bad", missing
+
+
+def strip_jats(text: str) -> str:
+    if not text:
+        return ""
+    clean = re.sub(r"<[^>]+>", "", text)
+    clean = re.sub(r"\s+", " ", clean).strip()
+    return clean
+
+
+def get_preview_path(image_path: str) -> str:
+    if not image_path:
+        return ""
+    return image_path if image_path.startswith("./") else f"./{image_path}"
+
+
+def slugify(text: str) -> str:
+    text = unicodedata.normalize("NFKD", text)
+    text = text.encode("ascii", "ignore").decode("ascii")
+    text = text.strip()
+    text = re.sub(r"[^\w\s]", "", text)
+    text = re.sub(r"\s+", "_", text)
+    return text
+
+
+def _clean_year(raw: str) -> str:
+    """
+    Extract a 4-digit year from a date string for numeric indexing.
+    Returns the year string if found, empty string otherwise.
+    CP will skip indexing an empty element as a number cleanly.
+    """
+    if not raw:
+        return ""
+    m = re.search(r'\b(19|20)\d{2}\b', str(raw))
+    return m.group(0) if m else ""
+
+
 def build_xml(
     metadata_info: dict | None,
     grobid_info:   dict | None,
     image_path:    str,
     stub:          bool = False,
-    category_id:   int  = 0,       # ← resolved by caller, no longer hardcoded
+    category_id:   int  = 0,
 ) -> str:
     meta  = metadata_info or {}
     grobi = grobid_info   or {}
@@ -75,13 +156,16 @@ def build_xml(
     openalex_id = meta.get("openalex_id") or grobi.get("openalex_id") or ""
     doc_id      = openalex_id if openalex_id else slugify(title)
 
-    date_val = ""
+    # ── Date: extract clean year for numeric indexing ─────────────────────────
+    # CP needs a plain integer for index-numbers=int.
+    # "Unknown" or unparseable dates become "" — CP skips numeric indexing
+    # for empty elements without erroring.
+    raw_date = ""
     if meta.get("year"):
-        date_val = str(meta["year"])
+        raw_date = str(meta["year"])
     elif grobi.get("date"):
-        date_val = grobi["date"]
-    else:
-        date_val = "Unknown"
+        raw_date = str(grobi["date"])
+    date_val = _clean_year(raw_date)   # e.g. "2013", or "" if unparseable
 
     if meta.get("authors"):
         authors = meta["authors"]
@@ -103,11 +187,6 @@ def build_xml(
     SubElement(doc, "img_preview_path").text = get_preview_path(image_path)
     SubElement(doc, "stub_document").text    = "yes" if stub else "no"
     SubElement(doc, "category_id").text      = str(category_id)
-
-    # Journal
-    journal = grobi.get("journal") or ""
-    if journal:
-        SubElement(doc, "journal").text = journal
 
     authors_el = SubElement(doc, "authors")
     for author in authors:
@@ -136,7 +215,7 @@ def build_xml(
         for keyword in keywords:
             SubElement(keywords_el, "keyword").text = keyword
 
-    # Keywords extracted from PDF text
+    # Keywords extracted from PDF
     keywords_extracted = grobi.get("keywords_extracted") or []
     if keywords_extracted:
         kw_ex_el = SubElement(doc, "keywords_extracted")
@@ -166,11 +245,6 @@ def build_xml(
             SubElement(conclusion_el, "heading").text = conclusion.get("heading", "")
             SubElement(conclusion_el, "text").text    = conclusion.get("text", "")
 
-    # Acknowledgements
-    acknowledgements = grobi.get("acknowledgements") or ""
-    if acknowledgements:
-        SubElement(doc, "acknowledgements").text = acknowledgements
-
     # Figures
     figures = grobi.get("figures") or []
     if figures:
@@ -181,35 +255,20 @@ def build_xml(
             SubElement(fig_el, "caption").text      = fig.get("caption") or ""
             SubElement(fig_el, "page").text         = str(fig.get("page") or "")
 
-    # Tables
     tables = grobi.get("tables") or []
     if tables:
         tables_el = SubElement(doc, "tables")
         for tbl in tables:
             tbl_el = SubElement(tables_el, "table")
-            SubElement(tbl_el, "caption").text = tbl.get("caption") or ""
             SubElement(tbl_el, "content").text = tbl.get("content") or ""
-            SubElement(tbl_el, "page").text    = str(tbl.get("page") or "")
             grid = tbl.get("grid") or []
             if grid:
                 grid_el = SubElement(tbl_el, "grid")
                 for row in grid:
                     SubElement(grid_el, "row").text = " | ".join(str(c) for c in row)
 
-    SubElement(doc, "full_text").text = grobi.get("full_text", "")
 
-    # References — supports both structured and raw formats
-    refs_el = SubElement(doc, "references")
-    for ref in grobi.get("references", []):
-        ref_el = SubElement(refs_el, "reference")
-        if "raw" in ref:
-            SubElement(ref_el, "raw").text = ref["raw"]
-        else:
-            SubElement(ref_el, "title").text = ref.get("title") or ""
-            ref_authors_el = SubElement(ref_el, "authors")
-            for ra in ref.get("authors", []):
-                SubElement(ref_authors_el, "author").text = ra
-            SubElement(ref_el, "date").text = str(ref.get("date") or "")
+    SubElement(doc, "full_text").text = grobi.get("full_text", "")
 
     # Referenced works (OpenAlex IDs)
     ref_ids = grobi.get("referenced_work_ids") or meta.get("referenced_work_ids") or []
@@ -234,6 +293,11 @@ def build_xml(
         lines = lines[1:]
     return "\n".join(lines)
 
+
+def save_xml(xml_string: str, output_path: str) -> None:
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(xml_string)
 
 def upload_xml(xml_string: str, cp_url: str, cp_user: str, cp_pass: str) -> dict:
     import requests

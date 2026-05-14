@@ -12,10 +12,13 @@ const displayFilename = (file) => file?.replace(/_\d+\.pdf$/i, ".pdf") ?? "";
 export default function SearchPage() {
   const [searchParams] = useSearchParams();
   const navigate       = useNavigate();
-  const urlQuery       = searchParams.get("q") || "";
+  const urlQuery       = searchParams.get("q")    || "";
+  const urlDocs        = parseInt(searchParams.get("docs") || "10", 10);
 
   const [inputVal,    setInputVal]    = useState(urlQuery);
+  const [docsInput,   setDocsInput]   = useState(isNaN(urlDocs) ? 10 : urlDocs);
   const [results,     setResults]     = useState([]);
+  const [hits,        setHits]        = useState(0);
   const [loading,     setLoading]     = useState(false);
   const [searched,    setSearched]    = useState("");
   const [hasSearched, setHasSearched] = useState(!!urlQuery);
@@ -23,7 +26,7 @@ export default function SearchPage() {
   const [modalStage,  setModalStage]  = useState("closed");
 
   // ── Upload modal state ─────────────────────────────────────────────────────
-  const [uploadNode, setUploadNode] = useState(null);
+  const [uploadNode,       setUploadNode]       = useState(null);
   const [uploadModalStage, setUploadModalStage] = useState("closed");
 
   const chartRef = useRef(null);
@@ -61,7 +64,6 @@ export default function SearchPage() {
     setTimeout(() => setModalStage("open"), 30);
   }, []);
 
-  // Called from chart on stub node double-click
   const openUploadFromChart = useCallback((d) => {
     setUploadNode(d);
     setUploadModalStage("expanding");
@@ -76,14 +78,20 @@ export default function SearchPage() {
     }, 300);
   }, []);
 
-  const fetchResults = useCallback(async (q) => {
+  // ── Fetch ──────────────────────────────────────────────────────────────────
+
+  const fetchResults = useCallback(async (q, docs) => {
     if (!q.trim()) return;
     setLoading(true);
     setSearched(q);
     try {
-      const res  = await fetch(`${API}/search?query=${encodeURIComponent(q)}`);
+      const res  = await fetch(
+        `${API}/search?query=${encodeURIComponent(q)}&docs=${docs}`
+      );
       const data = await res.json();
       setResults(data.results ?? []);
+      setHits(data.hits ?? 0);
+
       if (chartRef.current) {
         chartRef.current.remove();
         chartRef.current = null;
@@ -101,6 +109,7 @@ export default function SearchPage() {
       }
     } catch {
       setResults([]);
+      setHits(0);
     } finally {
       setLoading(false);
     }
@@ -114,10 +123,12 @@ export default function SearchPage() {
       setModalStage("closed");
       if (categoryChanged) {
         setCategoryChanged(false);
-        fetchResults(searched);
+        fetchResults(searched, docsInput);
       }
     }, 300);
-  }, [categoryChanged, searched, fetchResults]);
+  }, [categoryChanged, searched, docsInput, fetchResults]);
+
+  // ── Effects ────────────────────────────────────────────────────────────────
 
   useEffect(() => {
     if (!hasSearched || chartRef.current) return;
@@ -126,23 +137,39 @@ export default function SearchPage() {
   }, [hasSearched, openPdfFromChart, openUploadFromChart]);
 
   useEffect(() => {
+    const docs = isNaN(urlDocs) ? 10 : urlDocs;
     setInputVal(urlQuery);
+    setDocsInput(docs);
     if (urlQuery) {
       setHasSearched(true);
-      fetchResults(urlQuery);
+      fetchResults(urlQuery, docs);
     } else {
       setResults([]);
+      setHits(0);
     }
-  }, [urlQuery, fetchResults]);
+  }, [urlQuery, urlDocs]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── Handlers ───────────────────────────────────────────────────────────────
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const q = inputVal.trim();
+    const q    = inputVal.trim();
+    const docs = Math.max(1, docsInput || 1);
     if (!q) return;
     setHasSearched(true);
-    navigate(`/search?q=${encodeURIComponent(q)}`);
+    navigate(`/search?q=${encodeURIComponent(q)}&docs=${docs}`);
+  };
+
+  const handleLoadAll = () => {
+    const q = inputVal.trim();
+    if (!q || hits === 0) return;
+    setDocsInput(hits);
+    navigate(`/search?q=${encodeURIComponent(q)}&docs=${hits}`);
+  };
+
+  const handleDocsChange = (e) => {
+    const val = parseInt(e.target.value, 10);
+    setDocsInput(isNaN(val) ? 1 : Math.max(1, val));
   };
 
   const clearInput = () => setInputVal("");
@@ -177,8 +204,9 @@ export default function SearchPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="flex items-center gap-2 w-full max-w-xl"
+          className="flex items-end gap-2 w-full max-w-4xl"
         >
+          {/* Search input */}
           <div className="flex-1 flex items-center gap-2 bg-surface border border-border rounded-xl px-4 py-2.5
                           focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/30
                           transition-all duration-200">
@@ -200,6 +228,37 @@ export default function SearchPage() {
               </button>
             )}
           </div>
+
+          {/* Document Count — only after first search */}
+          {hasSearched && (
+            <div className="flex flex-col gap-1">
+              <label className="text-xs text-ink-muted pl-1">Document Count</label>
+              <input
+                type="number"
+                min={1}
+                value={docsInput}
+                onChange={handleDocsChange}
+                className="w-28 bg-surface border border-border rounded-xl px-3 py-2.5 text-sm text-ink
+                           text-center outline-none appearance-none
+                           focus:border-accent focus:ring-1 focus:ring-accent/30 transition-all duration-200"
+              />
+            </div>
+          )}
+
+          {/* Load All — only after first search */}
+          {hasSearched && (
+            <button
+              type="button"
+              onClick={handleLoadAll}
+              disabled={hits === 0 || loading}
+              className="px-4 py-2.5 rounded-xl border border-border text-ink-muted text-sm font-medium
+                         hover:border-accent hover:text-ink disabled:opacity-30 disabled:cursor-not-allowed
+                         transition-all duration-150"
+            >
+              Load All
+            </button>
+          )}
+
           <button
             type="submit"
             className="px-4 py-2.5 rounded-xl bg-accent text-main text-sm font-semibold
@@ -218,18 +277,21 @@ export default function SearchPage() {
           <div className="w-[550px] min-w-[420px] shrink-0 flex flex-col bg-main min-h-0">
             <div className="flex-1 overflow-y-auto px-5 pb-5 flex flex-col gap-3 pt-3">
 
+              {/* Result count */}
               {searched && !loading && (
                 <p className="text-xs text-ink-muted mb-1">
                   {results.length > 0
-                    ? `${results.length} result${results.length !== 1 ? "s" : ""} for "${searched}"`
+                    ? `Showing ${results.length} out of ${hits} results for "${searched}"`
                     : `No results for "${searched}"`}
                 </p>
               )}
 
+              {/* Skeletons */}
               {loading && [1, 2, 3].map((i) => (
                 <div key={i} className="h-40 rounded-2xl bg-surface animate-pulse" />
               ))}
 
+              {/* Results */}
               {!loading && results.length > 0 && results.map((r, i) => (
                 <SearchCard
                   key={`${r.file}-${i}`}
@@ -239,6 +301,7 @@ export default function SearchPage() {
                 />
               ))}
 
+              {/* Empty state */}
               {!loading && searched && results.length === 0 && (
                 <div className="flex flex-col items-center justify-center py-20 gap-3 text-ink-muted">
                   <svg className="w-12 h-12 opacity-30" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24">
@@ -262,7 +325,6 @@ export default function SearchPage() {
         onCategoryChange={() => setCategoryChanged(true)}
       />
 
-      {/* Upload modal — shown on stub node double-click */}
       <UploadModal
         node={uploadNode}
         modalStage={uploadModalStage}

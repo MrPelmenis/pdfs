@@ -398,11 +398,14 @@ def extract_snippet(doc: dict) -> str | None:
 
 
 
-def do_search(query):
+def do_search(query, docs):
+    query_stripped = query.strip()
+    zvaigznite = "" if query_stripped.endswith('"') else "*"
+
     fullQ = (
-        f"<query><stub_document>no</stub_document>{query}*</query>"
+        f"<query><stub_document>no</stub_document>{query}{zvaigznite}</query>"
         f"<relevance>decending</relevance>"
-        f"<docs>10</docs>"
+        f"<docs>{docs}</docs>"
         f"<list>"
         f"<id>yes</id>"
         f"<openalex_id>yes</openalex_id>"
@@ -431,6 +434,12 @@ def do_search(query):
     )
     resp.raise_for_status()
     data = resp.json()
+
+    hits = int(
+        data.get("cps:reply", {})
+            .get("cps:content", {})
+            .get("hits", 0)
+    )
  
     documents = (
         data.get("cps:reply", {})
@@ -510,7 +519,7 @@ def do_search(query):
 
         })
  
-    return results
+    return results, hits
  
  
 def _enrich_and_sort(work_ids: list, limit: int) -> list[tuple[str, dict | None]]:
@@ -578,12 +587,18 @@ def lookup_gray_node(openalex_id: str) -> dict | None:
 @app.route("/search")
 def search():
     query = request.args.get("query", "").strip()
+    try:
+        docs = int(request.args.get("docs", 10))
+        if docs < 1:
+            docs = 10
+    except (ValueError, TypeError):
+        docs = 10
 
     if not query:
         return jsonify({"error": "query is required"}), 400
-
+    
     try:
-        results = do_search(query)
+        results, hits = do_search(query, docs=docs)
 
         all_nodes     = []
         links         = []
@@ -598,7 +613,7 @@ def search():
             seen_links.add(key)
             links.append({"from": from_id, "to": to_id, "style": style})
 
-        def node_radius(cited, fallback=15):
+        def node_radius(cited, fallback=45):
             return min(200, round(70 + math.sqrt(cited) * 2, 1)) if cited else fallback
 
         REF_STYLE = {
@@ -697,6 +712,7 @@ def search():
             "query":         query,
             "results":       results,
             "chart_data":    {"nodes": all_nodes, "links": links},
+            "hits":           hits,
             "initial_nodes": initial_nodes,
         })
 
@@ -839,7 +855,7 @@ def expand():
     seen_new       = set()
     seen_links_set = set()
 
-    def node_radius(cited, fallback=15):
+    def node_radius(cited, fallback=45):
         return min(200, round(70 + math.sqrt(cited) * 2, 1)) if cited else fallback
 
     REF_STYLE = {"fillColor": "rgba(99,102,241,0.35)",  "radius": 2,   "toDecoration": "arrow"}
@@ -853,13 +869,7 @@ def expand():
         new_links.append({"from": from_id, "to": to_id, "style": style})
 
     def make_node(wid, enriched, link_style):
-        """
-        Build a node dict. If the CP record is a full document (stub_document=no),
-        treat it as a real node with category colour and full click behaviour.
-        Otherwise build a stub node (gray for ref, orange for rel).
-        """
         if not enriched:
-            # Nothing in CP at all — minimal gray stub
             return {
                 "id":     wid,
                 "loaded": False,
@@ -887,8 +897,6 @@ def expand():
 
         if not is_stub_doc:
             # ── Full document in our DB ──────────────────────────────────────
-            # Fetch complete data (category, file, preview) via do_search-style
-            # lookup so it renders exactly like a search result node.
             file_path    = enriched.get("file", "")
             filename     = clean_filename(file_path)
             preview_name = get_preview_filename(file_path) if file_path else None

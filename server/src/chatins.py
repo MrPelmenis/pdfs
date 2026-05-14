@@ -1,11 +1,3 @@
-"""
-src/chat.py
-
-Usage in app.py:
-    from src.chat import register_chat
-    register_chat(app, CP_URL, CP_USER, CP_PASS)
-"""
-
 import json
 import traceback
 import requests as req
@@ -15,7 +7,7 @@ OLLAMA_TIMEOUT = 120
 CHAT_MODEL     = "gemma4:26b"
 QUERY_MODEL    = "gemma4:e2b"
 
-SEARCH_DOCS = 10
+SEARCH_DOCS = 5
 
 QUERY_PROMPT = """\
 You are a search query generator for a scientific paper database.

@@ -263,7 +263,6 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         data:        { preloaded: chartData },
         navigation: {
             initialNodes:             initialNodes,
-            mode:                     "",
             focusNodeExpansionRadius: 8,
         },
         style: {
