@@ -4,25 +4,55 @@ import requests as req
 
 OLLAMA_URL     = "http://localhost:11434/api/chat"
 OLLAMA_TIMEOUT = 120
-CHAT_MODEL     = "gemma4:26b"
-QUERY_MODEL    = "gemma4:e2b"
+#CHAT_MODEL     = "gemma4:26b"
+#QUERY_MODEL    = "gemma4:26b"
+
+CHAT_MODEL = "gemma4:e4b"
+QUERY_MODEL = "gemma4:e4b"
+
+CTX_MIN        = 2048    # never go below this
+CTX_MAX        = 32768   # hard ceiling — raise if you have very long full_texts
+CTX_HEADROOM   = 1.4     # multiply estimated tokens by this for safety margin
+ANSWER_RESERVE = 1024    # tokens reserved for the model's output
 
 SEARCH_DOCS = 5
 
 QUERY_PROMPT = """\
-You are a search query generator for a scientific paper database.
-Your query will be used to query a search engine and find relevant documents on this question.
-Return ONLY the query string. No explanation, no punctuation, no quotes.
+You are a search keyword extractor for a scientific document database.
+Your job is to extract the most concrete, specific content words from the user's question.
+These keywords will be matched literally against document text, so only include words that would physically appear in a scientific paper.
+
+Rules:
+- Output ONLY the keywords, space-separated, nothing else
+- 2 to 4 words maximum
+- Use only nouns and adjectives — no verbs, no question words
+- No synonyms, no expansions, no related concepts
+- No scientific jargon that wasn't in the original question
+- Prefer shorter, more common words over long technical ones
+- If the question is vague, pick the single most concrete noun
+
+Examples:
+  "what interesting things can you find about human bones?" → human bones
+  "how does the heart pump blood?" → heart blood
+  "neural network training convergence issues" → neural network convergence
+  "what methods are used in protein folding?" → protein folding
+  "tell me about climate change effects on fish" → fish climate
 
 User question: {question}
-Search query:"""
+Keywords:"""
 
 ANSWER_PROMPT = """\
 You are a research assistant helping scientists explore a paper database.
-Answer the user's question based ONLY on the provided paper excerpts.
-Be concise and specific. Reference paper titles when relevant.
-If the papers don't contain enough information to answer, say so clearly.
-Answer in markdown.
+Answer the user's question using ONLY the provided paper excerpts below.
+
+Formatting rules — follow these exactly:
+- Structure your answer as one section per paper
+- Each section must start with a heading using the paper title: ## [Paper Title]
+- Under each heading write 2-5 sentences summarising what that paper says relevant to the question
+- Use $...$ for inline math and $$...$$ for block equations
+- Be concise and specific
+- If a paper is not relevant to the question, skip it entirely
+- If none of the papers contain enough information, say so clearly
 
 --- PAPERS ---
 {context}
@@ -35,7 +65,12 @@ NO_CONTEXT_PROMPT = """\
 You are a research assistant helping scientists explore a paper database.
 No relevant papers were found in the database for this question.
 Answer as best you can from your general knowledge.
-Be concise and answer in markdown.
+
+Formatting rules:
+- Use markdown headings and bullet points for structure
+- Use $...$ for inline math and $$...$$ for block equations
+- Begin your response with: > ⚠️ No relevant papers were found. Answering from general knowledge.
+- Then a blank line, then your answer
 
 User question: {question}
 Answer:"""
@@ -150,7 +185,6 @@ def search_cp(query: str, cp_url: str, cp_user: str, cp_pass: str) -> list:
     return results
 
 
-
 def _build_context(results: list) -> str:
     parts = []
     for i, doc in enumerate(results, 1):
@@ -165,7 +199,6 @@ def _build_context(results: list) -> str:
         ))
         kw_str = ", ".join(kw_all[:10]) if kw_all else ""
         topics = ", ".join((doc.get("topics") or [])[:5])
-
 
         lines = [f"[{i}] {title}"]
         if authors:   lines.append(f"Authors: {authors}" + (f" ({date})" if date else ""))
@@ -195,24 +228,41 @@ def _build_context(results: list) -> str:
 
         parts.append("\n".join(lines))
 
-    context = "\n\n---\n\n".join(parts)
-    return context
+    return "\n\n---\n\n".join(parts)
 
+
+def _estimate_num_ctx(prompt: str) -> int:
+    """
+    Estimate a sensible num_ctx for this prompt.
+    Rule of thumb: 1 token ≈ 4 chars for English/scientific text.
+    We add headroom for the model's reply, then round up to the next
+    power of two so Ollama can reuse cached KV allocations across
+    similar-sized requests.
+    """
+    estimated_tokens = len(prompt) // 4
+    needed = int(estimated_tokens * CTX_HEADROOM) + ANSWER_RESERVE
+    ctx = CTX_MIN
+    while ctx < needed:
+        ctx *= 2
+    ctx = min(ctx, CTX_MAX)
+    print(f"[ollama] prompt ~{estimated_tokens} tokens → num_ctx={ctx}")
+    return ctx
 
 
 def ollama_generate(prompt: str, stream: bool = False, model: str = CHAT_MODEL):
+    num_ctx = _estimate_num_ctx(prompt)
     payload = {
         "model":   model,
         "stream":  stream,
         "options": {
             "temperature": 0.3,
-            "num_ctx":     131072,
+            "num_ctx":     num_ctx,
+            "thinking":    False,
         },
         "messages": [{"role": "user", "content": prompt}],
     }
     resp = req.post(OLLAMA_URL, json=payload, timeout=OLLAMA_TIMEOUT, stream=stream)
     return resp
-
 
 
 def _convert_to_query(question: str) -> str:
@@ -222,7 +272,10 @@ def _convert_to_query(question: str) -> str:
         resp.raise_for_status()
         body  = resp.json()
         query = body.get("message", {}).get("content", "").strip()
-        print(f"[chat/_convert_to_query] Body keys: {list(body.keys())}")
+        # Sanitise: take only the first line, strip punctuation, cap at 4 words
+        first_line = query.splitlines()[0] if query else ""
+        words      = first_line.replace(",", " ").replace(";", " ").split()
+        query      = " ".join(words[:4])
         print(f"[chat/_convert_to_query] Result: '{query}'")
         return query or question
     except Exception as e:
@@ -257,34 +310,21 @@ def generate(question: str, cp_url: str, cp_user: str, cp_pass: str):
         cp_query = _convert_to_query(question)
         print(f"CP query: '{cp_query}'")
 
-        # Step 2 — search ClusterPoint
         yield send_status_update("Finding documents…")
         results = search_cp(cp_query, cp_url, cp_user, cp_pass)
 
         if not results:
-            # No documents found — answer from general knowledge
             print("[chat/generate] No results, falling back to general knowledge")
-            yield send_sources([])   # empty sources list so frontend knows
+            yield send_sources([])
             yield send_status_update("No papers found — generating from general knowledge…")
-
             prompt = NO_CONTEXT_PROMPT.format(question=question)
-            # Prepend the clarification as the first data token
-            clarification = (
-                "> ⚠️ I couldn't find any relevant papers in the database for your question. "
-                "Here's what I know from general knowledge:\n\n"
-            )
-            for line in clarification.split("\n"):
-                yield f"data: {line}\n\n"
-            yield "data: \\n\n\n"
 
         else:
-            # Documents found — emit sources then build context
             yield send_sources(results)
             yield send_status_update("Analysing papers…")
             context = _build_context(results)
             prompt  = ANSWER_PROMPT.format(context=context, question=question)
 
-        # Step 3 — stream the answer
         yield send_status_update("Generating response…")
         resp = ollama_generate(prompt, stream=True, model=CHAT_MODEL)
         resp.raise_for_status()

@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
 const API = process.env.REACT_APP_SERVER_URL;
 
@@ -29,19 +31,19 @@ function StatusStep({ label, done }) {
   );
 }
 
-function SourceChip({ file, title }) {
+function SourceCard({ file, title }) {
   const displayName = title || file.split("/").pop() || file;
-  const filePath    = file || "unknown path";
 
   return (
     <div
-      title={filePath}
-      className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface border border-border
-                 text-xs text-ink-muted max-w-xs truncate select-none"
+      title={file}
+      className="flex flex-col items-center gap-1.5 px-3 py-2.5 rounded-lg
+                 bg-surface border border-border flex-shrink-0
+                 w-28 select-none"
     >
       {/* Document icon */}
       <svg
-        className="w-3.5 h-3.5 flex-shrink-0 text-accent/60"
+        className="w-5 h-5 text-accent/60 flex-shrink-0"
         fill="none"
         stroke="currentColor"
         strokeWidth="1.8"
@@ -55,10 +57,38 @@ function SourceChip({ file, title }) {
              a2 2 0 01-2 2z"
         />
       </svg>
-      <span className="truncate">{displayName}</span>
+      {/* Title below icon */}
+      <span
+        className="text-xs text-ink-muted text-center leading-tight w-full"
+        style={{
+          display: "-webkit-box",
+          WebkitLineClamp: 3,
+          WebkitBoxOrient: "vertical",
+          overflow: "hidden",
+        }}
+      >
+        {displayName}
+      </span>
     </div>
   );
 }
+
+function SourceGrid({ sources }) {
+  if (!sources || sources.length === 0) return null;
+  return (
+    <div className="flex flex-row gap-2 overflow-x-auto pb-1"
+         style={{ scrollbarWidth: "thin" }}>
+      {sources.map((src, i) => (
+        <SourceCard key={i} file={src.file} title={src.title} />
+      ))}
+    </div>
+  );
+}
+
+const MD_PLUGINS = {
+  remarkPlugins: [remarkMath],
+  rehypePlugins: [rehypeKatex],
+};
 
 export default function ChatPage() {
   const [inputVal,  setInputVal]  = useState("");
@@ -72,8 +102,6 @@ export default function ChatPage() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // ── helpers to patch the last message ──────────────────────────────────────
-
   function patchLast(updater) {
     setMessages(prev => {
       const updated = [...prev];
@@ -82,15 +110,12 @@ export default function ChatPage() {
     });
   }
 
-  // ── send ───────────────────────────────────────────────────────────────────
-
   async function sendQuestion(question) {
     if (!question.trim() || streaming) return;
 
     setMessages(prev => [
       ...prev,
       { role: "user", text: question },
-      // placeholder assistant message
       { role: "assistant", text: "", sources: null, statusSteps: [], currentStatus: null },
     ]);
     setInputVal("");
@@ -115,34 +140,32 @@ export default function ChatPage() {
 
         buffer += decoder.decode(value, { stream: true });
 
-        // Process complete SSE lines from buffer
         const lines = buffer.split("\n");
-        buffer = lines.pop(); // keep incomplete last chunk
+        buffer = lines.pop();
 
         for (const line of lines) {
           const trimmed = line.trim();
           if (!trimmed) continue;
 
-          // ── status event ──────────────────────────────────────────────────
+          // ── status event ────────────────────────────────────────────────
           if (trimmed.startsWith("status: ")) {
             const statusMsg = trimmed.slice(8);
             patchLast(msg => ({
               ...msg,
-              statusSteps:   [...(msg.statusSteps || []).map(s =>
-                               s.label === msg.currentStatus
-                                 ? { ...s, done: true }
-                                 : s
-                             ),
-                             ...(msg.statusSteps || []).some(s => s.label === statusMsg)
-                               ? []
-                               : [{ label: statusMsg, done: false }]
-                            ],
+              statusSteps: [
+                ...(msg.statusSteps || []).map(s =>
+                  s.label === msg.currentStatus ? { ...s, done: true } : s
+                ),
+                ...(msg.statusSteps || []).some(s => s.label === statusMsg)
+                  ? []
+                  : [{ label: statusMsg, done: false }],
+              ],
               currentStatus: statusMsg,
             }));
             continue;
           }
 
-          // ── sources event ─────────────────────────────────────────────────
+          // ── sources event ───────────────────────────────────────────────
           if (trimmed.startsWith("sources: ")) {
             try {
               const sources = JSON.parse(trimmed.slice(9));
@@ -151,11 +174,10 @@ export default function ChatPage() {
             continue;
           }
 
-          // ── data event ────────────────────────────────────────────────────
+          // ── data event ──────────────────────────────────────────────────
           if (trimmed.startsWith("data: ")) {
             const token = trimmed.slice(6);
             if (token === "[DONE]") {
-              // Mark all status steps done
               patchLast(msg => ({
                 ...msg,
                 statusSteps:   (msg.statusSteps || []).map(s => ({ ...s, done: true })),
@@ -174,7 +196,7 @@ export default function ChatPage() {
           ...msg,
           text:  "Something went wrong. Please try again.",
           error: true,
-          statusSteps: (msg.statusSteps || []).map(s => ({ ...s, done: true })),
+          statusSteps:   (msg.statusSteps || []).map(s => ({ ...s, done: true })),
           currentStatus: null,
         }));
       }
@@ -230,7 +252,7 @@ export default function ChatPage() {
 
               <div style={{ maxWidth: "85%" }} className="flex flex-col gap-2 min-w-0">
 
-                {/* ── Status steps (assistant only) ── */}
+                {/* ── Status steps ── */}
                 {msg.role === "assistant" && (msg.statusSteps || []).length > 0 && (
                   <div className="flex flex-col gap-1 px-1 pb-1">
                     {msg.statusSteps.map((step, si) => (
@@ -239,13 +261,9 @@ export default function ChatPage() {
                   </div>
                 )}
 
-                {/* ── Source chips (assistant only, shown before text) ── */}
-                {msg.role === "assistant" && msg.sources && msg.sources.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5">
-                    {msg.sources.map((src, si) => (
-                      <SourceChip key={si} file={src.file} title={src.title} />
-                    ))}
-                  </div>
+                {/* ── Source cards — horizontal scrollable row ── */}
+                {msg.role === "assistant" && msg.sources && (
+                  <SourceGrid sources={msg.sources} />
                 )}
 
                 {/* ── Bubble ── */}
@@ -263,9 +281,15 @@ export default function ChatPage() {
                   >
                     {msg.role === "assistant"
                       ? msg.text
-                        ? <ReactMarkdown>{msg.text}</ReactMarkdown>
+                        ? (
+                          <ReactMarkdown
+                            remarkPlugins={MD_PLUGINS.remarkPlugins}
+                            rehypePlugins={MD_PLUGINS.rehypePlugins}
+                          >
+                            {msg.text}
+                          </ReactMarkdown>
+                        )
                         : (
-                          /* Typing indicator while we wait for first token */
                           !msg.currentStatus && (
                             <span className="flex gap-1 items-center h-4">
                               {[0, 1, 2].map(j => (

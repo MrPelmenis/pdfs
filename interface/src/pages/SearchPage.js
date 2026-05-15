@@ -199,11 +199,9 @@ export default function SearchPage() {
 
   const clearInput = () => setInputVal("");
 
-  // ── Render ─────────────────────────────────────────────────────────────────
   return (
     <main className="h-screen overflow-hidden bg-main flex flex-col">
 
-      {/* ── Search bar ── */}
       <div
         style={{
           transition: "all 450ms cubic-bezier(0.4, 0, 0.2, 1)",
@@ -230,7 +228,6 @@ export default function SearchPage() {
           onSubmit={handleSubmit}
           className="flex items-end gap-2 w-full max-w-4xl"
         >
-          {/* Search input */}
           <div className="flex-1 flex items-center gap-2 bg-surface border border-border rounded-xl px-4 py-2.5
                           focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/30
                           transition-all duration-200">
@@ -253,7 +250,6 @@ export default function SearchPage() {
             )}
           </div>
 
-          {/* Document Count — only after first search */}
           {hasSearched && (
             <div className="flex flex-col gap-1">
               <label className="text-xs text-ink-muted pl-1">Document Count</label>
@@ -269,7 +265,6 @@ export default function SearchPage() {
             </div>
           )}
 
-          {/* Load All — only after first search */}
           {hasSearched && (
             <button
               type="button"
