@@ -4,6 +4,7 @@ import SearchCard from "../components/SearchCard";
 import PdfModal from "../components/PdfModal";
 import UploadModal from "../components/UploadModal";
 import CreateChart from "../components/Chart";
+import YearRangeSlider, { YEAR_MIN, YEAR_MAX } from "../components/DualSlider";
 
 const API = process.env.REACT_APP_SERVER_URL;
 
@@ -12,8 +13,10 @@ const displayFilename = (file) => file?.replace(/_\d+\.pdf$/i, ".pdf") ?? "";
 export default function SearchPage() {
   const [searchParams] = useSearchParams();
   const navigate       = useNavigate();
-  const urlQuery       = searchParams.get("q")    || "";
+  const urlQuery       = searchParams.get("q")          || "";
   const urlDocs        = parseInt(searchParams.get("docs") || "10", 10);
+  const urlDateStart   = parseInt(searchParams.get("date_start") || "", 10);
+  const urlDateEnd     = parseInt(searchParams.get("date_end")   || "", 10);
 
   const [inputVal,    setInputVal]    = useState(urlQuery);
   const [docsInput,   setDocsInput]   = useState(isNaN(urlDocs) ? 10 : urlDocs);
@@ -25,13 +28,22 @@ export default function SearchPage() {
   const [modal,       setModal]       = useState(null);
   const [modalStage,  setModalStage]  = useState("closed");
 
-  // ── Upload modal state ─────────────────────────────────────────────────────
+  const [yearStart, setYearStart] = useState(
+    !isNaN(urlDateStart) && urlDateStart >= YEAR_MIN ? urlDateStart : YEAR_MIN
+  );
+  const [yearEnd, setYearEnd] = useState(
+    !isNaN(urlDateEnd) && urlDateEnd <= YEAR_MAX ? urlDateEnd : YEAR_MAX
+  );
+
+  const handleYearChange = useCallback((s, e) => {
+    setYearStart(s);
+    setYearEnd(e);
+  }, []);
+
   const [uploadNode,       setUploadNode]       = useState(null);
   const [uploadModalStage, setUploadModalStage] = useState("closed");
 
   const chartRef = useRef(null);
-
-  // ── Modal openers ──────────────────────────────────────────────────────────
 
   const openPdf = useCallback((e, r) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -78,16 +90,27 @@ export default function SearchPage() {
     }, 300);
   }, []);
 
-  // ── Fetch ──────────────────────────────────────────────────────────────────
+  const isDefaultRange = (ys, ye) => ys === YEAR_MIN && ye === YEAR_MAX;
 
-  const fetchResults = useCallback(async (q, docs) => {
+  const buildApiUrl = (q, docs, ys, ye) => {
+    let url = `${API}/search?query=${encodeURIComponent(q)}&docs=${docs}`;
+    if (!isDefaultRange(ys, ye)) url += `&date_start=${ys}&date_end=${ye}`;
+    return url;
+  };
+
+  const buildNavUrl = (q, docs, ys, ye) => {
+    let url = `/search?q=${encodeURIComponent(q)}&docs=${docs}`;
+    if (!isDefaultRange(ys, ye)) url += `&date_start=${ys}&date_end=${ye}`;
+    return url;
+  };
+
+  // ── Fetch ──────────────────────────────────────────────────────────────────
+  const fetchResults = useCallback(async (q, docs, ys, ye) => {
     if (!q.trim()) return;
     setLoading(true);
     setSearched(q);
     try {
-      const res  = await fetch(
-        `${API}/search?query=${encodeURIComponent(q)}&docs=${docs}`
-      );
+      const res  = await fetch(buildApiUrl(q, docs, ys, ye));
       const data = await res.json();
       setResults(data.results ?? []);
       setHits(data.hits ?? 0);
@@ -113,7 +136,7 @@ export default function SearchPage() {
     } finally {
       setLoading(false);
     }
-  }, [openPdfFromChart, openUploadFromChart]);
+  }, [openPdfFromChart, openUploadFromChart]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [categoryChanged, setCategoryChanged] = useState(false);
   const closeModal = useCallback(() => {
@@ -123,13 +146,12 @@ export default function SearchPage() {
       setModalStage("closed");
       if (categoryChanged) {
         setCategoryChanged(false);
-        fetchResults(searched, docsInput);
+        fetchResults(searched, docsInput, yearStart, yearEnd);
       }
     }, 300);
-  }, [categoryChanged, searched, docsInput, fetchResults]);
+  }, [categoryChanged, searched, docsInput, yearStart, yearEnd, fetchResults]);
 
   // ── Effects ────────────────────────────────────────────────────────────────
-
   useEffect(() => {
     if (!hasSearched || chartRef.current) return;
     chartRef.current = CreateChart(undefined, undefined, openPdfFromChart, openUploadFromChart);
@@ -138,33 +160,36 @@ export default function SearchPage() {
 
   useEffect(() => {
     const docs = isNaN(urlDocs) ? 10 : urlDocs;
+    const ys   = !isNaN(urlDateStart) && urlDateStart >= YEAR_MIN ? urlDateStart : YEAR_MIN;
+    const ye   = !isNaN(urlDateEnd)   && urlDateEnd   <= YEAR_MAX ? urlDateEnd   : YEAR_MAX;
     setInputVal(urlQuery);
     setDocsInput(docs);
+    setYearStart(ys);
+    setYearEnd(ye);
     if (urlQuery) {
       setHasSearched(true);
-      fetchResults(urlQuery, docs);
+      fetchResults(urlQuery, docs, ys, ye);
     } else {
       setResults([]);
       setHits(0);
     }
-  }, [urlQuery, urlDocs]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [urlQuery, urlDocs, urlDateStart, urlDateEnd]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── Handlers ───────────────────────────────────────────────────────────────
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const q    = inputVal.trim();
     const docs = Math.max(1, docsInput || 1);
     if (!q) return;
     setHasSearched(true);
-    navigate(`/search?q=${encodeURIComponent(q)}&docs=${docs}`);
+    navigate(buildNavUrl(q, docs, yearStart, yearEnd));
   };
 
   const handleLoadAll = () => {
     const q = inputVal.trim();
     if (!q || hits === 0) return;
     setDocsInput(hits);
-    navigate(`/search?q=${encodeURIComponent(q)}&docs=${hits}`);
+    navigate(buildNavUrl(q, hits, yearStart, yearEnd));
   };
 
   const handleDocsChange = (e) => {
@@ -175,7 +200,6 @@ export default function SearchPage() {
   const clearInput = () => setInputVal("");
 
   // ── Render ─────────────────────────────────────────────────────────────────
-
   return (
     <main className="h-screen overflow-hidden bg-main flex flex-col">
 
@@ -251,7 +275,7 @@ export default function SearchPage() {
               type="button"
               onClick={handleLoadAll}
               disabled={hits === 0 || loading}
-              className="px-4 py-2.5 rounded-xl border border-border text-ink-muted text-sm font-medium
+              className="px-4 py-2.5 rounded-xl border border-border text-ink-muted text-sm font-medium mr-2
                          hover:border-accent hover:text-ink disabled:opacity-30 disabled:cursor-not-allowed
                          transition-all duration-150"
             >
@@ -259,9 +283,18 @@ export default function SearchPage() {
             </button>
           )}
 
+          {/* Year Range Slider — only after first search */}
+          {hasSearched && (
+            <YearRangeSlider
+              start={yearStart}
+              end={yearEnd}
+              onChange={handleYearChange}
+            />
+          )}
+
           <button
             type="submit"
-            className="px-4 py-2.5 rounded-xl bg-accent text-main text-sm font-semibold
+            className="px-4 py-2.5 rounded-xl bg-accent text-main text-sm ml-2 font-semibold
                        hover:bg-accent/90 active:scale-95 transition-all duration-150"
           >
             Search

@@ -33,10 +33,16 @@ from src.hasher import _file_hash, _is_duplicate_file, _register_hash
 
 from src.chatins import register_chat
 
+#prieks gadiem 
+import datetime
+YEAR_MIN = 1800
+YEAR_MAX = datetime.date.today().year
+
 load_dotenv()
 
 CP_URL  = os.getenv("CP_URL")
 CP_USER = os.getenv("CP_USER")
+
 CP_PASS = os.getenv("CP_PASS")
 
 app = Flask(__name__)
@@ -142,7 +148,7 @@ def process_file_background(filename, save_path):
     finally:
         set_pdf_processing(False)
 
-
+#title kaa id openalexx id vietaa
 def slugify(text: str) -> str:
     import unicodedata
     text = unicodedata.normalize("NFKD", text)
@@ -418,12 +424,18 @@ def extract_snippet(doc: dict) -> str | None:
 
 
 
-def do_search(query, docs):
+def do_search(query, docs, date_start = None, date_end = None):
+    #sagatavoju paaris knifinus lai CP straadaa
     query_stripped = query.strip()
     zvaigznite = "" if query_stripped.endswith('"') else "*"
+    date_tag = ""
+    if date_start is not None or date_end is not None:
+        ds = int(date_start) if date_start is not None else YEAR_MIN
+        de = int(date_end)   if date_end   is not None else YEAR_MAX
+        date_tag = f"<date>{ds} .. {de}</date>"
 
     fullQ = (
-        f"<query><stub_document>no</stub_document>{query}{zvaigznite}</query>"
+        f"<query><stub_document>no</stub_document>{date_tag}{query}{zvaigznite}</query>"
         f"<relevance>decending</relevance>"
         f"<docs>{docs}</docs>"
         f"<list>"
@@ -619,8 +631,9 @@ def search():
         return jsonify({"error": "query is required"}), 400
     
     try:
-        results, hits = do_search(query, docs=docs)
-
+        date_start = request.args.get("date_start", type=int)
+        date_end   = request.args.get("date_end",   type=int)
+        results, hits = do_search(query, docs=docs, date_start=date_start, date_end=date_end)
         all_nodes     = []
         links         = []
         initial_nodes = ["query"]
