@@ -56,10 +56,11 @@ def cp_document_exists(openalex_id: str, cp_url: str, cp_user: str, cp_pass: str
 def fetch_cp_document(openalex_id: str, cp_url: str, cp_user: str, cp_pass: str) -> dict | None:
     if not openalex_id:
         return None
-    body = f"<document><id>{escape(openalex_id).upper()}</id></document>"
+    body = (
+    f"<document><id>{escape(openalex_id).upper()}</id></document>"
     f"<list>"
     f"<id>yes</id>"
-    f"</list>"
+    f"</list>")
 
     try:
         resp = requests.post(
@@ -188,9 +189,7 @@ def run_stub_worker(cp_url: str, cp_user: str, cp_pass: str):
             status_code = upload_result.get("status_code")
             if status_code == 422:
                 print(f"[stub_worker] ID {openalex_id} already exists. Skipping.")
-            elif upload_result.get("success"):
-                print(f"[stub_worker] Successfully uploaded {openalex_id}", flush=True)
-            else:
+            elif not upload_result.get("success"):
                 print(f"[stub_worker] Failed: {upload_result.get('error')}")
 
 

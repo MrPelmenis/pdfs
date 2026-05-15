@@ -14,6 +14,8 @@ from concurrent.futures import ThreadPoolExecutor
 background_executor = ThreadPoolExecutor(max_workers=1)
 
 from src.pdfToImage import generate_preview
+
+import traceback
 from src.parser import extract_paper_data
 from src.xml_builder import build_xml, save_xml, upload_xml, extract_fallback_text
 
@@ -26,6 +28,8 @@ from src.queue_manager import add_dois_to_queue
 from src.stub_worker import start_stub_worker, set_pdf_processing, cp_document_exists, fetch_cp_document, delete_cp_document
 import xml.etree.ElementTree as ET
 from xml.sax.saxutils import escape
+
+from src.hasher import _file_hash, _is_duplicate_file, _register_hash
 
 from src.chatins import register_chat
 
@@ -134,6 +138,7 @@ def process_file_background(filename, save_path):
 
     except Exception as e:
         print(f"FATAL: [{filename}] {str(e)}")
+        traceback.print_exc()
     finally:
         set_pdf_processing(False)
 
@@ -327,25 +332,26 @@ def upload():
         if header != b"%PDF":
             return jsonify({"error": f"'{filename}' is not a valid PDF file"}), 400
 
-    # ── Check for stub upgrade params ────────────────────────────────────────
     openalex_id = (request.form.get("openalex_id") or "").strip()
     doi         = (request.form.get("doi")         or "").strip()
     is_upgrade  = bool(openalex_id or doi)
 
+    file_hash = _file_hash(file.stream)
+    if _is_duplicate_file(file_hash):
+        return jsonify({"message": "File already uploaded"}), 200
+
     unique_filename = make_unique_filename(filename)
     save_path       = os.path.join(PDF_DIR, unique_filename)
     file.save(save_path)
+    _register_hash(file_hash)  
 
     if is_upgrade:
-        # Targeted stub upgrade — skip all LLM/metadata, run synchronously
-        # (fast enough for a single doc, no need for thread pool)
-        process_stub_upgrade(unique_filename, save_path, openalex_id=openalex_id, doi=doi)
+        background_executor.submit(process_stub_upgrade, unique_filename, save_path, openalex_id=openalex_id, doi=doi)
         return jsonify({
             "message":  "Stub upgraded. Processing in background.",
             "filename": unique_filename,
         }), 200
     else:
-        # Normal upload — full pipeline in background thread
         background_executor.submit(process_file_background, unique_filename, save_path)
         return jsonify({
             "message":  "Upload successful. Processing in background.",
@@ -364,34 +370,48 @@ def clean_filename(file_path):
     return os.path.basename(file_path)
 
 def extract_snippet(doc: dict) -> str | None:
-    for text in doc.values():
-        if not isinstance(text, str):
-            continue
+    def find_highlight(text: str) -> str | None:
         match = re.search(r'%%HLB%%.+?%%HLE%%', text)
         if not match:
-            continue
-
+            return None
         start, end = match.start(), match.end()
         before_words = [w for w in re.split(r'\s+', text[:start].strip()) if w]
         after_words  = [w for w in re.split(r'\s+', text[end:].strip())   if w]
-
         prefix = " ".join(before_words[-10:])
         suffix = " ".join(after_words[:10])
         lead   = "…" if len(before_words) > 10 else ""
         trail  = "…" if len(after_words)  > 10 else ""
-
         snippet = f"{lead}{prefix} {text[start:end]} {suffix}{trail}".strip()
-        snippet = snippet.replace("%%HLB%%", "<b>").replace("%%HLE%%", "</b>")
-        return snippet
+        return snippet.replace("%%HLB%%", "<b>").replace("%%HLE%%", "</b>")
 
-    # No highlight found anywhere — fall back to abstract, then full_text
-    abstract  = (doc.get("abstract")  or "").strip()
-    full_text = (doc.get("full_text") or "").strip()
-
-    fallback = abstract or full_text
-    if not fallback:
+    def search_in(value) -> str | None:
+        if isinstance(value, str):
+            return find_highlight(value)
+        if isinstance(value, list):
+            for item in value:
+                result = search_in(item)
+                if result:
+                    return result
+        if isinstance(value, dict):
+            for v in value.values():
+                result = search_in(v)
+                if result:
+                    return result
         return None
 
+    priority_fields = ["abstract", "full_text", "figures","keywords", "concepts"]
+    
+    for field in priority_fields:
+        value = doc.get(field)
+        if value is None:
+            continue
+        result = search_in(value)
+        if result:
+            return result
+
+    fallback = (doc.get("abstract") or doc.get("full_text") or "").strip()
+    if not fallback:
+        return None
     words = fallback.split()
     trail = "…" if len(words) > 30 else ""
     return " ".join(words[:30]) + trail
@@ -420,6 +440,7 @@ def do_search(query, docs):
         f"<full_text>snippet</full_text>"
         f"<stub_document>yes</stub_document>"
         f"<category_id>yes</category_id>"
+        f"<figure><caption>highlight</caption></figure>"
         f"<topics>yes</topics>"
         f"<concepts>snippet</concepts>"
         f"<keywords>snippet</keywords>"
@@ -500,7 +521,7 @@ def do_search(query, docs):
  
         results.append({
             "title":               doc.get("title"),
-            "id":                  doc.get("id"),          # OpenAlex ID (primary key)
+            "id":                  doc.get("id"),          
             "openalex_id":         doc.get("openalex_id", ""),
             "file":                filename,
             "date":                doc.get("date"),
@@ -1078,7 +1099,6 @@ def route_assign_category():
     if not result["success"]:
         return jsonify({"error": result.get("error"), "detail": result.get("response")}), 500
     return jsonify(result), 200
-
 
 
 register_chat(app, CP_URL, CP_USER, CP_PASS)

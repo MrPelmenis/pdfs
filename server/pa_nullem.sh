@@ -3,6 +3,8 @@
 rm -r ./files/pdf-files/*
 rm -r ./files/xml-files/*
 rm -r ./files/pdf-preview-images/*
+rm -r ./files/queue.txt
+rm -r ./files/uploaded_hashes.txt
 
 curl -u root:CPpassword -d '<database>pdfs</database>'   http://localhost:80/api/servers/a30a1b0d8cab0269f0cdd9bed98fa49c5283d5cd/stop_database
 

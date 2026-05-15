@@ -1,7 +1,7 @@
 import os
 import threading
 
-QUEUE_FILE = "./files/doi_queue.txt"
+QUEUE_FILE = "./files/queue.txt"
 _lock = threading.Lock()
 
 

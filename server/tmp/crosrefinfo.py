@@ -1,19 +1,6 @@
-"""
-fetch_doi.py
-Queries the Crossref API for a given DOI and writes structured metadata to output.json.
-
-Output includes:
-  - Title, journal, year, publisher
-  - Authors with ORCID (when available)
-  - references_count       : how many papers this paper cites
-  - cited_by_count         : how many times this paper has been cited (Crossref's is-referenced-by-count)
-  - references             : list of cited DOIs (where deposited by publisher)
-"""
-
 import json
 import requests
 
-# ── Config ────────────────────────────────────────────────────────────────────
 DOI = "10.3181/00379727-21-3"
 OUTPUT_FILE = "./output.json"
 CROSSREF_URL = f"https://api.crossref.org/works/{DOI}"
