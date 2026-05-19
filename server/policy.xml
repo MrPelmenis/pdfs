@@ -57,8 +57,6 @@
     <property>index=text&amp;xml&amp;facet</property>
     <property>list=yes</property>
   </rule>
-
-
   <rule>
     <xpath>//document/authors</xpath>
     <property>index=text&amp;xml</property>
@@ -71,15 +69,12 @@
     <property>weight=70-80</property>
     <property>list=yes</property>
   </rule>
-
   <rule>
     <xpath>//document/abstract</xpath>
     <property>index=text&amp;xml</property>
     <property>weight=70-80</property>
     <property>list=highlight</property>
   </rule>
-
-
   <rule>
     <xpath>//document/topics</xpath>
     <property>index=text&amp;xml</property>
@@ -90,8 +85,6 @@
     <property>weight=70-80</property>
     <property>list=yes</property>
   </rule>
-
-
   <rule>
     <xpath>//document/concepts</xpath>
     <property>index=text&amp;xml</property>
@@ -102,8 +95,6 @@
     <property>weight=60-70</property>
     <property>list=yes</property>
   </rule>
-
-
   <rule>
     <xpath>//document/keywords</xpath>
     <property>index=text&amp;xml</property>
@@ -114,8 +105,6 @@
     <property>weight=75-85</property>
     <property>list=yes</property>
   </rule>
-
-
   <rule>
     <xpath>//document/keywords_extracted</xpath>
     <property>index=text&amp;xml</property>
@@ -126,8 +115,6 @@
     <property>weight=70-80</property>
     <property>list=yes</property>
   </rule>
-
-
   <rule>
     <xpath>//document/sections</xpath>
     <property>index=text&amp;xml</property>
@@ -138,58 +125,42 @@
     <property>weight=55-65</property>
     <property>list=highlight</property>
   </rule>
-
   <rule>
     <xpath>//document/methods</xpath>
-    <property>index=xml-text&amp;xml</property>
+    <property>index=xml-text</property>
     <property>list=no</property>
   </rule>
   <rule>
     <xpath>//document/methods/method</xpath>
-    <property>index=text&amp;xml</property>
-    <property>weight=50-60</property>
+    <property>colocate=yes</property>
     <property>list=no</property>
   </rule>
   <rule>
     <xpath>//document/methods/method/heading</xpath>
-    <property>index=text&amp;xml</property>
-    <property>weight=60-70</property>
-    <property>list=no</property>
+    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/methods/method/text</xpath>
-    <property>index=text&amp;xml</property>
-    <property>weight=50-60</property>
-    <property>list=no</property>
+    <property>list=yes</property>
   </rule>
-
-
   <rule>
     <xpath>//document/conclusions</xpath>
-    <property>index=xml-text&amp;xml</property>
+    <property>index=xml-text</property>
     <property>list=no</property>
   </rule>
   <rule>
     <xpath>//document/conclusions/conclusion</xpath>
-    <property>index=text&amp;xml</property>
-    <property>weight=50-60</property>
+    <property>colocate=yes</property>
     <property>list=no</property>
   </rule>
   <rule>
     <xpath>//document/conclusions/conclusion/heading</xpath>
-    <property>index=text&amp;xml</property>
-    <property>weight=60-70</property>
-    <property>list=no</property>
+    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/conclusions/conclusion/text</xpath>
-    <property>index=text&amp;xml</property>
-    <property>weight=50-60</property>
-    <property>list=no</property>
+    <property>list=yes</property>
   </rule>
-
-
-
   <rule>
     <xpath>//document/figures</xpath>
     <property>index=text&amp;xml</property>
@@ -198,6 +169,7 @@
   <rule>
     <xpath>//document/figures/figure</xpath>
     <property>index=text&amp;xml</property>
+    <property>colocate=yes</property>
     <property>list=no</property>
   </rule>
   <rule>
@@ -217,8 +189,6 @@
     <property>index=no</property>
     <property>list=no</property>
   </rule>
-
-
   <rule>
     <xpath>//document/tables</xpath>
     <property>index=no</property>
@@ -226,27 +196,8 @@
   </rule>
   <rule>
     <xpath>//document/tables/table</xpath>
-    <property>index=no</property>
-    <property>list=no</property>
-  </rule>
-  <rule>
-    <xpath>//document/tables/table/content</xpath>
-    <property>index=no</property>
-    <property>list=yes</property>
-  </rule>
-  <rule>
-    <xpath>//document/tables/table/grid</xpath>
-    <property>index=no</property>
-    <property>list=yes</property>
-  </rule>
-  <rule>
-    <xpath>//document/tables/table/grid/row</xpath>
-    <property>index=no</property>
-    <property>list=yes</property>
-  </rule>
-  <rule>
-    <xpath>//document/tables/table</xpath>
     <property>index=text&amp;xml</property>
+    <property>colocate=yes</property>
     <property>list=no</property>
   </rule>
   <rule>
@@ -275,8 +226,6 @@
     <property>index=no</property>
     <property>list=no</property>
   </rule>
-
-
   <rule>
     <xpath>//document/full_text</xpath>
     <property>index=text&amp;xml</property>
@@ -284,8 +233,6 @@
     <property>stem-lang=en</property>
     <property>list=snippet</property>
   </rule>
-
-
   <rule>
     <xpath>//document/referenced_work_ids</xpath>
     <property>index=xml</property>
@@ -306,5 +253,4 @@
     <property>index=text&amp;xml</property>
     <property>list=yes</property>
   </rule>
-
 </policy>

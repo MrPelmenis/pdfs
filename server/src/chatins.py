@@ -4,14 +4,12 @@ import requests as req
 
 OLLAMA_URL     = "http://localhost:11434/api/chat"
 OLLAMA_TIMEOUT = 120
-#CHAT_MODEL     = "gemma4:26b"
-#QUERY_MODEL    = "gemma4:26b"
 
 CHAT_MODEL = "gemma4:e4b"
 QUERY_MODEL = "gemma4:e4b"
 
 CTX_MIN        = 2048    # never go below this
-CTX_MAX        = 32768   # hard ceiling — raise if you have very long full_texts
+CTX_MAX        = 65536   # hard ceiling — raise if you have very long full_texts
 CTX_HEADROOM   = 1.4     # multiply estimated tokens by this for safety margin
 ANSWER_RESERVE = 1024    # tokens reserved for the model's output
 
@@ -45,14 +43,16 @@ ANSWER_PROMPT = """\
 You are a research assistant helping scientists explore a paper database.
 Answer the user's question using ONLY the provided paper excerpts below.
 
-Formatting rules — follow these exactly:
-- Structure your answer as one section per paper
-- Each section must start with a heading using the paper title: ## [Paper Title]
-- Under each heading write 2-5 sentences summarising what that paper says relevant to the question
-- Use $...$ for inline math and $$...$$ for block equations
-- Be concise and specific
-- If a paper is not relevant to the question, skip it entirely
-- If none of the papers contain enough information, say so clearly
+Formatting rules — follow exactly:
+- Write one section per relevant paper
+- Each section MUST start with: ## Paper Title (use the exact title)
+- Under each heading write 3-6 sentences covering what that paper says about the question
+- Always extract and highlight specific numeric results: values, units, percentages, concentrations, rates, constants — format them as `inline code` (e.g. `37 °C`, `Km = 2.4 mM`, `yield: 91%`)
+- Use bullet points under a section when listing multiple measurements or findings
+- Use $...$ for inline math and $$...$$ for display equations when the paper contains them
+- If a paper has no relevant information, skip it entirely
+- End with a short **Summary** section (2-3 sentences) synthesising the key numeric findings across papers
+- Do not invent numbers — only report what is explicitly stated in the excerpts
 
 --- PAPERS ---
 {context}
@@ -60,6 +60,7 @@ Formatting rules — follow these exactly:
 
 User question: {question}
 Answer:"""
+
 
 NO_CONTEXT_PROMPT = """\
 You are a research assistant helping scientists explore a paper database.
@@ -69,7 +70,7 @@ Answer as best you can from your general knowledge.
 Formatting rules:
 - Use markdown headings and bullet points for structure
 - Use $...$ for inline math and $$...$$ for block equations
-- Begin your response with: > ⚠️ No relevant papers were found. Answering from general knowledge.
+- Begin your response with: > No relevant papers were found. Answering from general knowledge.
 - Then a blank line, then your answer
 
 User question: {question}
@@ -77,24 +78,15 @@ Answer:"""
 
 
 def search_cp(query: str, cp_url: str, cp_user: str, cp_pass: str) -> list:
-    print(f"Querying CP: '{query}'")
-
     body = (
         f"<query><stub_document>no</stub_document>{query}*</query>"
         f"<relevance>decending</relevance>"
         f"<docs>{SEARCH_DOCS}</docs>"
         f"<list>"
-        f"<file>yes</file>"
         f"<title>yes</title>"
         f"<abstract>yes</abstract>"
         f"<authors>yes</authors>"
         f"<date>yes</date>"
-        f"<keywords>yes</keywords>"
-        f"<keywords_extracted>yes</keywords_extracted>"
-        f"<topics>yes</topics>"
-        f"<methods>yes</methods>"
-        f"<conclusions>yes</conclusions>"
-        f"<figures>yes</figures>"
         f"<full_text>yes</full_text>"
         f"</list>"
     )
@@ -232,20 +224,12 @@ def _build_context(results: list) -> str:
 
 
 def _estimate_num_ctx(prompt: str) -> int:
-    """
-    Estimate a sensible num_ctx for this prompt.
-    Rule of thumb: 1 token ≈ 4 chars for English/scientific text.
-    We add headroom for the model's reply, then round up to the next
-    power of two so Ollama can reuse cached KV allocations across
-    similar-sized requests.
-    """
     estimated_tokens = len(prompt) // 4
     needed = int(estimated_tokens * CTX_HEADROOM) + ANSWER_RESERVE
     ctx = CTX_MIN
     while ctx < needed:
         ctx *= 2
     ctx = min(ctx, CTX_MAX)
-    print(f"[ollama] prompt ~{estimated_tokens} tokens → num_ctx={ctx}")
     return ctx
 
 
@@ -308,7 +292,6 @@ def generate(question: str, cp_url: str, cp_user: str, cp_pass: str):
     try:
         yield send_status_update("Converting query…")
         cp_query = _convert_to_query(question)
-        print(f"CP query: '{cp_query}'")
 
         yield send_status_update("Finding documents…")
         results = search_cp(cp_query, cp_url, cp_user, cp_pass)
@@ -340,12 +323,9 @@ def generate(question: str, cp_url: str, cp_user: str, cp_pass: str):
 
                 if token:
                     token_count += 1
-                    if token_count <= 5 or token_count % 50 == 0:
-                        print(f"[chat/generate] Token #{token_count}: {repr(token)}")
                     yield _sse_token(token)
 
                 if data.get("done"):
-                    print(f"Ollama done. Total tokens: {token_count}")
                     break
 
             except (json.JSONDecodeError, UnicodeDecodeError) as e:
@@ -355,15 +335,12 @@ def generate(question: str, cp_url: str, cp_user: str, cp_pass: str):
         yield "data: [DONE]\n\n"
 
     except req.exceptions.ConnectionError as e:
-        print(f"[chat/generate] CONNECTION ERROR: {e}")
         yield "data: Ollama is not reachable. Is it running?\n\n"
         yield "data: [DONE]\n\n"
     except req.exceptions.Timeout as e:
-        print(f"[chat/generate] TIMEOUT: {e}")
         yield "data: The model timed out. Try a shorter question.\n\n"
         yield "data: [DONE]\n\n"
     except Exception as e:
-        print(f"UNEXPECTED ERROR: {type(e).__name__}: {e}")
         traceback.print_exc()
         yield "data: Something went wrong on the server.\n\n"
         yield "data: [DONE]\n\n"

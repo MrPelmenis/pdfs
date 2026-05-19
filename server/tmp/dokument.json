@@ -1,0 +1,16 @@
+ * Debugger is active!
+ * Debugger PIN: 801-535-995
+{'id': 'W2153643495', 'openalex_id': 'W2153643495', 'file': './files/pdf-files/0071_1593.pdf', 'title': 'Calcium Phosphate Nanoparticle Adjuvant', 'cited_by_count': '214', 'date': '2000', 'doi_number': '10.1128/cdli.
+7.6.899-903.2000', 'img_preview_path': './files/pdf-preview-images/0071_1593.jpeg', 'stub_document': 'no', 'category_id': '13', 'authors': None, 'abstract': 'Vaccination to protect against human infectious diseases m
+ay be enhanced by using adjuvants that can selectively stimulate immunoregulatory responses. In a murine model, a novel nanoparticulate adjuvant composed of calcium phosphate (CAP) was compared with the commonly used
+ aluminum (alum) adjuvants for its ability to induce immunity to herpes simplex virus type 2 (HSV-2) and Epstein-Barr virus (EBV) infections. Results indicated that CAP was more potent as an adjuvant than alum, elici
+ted little or no inflammation at the site of administration, induced high titers of immunoglobulin G2a (IgG2a) antibody and neutralizing antibody, and facilitated a high percentage of protection against HSV-2 infecti
+on. Additional benefits of CAP include (i) an insignificant IgE response, which is an important advantage over injection of alum compounds, and (ii) the fact that CAP is a natural constituent of the human body. Thus,
+ CAP is very well tolerated and absorbed. These studies were performed with animal models. By virtue of the potency of this CAP adjuvant and the relative absence of side effects, we believe that this new CAP formulat
+ion has great potential for use as an adjuvant in humans.', 'methods': None, 'conclusions': None, 'full_text': 'QING HE,* ALAINA R. MITCHELL, STACY L. JOHNSON, CLAUS WAGNER-BARTAK, TULIN MORCOL, AND STEVE J. D. BELL\
+n\nBioSante Pharmaceuticals, Inc., Smyrna, Georgia 30082\n\nReceived 10 February 2000/Returned for modification 27 April 2000/Accepted 14 August 2000\n\nVaccination to protect against human infectious diseases may be
+ enhanced by using adjuvants that can selectively stimulate immunoregulatory responses. In a murine model, a novel nanoparticulate adjuvant composed of calcium phosphate (CAP) was compared with the commonly used alum
+inum (alum) adjuvants for its ability to induce immunity to herpes simplex virus type 2 (HSV-2) and Epstein-Barr virus (EBV) infections. Results indicated that CAP was more potent as an adjuvant than alum, elicited l
+ittle or no inflammation at the site of administration', 'referenced_work_ids': None, 'related_work_ids': None}
+80.232.183.230 - - [19/May/2026 14:38:30] "GET /search?query=&docs=1&figures=mice HTTP/1.1" 200 -
+

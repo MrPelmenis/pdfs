@@ -1,0 +1,16 @@
+<cps:reply xmlns:cps="www.contextprime.com">
+	<cps:database>pdfs</cps:database>
+	<cps:command>search</cps:command>
+	<cps:content>
+		<hits>0</hits>
+		<more>=0</more>
+		<found>0</found>
+		<from>0</from>
+		<to>0</to>
+		<problem_terms>
+			<path_not_indexed>figures/figure/caption/mouse</path_not_indexed>
+		</problem_terms>
+	</cps:content>
+	<cps:seconds>0.0010</cps:seconds>
+</cps:reply>
+

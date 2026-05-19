@@ -405,8 +405,8 @@ def extract_snippet(doc: dict) -> str | None:
                     return result
         return None
 
-    priority_fields = ["abstract", "full_text", "figures","keywords", "concepts"]
-    
+    priority_fields = ["abstract", "conclusions", "methods", "figures", "full_text", "keywords", "concepts"]
+
     for field in priority_fields:
         value = doc.get(field)
         if value is None:
@@ -423,43 +423,97 @@ def extract_snippet(doc: dict) -> str | None:
     return " ".join(words[:30]) + trail
 
 
+import re
 
-def do_search(query, docs, date_start = None, date_end = None):
-    #sagatavoju paaris knifinus lai CP straadaa
-    query_stripped = query.strip()
-    zvaigznite = "" if query_stripped.endswith('"') else "*"
+def add_wildcards(val: str) -> str:
+    #katram vardam galaa * iznemot ja viss ir "query_text"
+    v = val.strip()
+    if not v:
+        return v
+    if v.startswith('"') and v.endswith('"'):
+        return v
+    tokens = v.split()
+    return " ".join(t if t.endswith(("*", "?")) else t + "*" for t in tokens)
+
+
+def build_cp_query(query: str,date_start=None,date_end=None,f_abstract: str = "",f_methods: str = "",f_conclusions: str = "",f_figures: str = "",category_id=None,):
     date_tag = ""
     if date_start is not None or date_end is not None:
         ds = int(date_start) if date_start is not None else YEAR_MIN
         de = int(date_end)   if date_end   is not None else YEAR_MAX
         date_tag = f"<date>{ds} .. {de}</date>"
 
+    main_part = add_wildcards(query) if query.strip() else ""
+
+    fields = [
+        ("abstract",    f_abstract),
+        ("methods",     f_methods),
+        ("conclusions", f_conclusions),
+        ("figures",     f_figures),
+    ]
+    field_parts = []
+    for tag, val in fields:
+        v = (val or "").strip()
+        if not v:
+            continue
+        field_parts.append(f"<{tag}>{add_wildcards(v)}</{tag}>")
+
+    if len(field_parts) > 1:
+        field_query = "".join(field_parts)  
+    elif len(field_parts) == 1:
+        field_query = field_parts[0]
+    else:
+        field_query = ""
+
+    # Category — AND filter
+    cat_part = (
+        f"<category_id>{int(category_id)}</category_id>"
+        if category_id not in (None, "", "0")
+        else ""
+    )
+
+    parts = [p for p in [main_part, field_query, cat_part] if p]
+    combined = " ".join(parts) if parts else ""
+
+    return combined, date_tag
+
+def do_search(query, docs, date_start=None, date_end=None, f_abstract="", f_methods="", f_conclusions="", f_figures="", category_id=None,):
+    combined_query, date_tag = build_cp_query(
+            query,
+            date_start=date_start,
+            date_end=date_end,
+            f_abstract=f_abstract,
+            f_methods=f_methods,
+            f_conclusions=f_conclusions,
+            f_figures=f_figures,
+            category_id=category_id,
+        )
     fullQ = (
-        f"<query><stub_document>no</stub_document>{date_tag}{query}{zvaigznite}</query>"
+        f"<query><stub_document>no</stub_document>{date_tag}{combined_query}</query>"
         f"<relevance>decending</relevance>"
         f"<docs>{docs}</docs>"
         f"<list>"
         f"<id>yes</id>"
         f"<openalex_id>yes</openalex_id>"
         f"<title>yes</title>"
-        f"<abstract>snippet</abstract>"
+        f"<abstract>highlight</abstract>"          
         f"<authors>yes</authors>"
         f"<date>yes</date>"
         f"<doi_number>yes</doi_number>"
         f"<cited_by_count>yes</cited_by_count>"
         f"<file>yes</file>"
         f"<img_preview_path>yes</img_preview_path>"
-        f"<full_text>snippet</full_text>"
+        f"<full_text>snippet</full_text>"         
         f"<stub_document>yes</stub_document>"
         f"<category_id>yes</category_id>"
         f"<figure><caption>highlight</caption></figure>"
-        f"<topics>yes</topics>"
-        f"<concepts>snippet</concepts>"
-        f"<keywords>snippet</keywords>"
+        f"<conclusions><conclusion><text>highlight</text></conclusion></conclusions>"
+        f"<methods><method><text>highlight</text></method></methods>"
         f"<referenced_work_ids>yes</referenced_work_ids>"
         f"<related_work_ids>yes</related_work_ids>"
         f"</list>"
     )
+    print(fullQ)
     resp = requests.post(
         CP_URL + "/api/databases/pdfs/search/json",
         data=fullQ,
@@ -523,6 +577,7 @@ def do_search(query, docs, date_start = None, date_end = None):
             os.path.join(PREVIEW_DIR, preview_name)
         )
  
+
         try:
             cat_id_raw = doc.get("category_id")
             category = get_category_by_id(int(cat_id_raw)) if cat_id_raw is not None else None
@@ -551,6 +606,7 @@ def do_search(query, docs, date_start = None, date_end = None):
             "snippet": extract_snippet(doc),
 
         })
+        print(extract_snippet(doc))
  
     return results, hits
  
@@ -627,13 +683,35 @@ def search():
     except (ValueError, TypeError):
         docs = 10
 
-    if not query:
+    f_abstract    = request.args.get("abstract",    "").strip()
+    f_methods     = request.args.get("methods",     "").strip()
+    f_conclusions = request.args.get("conclusions", "").strip()
+    f_figures     = request.args.get("figures",     "").strip()
+ 
+    has_any = query or f_abstract or f_methods or f_conclusions or f_figures
+    if not has_any:
         return jsonify({"error": "query is required"}), 400
-    
+
     try:
         date_start = request.args.get("date_start", type=int)
         date_end   = request.args.get("date_end",   type=int)
-        results, hits = do_search(query, docs=docs, date_start=date_start, date_end=date_end)
+        category_id = request.args.get("category_id", "").strip() or None
+        has_any = query or f_abstract or f_methods or f_conclusions or f_figures
+        if not has_any:
+            return jsonify({"error": "query is required"}), 400
+
+        results, hits = do_search(
+            query,
+            docs=docs,
+            date_start=date_start,
+            date_end=date_end,
+            f_abstract=f_abstract,
+            f_methods=f_methods,
+            f_conclusions=f_conclusions,
+            f_figures=f_figures,
+            category_id=category_id,
+        )
+
         all_nodes     = []
         links         = []
         initial_nodes = ["query"]

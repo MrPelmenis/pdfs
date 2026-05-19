@@ -247,7 +247,8 @@ function CategoryPanel({ documentId, initialCategory, visible, onCategoryChange 
     setNewName("");
     setCreating(false);
     setError(null);
-  }, [documentId]);
+  }, [documentId]); //eslint-disable-line react-hooks/exhaustive-deps
+
 
   async function doAssign(cat) {
     setSaving(true);

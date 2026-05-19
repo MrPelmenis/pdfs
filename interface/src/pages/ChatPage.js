@@ -31,35 +31,23 @@ function StatusStep({ label, done }) {
   );
 }
 
-function SourceCard({ file, title }) {
+function SourceCard({ file, title, index }) {
   const displayName = title || file.split("/").pop() || file;
 
   return (
     <div
       title={file}
-      className="flex flex-col items-center gap-1.5 px-3 py-2.5 rounded-lg
+      className="flex items-start gap-2 px-3 py-2 rounded-lg
                  bg-surface border border-border flex-shrink-0
-                 w-28 select-none"
+                 w-44 select-none hover:border-accent/40 transition-colors duration-150"
     >
-      {/* Document icon */}
-      <svg
-        className="w-5 h-5 text-accent/60 flex-shrink-0"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586
-             a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19
-             a2 2 0 01-2 2z"
-        />
-      </svg>
-      {/* Title below icon */}
+      {/* Number badge */}
+      <span className="text-xs font-semibold text-accent/70 mt-0.5 flex-shrink-0">
+        {index}
+      </span>
+      {/* Title */}
       <span
-        className="text-xs text-ink-muted text-center leading-tight w-full"
+        className="text-xs text-ink-dim leading-tight"
         style={{
           display: "-webkit-box",
           WebkitLineClamp: 3,
@@ -76,18 +64,76 @@ function SourceCard({ file, title }) {
 function SourceGrid({ sources }) {
   if (!sources || sources.length === 0) return null;
   return (
-    <div className="flex flex-row gap-2 overflow-x-auto pb-1"
-         style={{ scrollbarWidth: "thin" }}>
-      {sources.map((src, i) => (
-        <SourceCard key={i} file={src.file} title={src.title} />
-      ))}
+    <div className="flex flex-col gap-1.5 mb-1">
+      <span className="text-xs text-ink-muted font-medium uppercase tracking-wide">
+        Sources
+      </span>
+      <div
+        className="flex flex-row gap-2 overflow-x-auto pb-1"
+        style={{ scrollbarWidth: "thin" }}
+      >
+        {sources.map((src, i) => (
+          <SourceCard key={i} index={i + 1} file={src.file} title={src.title} />
+        ))}
+      </div>
     </div>
   );
 }
 
-const MD_PLUGINS = {
-  remarkPlugins: [remarkMath],
-  rehypePlugins: [rehypeKatex],
+const MD_COMPONENTS = {
+  // Render h2 with a subtle left accent bar — Perplexity-style section headers
+  h2: ({ children }) => (
+    <h2 className="flex items-center gap-2 text-sm font-semibold text-ink mt-4 mb-2
+                   border-b border-border pb-1.5">
+      <span className="w-0.5 h-4 rounded-full bg-accent flex-shrink-0" />
+      {children}
+    </h2>
+  ),
+  // Inline code — numeric values, units
+  code: ({ inline, children }) =>
+    inline ? (
+      <code className="bg-raised text-accent text-xs px-1.5 py-0.5 rounded font-mono">
+        {children}
+      </code>
+    ) : (
+      <code>{children}</code>
+    ),
+  // Pre — code blocks
+  pre: ({ children }) => (
+    <pre className="bg-raised rounded-lg px-4 py-3 overflow-x-auto text-xs font-mono text-ink my-2">
+      {children}
+    </pre>
+  ),
+  // Blockquote — "No papers found" notice
+  blockquote: ({ children }) => (
+    <blockquote className="border-l-2 border-accent pl-3 text-ink-dim text-xs italic my-2">
+      {children}
+    </blockquote>
+  ),
+  // HR — divider between paper sections
+  hr: () => <hr className="border-border my-3" />,
+  // Strong — bold text
+  strong: ({ children }) => (
+    <strong className="font-semibold text-ink">{children}</strong>
+  ),
+  // Paragraph
+  p: ({ children }) => (
+    <p className="text-sm text-ink leading-relaxed my-1.5">{children}</p>
+  ),
+  // Lists
+  ul: ({ children }) => (
+    <ul className="list-disc list-outside pl-4 my-1.5 space-y-0.5 text-sm text-ink">
+      {children}
+    </ul>
+  ),
+  ol: ({ children }) => (
+    <ol className="list-decimal list-outside pl-4 my-1.5 space-y-0.5 text-sm text-ink">
+      {children}
+    </ol>
+  ),
+  li: ({ children }) => (
+    <li className="leading-relaxed">{children}</li>
+  ),
 };
 
 export default function ChatPage() {
@@ -147,7 +193,6 @@ export default function ChatPage() {
           const trimmed = line.trim();
           if (!trimmed) continue;
 
-          // ── status event ────────────────────────────────────────────────
           if (trimmed.startsWith("status: ")) {
             const statusMsg = trimmed.slice(8);
             patchLast(msg => ({
@@ -165,7 +210,6 @@ export default function ChatPage() {
             continue;
           }
 
-          // ── sources event ───────────────────────────────────────────────
           if (trimmed.startsWith("sources: ")) {
             try {
               const sources = JSON.parse(trimmed.slice(9));
@@ -174,7 +218,6 @@ export default function ChatPage() {
             continue;
           }
 
-          // ── data event ──────────────────────────────────────────────────
           if (trimmed.startsWith("data: ")) {
             const token = trimmed.slice(6);
             if (token === "[DONE]") {
@@ -226,7 +269,7 @@ export default function ChatPage() {
 
       {/* ── Messages ── */}
       <div className="flex-1 overflow-y-auto px-5 py-6">
-        <div className="max-w-2xl mx-auto flex flex-col gap-5">
+        <div className="max-w-2xl mx-auto flex flex-col gap-6">
 
           {isEmpty && (
             <div className="flex flex-col items-center justify-center h-full pt-24 gap-3 text-ink-muted select-none">
@@ -239,77 +282,79 @@ export default function ChatPage() {
           )}
 
           {messages.map((msg, i) => (
-            <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+            <div key={i}>
 
-              {/* Assistant avatar */}
-              {msg.role === "assistant" && (
-                <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5 mr-2.5">
-                  <svg className="w-3 h-3 text-accent" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-11h2v6h-2zm0-4h2v2h-2z" />
-                  </svg>
+              {/* ── User message ── */}
+              {msg.role === "user" && (
+                <div className="flex justify-end">
+                  <div className="max-w-[80%] bg-accent text-main rounded-2xl rounded-br-sm
+                                  px-4 py-2.5 text-sm font-medium leading-relaxed">
+                    {msg.text}
+                  </div>
                 </div>
               )}
 
-              <div style={{ maxWidth: "85%" }} className="flex flex-col gap-2 min-w-0">
+              {/* ── Assistant message ── */}
+              {msg.role === "assistant" && (
+                <div className="flex gap-3">
 
-                {/* ── Status steps ── */}
-                {msg.role === "assistant" && (msg.statusSteps || []).length > 0 && (
-                  <div className="flex flex-col gap-1 px-1 pb-1">
-                    {msg.statusSteps.map((step, si) => (
-                      <StatusStep key={si} label={step.label} done={step.done} />
-                    ))}
+                  {/* Avatar */}
+                  <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center
+                                  justify-center flex-shrink-0 mt-0.5">
+                    <svg className="w-3 h-3 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-11h2v6h-2zm0-4h2v2h-2z" />
+                    </svg>
                   </div>
-                )}
 
-                {/* ── Source cards — horizontal scrollable row ── */}
-                {msg.role === "assistant" && msg.sources && (
-                  <SourceGrid sources={msg.sources} />
-                )}
+                  <div className="flex-1 min-w-0 flex flex-col gap-2">
 
-                {/* ── Bubble ── */}
-                {(msg.text || msg.role === "user") && (
-                  <div
-                    className={`
-                      rounded-2xl px-4 py-2.5 text-sm leading-relaxed
-                      ${msg.role === "user"
-                        ? "bg-accent text-main rounded-br-sm font-medium"
-                        : msg.error
-                          ? "bg-surface border border-red-500/30 text-red-400 rounded-bl-sm"
-                          : "bg-surface border border-border text-ink rounded-bl-sm"
-                      }
-                    `}
-                  >
-                    {msg.role === "assistant"
-                      ? msg.text
-                        ? (
-                          <ReactMarkdown
-                            remarkPlugins={MD_PLUGINS.remarkPlugins}
-                            rehypePlugins={MD_PLUGINS.rehypePlugins}
-                          >
-                            {msg.text}
-                          </ReactMarkdown>
-                        )
-                        : (
-                          !msg.currentStatus && (
-                            <span className="flex gap-1 items-center h-4">
-                              {[0, 1, 2].map(j => (
-                                <span
-                                  key={j}
-                                  className="w-1.5 h-1.5 rounded-full bg-ink-muted"
-                                  style={{
-                                    animation: "pulse 1.2s ease-in-out infinite",
-                                    animationDelay: `${j * 0.2}s`,
-                                  }}
-                                />
-                              ))}
-                            </span>
-                          )
-                        )
-                      : msg.text
-                    }
+                    {/* Status steps */}
+                    {(msg.statusSteps || []).length > 0 && (
+                      <div className="flex flex-col gap-1">
+                        {msg.statusSteps.map((step, si) => (
+                          <StatusStep key={si} label={step.label} done={step.done} />
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Sources */}
+                    {msg.sources && msg.sources.length > 0 && (
+                      <SourceGrid sources={msg.sources} />
+                    )}
+
+                    {/* Answer */}
+                    {msg.text ? (
+                      <div className={msg.error
+                        ? "text-sm text-danger"
+                        : "min-w-0"
+                      }>
+                        <ReactMarkdown
+                          remarkPlugins={[remarkMath]}
+                          rehypePlugins={[rehypeKatex]}
+                          components={MD_COMPONENTS}
+                        >
+                          {msg.text}
+                        </ReactMarkdown>
+                      </div>
+                    ) : (
+                      !msg.currentStatus && (
+                        <span className="flex gap-1 items-center h-4">
+                          {[0, 1, 2].map(j => (
+                            <span
+                              key={j}
+                              className="w-1.5 h-1.5 rounded-full bg-ink-muted"
+                              style={{
+                                animation: "pulse 1.2s ease-in-out infinite",
+                                animationDelay: `${j * 0.2}s`,
+                              }}
+                            />
+                          ))}
+                        </span>
+                      )
+                    )}
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           ))}
 
