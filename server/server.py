@@ -405,7 +405,7 @@ def extract_snippet(doc: dict) -> str | None:
                     return result
         return None
 
-    priority_fields = ["abstract", "conclusions", "methods", "figures", "full_text", "keywords", "concepts"]
+    priority_fields = ["abstract", "conclusions", "methods", "figures", "topics", "keywords", "concepts", "full_text"]
 
     for field in priority_fields:
         value = doc.get(field)
@@ -436,7 +436,7 @@ def add_wildcards(val: str) -> str:
     return " ".join(t if t.endswith(("*", "?")) else t + "*" for t in tokens)
 
 
-def build_cp_query(query: str,date_start=None,date_end=None,f_abstract: str = "",f_methods: str = "",f_conclusions: str = "",f_figures: str = "",category_id=None,):
+def build_cp_query(query: str,date_start=None,date_end=None,f_abstract: str = "",f_methods: str = "",f_conclusions: str = "",f_figures: str = "",category_id=None, f_topics: str =""):
     date_tag = ""
     if date_start is not None or date_end is not None:
         ds = int(date_start) if date_start is not None else YEAR_MIN
@@ -444,6 +444,17 @@ def build_cp_query(query: str,date_start=None,date_end=None,f_abstract: str = ""
         date_tag = f"<date>{ds} .. {de}</date>"
 
     main_part = add_wildcards(query) if query.strip() else ""
+
+    f_topics_val = add_wildcards((f_topics or "").strip())
+    if f_topics_val:
+        tkc_part = (
+            f"{{<topics><topic>{f_topics_val}</topic></topics>"
+            f"<keywords><keyword>{f_topics_val}</keyword></keywords>"
+            f"<concepts><concept>{f_topics_val}</concept></concepts>}}"
+        )
+    else:
+        tkc_part = ""
+
 
     fields = [
         ("abstract",    f_abstract),
@@ -477,17 +488,23 @@ def build_cp_query(query: str,date_start=None,date_end=None,f_abstract: str = ""
 
     return combined, date_tag
 
-def do_search(query, docs, date_start=None, date_end=None, f_abstract="", f_methods="", f_conclusions="", f_figures="", category_id=None,):
+def do_search(query, docs, date_start=None, date_end=None, 
+              f_abstract="", f_methods="", f_conclusions="", 
+              f_figures="", category_id=None, f_topics=""):
+    
     combined_query, date_tag = build_cp_query(
-            query,
-            date_start=date_start,
-            date_end=date_end,
-            f_abstract=f_abstract,
-            f_methods=f_methods,
-            f_conclusions=f_conclusions,
-            f_figures=f_figures,
-            category_id=category_id,
-        )
+        query,
+        date_start=date_start,
+        date_end=date_end,
+        f_abstract=f_abstract,
+        f_methods=f_methods,
+        f_conclusions=f_conclusions,
+        f_figures=f_figures,
+        category_id=category_id,
+        f_topics=f_topics,
+    )
+    print(combined_query)
+
     fullQ = (
         f"<query><stub_document>no</stub_document>{date_tag}{combined_query}</query>"
         f"<relevance>decending</relevance>"
@@ -496,24 +513,32 @@ def do_search(query, docs, date_start=None, date_end=None, f_abstract="", f_meth
         f"<id>yes</id>"
         f"<openalex_id>yes</openalex_id>"
         f"<title>yes</title>"
-        f"<abstract>highlight</abstract>"          
+        f"<abstract>highlight</abstract>"
         f"<authors>yes</authors>"
         f"<date>yes</date>"
         f"<doi_number>yes</doi_number>"
         f"<cited_by_count>yes</cited_by_count>"
         f"<file>yes</file>"
         f"<img_preview_path>yes</img_preview_path>"
-        f"<full_text>snippet</full_text>"         
+        f"<full_text>highlight</full_text>"
         f"<stub_document>yes</stub_document>"
         f"<category_id>yes</category_id>"
-        f"<figure><caption>highlight</caption></figure>"
+        f"<figures><figure><caption>highlight</caption></figure></figures>"
         f"<conclusions><conclusion><text>highlight</text></conclusion></conclusions>"
         f"<methods><method><text>highlight</text></method></methods>"
+        f"<topics><topic>highlight</topic></topics>"
+        f"<keywords><keyword>highlight</keyword></keywords>"
+        f"<concepts><concept>highlight</concept></concepts>"
+        f"<figures>highlight</figures>"
+        f"<conclusions>highlight</conclusions>"
+        f"<methods>highlight</methods>"
+        f"<topics>highlight</topics>"
+        f"<keywords>highlight</keywords>"
+        f"<concepts>highlight</concepts>"
         f"<referenced_work_ids>yes</referenced_work_ids>"
         f"<related_work_ids>yes</related_work_ids>"
         f"</list>"
-    )
-    print(fullQ)
+        )
     resp = requests.post(
         CP_URL + "/api/databases/pdfs/search/json",
         data=fullQ,
@@ -606,7 +631,7 @@ def do_search(query, docs, date_start=None, date_end=None, f_abstract="", f_meth
             "snippet": extract_snippet(doc),
 
         })
-        print(extract_snippet(doc))
+        print(doc)
  
     return results, hits
  
@@ -687,8 +712,10 @@ def search():
     f_methods     = request.args.get("methods",     "").strip()
     f_conclusions = request.args.get("conclusions", "").strip()
     f_figures     = request.args.get("figures",     "").strip()
+    f_topics = request.args.get("topics", "").strip()
+
  
-    has_any = query or f_abstract or f_methods or f_conclusions or f_figures
+    has_any = query or f_abstract or f_methods or f_conclusions or f_figures or f_topics
     if not has_any:
         return jsonify({"error": "query is required"}), 400
 
@@ -696,9 +723,6 @@ def search():
         date_start = request.args.get("date_start", type=int)
         date_end   = request.args.get("date_end",   type=int)
         category_id = request.args.get("category_id", "").strip() or None
-        has_any = query or f_abstract or f_methods or f_conclusions or f_figures
-        if not has_any:
-            return jsonify({"error": "query is required"}), 400
 
         results, hits = do_search(
             query,
@@ -710,6 +734,7 @@ def search():
             f_conclusions=f_conclusions,
             f_figures=f_figures,
             category_id=category_id,
+            f_topics= f_topics,
         )
 
         all_nodes     = []
@@ -911,7 +936,6 @@ def expand():
     if not openalex_id:
         return jsonify({"error": "openalex_id is required"}), 400
 
-    # ── 1. Fetch edge lists for the target node ──────────────────────────────
     body_xml = (
         f"<document><id>{escape(openalex_id).upper()}</id></document>"
         f"<list>"

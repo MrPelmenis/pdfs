@@ -61,13 +61,11 @@
     <xpath>//document/authors</xpath>
     <property>index=text&amp;xml</property>
     <property>weight=70-80</property>
-    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/authors/author</xpath>
     <property>index=text&amp;xml</property>
     <property>weight=70-80</property>
-    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/abstract</xpath>
@@ -83,27 +81,22 @@
     <xpath>//document/topics/topic</xpath>
     <property>index=text&amp;xml&amp;facet</property>
     <property>weight=70-80</property>
-    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/concepts</xpath>
-    <property>index=text&amp;xml</property>
+    <property>index=xml-text</property>
   </rule>
   <rule>
     <xpath>//document/concepts/concept</xpath>
-    <property>index=text&amp;xml</property>
-    <property>weight=60-70</property>
-    <property>list=yes</property>
+    <property>colocate=yes</property>
   </rule>
   <rule>
     <xpath>//document/keywords</xpath>
-    <property>index=text&amp;xml</property>
+    <property>index=xml-text</property>
   </rule>
   <rule>
     <xpath>//document/keywords/keyword</xpath>
-    <property>index=text&amp;xml</property>
-    <property>weight=75-85</property>
-    <property>list=yes</property>
+    <property>colocate=yes</property>
   </rule>
   <rule>
     <xpath>//document/keywords_extracted</xpath>
@@ -113,7 +106,6 @@
     <xpath>//document/keywords_extracted/keyword</xpath>
     <property>index=text&amp;xml</property>
     <property>weight=70-80</property>
-    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/sections</xpath>
@@ -137,11 +129,9 @@
   </rule>
   <rule>
     <xpath>//document/methods/method/heading</xpath>
-    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/methods/method/text</xpath>
-    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/conclusions</xpath>
@@ -155,39 +145,28 @@
   </rule>
   <rule>
     <xpath>//document/conclusions/conclusion/heading</xpath>
-    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/conclusions/conclusion/text</xpath>
-    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/figures</xpath>
-    <property>index=text&amp;xml</property>
+    <property>index=xml-text</property>
     <property>list=no</property>
   </rule>
   <rule>
     <xpath>//document/figures/figure</xpath>
-    <property>index=text&amp;xml</property>
     <property>colocate=yes</property>
-    <property>list=no</property>
   </rule>
   <rule>
     <xpath>//document/figures/figure/figure_label</xpath>
-    <property>index=text&amp;xml</property>
-    <property>weight=60-70</property>
-    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/figures/figure/caption</xpath>
-    <property>index=text&amp;xml</property>
-    <property>weight=80-90</property>
-    <property>list=highlight</property>
   </rule>
   <rule>
     <xpath>//document/figures/figure/page</xpath>
     <property>index=no</property>
-    <property>list=no</property>
   </rule>
   <rule>
     <xpath>//document/tables</xpath>
@@ -204,7 +183,6 @@
     <xpath>//document/tables/table/caption</xpath>
     <property>index=text&amp;xml</property>
     <property>weight=50-60</property>
-    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/tables/table/content</xpath>
@@ -236,21 +214,17 @@
   <rule>
     <xpath>//document/referenced_work_ids</xpath>
     <property>index=xml</property>
-    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/referenced_work_ids/referenced_work_id</xpath>
     <property>index=text&amp;xml</property>
-    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/related_work_ids</xpath>
     <property>index=xml</property>
-    <property>list=yes</property>
   </rule>
   <rule>
     <xpath>//document/related_work_ids/related_work_id</xpath>
     <property>index=text&amp;xml</property>
-    <property>list=yes</property>
   </rule>
 </policy>
