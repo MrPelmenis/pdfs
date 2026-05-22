@@ -11,10 +11,11 @@ const API = process.env.REACT_APP_SERVER_URL;
 const displayFilename = (file) => file?.replace(/_\d+\.pdf$/i, ".pdf") ?? "";
 
 const FIELD_FILTERS = [
-  { key: "abstract",    label: "Abstract",    placeholder: "…"  },
-  { key: "methods",     label: "Methods",     placeholder: "…"     },
-  { key: "conclusions", label: "Conclusions", placeholder: "…" },
-  { key: "figures",     label: "Figures",     placeholder: "…"    },
+  { key: "abstract",    label: "Abstract",                      placeholder: ""          },
+  { key: "methods",     label: "Methods",                       placeholder: ""             },
+  { key: "conclusions", label: "Conclusions",                   placeholder: ""         },
+  { key: "figures",     label: "Figures",                       placeholder: ""            },
+  { key: "topics",      label: "Topics / Keywords / Concepts",  placeholder: "" },
 ];
 
 export default function SearchPage() {
@@ -57,6 +58,8 @@ export default function SearchPage() {
   );
   const [categoryId, setCategoryId] = useState(urlCategoryId);
   const [categories, setCategories] = useState([]);
+  const [catOpen,    setCatOpen]    = useState(false);
+  const catRef = useRef(null);
 
   useEffect(() => {
     fetch(`${API}/get-all-categories`)
@@ -65,9 +68,23 @@ export default function SearchPage() {
       .catch(() => {});
   }, []);
 
+  // Close category dropdown on outside click
+  useEffect(() => {
+    const handler = (e) => {
+      if (catRef.current && !catRef.current.contains(e.target)) setCatOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const selectedCat = categories.find(c => String(c.id) === String(categoryId)) ?? null;
+
   const hasActiveFilters =
     Object.values(fieldFilters).some(v => v.trim()) ||
     (categoryId !== "" && categoryId != null);
+
+  const hasAnyInput = (q, ff) =>
+    q.trim() || Object.values(ff).some(v => v.trim());
 
   const updateField = (key, val) =>
     setFieldFilters(prev => ({ ...prev, [key]: val }));
@@ -132,7 +149,6 @@ export default function SearchPage() {
   // ── URL builders ──────────────────────────────────────────────────────────
   const isDefaultRange = (ys, ye) => ys === YEAR_MIN && ye === YEAR_MAX;
 
-  // API url — passes each filter as its own param; backend assembles the CP query
   const buildApiUrl = (q, docs, ys, ye, ff, catId) => {
     const p = new URLSearchParams();
     p.set("query", q);
@@ -143,7 +159,6 @@ export default function SearchPage() {
     return `${API}/search?${p.toString()}`;
   };
 
-  // Nav url — mirrors the same params into the browser address bar
   const buildNavUrl = (q, docs, ys, ye, ff, catId) => {
     const p = new URLSearchParams();
     p.set("q",    q);
@@ -156,8 +171,7 @@ export default function SearchPage() {
 
   // ── Fetch ─────────────────────────────────────────────────────────────────
   const fetchResults = useCallback(async (q, docs, ys, ye, ff, catId) => {
-    const hasAnyQuery = q.trim() || Object.values(ff).some(v => v.trim());
-    if (!hasAnyQuery) return;
+    if (!hasAnyInput(q, ff)) return;
     setLoading(true);
     setSearched(q);
     try {
@@ -199,7 +213,7 @@ export default function SearchPage() {
     }, 300);
   }, [categoryChanged, searched, docsInput, yearStart, yearEnd, fieldFilters, categoryId, fetchResults]);
 
-  // ── Sync state from URL on every navigation ───────────────────────────────
+  // ── Sync from URL ─────────────────────────────────────────────────────────
   useEffect(() => {
     const q     = searchParams.get("q")          || "";
     const docs  = parseInt(searchParams.get("docs") || "10", 10);
@@ -219,8 +233,7 @@ export default function SearchPage() {
     setFieldFilters(ff);
     setCategoryId(catId);
 
-    const hasAnyQuery = q || Object.values(ff).some(v => v);
-    if (hasAnyQuery) {
+    if (hasAnyInput(q, ff)) {
       setHasSearched(true);
       fetchResults(q, docsVal, ysVal, yeVal, ff, catId);
     } else {
@@ -236,18 +249,30 @@ export default function SearchPage() {
   }, [hasSearched, openPdfFromChart, openUploadFromChart]);
 
   // ── Handlers ──────────────────────────────────────────────────────────────
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const doSearch = () => {
     const q    = inputVal.trim();
     const docs = Math.max(1, docsInput || 1);
-    if (!q && !Object.values(fieldFilters).some(v => v.trim())) return;
+    if (!hasAnyInput(q, fieldFilters)) return;
     setHasSearched(true);
     navigate(buildNavUrl(q, docs, yearStart, yearEnd, fieldFilters, categoryId));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    doSearch();
+  };
+
+  // Enter key on any filter input triggers search
+  const handleFieldKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      doSearch();
+    }
+  };
+
   const handleLoadAll = () => {
     const q = inputVal.trim();
-    if ((!q && !Object.values(fieldFilters).some(v => v.trim())) || hits === 0) return;
+    if (!hasAnyInput(q, fieldFilters) || hits === 0) return;
     setDocsInput(hits);
     navigate(buildNavUrl(q, hits, yearStart, yearEnd, fieldFilters, categoryId));
   };
@@ -353,6 +378,7 @@ export default function SearchPage() {
                 min={1}
                 value={docsInput}
                 onChange={handleDocsChange}
+                onKeyDown={handleFieldKeyDown}
                 className="w-28 bg-surface border border-border rounded-xl px-3 py-2.5 text-sm text-ink
                            text-center outline-none appearance-none
                            focus:border-accent focus:ring-1 focus:ring-accent/30 transition-all duration-200"
@@ -395,7 +421,7 @@ export default function SearchPage() {
             <div className="overflow-hidden">
               <div className="pt-3 pb-4 flex flex-col gap-3">
 
-                {/* 2×2 field inputs */}
+                {/* Field text inputs — 2×3 grid */}
                 <div className="grid grid-cols-2 gap-2">
                   {FIELD_FILTERS.map(({ key, label, placeholder }) => (
                     <div key={key} className="flex flex-col gap-1">
@@ -407,6 +433,7 @@ export default function SearchPage() {
                           type="text"
                           value={fieldFilters[key]}
                           onChange={e => updateField(key, e.target.value)}
+                          onKeyDown={handleFieldKeyDown}
                           placeholder={placeholder}
                           className="flex-1 bg-transparent text-ink placeholder-ink-muted text-sm outline-none"
                         />
@@ -429,49 +456,46 @@ export default function SearchPage() {
                 {/* Category + year range + clear */}
                 <div className="flex items-end gap-3">
 
-                  {/* Category */}
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs text-ink-muted pl-1">Category</label>
-                    <div className="relative">
-                      {categoryId !== "" && (
-                        <span
-                          className="absolute left-3 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full pointer-events-none z-10"
-                          style={{
-                            backgroundColor:
-                              categories.find(c => String(c.id) === String(categoryId))?.color ?? "transparent",
-                          }}
-                        />
-                      )}
-                      <select
-                        value={categoryId}
-                        onChange={e => setCategoryId(e.target.value)}
-                        style={{ minWidth: "11rem" }}
-                        className={`
-                          bg-surface border border-border rounded-xl py-2 pr-8 text-sm text-ink
-                          outline-none appearance-none cursor-pointer
-                          focus:border-accent focus:ring-1 focus:ring-accent/30 transition-all duration-200
-                          ${categoryId !== "" ? "pl-7" : "pl-3"}
-                        `}
-                      >
-                        <option value="">All categories</option>
-                        {categories
-                          .filter(c => c.id !== 0)
-                          .map(c => (
-                            <option key={c.id} value={String(c.id)}>
-                              {c.name.charAt(0).toUpperCase() + c.name.slice(1)}
-                            </option>
-                          ))}
-                      </select>
-                      <svg
-                        className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3 h-3 text-ink-muted pointer-events-none"
-                        fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </div>
+                  <label className="text-xs text-ink-muted pl-1">Category</label>
+                  <div className="relative" style={{ minWidth: "11rem" }}>
+                    {/* Always-visible color dot — grey for "all", category color when selected */}
+                    <span
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full pointer-events-none z-10"
+                      style={{
+                        backgroundColor: selectedCat?.color ?? "rgba(170,170,170,0.92)",
+                      }}
+                    />
+                    <select
+                          value={categoryId}
+                          onChange={e => setCategoryId(e.target.value)}
+                          style={{ minWidth: "11rem" }}
+                          className="bg-surface border border-border rounded-xl py-2 pl-7 pr-8 text-sm text-ink
+                                     outline-none appearance-none cursor-pointer
+                                     focus:border-accent focus:ring-1 focus:ring-accent/30 transition-all duration-200">
+                          <option value="">All categories</option>
+                          {categories
+                            .filter(c => c.id !== 0)
+                            .map(c => (
+                              <option
+                                key={c.id}
+                                value={String(c.id)}
+                                style={{ backgroundColor: c.color, color: "#000" }}
+                              >
+                                {c.name.charAt(0).toUpperCase() + c.name.slice(1)}
+                              </option>
+                            ))}
+                    </select>
+                    <svg
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3 h-3 text-ink-muted pointer-events-none"
+                      fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
                   </div>
+                </div>
 
-                  {/* Year range — moved from top bar */}
+                  {/* Year range */}
                   <div className="flex flex-col gap-1">
                     <YearRangeSlider
                       start={yearStart}
@@ -508,13 +532,14 @@ export default function SearchPage() {
           <div className="w-[550px] min-w-[420px] shrink-0 flex flex-col bg-main min-h-0">
             <div className="flex-1 overflow-y-auto px-5 pb-5 flex flex-col gap-3 pt-3">
 
-                {!loading && hasSearched && (
-                  <p className="text-xs text-ink-muted mb-1">
-                    {results.length > 0
-                      ? `Showing ${results.length} out of ${hits} results`
-                      : `No results found`}
-                  </p>
-                )}
+              {!loading && hasSearched && (
+                <p className="text-xs text-ink-muted mb-1">
+                  {results.length > 0
+                    ? `Showing ${results.length} out of ${hits} results`
+                    : `No results found`}
+                </p>
+              )}
+
               {loading && [1, 2, 3].map((i) => (
                 <div key={i} className="h-40 rounded-2xl bg-surface animate-pulse" />
               ))}
@@ -528,14 +553,12 @@ export default function SearchPage() {
                 />
               ))}
 
-              {!loading && searched && results.length === 0 && (
+              {!loading && hasSearched && results.length === 0 && (
                 <div className="flex flex-col items-center justify-center py-20 gap-3 text-ink-muted">
                   <svg className="w-12 h-12 opacity-30" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <p className="text-sm">
-                    Nothing found for <span className="text-ink-dim font-medium">{searched}</span>
-                  </p>
+                  <p className="text-sm">No results found</p>
                 </div>
               )}
             </div>

@@ -1,19 +1,29 @@
 import json
+import os
 import traceback
 import requests as req
 
 OLLAMA_URL     = "http://localhost:11434/api/chat"
+DEEPSEEK_URL   = "https://api.deepseek.com/v1/chat/completions"
+DEEPSEEK_KEY   = os.getenv("DEEPSEEK_KEY", "")
 OLLAMA_TIMEOUT = 120
+DEEPSEEK_TIMEOUT = 60
 
-CHAT_MODEL = "gemma4:e4b"
-QUERY_MODEL = "gemma4:e4b"
+# "ollama" or "deepseek"
+PROVIDER = os.getenv("PROVIDER", "ollama")
 
-CTX_MIN        = 2048    # never go below this
-CTX_MAX        = 65536   # hard ceiling — raise if you have very long full_texts
-CTX_HEADROOM   = 1.4     # multiply estimated tokens by this for safety margin
-ANSWER_RESERVE = 1024    # tokens reserved for the model's output
+CHAT_MODEL  = "gemma4:e4b"        # used when PROVIDER=ollama
+QUERY_MODEL = "gemma4:e4b"        # used when PROVIDER=ollama
 
-SEARCH_DOCS = 5
+DEEPSEEK_CHAT_MODEL  = "deepseek-chat"   # used when PROVIDER=deepseek
+DEEPSEEK_QUERY_MODEL = "deepseek-chat"   # used when PROVIDER=deepseek
+
+CTX_MIN        = 2048
+CTX_MAX        = 65536
+CTX_HEADROOM   = 1.4
+ANSWER_RESERVE = 1024
+
+SEARCH_DOCS = 10
 
 QUERY_PROMPT = """\
 You are a search keyword extractor for a scientific document database.
@@ -45,9 +55,10 @@ Answer the user's question using ONLY the provided paper excerpts below.
 
 Formatting rules — follow exactly:
 - Write one section per relevant paper
-- Each section MUST start with: ## Paper Title (use the exact title)
+- Each section MUST start with: ## (use the exact title)
 - Under each heading write 3-6 sentences covering what that paper says about the question
 - Always extract and highlight specific numeric results: values, units, percentages, concentrations, rates, constants — format them as `inline code` (e.g. `37 °C`, `Km = 2.4 mM`, `yield: 91%`)
+- When a paper includes table data, present key values from it as a markdown table if it adds clarity
 - Use bullet points under a section when listing multiple measurements or findings
 - Use $...$ for inline math and $$...$$ for display equations when the paper contains them
 - If a paper has no relevant information, skip it entirely
@@ -77,6 +88,89 @@ User question: {question}
 Answer:"""
 
 
+# ---------------------------------------------------------------------------
+# Provider functions
+# ---------------------------------------------------------------------------
+
+def ollama_generate(prompt: str, stream: bool = False, model: str = CHAT_MODEL):
+    num_ctx = _estimate_num_ctx(prompt)
+    payload = {
+        "model":   model,
+        "stream":  stream,
+        "options": {
+            "temperature": 0.3,
+            "num_ctx":     num_ctx,
+            "thinking":    False,
+        },
+        "messages": [{"role": "user", "content": prompt}],
+    }
+    resp = req.post(OLLAMA_URL, json=payload, timeout=OLLAMA_TIMEOUT, stream=stream)
+    return resp
+
+
+def deepseek_generate(prompt: str, stream: bool = False, model: str = DEEPSEEK_CHAT_MODEL):
+    payload = {
+        "model":       model,
+        "stream":      stream,
+        "temperature": 0.3,
+        "messages":    [{"role": "user", "content": prompt}],
+    }
+    headers = {
+        "Authorization": f"Bearer {DEEPSEEK_KEY}",
+        "Content-Type":  "application/json",
+    }
+    resp = req.post(DEEPSEEK_URL, json=payload, headers=headers, timeout=DEEPSEEK_TIMEOUT, stream=stream)
+    return resp
+
+
+def _generate(prompt: str, stream: bool = False, use_query_model: bool = False):
+    """Route to the right provider based on PROVIDER setting."""
+    if PROVIDER == "deepseek":
+        model = DEEPSEEK_QUERY_MODEL if use_query_model else DEEPSEEK_CHAT_MODEL
+        return deepseek_generate(prompt, stream=stream, model=model)
+    else:
+        model = QUERY_MODEL if use_query_model else CHAT_MODEL
+        return ollama_generate(prompt, stream=stream, model=model)
+
+
+# ---------------------------------------------------------------------------
+# Token parsing — each provider has a different response shape
+# ---------------------------------------------------------------------------
+
+def _extract_token_ollama(data: dict) -> tuple[str, bool]:
+    token = data.get("message", {}).get("content", "")
+    done  = data.get("done", False)
+    return token, done
+
+
+def _extract_token_deepseek(data: dict) -> tuple[str, bool]:
+    choices = data.get("choices", [])
+    if not choices:
+        return "", False
+    choice = choices[0]
+    token  = (choice.get("delta") or choice.get("message") or {}).get("content") or ""
+    done   = choice.get("finish_reason") is not None
+    return token, done
+
+
+def _extract_token(data: dict) -> tuple[str, bool]:
+    if PROVIDER == "deepseek":
+        return _extract_token_deepseek(data)
+    return _extract_token_ollama(data)
+
+
+def _extract_query_response(data: dict) -> str:
+    """Extract the full text from a non-streaming response."""
+    if PROVIDER == "deepseek":
+        choices = data.get("choices", [])
+        return (choices[0].get("message", {}).get("content") or "").strip() if choices else ""
+    return data.get("message", {}).get("content", "").strip()
+
+
+# ---------------------------------------------------------------------------
+# Search + context helpers (unchanged)
+# ---------------------------------------------------------------------------
+
 def search_cp(query: str, cp_url: str, cp_user: str, cp_pass: str) -> list:
     body = (
         f"<query><stub_document>no</stub_document>{query}*</query>"
@@ -88,6 +182,12 @@ def search_cp(query: str, cp_url: str, cp_user: str, cp_pass: str) -> list:
         f"<authors>yes</authors>"
         f"<date>yes</date>"
         f"<full_text>yes</full_text>"
+        f"<figures>yes</figures>"
+        f"<conclusions>yes</conclusions>"
+        f"<methods>yes</methods>"
+        f"<topics>yes</topics>"
+        f"<keywords>yes</keywords>"
+        f"<concepts>yes</concepts>"
         f"</list>"
     )
 
@@ -100,7 +200,7 @@ def search_cp(query: str, cp_url: str, cp_user: str, cp_pass: str) -> list:
         )
         resp.raise_for_status()
         data = resp.json()
-    except Exception as e:
+    except Exception:
         return []
 
     documents = (
@@ -159,6 +259,19 @@ def search_cp(query: str, cp_url: str, cp_user: str, cp_pass: str) -> list:
                 if f.get("caption")
             ]
 
+        def _table_list():
+            raw = doc.get("tables")
+            if not raw:
+                return []
+            items = raw.get("table", [])
+            if isinstance(items, dict):
+                items = [items]
+            return [
+                t.get("content", "").strip()
+                for t in items
+                if t.get("content", "").strip()
+            ]
+
         results.append({
             "file":               (doc.get("file")      or "").strip(),
             "title":              (doc.get("title")     or "").strip(),
@@ -172,6 +285,7 @@ def search_cp(query: str, cp_url: str, cp_user: str, cp_pass: str) -> list:
             "methods":            _method_list(),
             "conclusions":        _conclusion_list(),
             "figures":            _figure_list(),
+            "tables":             _table_list(),
         })
 
     return results
@@ -215,10 +329,15 @@ def _build_context(results: list) -> str:
             if caption:
                 lines.append(f"Figure {label}: {caption}")
 
+        for idx, table_content in enumerate(doc.get("tables") or [], 1):
+            print(table_content)
+            lines.append(f"Table {idx}:\n{table_content}")
+
         if full_text:
             lines.append(f"Full text:\n{full_text}")
 
         parts.append("\n".join(lines))
+        
 
     return "\n\n---\n\n".join(parts)
 
@@ -233,34 +352,21 @@ def _estimate_num_ctx(prompt: str) -> int:
     return ctx
 
 
-def ollama_generate(prompt: str, stream: bool = False, model: str = CHAT_MODEL):
-    num_ctx = _estimate_num_ctx(prompt)
-    payload = {
-        "model":   model,
-        "stream":  stream,
-        "options": {
-            "temperature": 0.3,
-            "num_ctx":     num_ctx,
-            "thinking":    False,
-        },
-        "messages": [{"role": "user", "content": prompt}],
-    }
-    resp = req.post(OLLAMA_URL, json=payload, timeout=OLLAMA_TIMEOUT, stream=stream)
-    return resp
-
+# ---------------------------------------------------------------------------
+# Core pipeline
+# ---------------------------------------------------------------------------
 
 def _convert_to_query(question: str) -> str:
     prompt = QUERY_PROMPT.format(question=question)
     try:
-        resp = ollama_generate(prompt, stream=False, model=QUERY_MODEL)
+        resp = _generate(prompt, stream=False, use_query_model=True)
         resp.raise_for_status()
         body  = resp.json()
-        query = body.get("message", {}).get("content", "").strip()
-        # Sanitise: take only the first line, strip punctuation, cap at 4 words
+        query = _extract_query_response(body)
         first_line = query.splitlines()[0] if query else ""
         words      = first_line.replace(",", " ").replace(";", " ").split()
         query      = " ".join(words[:4])
-        print(f"[chat/_convert_to_query] Result: '{query}'")
+        print(f"[chat/_convert_to_query] provider={PROVIDER} result='{query}'")
         return query or question
     except Exception as e:
         print(f"[chat/_convert_to_query] FAILED: {e} — falling back to raw question")
@@ -290,7 +396,7 @@ def _sse_token(token: str):
 
 def generate(question: str, cp_url: str, cp_user: str, cp_pass: str):
     try:
-        yield send_status_update("Converting query…")
+        yield send_status_update(f"Converting query… [{PROVIDER}]")
         cp_query = _convert_to_query(question)
 
         yield send_status_update("Finding documents…")
@@ -301,7 +407,6 @@ def generate(question: str, cp_url: str, cp_user: str, cp_pass: str):
             yield send_sources([])
             yield send_status_update("No papers found — generating from general knowledge…")
             prompt = NO_CONTEXT_PROMPT.format(question=question)
-
         else:
             yield send_sources(results)
             yield send_status_update("Analysing papers…")
@@ -309,23 +414,26 @@ def generate(question: str, cp_url: str, cp_user: str, cp_pass: str):
             prompt  = ANSWER_PROMPT.format(context=context, question=question)
 
         yield send_status_update("Generating response…")
-        resp = ollama_generate(prompt, stream=True, model=CHAT_MODEL)
+        resp = _generate(prompt, stream=True, use_query_model=False)
         resp.raise_for_status()
 
-        token_count = 0
         for raw_line in resp.iter_lines():
             if not raw_line:
                 continue
             try:
-                line  = raw_line.decode("utf-8") if isinstance(raw_line, bytes) else raw_line
+                line = raw_line.decode("utf-8") if isinstance(raw_line, bytes) else raw_line
+                # DeepSeek SSE lines are prefixed with "data: "
+                if line.startswith("data: "):
+                    line = line[6:]
+                if line == "[DONE]":
+                    break
                 data  = json.loads(line)
-                token = data.get("message", {}).get("content", "")
+                token, done = _extract_token(data)
 
                 if token:
-                    token_count += 1
                     yield _sse_token(token)
 
-                if data.get("done"):
+                if done:
                     break
 
             except (json.JSONDecodeError, UnicodeDecodeError) as e:
@@ -334,13 +442,13 @@ def generate(question: str, cp_url: str, cp_user: str, cp_pass: str):
 
         yield "data: [DONE]\n\n"
 
-    except req.exceptions.ConnectionError as e:
-        yield "data: Ollama is not reachable. Is it running?\n\n"
+    except req.exceptions.ConnectionError:
+        yield f"data: Could not connect to {PROVIDER}. Is it running?\n\n"
         yield "data: [DONE]\n\n"
-    except req.exceptions.Timeout as e:
+    except req.exceptions.Timeout:
         yield "data: The model timed out. Try a shorter question.\n\n"
         yield "data: [DONE]\n\n"
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
         yield "data: Something went wrong on the server.\n\n"
         yield "data: [DONE]\n\n"
@@ -352,7 +460,7 @@ def register_chat(app, cp_url: str, cp_user: str, cp_pass: str):
     @app.route("/chat")
     def chat():
         question = request.args.get("question", "").strip()
-        print(f"Question: '{question}'")
+        print(f"Question: '{question}' | provider: {PROVIDER}")
 
         if not question:
             return jsonify({"error": "question is required"}), 400

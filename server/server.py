@@ -436,7 +436,10 @@ def add_wildcards(val: str) -> str:
     return " ".join(t if t.endswith(("*", "?")) else t + "*" for t in tokens)
 
 
-def build_cp_query(query: str,date_start=None,date_end=None,f_abstract: str = "",f_methods: str = "",f_conclusions: str = "",f_figures: str = "",category_id=None, f_topics: str =""):
+def build_cp_query(query, date_start=None, date_end=None,
+                   f_abstract="", f_methods="", f_conclusions="",
+                   f_figures="", category_id=None, f_topics=""):
+
     date_tag = ""
     if date_start is not None or date_end is not None:
         ds = int(date_start) if date_start is not None else YEAR_MIN
@@ -445,48 +448,36 @@ def build_cp_query(query: str,date_start=None,date_end=None,f_abstract: str = ""
 
     main_part = add_wildcards(query) if query.strip() else ""
 
-    f_topics_val = add_wildcards((f_topics or "").strip())
-    if f_topics_val:
-        tkc_part = (
-            f"{{<topics><topic>{f_topics_val}</topic></topics>"
-            f"<keywords><keyword>{f_topics_val}</keyword></keywords>"
-            f"<concepts><concept>{f_topics_val}</concept></concepts>}}"
-        )
-    else:
-        tkc_part = ""
-
-
-    fields = [
-        ("abstract",    f_abstract),
+    # xml-text fields: query at the PARENT level, not nested
+    xml_text_fields = [
+        ("figures",     f_figures),
         ("methods",     f_methods),
         ("conclusions", f_conclusions),
-        ("figures",     f_figures),
+        ("topics",      f_topics),
     ]
     field_parts = []
-    for tag, val in fields:
+    for tag, val in xml_text_fields:
         v = (val or "").strip()
         if not v:
             continue
         field_parts.append(f"<{tag}>{add_wildcards(v)}</{tag}>")
 
-    if len(field_parts) > 1:
-        field_query = "".join(field_parts)  
-    elif len(field_parts) == 1:
-        field_query = field_parts[0]
-    else:
-        field_query = ""
+    # abstract is text&xml so nested is fine
+    if (f_abstract or "").strip():
+        field_parts.append(f"<abstract>{add_wildcards(f_abstract)}</abstract>")
 
-    # Category — AND filter
     cat_part = (
         f"<category_id>{int(category_id)}</category_id>"
         if category_id not in (None, "", "0")
         else ""
     )
 
-    parts = [p for p in [main_part, field_query, cat_part] if p]
+    parts = [p for p in [main_part, *field_parts, cat_part] if p]
     combined = " ".join(parts) if parts else ""
 
     return combined, date_tag
+
+
 
 def do_search(query, docs, date_start=None, date_end=None, 
               f_abstract="", f_methods="", f_conclusions="", 
@@ -503,7 +494,7 @@ def do_search(query, docs, date_start=None, date_end=None,
         category_id=category_id,
         f_topics=f_topics,
     )
-    print(combined_query)
+
 
     fullQ = (
         f"<query><stub_document>no</stub_document>{date_tag}{combined_query}</query>"
@@ -520,15 +511,9 @@ def do_search(query, docs, date_start=None, date_end=None,
         f"<cited_by_count>yes</cited_by_count>"
         f"<file>yes</file>"
         f"<img_preview_path>yes</img_preview_path>"
-        f"<full_text>highlight</full_text>"
+        f"<full_text>snippet</full_text>"
         f"<stub_document>yes</stub_document>"
         f"<category_id>yes</category_id>"
-        f"<figures><figure><caption>highlight</caption></figure></figures>"
-        f"<conclusions><conclusion><text>highlight</text></conclusion></conclusions>"
-        f"<methods><method><text>highlight</text></method></methods>"
-        f"<topics><topic>highlight</topic></topics>"
-        f"<keywords><keyword>highlight</keyword></keywords>"
-        f"<concepts><concept>highlight</concept></concepts>"
         f"<figures>highlight</figures>"
         f"<conclusions>highlight</conclusions>"
         f"<methods>highlight</methods>"
@@ -538,7 +523,9 @@ def do_search(query, docs, date_start=None, date_end=None,
         f"<referenced_work_ids>yes</referenced_work_ids>"
         f"<related_work_ids>yes</related_work_ids>"
         f"</list>"
-        )
+    )
+
+
     resp = requests.post(
         CP_URL + "/api/databases/pdfs/search/json",
         data=fullQ,
@@ -631,7 +618,6 @@ def do_search(query, docs, date_start=None, date_end=None,
             "snippet": extract_snippet(doc),
 
         })
-        print(doc)
  
     return results, hits
  

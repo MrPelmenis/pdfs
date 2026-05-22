@@ -3,13 +3,17 @@ protams uzlabot metadata_analyser, biezi atrod ne-to dokumentu
 
 
 LELIE TODO:
+
 ignored words pielikt lai labak searcho?
-snipetiem jabut labakiem vini nestrada
+specsymbols Ca:P
+order_by date, type, alphabet (nevis relevance=yes)
 
 
 
 LLM chatbots
-gudraku modeli querijam
+gudraku modeli
+lai dot vairak datus 
+deepseek API
 
 
 

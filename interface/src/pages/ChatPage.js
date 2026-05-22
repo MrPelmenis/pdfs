@@ -1,9 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
-
-const API = process.env.REACT_APP_SERVER_URL;
+import { useChatStore } from "../store/useChatStore";
 
 function StatusStep({ label, done }) {
   return (
@@ -15,12 +14,12 @@ function StatusStep({ label, done }) {
       <span>{label}</span>
       {!done && (
         <span className="flex gap-0.5 ml-1">
-          {[0, 1, 2].map(i => (
+          {[0, 1, 2].map((i) => (
             <span
               key={i}
               className="w-1 h-1 rounded-full bg-accent"
               style={{
-                animation: "pulse 1.2s ease-in-out infinite",
+                animation:      "pulse 1.2s ease-in-out infinite",
                 animationDelay: `${i * 0.2}s`,
               }}
             />
@@ -33,7 +32,6 @@ function StatusStep({ label, done }) {
 
 function SourceCard({ file, title, index }) {
   const displayName = title || file.split("/").pop() || file;
-
   return (
     <div
       title={file}
@@ -41,18 +39,16 @@ function SourceCard({ file, title, index }) {
                  bg-surface border border-border flex-shrink-0
                  w-44 select-none hover:border-accent/40 transition-colors duration-150"
     >
-      {/* Number badge */}
       <span className="text-xs font-semibold text-accent/70 mt-0.5 flex-shrink-0">
         {index}
       </span>
-      {/* Title */}
       <span
         className="text-xs text-ink-dim leading-tight"
         style={{
-          display: "-webkit-box",
-          WebkitLineClamp: 3,
-          WebkitBoxOrient: "vertical",
-          overflow: "hidden",
+          display:           "-webkit-box",
+          WebkitLineClamp:   3,
+          WebkitBoxOrient:   "vertical",
+          overflow:          "hidden",
         }}
       >
         {displayName}
@@ -80,185 +76,44 @@ function SourceGrid({ sources }) {
   );
 }
 
-const MD_COMPONENTS = {
-  // Render h2 with a subtle left accent bar — Perplexity-style section headers
-  h2: ({ children }) => (
-    <h2 className="flex items-center gap-2 text-sm font-semibold text-ink mt-4 mb-2
-                   border-b border-border pb-1.5">
-      <span className="w-0.5 h-4 rounded-full bg-accent flex-shrink-0" />
-      {children}
-    </h2>
-  ),
-  // Inline code — numeric values, units
-  code: ({ inline, children }) =>
-    inline ? (
-      <code className="bg-raised text-accent text-xs px-1.5 py-0.5 rounded font-mono">
-        {children}
-      </code>
-    ) : (
-      <code>{children}</code>
-    ),
-  // Pre — code blocks
-  pre: ({ children }) => (
-    <pre className="bg-raised rounded-lg px-4 py-3 overflow-x-auto text-xs font-mono text-ink my-2">
-      {children}
-    </pre>
-  ),
-  // Blockquote — "No papers found" notice
-  blockquote: ({ children }) => (
-    <blockquote className="border-l-2 border-accent pl-3 text-ink-dim text-xs italic my-2">
-      {children}
-    </blockquote>
-  ),
-  // HR — divider between paper sections
-  hr: () => <hr className="border-border my-3" />,
-  // Strong — bold text
-  strong: ({ children }) => (
-    <strong className="font-semibold text-ink">{children}</strong>
-  ),
-  // Paragraph
-  p: ({ children }) => (
-    <p className="text-sm text-ink leading-relaxed my-1.5">{children}</p>
-  ),
-  // Lists
-  ul: ({ children }) => (
-    <ul className="list-disc list-outside pl-4 my-1.5 space-y-0.5 text-sm text-ink">
-      {children}
-    </ul>
-  ),
-  ol: ({ children }) => (
-    <ol className="list-decimal list-outside pl-4 my-1.5 space-y-0.5 text-sm text-ink">
-      {children}
-    </ol>
-  ),
-  li: ({ children }) => (
-    <li className="leading-relaxed">{children}</li>
-  ),
-};
+
+
+// ── page ─────────────────────────────────────────────────────────────────────
 
 export default function ChatPage() {
-  const [inputVal,  setInputVal]  = useState("");
-  const [messages,  setMessages]  = useState([]);
-  const [streaming, setStreaming] = useState(false);
-  const bottomRef = useRef(null);
-  const inputRef  = useRef(null);
-  const abortRef  = useRef(null);
+  const [inputVal, setInputVal] = useState("");
+  const bottomRef  = useRef(null);
+  const inputRef   = useRef(null);
 
+  const messages    = useChatStore((s) => s.messages);
+  const streaming   = useChatStore((s) => s.streaming);
+  const sendQuestion = useChatStore((s) => s.sendQuestion);
+  const clearChat   = useChatStore((s) => s.clearChat);
+
+  // auto-scroll on new content
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  function patchLast(updater) {
-    setMessages(prev => {
-      const updated = [...prev];
-      updated[updated.length - 1] = updater(updated[updated.length - 1]);
-      return updated;
-    });
-  }
-
-  async function sendQuestion(question) {
-    if (!question.trim() || streaming) return;
-
-    setMessages(prev => [
-      ...prev,
-      { role: "user", text: question },
-      { role: "assistant", text: "", sources: null, statusSteps: [], currentStatus: null },
-    ]);
-    setInputVal("");
-    setStreaming(true);
-
-    try {
-      abortRef.current = new AbortController();
-      const res = await fetch(
-        `${API}/chat?question=${encodeURIComponent(question)}`,
-        { signal: abortRef.current.signal }
-      );
-
-      if (!res.ok || !res.body) throw new Error("Stream failed");
-
-      const reader  = res.body.getReader();
-      const decoder = new TextDecoder();
-      let   buffer  = "";
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-
-        const lines = buffer.split("\n");
-        buffer = lines.pop();
-
-        for (const line of lines) {
-          const trimmed = line.trim();
-          if (!trimmed) continue;
-
-          if (trimmed.startsWith("status: ")) {
-            const statusMsg = trimmed.slice(8);
-            patchLast(msg => ({
-              ...msg,
-              statusSteps: [
-                ...(msg.statusSteps || []).map(s =>
-                  s.label === msg.currentStatus ? { ...s, done: true } : s
-                ),
-                ...(msg.statusSteps || []).some(s => s.label === statusMsg)
-                  ? []
-                  : [{ label: statusMsg, done: false }],
-              ],
-              currentStatus: statusMsg,
-            }));
-            continue;
-          }
-
-          if (trimmed.startsWith("sources: ")) {
-            try {
-              const sources = JSON.parse(trimmed.slice(9));
-              patchLast(msg => ({ ...msg, sources }));
-            } catch (_) {}
-            continue;
-          }
-
-          if (trimmed.startsWith("data: ")) {
-            const token = trimmed.slice(6);
-            if (token === "[DONE]") {
-              patchLast(msg => ({
-                ...msg,
-                statusSteps:   (msg.statusSteps || []).map(s => ({ ...s, done: true })),
-                currentStatus: null,
-              }));
-              break;
-            }
-            const actual = token === "\\n" ? "\n" : token;
-            patchLast(msg => ({ ...msg, text: msg.text + actual }));
-          }
-        }
-      }
-    } catch (err) {
-      if (err.name !== "AbortError") {
-        patchLast(msg => ({
-          ...msg,
-          text:  "Something went wrong. Please try again.",
-          error: true,
-          statusSteps:   (msg.statusSteps || []).map(s => ({ ...s, done: true })),
-          currentStatus: null,
-        }));
-      }
-    } finally {
-      setStreaming(false);
-      abortRef.current = null;
+  // refocus input when streaming stops
+  useEffect(() => {
+    if (!streaming) {
       setTimeout(() => inputRef.current?.focus(), 50);
     }
-  }
+  }, [streaming]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    sendQuestion(inputVal.trim());
+    const q = inputVal.trim();
+    if (!q) return;
+    setInputVal("");
+    sendQuestion(q);
   }
 
   function handleKeyDown(e) {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      sendQuestion(inputVal.trim());
+      handleSubmit(e);
     }
   }
 
@@ -284,7 +139,7 @@ export default function ChatPage() {
           {messages.map((msg, i) => (
             <div key={i}>
 
-              {/* ── User message ── */}
+              {/* ── User ── */}
               {msg.role === "user" && (
                 <div className="flex justify-end">
                   <div className="max-w-[80%] bg-accent text-main rounded-2xl rounded-br-sm
@@ -294,11 +149,9 @@ export default function ChatPage() {
                 </div>
               )}
 
-              {/* ── Assistant message ── */}
+              {/* ── Assistant ── */}
               {msg.role === "assistant" && (
                 <div className="flex gap-3">
-
-                  {/* Avatar */}
                   <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center
                                   justify-center flex-shrink-0 mt-0.5">
                     <svg className="w-3 h-3 text-accent" fill="currentColor" viewBox="0 0 24 24">
@@ -324,14 +177,10 @@ export default function ChatPage() {
 
                     {/* Answer */}
                     {msg.text ? (
-                      <div className={msg.error
-                        ? "text-sm text-danger"
-                        : "min-w-0"
-                      }>
+                      <div className={msg.error ? "text-sm text-danger" : "prose prose-chat min-w-0 max-w-none"}>
                         <ReactMarkdown
                           remarkPlugins={[remarkMath]}
                           rehypePlugins={[rehypeKatex]}
-                          components={MD_COMPONENTS}
                         >
                           {msg.text}
                         </ReactMarkdown>
@@ -339,12 +188,12 @@ export default function ChatPage() {
                     ) : (
                       !msg.currentStatus && (
                         <span className="flex gap-1 items-center h-4">
-                          {[0, 1, 2].map(j => (
+                          {[0, 1, 2].map((j) => (
                             <span
                               key={j}
                               className="w-1.5 h-1.5 rounded-full bg-ink-muted"
                               style={{
-                                animation: "pulse 1.2s ease-in-out infinite",
+                                animation:      "pulse 1.2s ease-in-out infinite",
                                 animationDelay: `${j * 0.2}s`,
                               }}
                             />
@@ -364,49 +213,67 @@ export default function ChatPage() {
 
       {/* ── Input bar ── */}
       <div className="flex-shrink-0 border-t border-border bg-main px-5 py-3">
-        <form
-          onSubmit={handleSubmit}
-          className="max-w-2xl mx-auto flex items-end gap-2"
-        >
-          <div className="flex-1 flex items-end gap-2 bg-surface border border-border rounded-xl px-4 py-2.5
-                          focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/30
-                          transition-all duration-200">
-            <textarea
-              ref={inputRef}
-              rows={1}
-              value={inputVal}
-              onChange={e => {
-                setInputVal(e.target.value);
-                e.target.style.height = "auto";
-                e.target.style.height = Math.min(e.target.scrollHeight, 120) + "px";
-              }}
-              onKeyDown={handleKeyDown}
-              placeholder="Ask about your papers…"
-              disabled={streaming}
-              style={{ resize: "none", minHeight: "1.25rem", maxHeight: "7.5rem" }}
-              className="flex-1 bg-transparent text-ink placeholder-ink-muted text-sm outline-none leading-relaxed"
-            />
-          </div>
+        <div className="max-w-2xl mx-auto flex flex-col gap-2">
 
-          <button
-            type="submit"
-            disabled={!inputVal.trim() || streaming}
-            className="px-4 py-2.5 rounded-xl bg-accent text-main text-sm font-semibold
-                       hover:bg-accent/90 active:scale-95 transition-all duration-150
-                       disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100"
+          {/* Clear button — only shown when there are messages */}
+          {!isEmpty && (
+            <div className="flex justify-end">
+              <button
+                onClick={clearChat}
+                disabled={streaming}
+                className="text-xs text-ink-muted hover:text-danger transition-colors duration-150
+                           disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                Clear chat
+              </button>
+            </div>
+          )}
+
+          <form
+            onSubmit={handleSubmit}
+            className="flex items-end gap-2"
           >
-            {streaming ? (
-              <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-              </svg>
-            ) : (
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-              </svg>
-            )}
-          </button>
-        </form>
+            <div className="flex-1 flex items-end gap-2 bg-surface border border-border rounded-xl px-4 py-2.5
+                            focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/30
+                            transition-all duration-200">
+              <textarea
+                ref={inputRef}
+                rows={1}
+                value={inputVal}
+                onChange={(e) => {
+                  setInputVal(e.target.value);
+                  e.target.style.height = "auto";
+                  e.target.style.height = Math.min(e.target.scrollHeight, 120) + "px";
+                }}
+                onKeyDown={handleKeyDown}
+                placeholder="Ask about your papers…"
+                disabled={streaming}
+                style={{ resize: "none", minHeight: "1.25rem", maxHeight: "7.5rem" }}
+                className="flex-1 bg-transparent text-ink placeholder-ink-muted text-sm outline-none leading-relaxed"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={!inputVal.trim() || streaming}
+              className="px-4 py-2.5 rounded-xl bg-accent text-main text-sm font-semibold
+                         hover:bg-accent/90 active:scale-95 transition-all duration-150
+                         disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100"
+            >
+              {streaming ? (
+                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                </svg>
+              ) : (
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                </svg>
+              )}
+            </button>
+          </form>
+
+        </div>
       </div>
     </main>
   );

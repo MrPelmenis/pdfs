@@ -1,0 +1,23 @@
+curl -u a:a -X POST http://localhost:80/api/databases/test/insert \
+  -d "
+<document>
+  <id>TEST001</id>
+  <title>Test Document One</title>
+  <figures>calcium phosphate crystallization in aqueous solution</figures>
+</document>"
+
+curl -u a:a -X POST http://localhost:80/api/databases/test/insert \
+  -d "
+<document>
+  <id>TEST002</id>
+  <title>Test Document Two</title>
+  <figures>hydroxyapatite calcium phosphate bone mineral</figures>
+</document>"
+
+curl -u a:a -X POST http://localhost:80/api/databases/test/insert \
+  -d "
+<document>
+  <id>TEST003</id>
+  <title>Test Document Three</title>
+  <figures>osteon alignment in compact bone calcium</figures>
+</document>"
