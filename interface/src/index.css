@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono&display=swap');
+/* Merged font imports (Poppins full weights + JetBrains Mono) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=JetBrains+Mono&display=swap');
 
 body {
   margin: 0;
@@ -13,6 +14,34 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+code {
+  font-family: 'JetBrains Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.dark, :root {
+  --color-primary: 28, 164, 222;
+  --color-primary-hover: 125, 211, 252;
+  --color-secondary: 156, 163, 175; /* gray-400 */
+  --color-muted: 209, 213, 219; /* gray-300 */
+  --bg-primary: 38, 38, 38; /* gray-800 */
+  --bg-secondary: 64, 64, 64; /* gray-900 */
+  --bg-accent: 30, 58, 138; /* blue-900 */
+  --bg-dark: 23, 23, 23;
+  --bg-hover: 55, 65, 81; /* gray-700 */
+  --border-primary: 55, 65, 81; /* gray-700 */
+  --border-secondary: 75, 85, 99; /* gray-600 */
+  --comment-bg: 55, 65, 81; /* gray-700 */
+  --text-primary: 229, 229, 229;
+  --text-dark: 212, 212, 212;
+  --text-accent: 255, 255, 255;
+  --text-light: 229, 229, 229;
+  --chartizer-green: 45, 189, 134;
+  --chartizer-blue: 28, 164, 222;
+  --chartizer-yellow: 222, 161, 28;
+  --chartizer-orange: 248, 125, 49;
+}
+
+/* Your existing specific classes & animations */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }

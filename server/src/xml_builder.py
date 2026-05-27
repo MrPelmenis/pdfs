@@ -32,64 +32,6 @@ def extract_fallback_text(pdf_path: str) -> str:
         return "\n\n".join(text)
 
 
-
-def strip_jats(text: str) -> str:
-    if not text:
-        return ""
-    clean = re.sub(r"<[^>]+>", "", text)
-    clean = re.sub(r"\s+", " ", clean).strip()
-    return clean
-
-
-def get_preview_path(image_path: str) -> str:
-    if not image_path:
-        return ""
-    return image_path if image_path.startswith("./") else f"./{image_path}"
-
-
-def slugify(text: str) -> str:
-    text = unicodedata.normalize("NFKD", text)
-    text = text.encode("ascii", "ignore").decode("ascii")
-    text = text.strip()
-    text = re.sub(r"[^\w\s]", "", text)
-    text = re.sub(r"\s+", "_", text)
-    return text
-
-
-import re
-import unicodedata
-import os
-from xml.etree.ElementTree import Element, SubElement, tostring
-import xml.dom.minidom
-import pdfplumber
-import pytesseract
-from pdf2image import convert_from_path
-
-
-def extract_fallback_text(pdf_path: str) -> str:
-    try:
-        custom_config = r'--oem 3 --psm 6'
-        pages = convert_from_path(pdf_path, dpi=250)
-        text = []
-        for page_img in pages:
-            page_text = pytesseract.image_to_string(page_img, config=custom_config)
-            if page_text.strip():
-                text.append(page_text.strip())
-        result = "\n\n".join(text)
-        if len(result.split()) < 50:
-            raise ValueError("OCR returned too little text")
-        return result
-    except Exception as e:
-        print(f"[OCR] pytesseract failed: {e}, falling back to pdfplumber")
-        text = []
-        with pdfplumber.open(pdf_path) as pdf:
-            for page in pdf.pages:
-                page_text = page.extract_text()
-                if page_text:
-                    text.append(page_text)
-        return "\n\n".join(text)
-
-
 def grobid_confidence(info: dict) -> tuple[str, list[str]]:
     if not info:
         return "bad", ["all"]
@@ -142,7 +84,7 @@ def build_xml(
     grobid_info:   dict | None,
     image_path:    str,
     stub:          bool = False,
-    category_id:   int  = 0,
+    category_id:   int  = 1,
 ) -> str:
     meta  = metadata_info or {}
     grobi = grobid_info   or {}
@@ -151,21 +93,17 @@ def build_xml(
     abstract       = meta.get("abstract") or grobi.get("abstract") or ""
     abstract       = strip_jats(abstract)
     doi_number     = meta.get("doi", "")  or grobi.get("doi", "")
-    cited_by_count = meta.get("cited_by_count", 0) or 0
+    cited_by_count = meta.get("cited_by_count", 1) or 0
 
     openalex_id = meta.get("openalex_id") or grobi.get("openalex_id") or ""
     doc_id      = openalex_id if openalex_id else slugify(title)
 
-    # ── Date: extract clean year for numeric indexing ─────────────────────────
-    # CP needs a plain integer for index-numbers=int.
-    # "Unknown" or unparseable dates become "" — CP skips numeric indexing
-    # for empty elements without erroring.
     raw_date = ""
     if meta.get("year"):
         raw_date = str(meta["year"])
     elif grobi.get("date"):
         raw_date = str(grobi["date"])
-    date_val = _clean_year(raw_date)   # e.g. "2013", or "" if unparseable
+    date_val = _clean_year(raw_date)
 
     if meta.get("authors"):
         authors = meta["authors"]
@@ -194,49 +132,31 @@ def build_xml(
 
     SubElement(doc, "abstract").text = abstract
 
-    # Topics from OpenAlex
-    topics = meta.get("topics") or grobi.get("topics") or []
-    if topics:
-        topics_el = SubElement(doc, "topics")
-        for topic in topics:
-            SubElement(topics_el, "topic").text = topic
-
-    # Concepts from OpenAlex
-    concepts = meta.get("concepts") or grobi.get("concepts") or []
-    if concepts:
-        concepts_el = SubElement(doc, "concepts")
-        for concept in concepts:
-            SubElement(concepts_el, "concept").text = concept
-
-    # Keywords from OpenAlex
-    keywords = meta.get("keywords") or grobi.get("keywords") or []
-    if keywords:
-        keywords_el = SubElement(doc, "keywords")
-        for keyword in keywords:
-            SubElement(keywords_el, "keyword").text = keyword
-
-    # Keywords extracted from PDF
+    # Keywords — all sources combined, space-separated (repetition intentional for search weight)
+    topics             = meta.get("topics")            or grobi.get("topics")            or []
+    concepts           = meta.get("concepts")          or grobi.get("concepts")          or []
+    keywords           = meta.get("keywords")          or grobi.get("keywords")          or []
     keywords_extracted = grobi.get("keywords_extracted") or []
-    if keywords_extracted:
-        kw_ex_el = SubElement(doc, "keywords_extracted")
-        for kw in keywords_extracted:
-            SubElement(kw_ex_el, "keyword").text = kw
+    all_keywords = list(topics) + list(concepts) + list(keywords) + list(keywords_extracted)
+    SubElement(doc, "keywords_text").text = " ".join(str(k) for k in all_keywords)
 
-    # Section headings
-    sections = grobi.get("sections") or []
-    if sections:
-        sections_el = SubElement(doc, "sections")
-        for heading in sections:
-            SubElement(sections_el, "section").text = heading
+    # Methods — structured + flat text for search
+    methods = grobi.get("methods") or []
+    if methods:
+        methods_el = SubElement(doc, "methods")
+        for method in methods:
+            method_el = SubElement(methods_el, "method")
+            SubElement(method_el, "heading").text = method.get("heading", "")
+            SubElement(method_el, "text").text    = method.get("text", "")
+    methods_parts = []
+    for method in methods:
+        if method.get("heading"):
+            methods_parts.append(method["heading"])
+        if method.get("text"):
+            methods_parts.append(method["text"])
+    SubElement(doc, "methods_text").text = " ".join(methods_parts)
 
-    # Methods
-    methods_el = SubElement(doc, "methods")
-    for method in grobi.get("methods", []):
-        method_el = SubElement(methods_el, "method")
-        SubElement(method_el, "heading").text = method.get("heading", "")
-        SubElement(method_el, "text").text    = method.get("text", "")
-
-    # Conclusions
+    # Conclusions — structured + flat text for search
     conclusions = grobi.get("conclusions") or []
     if conclusions:
         conclusions_el = SubElement(doc, "conclusions")
@@ -244,8 +164,15 @@ def build_xml(
             conclusion_el = SubElement(conclusions_el, "conclusion")
             SubElement(conclusion_el, "heading").text = conclusion.get("heading", "")
             SubElement(conclusion_el, "text").text    = conclusion.get("text", "")
+    conclusions_parts = []
+    for conclusion in conclusions:
+        if conclusion.get("heading"):
+            conclusions_parts.append(conclusion["heading"])
+        if conclusion.get("text"):
+            conclusions_parts.append(conclusion["text"])
+    SubElement(doc, "conclusions_text").text = " ".join(conclusions_parts)
 
-    # Figures
+    # Figures — structured + flat text for search
     figures = grobi.get("figures") or []
     if figures:
         figures_el = SubElement(doc, "figures")
@@ -254,19 +181,38 @@ def build_xml(
             SubElement(fig_el, "figure_label").text = fig.get("figure_label") or ""
             SubElement(fig_el, "caption").text      = fig.get("caption") or ""
             SubElement(fig_el, "page").text         = str(fig.get("page") or "")
+    figures_parts = []
+    for fig in figures:
+        if fig.get("figure_label"):
+            figures_parts.append(fig["figure_label"])
+        if fig.get("caption"):
+            figures_parts.append(fig["caption"])
+    SubElement(doc, "figures_text").text = " ".join(figures_parts)
 
+    # Tables — structured (stored only, index=no) + flat tables_text for search
+    # tables_text format per table:
+    #   row1
+    #   row2
+    #   ...
+    # blank line between tables
     tables = grobi.get("tables") or []
     if tables:
         tables_el = SubElement(doc, "tables")
         for tbl in tables:
             tbl_el = SubElement(tables_el, "table")
-            SubElement(tbl_el, "content").text = tbl.get("content") or ""
             grid = tbl.get("grid") or []
             if grid:
                 grid_el = SubElement(tbl_el, "grid")
                 for row in grid:
                     SubElement(grid_el, "row").text = " | ".join(str(c) for c in row)
 
+    tables_text_blocks = []
+    for tbl in tables:
+        grid = tbl.get("grid") or []
+        if grid:
+            rows = [" | ".join(str(c) for c in row) for row in grid]
+            tables_text_blocks.append("\n".join(rows))
+    SubElement(doc, "tables_text").text = "\n\n".join(tables_text_blocks)
 
     SubElement(doc, "full_text").text = grobi.get("full_text", "")
 
@@ -289,8 +235,8 @@ def build_xml(
     raw_xml = tostring(doc, encoding="unicode", xml_declaration=False)
     pretty  = xml.dom.minidom.parseString(raw_xml).toprettyxml(indent="\t")
     lines   = pretty.split("\n")
-    if lines[0].startswith("<?xml"):
-        lines = lines[1:]
+    if lines[1].startswith("<?xml"):
+        lines = lines[2:]
     return "\n".join(lines)
 
 
@@ -316,9 +262,3 @@ def upload_xml(xml_string: str, cp_url: str, cp_user: str, cp_pass: str) -> dict
         return {"success": False, "status_code": resp.status_code, "response": resp.text, "error": str(e)}
     except requests.exceptions.RequestException as e:
         return {"success": False, "status_code": None, "response": None, "error": str(e)}
-
-
-def save_xml(xml_string: str, output_path: str) -> None:
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(xml_string)

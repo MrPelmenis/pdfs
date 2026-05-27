@@ -1,10 +1,45 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Poppins", "system-ui", "sans-serif"],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
       colors: {
+        // --- The Colors You Need (Dynamic CSS Variables) ---
+        // Base colors
+        "theme-primary": "rgb(var(--color-primary))",
+        "theme-primary-hover": "rgb(var(--color-primary-hover))",
+        "theme-secondary": "rgb(var(--color-secondary))",
+        "theme-muted": "rgb(var(--color-muted))",
+        // Backgrounds
+        "theme-bg": "rgb(var(--bg-primary))",
+        "theme-bg-secondary": "rgb(var(--bg-secondary))",
+        "theme-bg-accent": "rgb(var(--bg-accent))",
+        "theme-bg-dark": "rgb(var(--bg-dark))",
+        // Borders
+        "theme-border": "rgb(var(--border-primary))",
+        "theme-border-secondary": "rgb(var(--border-secondary))",
+        // Interactive states
+        "theme-hover": "rgb(var(--bg-hover))",
+        // Specialized components
+        "theme-comment-bg": "rgb(var(--comment-bg))",
+        "theme-text-primary": "rgb(var(--text-primary))",
+        "theme-text-dark": "rgb(var(--text-dark))",
+        "theme-text-accent": "rgb(var(--text-accent))",
+        "theme-text-light": "rgb(var(--text-light))",
+        // Chartizer colors
+        "chartizer-green": "rgb(var(--chartizer-green), <alpha-value>)",
+        "chartizer-blue": "rgb(var(--chartizer-blue), <alpha-value>)",
+        "chartizer-yellow": "rgb(var(--chartizer-yellow), <alpha-value>)",
+        "chartizer-orange": "rgb(var(--chartizer-orange), <alpha-value>)",
+
+        // --- Your Existing Setup (Preserved for existing components) ---
         main:        '#202124',
         surface:     '#303134',
         raised:      '#3c3f43',
@@ -17,30 +52,26 @@ module.exports = {
         'ink-dim':   '#9aa0a6',
         'ink-muted': '#5f6368',
       },
-      fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
-      },
-    //configs prieks chatbota dalas lai smukaak
+      // configs prieks chatbota dalas lai smukaak
       typography: ({ theme }) => ({
         chat: {
           css: {
-            '--tw-prose-body':        theme('colors.ink'),
-            '--tw-prose-headings':    theme('colors.ink'),
-            '--tw-prose-lead':        theme('colors.ink-dim'),
-            '--tw-prose-links':       theme('colors.accent'),
-            '--tw-prose-bold':        theme('colors.ink'),
-            '--tw-prose-counters':    theme('colors.ink-dim'),
-            '--tw-prose-bullets':     theme('colors.ink-dim'),
-            '--tw-prose-hr':          theme('colors.border'),
-            '--tw-prose-quotes':      theme('colors.ink-dim'),
+            '--tw-prose-body':          theme('colors.ink'),
+            '--tw-prose-headings':      theme('colors.ink'),
+            '--tw-prose-lead':          theme('colors.ink-dim'),
+            '--tw-prose-links':         theme('colors.accent'),
+            '--tw-prose-bold':          theme('colors.ink'),
+            '--tw-prose-counters':      theme('colors.ink-dim'),
+            '--tw-prose-bullets':       theme('colors.ink-dim'),
+            '--tw-prose-hr':            theme('colors.border'),
+            '--tw-prose-quotes':        theme('colors.ink-dim'),
             '--tw-prose-quote-borders': theme('colors.accent'),
-            '--tw-prose-captions':    theme('colors.ink-muted'),
-            '--tw-prose-code':        theme('colors.accent'),
-            '--tw-prose-pre-code':    theme('colors.ink'),
-            '--tw-prose-pre-bg':      theme('colors.raised'),
-            '--tw-prose-th-borders':  theme('colors.border'),
-            '--tw-prose-td-borders':  theme('colors.border'),
+            '--tw-prose-captions':      theme('colors.ink-muted'),
+            '--tw-prose-code':          theme('colors.accent'),
+            '--tw-prose-pre-code':      theme('colors.ink'),
+            '--tw-prose-pre-bg':        theme('colors.raised'),
+            '--tw-prose-th-borders':    theme('colors.border'),
+            '--tw-prose-td-borders':    theme('colors.border'),
             fontSize:     '0.875rem',  
             lineHeight:   '1.65',
             maxWidth:     'none',
@@ -87,4 +118,4 @@ module.exports = {
   plugins: [
     require('@tailwindcss/typography'),
   ],
-}
+};

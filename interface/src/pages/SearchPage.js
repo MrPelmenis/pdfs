@@ -11,10 +11,10 @@ const API = process.env.REACT_APP_SERVER_URL;
 const displayFilename = (file) => file?.replace(/_\d+\.pdf$/i, ".pdf") ?? "";
 
 const FIELD_FILTERS = [
-  { key: "abstract",    label: "Abstract",                      placeholder: ""          },
-  { key: "methods",     label: "Methods",                       placeholder: ""             },
-  { key: "conclusions", label: "Conclusions",                   placeholder: ""         },
-  { key: "figures",     label: "Figures",                       placeholder: ""            },
+  { key: "abstract",    label: "Abstract",                    placeholder: ""   },
+  { key: "methods",     label: "Methods",                     placeholder: ""   },
+  { key: "conclusions", label: "Conclusions",                   placeholder: "" },
+  { key: "figures",     label: "Figures",                       placeholder: "" },
   { key: "topics",      label: "Topics / Keywords / Concepts",  placeholder: "" },
 ];
 
@@ -58,23 +58,12 @@ export default function SearchPage() {
   );
   const [categoryId, setCategoryId] = useState(urlCategoryId);
   const [categories, setCategories] = useState([]);
-  const [catOpen,    setCatOpen]    = useState(false);
-  const catRef = useRef(null);
 
   useEffect(() => {
     fetch(`${API}/get-all-categories`)
       .then(r => r.json())
       .then(setCategories)
       .catch(() => {});
-  }, []);
-
-  // Close category dropdown on outside click
-  useEffect(() => {
-    const handler = (e) => {
-      if (catRef.current && !catRef.current.contains(e.target)) setCatOpen(false);
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   const selectedCat = categories.find(c => String(c.id) === String(categoryId)) ?? null;
@@ -97,7 +86,7 @@ export default function SearchPage() {
   };
 
   // ── Upload / chart refs ───────────────────────────────────────────────────
-  const [uploadNode,       setUploadNode]       = useState(null);
+  const [uploadNode,        setUploadNode]        = useState(null);
   const [uploadModalStage, setUploadModalStage] = useState("closed");
   const chartRef = useRef(null);
 
@@ -107,12 +96,13 @@ export default function SearchPage() {
       pdfUrl:     `${API}/pdf-file/${encodeURIComponent(r.file)}`,
       previewUrl: `${API}${r.preview}`,
       documentId: r.id,
+      searchQuery: searched,   
       category:   r.category ?? null,
       rect: { top: rect.top, left: rect.left, width: rect.width, height: rect.height },
     });
     setModalStage("expanding");
     setTimeout(() => setModalStage("open"), 30);
-  }, []);
+  }, [searched]);
 
   const openPdfFromChart = useCallback((d) => {
     if (!d.file || !d.preview) return;
@@ -120,6 +110,7 @@ export default function SearchPage() {
       pdfUrl:     `${API}/pdf-file/${encodeURIComponent(d.file)}`,
       previewUrl: `${API}${d.preview}`,
       documentId: d.id,
+      searchQuery: inputVal,   
       category:   d.category ?? null,
       rect: {
         top:    window.innerHeight / 2 - 1,
@@ -130,7 +121,7 @@ export default function SearchPage() {
     });
     setModalStage("expanding");
     setTimeout(() => setModalStage("open"), 30);
-  }, []);
+  }, [searched]);
 
   const openUploadFromChart = useCallback((d) => {
     setUploadNode(d);
@@ -313,7 +304,7 @@ export default function SearchPage() {
         >
           {/* Main search input */}
           <div className="flex-1 flex items-center gap-2 bg-surface border border-border rounded-xl px-4 py-2.5
-                          focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/30
+                          focus-within:border-chartizer-yellow focus-within:ring-1 focus-within:ring-chartizer-yellow/30
                           transition-all duration-200">
             <svg className="w-4 h-4 text-ink-muted flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -343,8 +334,8 @@ export default function SearchPage() {
                 relative flex items-center gap-1.5 px-3 py-2.5 rounded-xl border text-sm font-medium
                 transition-all duration-150 whitespace-nowrap
                 ${filtersOpen
-                  ? "border-accent text-accent"
-                  : "border-border text-ink-muted hover:border-accent hover:text-ink"
+                  ? "border-chartizer-yellow text-chartizer-yellow"
+                  : "border-border text-ink-muted hover:border-chartizer-yellow hover:text-ink"
                 }
               `}
             >
@@ -358,7 +349,7 @@ export default function SearchPage() {
               </svg>
               Filters
               {hasActiveFilters && (
-                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-accent" />
+                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-chartizer-yellow" />
               )}
               <svg
                 className={`w-3 h-3 transition-transform duration-200 ${filtersOpen ? "rotate-180" : ""}`}
@@ -381,7 +372,7 @@ export default function SearchPage() {
                 onKeyDown={handleFieldKeyDown}
                 className="w-28 bg-surface border border-border rounded-xl px-3 py-2.5 text-sm text-ink
                            text-center outline-none appearance-none
-                           focus:border-accent focus:ring-1 focus:ring-accent/30 transition-all duration-200"
+                           focus:border-chartizer-yellow focus:ring-1 focus:ring-chartizer-yellow/30 transition-all duration-200"
               />
             </div>
           )}
@@ -392,7 +383,7 @@ export default function SearchPage() {
               onClick={handleLoadAll}
               disabled={hits === 0 || loading}
               className="px-4 py-2.5 rounded-xl border border-border text-ink-muted text-sm font-medium
-                         hover:border-accent hover:text-ink disabled:opacity-30 disabled:cursor-not-allowed
+                         hover:border-chartizer-yellow hover:text-ink disabled:opacity-30 disabled:cursor-not-allowed
                          transition-all duration-150"
             >
               Load All
@@ -401,8 +392,8 @@ export default function SearchPage() {
 
           <button
             type="submit"
-            className="px-4 py-2.5 rounded-xl bg-accent text-main text-sm ml-2 font-semibold
-                       hover:bg-accent/90 active:scale-95 transition-all duration-150"
+            className="px-4 py-2.5 rounded-xl bg-chartizer-yellow text-main text-sm ml-2 font-semibold
+                       hover:bg-chartizer-yellow/90 active:scale-95 transition-all duration-150"
           >
             Search
           </button>
@@ -427,7 +418,7 @@ export default function SearchPage() {
                     <div key={key} className="flex flex-col gap-1">
                       <label className="text-xs text-ink-muted pl-1">{label}</label>
                       <div className="flex items-center gap-2 bg-surface border border-border rounded-xl px-3 py-2
-                                      focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/30
+                                      focus-within:border-chartizer-yellow focus-within:ring-1 focus-within:ring-chartizer-yellow/30
                                       transition-all duration-200">
                         <input
                           type="text"
@@ -472,7 +463,7 @@ export default function SearchPage() {
                           style={{ minWidth: "11rem" }}
                           className="bg-surface border border-border rounded-xl py-2 pl-7 pr-8 text-sm text-ink
                                      outline-none appearance-none cursor-pointer
-                                     focus:border-accent focus:ring-1 focus:ring-accent/30 transition-all duration-200">
+                                     focus:border-chartizer-yellow focus:ring-1 focus:ring-chartizer-yellow/30 transition-all duration-200">
                           <option value="">All categories</option>
                           {categories
                             .filter(c => c.id !== 0)
@@ -512,7 +503,7 @@ export default function SearchPage() {
                       type="button"
                       onClick={clearAllFilters}
                       className="self-end px-3 py-2 rounded-xl border border-border text-ink-muted text-xs
-                                 hover:border-accent hover:text-ink transition-all duration-150"
+                                 hover:border-chartizer-yellow hover:text-ink transition-all duration-150"
                     >
                       Clear filters
                     </button>

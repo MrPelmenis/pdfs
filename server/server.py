@@ -405,7 +405,7 @@ def extract_snippet(doc: dict) -> str | None:
                     return result
         return None
 
-    priority_fields = ["abstract", "conclusions", "methods", "figures", "topics", "keywords", "concepts", "full_text"]
+    priority_fields = ["abstract", "conclusions_text", "methods_text", "figures_text", "topics", "keywords_text", "full_text"]
 
     for field in priority_fields:
         value = doc.get(field)
@@ -423,22 +423,27 @@ def extract_snippet(doc: dict) -> str | None:
     return " ".join(words[:30]) + trail
 
 
-import re
+def buildFilterQuery(f_abstract="", f_methods="", f_conclusions="",
+                     f_figures="", f_topics="", f_keywords=""):
+    parts = []
+    if f_abstract:
+        parts.append(f"<abstract>{f_abstract}</abstract>")
+    if f_topics:
+        parts.append(f"<keywords_text>{f_topics}</keywords_text>")
+    if f_keywords:
+        parts.append(f"<keywords_text>{f_keywords}</keywords_text>")
+    if f_methods:
+        parts.append(f"<methods_text>{f_methods}</methods_text>")
+    if f_conclusions:
+        parts.append(f"<conclusions_text>{f_conclusions}</conclusions_text>")
+    if f_figures:
+        parts.append(f"<figures_text>{f_figures}</figures_text>")
+    return "".join(parts)
 
-def add_wildcards(val: str) -> str:
-    #katram vardam galaa * iznemot ja viss ir "query_text"
-    v = val.strip()
-    if not v:
-        return v
-    if v.startswith('"') and v.endswith('"'):
-        return v
-    tokens = v.split()
-    return " ".join(t if t.endswith(("*", "?")) else t + "*" for t in tokens)
 
-
-def build_cp_query(query, date_start=None, date_end=None,
-                   f_abstract="", f_methods="", f_conclusions="",
-                   f_figures="", category_id=None, f_topics=""):
+def do_search(query, docs, date_start=None, date_end=None,
+              f_abstract="", f_methods="", f_conclusions="",
+              f_figures="", category_id=None, f_topics="", f_keywords=""):
 
     date_tag = ""
     if date_start is not None or date_end is not None:
@@ -446,59 +451,17 @@ def build_cp_query(query, date_start=None, date_end=None,
         de = int(date_end)   if date_end   is not None else YEAR_MAX
         date_tag = f"<date>{ds} .. {de}</date>"
 
-    main_part = add_wildcards(query) if query.strip() else ""
-
-    # xml-text fields: query at the PARENT level, not nested
-    xml_text_fields = [
-        ("figures",     f_figures),
-        ("methods",     f_methods),
-        ("conclusions", f_conclusions),
-        ("topics",      f_topics),
-    ]
-    field_parts = []
-    for tag, val in xml_text_fields:
-        v = (val or "").strip()
-        if not v:
-            continue
-        field_parts.append(f"<{tag}>{add_wildcards(v)}</{tag}>")
-
-    # abstract is text&xml so nested is fine
-    if (f_abstract or "").strip():
-        field_parts.append(f"<abstract>{add_wildcards(f_abstract)}</abstract>")
-
-    cat_part = (
-        f"<category_id>{int(category_id)}</category_id>"
-        if category_id not in (None, "", "0")
-        else ""
-    )
-
-    parts = [p for p in [main_part, *field_parts, cat_part] if p]
-    combined = " ".join(parts) if parts else ""
-
-    return combined, date_tag
-
-
-
-def do_search(query, docs, date_start=None, date_end=None, 
-              f_abstract="", f_methods="", f_conclusions="", 
-              f_figures="", category_id=None, f_topics=""):
-    
-    combined_query, date_tag = build_cp_query(
-        query,
-        date_start=date_start,
-        date_end=date_end,
+    filter_query = buildFilterQuery(
         f_abstract=f_abstract,
         f_methods=f_methods,
         f_conclusions=f_conclusions,
         f_figures=f_figures,
-        category_id=category_id,
         f_topics=f_topics,
+        f_keywords=f_keywords,
     )
 
-
     fullQ = (
-        f"<query><stub_document>no</stub_document>{date_tag}{combined_query}</query>"
-        f"<relevance>decending</relevance>"
+        f"<query><stub_document>no</stub_document>{date_tag}{filter_query} {query}</query>"
         f"<docs>{docs}</docs>"
         f"<list>"
         f"<id>yes</id>"
@@ -514,16 +477,16 @@ def do_search(query, docs, date_start=None, date_end=None,
         f"<full_text>snippet</full_text>"
         f"<stub_document>yes</stub_document>"
         f"<category_id>yes</category_id>"
-        f"<figures>highlight</figures>"
-        f"<conclusions>highlight</conclusions>"
-        f"<methods>highlight</methods>"
-        f"<topics>highlight</topics>"
-        f"<keywords>highlight</keywords>"
-        f"<concepts>highlight</concepts>"
+        f"<keywords_text>highlight</keywords_text>"
+        f"<methods_text>highlight</methods_text>"
+        f"<conclusions_text>highlight</conclusions_text>"
+        f"<figures_text>highlight</figures_text>"
+        f"<tables_text>highlight</tables_text>"
         f"<referenced_work_ids>yes</referenced_work_ids>"
         f"<related_work_ids>yes</related_work_ids>"
         f"</list>"
     )
+
 
 
     resp = requests.post(
@@ -533,13 +496,14 @@ def do_search(query, docs, date_start=None, date_end=None,
     )
     resp.raise_for_status()
     data = resp.json()
+    print(resp.text)
 
     hits = int(
         data.get("cps:reply", {})
             .get("cps:content", {})
             .get("hits", 0)
     )
- 
+
     documents = (
         data.get("cps:reply", {})
             .get("cps:content", {})
@@ -548,7 +512,7 @@ def do_search(query, docs, date_start=None, date_end=None,
     )
     if isinstance(documents, dict):
         documents = [documents]
- 
+
     results = []
     for doc in documents:
         raw_authors = doc.get("authors")
@@ -557,15 +521,7 @@ def do_search(query, docs, date_start=None, date_end=None,
         else:
             a = raw_authors.get("author", [])
             authors = [a] if isinstance(a, str) else a
- 
-        # Topics
-        raw_topics = doc.get("topics")
-        if raw_topics is None:
-            topics = []
-        else:
-            t = raw_topics.get("topic", [])
-            topics = [t] if isinstance(t, str) else t
- 
+
         # Referenced work IDs
         raw_ref_ids = doc.get("referenced_work_ids")
         if raw_ref_ids is None:
@@ -573,7 +529,7 @@ def do_search(query, docs, date_start=None, date_end=None,
         else:
             r = raw_ref_ids.get("referenced_work_id", [])
             referenced_work_ids = [r] if isinstance(r, str) else r
- 
+
         # Related work IDs
         raw_rel_ids = doc.get("related_work_ids")
         if raw_rel_ids is None:
@@ -581,14 +537,13 @@ def do_search(query, docs, date_start=None, date_end=None,
         else:
             r = raw_rel_ids.get("related_work_id", [])
             related_work_ids = [r] if isinstance(r, str) else r
- 
+
         file_path    = doc.get("file")
         filename     = clean_filename(file_path)
         preview_name = get_preview_filename(file_path) if file_path else None
         preview_exists = preview_name and os.path.exists(
             os.path.join(PREVIEW_DIR, preview_name)
         )
- 
 
         try:
             cat_id_raw = doc.get("category_id")
@@ -597,10 +552,10 @@ def do_search(query, docs, date_start=None, date_end=None,
                 category = NONE_CATEGORY
         except (TypeError, ValueError):
             category = NONE_CATEGORY
- 
+
         results.append({
             "title":               doc.get("title"),
-            "id":                  doc.get("id"),          
+            "id":                  doc.get("id"),
             "openalex_id":         doc.get("openalex_id", ""),
             "file":                filename,
             "date":                doc.get("date"),
@@ -610,17 +565,20 @@ def do_search(query, docs, date_start=None, date_end=None,
             "preview":             f"/previews/{preview_name}" if preview_exists else None,
             "doi_number":          doc.get("doi_number", ""),
             "cited_by_count":      doc.get("cited_by_count"),
-            "topics":              topics,
+            "keywords_text":       doc.get("keywords_text", ""),
+            "methods_text":        doc.get("methods_text", ""),
+            "conclusions_text":    doc.get("conclusions_text", ""),
+            "figures_text":        doc.get("figures_text", ""),
+            "tables_text":         doc.get("tables_text", ""),
             "referenced_work_ids": referenced_work_ids,
             "related_work_ids":    related_work_ids,
             "category":            category,
             "stub_document":       doc.get("stub_document", "no"),
-            "snippet": extract_snippet(doc),
-
+            "snippet":             extract_snippet(doc),
         })
- 
-    return results, hits
- 
+
+    return results, hits 
+
  
 def _enrich_and_sort(work_ids: list, limit: int) -> list[tuple[str, dict | None]]:
     enriched_map = {}
@@ -927,6 +885,8 @@ def expand():
         f"<list>"
         f"<referenced_work_ids>yes</referenced_work_ids>"
         f"<related_work_ids>yes</related_work_ids>"
+        f"<referenced_work_id>yes</referenced_work_id>"
+        f"<related_work_id>yes</related_work_id>"
         f"</list>"
     )
     try:

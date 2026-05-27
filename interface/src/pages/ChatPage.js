@@ -8,7 +8,7 @@ function StatusStep({ label, done }) {
   return (
     <div
       className={`flex items-center gap-2 text-xs transition-all duration-300 ${
-        done ? "text-ink-muted line-through opacity-40" : "text-accent font-medium"
+        done ? "text-ink-muted line-through opacity-40" : "text-chartizer-yellow font-medium"
       }`}
     >
       <span>{label}</span>
@@ -17,7 +17,7 @@ function StatusStep({ label, done }) {
           {[0, 1, 2].map((i) => (
             <span
               key={i}
-              className="w-1 h-1 rounded-full bg-accent"
+              className="w-1 h-1 rounded-full bg-chartizer-yellow"
               style={{
                 animation:      "pulse 1.2s ease-in-out infinite",
                 animationDelay: `${i * 0.2}s`,
@@ -37,9 +37,9 @@ function SourceCard({ file, title, index }) {
       title={file}
       className="flex items-start gap-2 px-3 py-2 rounded-lg
                  bg-surface border border-border flex-shrink-0
-                 w-44 select-none hover:border-accent/40 transition-colors duration-150"
+                 w-44 select-none hover:border-chartizer-yellow/40 transition-colors duration-150"
     >
-      <span className="text-xs font-semibold text-accent/70 mt-0.5 flex-shrink-0">
+      <span className="text-xs font-semibold text-chartizer-yellow/70 mt-0.5 flex-shrink-0">
         {index}
       </span>
       <span
@@ -142,7 +142,7 @@ export default function ChatPage() {
               {/* ── User ── */}
               {msg.role === "user" && (
                 <div className="flex justify-end">
-                  <div className="max-w-[80%] bg-accent text-main rounded-2xl rounded-br-sm
+                  <div className="max-w-[80%] bg-chartizer-yellow text-main rounded-2xl rounded-br-sm
                                   px-4 py-2.5 text-sm font-medium leading-relaxed">
                     {msg.text}
                   </div>
@@ -152,9 +152,9 @@ export default function ChatPage() {
               {/* ── Assistant ── */}
               {msg.role === "assistant" && (
                 <div className="flex gap-3">
-                  <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center
+                  <div className="w-6 h-6 rounded-full bg-chartizer-yellow/20 flex items-center
                                   justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-3 h-3 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3 h-3 text-chartizer-yellow" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-11h2v6h-2zm0-4h2v2h-2z" />
                     </svg>
                   </div>
@@ -234,7 +234,7 @@ export default function ChatPage() {
             className="flex items-end gap-2"
           >
             <div className="flex-1 flex items-end gap-2 bg-surface border border-border rounded-xl px-4 py-2.5
-                            focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/30
+                            focus-within:border-chartizer-yellow focus-within:ring-1 focus-within:ring-chartizer-yellow/30
                             transition-all duration-200">
               <textarea
                 ref={inputRef}
@@ -256,8 +256,8 @@ export default function ChatPage() {
             <button
               type="submit"
               disabled={!inputVal.trim() || streaming}
-              className="px-4 py-2.5 rounded-xl bg-accent text-main text-sm font-semibold
-                         hover:bg-accent/90 active:scale-95 transition-all duration-150
+              className="px-4 py-2.5 rounded-xl bg-chartizer-yellow text-main text-sm font-semibold
+                         hover:bg-chartizer-yellow/90 active:scale-95 transition-all duration-150
                          disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100"
             >
               {streaming ? (

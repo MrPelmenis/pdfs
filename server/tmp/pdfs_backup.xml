@@ -1,0 +1,14 @@
+<cps:reply xmlns:cps="www.contextprime.com">
+	<cps:database>pdfs</cps:database>
+	<cps:command>retrieve</cps:command>
+	<cps:content/>
+	<cps:error>
+		<code>2437</code>
+		<text>Document root tag is not present</text>
+		<message>Document root tag is not present</message>
+		<level>REJECTED</level>
+		<source>database</source>
+	</cps:error>
+	<cps:seconds>0.0002</cps:seconds>
+</cps:reply>
+

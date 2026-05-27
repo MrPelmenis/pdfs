@@ -25,9 +25,19 @@ export default function UploadPage() {
   const progress    = totalCount > 0 ? (doneCount / totalCount) * 100 : 0;
   const estimatedSeconds = Math.ceil(totalCount * SECONDS_PER_FILE);
 
-  const barColor = allDone
-    ? (anyError ? "#f6ae2d" : "#34a853")
-    : "#4f8ef7";
+  const getProgressBarColor = () => {
+    if (allDone) {
+      return anyError ? "bg-danger" : "bg-success";
+    }
+    return "bg-chartizer-yellow";
+  };
+
+  const getBorderColorClass = () => {
+    if (allDone) {
+      return anyError ? "border-danger/40" : "border-success/40";
+    }
+    return "border-border hover:border-chartizer-yellow/40";
+  };
 
   async function uploadFiles(fileList) {
     const all     = Array.from(fileList);
@@ -62,93 +72,76 @@ export default function UploadPage() {
   }
 
   return (
-    <main style={{
-      minHeight: "100vh", background: "#202124", color: "white",
-      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-      padding: "2rem", fontFamily: "sans-serif",
-    }}>
-      <div style={{ width: "100%", maxWidth: "30rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+    <main className="min-h-screen bg-main text-ink flex flex-col items-center justify-center p-8">
+      {/* Restored exact original 30rem sizing footprint to avoid layout jumps */}
+      <div className="w-full max-w-[30rem] flex flex-col gap-3">
 
         {/* Drop zone */}
         <div
           onDrop={(e) => { e.preventDefault(); uploadFiles(e.dataTransfer.files); }}
           onDragOver={(e) => e.preventDefault()}
           onClick={() => !isUploading && inputRef.current?.click()}
-          style={{
-            border: `2px dashed ${
-              allDone && !anyError ? "#34a853" :
-              allDone && anyError  ? "#f6ae2d" : "#3c3f43"
-            }`,
-            background: "#303134",
-            borderRadius: "0.875rem", padding: "2.5rem 2rem",
-            cursor: isUploading ? "default" : "pointer",
-            display: "flex", flexDirection: "column", alignItems: "center", gap: "0.625rem",
-            transition: "border-color 0.2s",
-          }}
+          className={`border-2 border-dashed ${getBorderColorClass()} bg-surface rounded-xl 
+                     py-10 px-8 flex flex-col items-center justify-center text-center gap-2.5 transition-colors duration-200 w-full`}
+          style={{ cursor: isUploading ? "default" : "pointer" }}
         >
           <input
-            ref={inputRef} type="file" accept=".pdf,application/pdf" multiple
-            style={{ display: "none" }}
+            ref={inputRef}
+            type="file"
+            accept=".pdf,application/pdf"
+            multiple
+            className="hidden"
             onChange={(e) => { uploadFiles(e.target.files); e.target.value = ""; }}
           />
-          <svg style={{ width: 50, height: 70, color: "#5f6368" }}
-            fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+          <svg className="w-12 h-16 text-ink-muted opacity-30" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round"
               d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
           </svg>
-          <p style={{ fontSize: 15, color: "#9aa0a6", margin: 0 }}>
+          <p className="text-sm text-ink-dim select-none m-0">
             {isUploading ? "Uploading, please wait…" : "Drag & drop PDFs, or click to browse"}
           </p>
         </div>
 
         {/* Progress section */}
         {fileQueue.length > 0 && (
-          <div style={{
-            background: "#303134", borderRadius: "0.75rem",
-            padding: "0.75rem 1rem", display: "flex", flexDirection: "column", gap: "0.5rem",
-          }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <span style={{ fontSize: 13, color: "#9aa0a6" }}>
+          <div className="bg-surface border border-border rounded-xl p-4 flex flex-col gap-2 w-full">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-ink-dim font-medium">
                 {allDone
                   ? `${doneCount}/${totalCount} files done${anyError ? " (some errors)" : ""}`
                   : `${doneCount}/${totalCount} uploaded · processing ${formatTime(estimatedSeconds)} total`}
               </span>
               <button
                 onClick={() => setExpanded(e => !e)}
-                style={{
-                  background: "none", border: "none", cursor: "pointer",
-                  color: "#5f6368", fontSize: 12, display: "flex", alignItems: "center", gap: "0.25rem",
-                  padding: 0,
-                }}
+                className="bg-transparent border-none cursor-pointer text-ink-muted hover:text-ink text-xs 
+                           flex items-center gap-1 p-0 transition-colors duration-150"
               >
                 {expanded ? "hide" : "details"}
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path strokeLinecap="round" strokeLinejoin="round"
                     d={expanded ? "M2 8l4-4 4 4" : "M2 4l4 4 4-4"} />
                 </svg>
               </button>
             </div>
 
-            <div style={{ height: 4, background: "#3c3f43", borderRadius: 2, overflow: "hidden" }}>
-              <div style={{
-                height: "100%", width: `${progress}%`,
-                background: barColor,
-                borderRadius: 2,
-                transition: "width 0.3s ease, background 0.3s ease",
-              }} />
+            <div className="h-1 bg-border rounded-full overflow-hidden">
+              <div 
+                className={`h-full ${getProgressBarColor()} rounded-full transition-all duration-300 ease-in-out`}
+                style={{ width: `${progress}%` }} 
+              />
             </div>
 
             {totalCount > 0 && (
-              <p style={{ fontSize: 14, color: "#5f6368", margin: 0 }}>
+              <p className="text-xs text-ink-muted leading-relaxed m-0">
                 Files are processed in the background — {formatTime(estimatedSeconds)} for all {totalCount} file{totalCount !== 1 ? "s" : ""}. You can leave this page.
               </p>
             )}
 
             {expanded && (
-              <div style={{
-                display: "flex", flexDirection: "column", gap: "0.25rem",
-                marginTop: "0.25rem", maxHeight: "14rem", overflowY: "auto",
-              }}>
+              <div 
+                className="flex flex-col gap-1 mt-1 max-h-56 overflow-y-auto pr-1"
+                style={{ scrollbarWidth: "thin" }}
+              >
                 {fileQueue.map(f => (
                   <FileRow key={f.name} name={f.name} status={f.status} message={f.message} />
                 ))}
@@ -158,12 +151,8 @@ export default function UploadPage() {
             {allDone && (
               <button
                 onClick={() => { clearQueue(); setExpanded(false); }}
-                style={{
-                  alignSelf: "center",
-                  fontSize: 12, color: "#5f6368",
-                  background: "none", border: "none", cursor: "pointer",
-                  textDecoration: "underline", textUnderlineOffset: 3,
-                }}
+                className="self-center mt-1 text-xs text-ink-muted hover:text-danger underline 
+                           underline-offset-4 bg-transparent border-none cursor-pointer transition-colors duration-150"
               >
                 Clear
               </button>

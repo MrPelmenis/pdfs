@@ -503,13 +503,17 @@ export default function PdfModal({ modal, modalStage, onClose, onCategoryChange 
           {!isOpen && (
             <img src={modal.previewUrl} alt="" className="w-full h-full object-cover" />
           )}
-          {isOpen && (
-            <embed
-              src={modal.pdfUrl}
-              className="w-full h-full border-0 bg-[#303134]"
-              title="PDF viewer"
-            />
-          )}
+            {isOpen && (
+              <embed
+                src={`${modal.pdfUrl}${
+                  modal.searchQuery
+                    ? `#search=${encodeURIComponent(modal.searchQuery.replace(/[^a-zA-Z ]/g, "").trim())}`
+                    : ""
+                }`}
+                className="w-full h-full border-0 bg-[#303134]"
+                title="PDF viewer"
+              />
+            )}
         </div>
       </div>
     </div>

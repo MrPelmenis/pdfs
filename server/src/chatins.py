@@ -49,7 +49,7 @@ Examples:
 User question: {question}
 Keywords:"""
 
-ANSWER_PROMPT = """\
+ANSWER_PROMPT = """b\
 You are a research assistant helping scientists explore a paper database.
 Answer the user's question using ONLY the provided paper excerpts below.
 
