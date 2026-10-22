@@ -1,10 +1,40 @@
+import { GraphRenderer } from "@chartizer/graph-renderer";
+
+
 const SEARCH_ICON = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/500px-Search_Icon.svg.png?_=20181016161702";
 const API = process.env.REACT_APP_SERVER_URL;
+
+// ── Visual constants (ported from the old NetChart style block) ──────────────
+
+const CHART_BG = "#262626";
+const NODE_FILL = "rgba(28,124,213,0.92)";
+const NODE_STROKE = "rgba(0,0,0,0.15)";
+const QUERY_NODE_RADIUS = 28;
+const LABEL_MAX_WIDTH = 240;
+const LINK_FILL = "rgba(255,255,255,0.15)";
+const DEFAULT_LINK_RADIUS = 5;
+// NetChart styled links by "radius"; the new renderer takes a line width.
+// This assumes radius is half the thickness. Tweak if lines look too thick/thin.
+const LINK_WIDTH_PER_RADIUS = 2;
+const GOLDEN_ANGLE = 2.399963229728653;
+
+const REF_STYLE = { fillColor: "rgba(99,102,241,0.35)", radius: 2, toDecoration: "arrow" };
+const REL_STYLE = { fillColor: "rgba(251,146,60,0.45)", radius: 1.5, toDecoration: "arrow", dashSize: 4 };
 
 function stripHtml(str) {
     if (!str) return str;
     const doc = new DOMParser().parseFromString(str, "text/html");
     return doc.body.textContent ?? "";
+}
+
+// The server wraps node fields as item.data.data; accept item.data as well so a
+// slightly different payload shape doesn't silently lose titles/ids/edges.
+function fieldsOf(item) {
+    return item?.data?.data ?? item?.data ?? null;
+}
+
+function linkStyleOf(link) {
+    return link?.style ?? link?.data?.style ?? {};
 }
 
 // ── Tooltip ──────────────────────────────────────────────────────────────────
@@ -15,21 +45,21 @@ function getTooltip() {
     if (_tooltip) return _tooltip;
     _tooltip = document.createElement("div");
     Object.assign(_tooltip.style, {
-        position:      "fixed",
+        position: "fixed",
         pointerEvents: "none",
-        zIndex:        "99999",
-        background:    "rgba(15,15,20,0.95)",
-        color:         "#e8e8e8",
-        border:        "1px solid rgba(255,255,255,0.1)",
-        borderRadius:  "8px",
-        padding:       "8px 12px",
-        fontSize:      "11px",
-        lineHeight:    "1.5",
-        width:         "360px",
-        boxShadow:     "0 4px 20px rgba(0,0,0,0.55)",
-        display:       "none",
-        fontFamily:    "sans-serif",
-        wordBreak:     "break-word",
+        zIndex: "99999",
+        background: "rgba(15,15,20,0.95)",
+        color: "#e8e8e8",
+        border: "1px solid rgba(255,255,255,0.1)",
+        borderRadius: "8px",
+        padding: "8px 12px",
+        fontSize: "11px",
+        lineHeight: "1.5",
+        width: "360px",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.55)",
+        display: "none",
+        fontFamily: "sans-serif",
+        wordBreak: "break-word",
     });
     document.body.appendChild(_tooltip);
     return _tooltip;
@@ -43,11 +73,11 @@ function positionTooltip(x, y) {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
     let left = x + margin;
-    let top  = y + margin;
+    let top = y + margin;
     if (left + tw > vw - margin) left = x - tw - margin;
-    if (top  + th > vh - margin) top  = y - th - margin;
+    if (top + th > vh - margin) top = y - th - margin;
     _tooltip.style.left = `${Math.max(margin, left)}px`;
-    _tooltip.style.top  = `${Math.max(margin, top)}px`;
+    _tooltip.style.top = `${Math.max(margin, top)}px`;
 }
 
 function hideTooltip() {
@@ -61,9 +91,9 @@ function buildSnippetHtml(d) {
     if (!raw) return "";
 
     // Replace <b>…</b> with a placeholder, strip all other tags, restore placeholder
-    const marked  = raw.replace(/<b>(.*?)<\/b>/gi, "%%BOLD%%$1%%ENDBOLD%%");
-    const plain   = marked.replace(/<[^>]+>/g, "");
-    const words   = plain.trim().split(/\s+/);
+    const marked = raw.replace(/<b>(.*?)<\/b>/gi, "%%BOLD%%$1%%ENDBOLD%%");
+    const plain = marked.replace(/<[^>]+>/g, "");
+    const words = plain.trim().split(/\s+/);
     const snippet = words.slice(0, 25).join(" ") + (words.length > 25 ? "…" : "");
 
     // Re-apply highlight styling in place of the placeholder
@@ -75,20 +105,20 @@ function buildSnippetHtml(d) {
 }
 
 function showTooltip(d, x, y) {
-    const tip     = getTooltip();
-    const title   = d.title       || "—";
-    const oaId    = d.openalex_id || "—";
-    const doi     = d.doi         || "—";
-    const cited   = d.cited       ?? "—";
+    const tip = getTooltip();
+    const title = d.title || "—";
+    const oaId = d.openalex_id || "—";
+    const doi = d.doi || "—";
+    const cited = d.cited ?? "—";
     const authors = Array.isArray(d.authors) && d.authors.length
         ? d.authors.join(", ")
         : "—";
 
     const snippetHtml = buildSnippetHtml(d);
 
-    const isStub    = !!d.is_stub_node;
+    const isStub = !!d.is_stub_node;
     const clickHint = isStub ? "Click to open on OpenAlex" : "Click to expand references";
-    const dblHint   = isStub ? "Double-click to upload this document" : (d.stub_document ? "Double-click for DOI info" : "Double-click to view PDF");
+    const dblHint = isStub ? "Double-click to upload this document" : (d.stub_document ? "Double-click for DOI info" : "Double-click to view PDF");
 
     // Category badge — only shown if category exists and isn't "none" (id 0)
     const cat = d.category;
@@ -124,33 +154,234 @@ function showTooltip(d, x, y) {
     positionTooltip(x, y);
     tip.style.display = "block";
 }
+
+// ── Data mapping: server node/link  →  @chartizer/graph-renderer snapshots ───
+//
+// Shapes and styles below are confirmed against snapshot.d.ts:
+//   GraphRendererNodeShape  = circle | rect | paragraph | container | autoText | labelBox
+//   GraphRendererNodeStyle  = { fillColor, strokeColor, strokeWidth, imageUrl, label: {...} }
+//   GraphRendererLinkStyle  = { color, width, dashed, arrow, curveStyle: "straight"|"curved", ... }
+
+function toRendererNode(item, x, y) {
+    const id = String(item.id);
+    const d = fieldsOf(item) ?? {};
+
+    // The search "query" node: white circle with the search icon, no label.
+    if (id === "query") {
+        return {
+            id, x, y,
+            shape: { kind: "circle", radius: d.radius ?? QUERY_NODE_RADIUS },
+            style: {
+                fillColor: "#ffffff",
+                strokeColor: NODE_STROKE,
+                strokeWidth: 1,
+                imageUrl: SEARCH_ICON,
+            },
+        };
+    }
+
+    // Document nodes: rounded label box (old `display: "text"`), coloured by d.fillColor.
+    // NOTE: d.radius no longer changes the size — autoText nodes size to their label.
+    return {
+        id, x, y,
+        label: stripHtml(d.title || id),
+        shape: { kind: "autoText", maxWidth: LABEL_MAX_WIDTH, padding: 10, cornerRadius: 6 },
+        style: {
+            fillColor: d.fillColor ?? NODE_FILL,
+            strokeColor: NODE_STROKE,
+            strokeWidth: 1,
+            label: {
+                textColor: "#000000",
+                fontFamily: "Poppins, sans-serif",
+                fontSize: 12,
+            },
+        },
+    };
+}
+
+function toRendererLink(link) {
+    const s = linkStyleOf(link);
+    const from = String(link.from);
+    const to = String(link.to);
+    return {
+        // NetChart links had no ids; the renderer needs one. Include the colour so a
+        // "referenced" and a "related" link between the same pair can coexist.
+        id: link.id != null ? String(link.id) : `${from}|${to}|${s.fillColor ?? ""}`,
+        from,
+        to,
+        points: [],
+        style: {
+            color: s.fillColor ?? LINK_FILL,
+            width: (s.radius ?? DEFAULT_LINK_RADIUS) * LINK_WIDTH_PER_RADIUS,
+            arrow: s.toDecoration === "arrow",
+            dashed: s.dashSize !== undefined,
+            curveStyle: "straight",
+        },
+    };
+}
+
+// The renderer needs a starting x/y for every node (its force layout then settles
+// them). Fan new nodes out around the node they connect to, or a spiral at the origin.
+function seedPosition(index, anchor) {
+    const angle = index * GOLDEN_ANGLE;
+    if (!anchor) {
+        const r = 90 * Math.sqrt(index + 1);
+        return { x: r * Math.cos(angle), y: r * Math.sin(angle) };
+    }
+    const r = 170 + 20 * Math.sqrt(index);
+    return { x: anchor.x + r * Math.cos(angle), y: anchor.y + r * Math.sin(angle) };
+}
+
+function pushTo(map, key, value) {
+    const list = map.get(key);
+    if (list) list.push(value);
+    else map.set(key, [value]);
+}
+
 // ── Chart ────────────────────────────────────────────────────────────────────
 
-const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadStub = null) => {
+/**
+ * Drop-in replacement for the old NetChart-based CreateChart.
+ * Returns a handle { addData({nodes, links}), remove(), renderer } immediately;
+ * the WASM renderer mounts asynchronously and calls made before that are queued.
+ */
+const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUploadStub = null) => {
     const container = document.getElementById("megachart");
     if (!container) return null;
 
     const chartData = data ?? { nodes: [], links: [] };
 
     // Tracks every node ID currently visible in the graph
-    const shownNodeIds    = new Set(chartData.nodes.map(n => n.id));
+    const shownNodeIds = new Set();
     // Tracks which ref/rel IDs have already been shown per node (for pagination)
     const shownRefsByNode = new Map();
     const shownRelsByNode = new Map();
     // Stores each node's full ref/rel ID lists (for client-side cross-link pass)
-    const nodeEdgeMap     = new Map();
+    const nodeEdgeMap = new Map();
     // Debounce: skip if already fetching for this node
-    const expandingNodes  = new Set();
+    const expandingNodes = new Set();
+    // Node fields by id, for tooltips / click handlers
+    const fieldsById = new Map();
+    // Ids actually handed to the renderer
+    const knownNodeIds = new Set();
+    const knownLinkIds = new Set();
 
     for (const node of chartData.nodes) {
-        const d = node.data?.data;
+        shownNodeIds.add(node.id);
+        const d = fieldsOf(node);
         if (!d) continue;
         nodeEdgeMap.set(node.id, {
             ref_ids: d.referenced_work_ids || [],
-            rel_ids: d.related_work_ids    || [],
+            rel_ids: d.related_work_ids || [],
         });
         shownRefsByNode.set(node.id, new Set());
         shownRelsByNode.set(node.id, new Set());
+    }
+
+    // ── Renderer lifecycle ───────────────────────────────────────────────────
+
+    if (!container.style.position) container.style.position = "relative";
+
+    const canvas = document.createElement("canvas");
+    Object.assign(canvas.style, {
+        position: "absolute",
+        top: "0",
+        left: "0",
+        width: "100%",
+        height: "100%",
+        display: "block",
+        background: CHART_BG,
+    });
+    container.appendChild(canvas);
+
+    let renderer = null;
+    let removed = false;
+    let latestSize = null;
+    let fitTimer = null;
+    let userMoved = false;
+    let offEvents = null;
+    const queue = [];
+
+    const safe = (fn, r) => {
+        try { fn(r); } catch (err) { console.error("[chart]", err); }
+    };
+    // Run now if the renderer is up, otherwise once it has mounted.
+    const run = (fn) => {
+        if (removed) return;
+        if (renderer) safe(fn, renderer);
+        else queue.push(fn);
+    };
+
+    // Push nodes/links into the renderer (initial load and expansions).
+    function applyData(r, payload, anchorId, isInitial) {
+        const nodes = payload?.nodes ?? [];
+        const links = payload?.links ?? [];
+
+        const neighbours = new Map();
+        for (const l of links) {
+            pushTo(neighbours, String(l.from), String(l.to));
+            pushTo(neighbours, String(l.to), String(l.from));
+        }
+
+        const fresh = [];
+        for (const n of nodes) {
+            if (n?.id == null) continue;
+            fieldsById.set(String(n.id), fieldsOf(n));
+            if (!knownNodeIds.has(String(n.id))) fresh.push(n);
+        }
+
+        const anchorFor = (id) => {
+            for (const nb of neighbours.get(id) ?? []) {
+                if (!knownNodeIds.has(nb)) continue;
+                const p = r.getNodePosition(nb);
+                if (p) return p;
+            }
+            if (anchorId != null && knownNodeIds.has(String(anchorId))) {
+                return r.getNodePosition(String(anchorId));
+            }
+            return null;
+        };
+
+        const perAnchor = new Map();
+        const rendererNodes = fresh.map((n) => {
+            const id = String(n.id);
+            if (Number.isFinite(n.x) && Number.isFinite(n.y)) {
+                return toRendererNode(n, n.x, n.y);
+            }
+            const anchor = anchorFor(id);
+            const key = anchor ? `${anchor.x}|${anchor.y}` : "origin";
+            const index = perAnchor.get(key) ?? 0;
+            perAnchor.set(key, index + 1);
+            const { x, y } = seedPosition(index, anchor);
+            return toRendererNode(n, x, y);
+        });
+
+        if (rendererNodes.length) {
+            r.upsertNodes(rendererNodes);
+            for (const n of rendererNodes) knownNodeIds.add(n.id);
+        }
+
+        const rendererLinks = [];
+        for (const l of links) {
+            if (l?.from == null || l?.to == null) continue;
+            const rl = toRendererLink(l);
+            // Links to nodes the renderer doesn't have can't be drawn — skip them.
+            if (!knownNodeIds.has(rl.from) || !knownNodeIds.has(rl.to)) continue;
+            if (knownLinkIds.has(rl.id)) continue;
+            knownLinkIds.add(rl.id);
+            rendererLinks.push(rl);
+        }
+        if (rendererLinks.length) r.upsertLinks(rendererLinks);
+
+        if (rendererNodes.length || rendererLinks.length) r.autoLayout();
+
+        if (isInitial && rendererNodes.length) {
+            r.fitToScreen(60);
+            // Re-fit once the layout has had a moment to spread out, unless the user already moved the view.
+            fitTimer = setTimeout(() => {
+                if (!removed && renderer && !userMoved) renderer.fitToScreen(60);
+            }, 900);
+        }
     }
 
     // ── Expand a node on click ───────────────────────────────────────────────
@@ -164,13 +395,13 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
 
         try {
             const resp = await fetch(`${API}/expand`, {
-                method:  "POST",
+                method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    openalex_id:    nodeId,
+                    openalex_id: nodeId,
                     shown_node_ids: [...shownNodeIds],
-                    shown_ref_ids:  [...shownRefs],
-                    shown_rel_ids:  [...shownRels],
+                    shown_ref_ids: [...shownRefs],
+                    shown_rel_ids: [...shownRels],
                 }),
             });
 
@@ -179,17 +410,17 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
                 return;
             }
 
-            const payload  = await resp.json();
+            const payload = await resp.json();
             const newNodes = payload.nodes ?? [];
             const newLinks = payload.links ?? [];
 
             // Register new nodes before addData so the cross-link pass sees them
             for (const node of newNodes) {
                 shownNodeIds.add(node.id);
-                const d = node.data?.data ?? {};
+                const d = fieldsOf(node) ?? {};
                 nodeEdgeMap.set(node.id, {
                     ref_ids: d.referenced_work_ids || [],
-                    rel_ids: d.related_work_ids    || [],
+                    rel_ids: d.related_work_ids || [],
                 });
                 shownRefsByNode.set(node.id, new Set());
                 shownRelsByNode.set(node.id, new Set());
@@ -197,18 +428,15 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
 
             // Update pagination cursors for the expanded node
             if (!shownRefsByNode.has(nodeId)) shownRefsByNode.set(nodeId, new Set());
-            if (!shownRelsByNode.has(nodeId))  shownRelsByNode.set(nodeId, new Set());
+            if (!shownRelsByNode.has(nodeId)) shownRelsByNode.set(nodeId, new Set());
             for (const id of payload.new_ref_ids ?? []) shownRefsByNode.get(nodeId).add(id);
             for (const id of payload.new_rel_ids ?? []) shownRelsByNode.get(nodeId).add(id);
 
             // Client-side cross-link pass: existing nodes → new nodes
             // (server handles new→existing and new→new)
             const newNodeIdSet = new Set(newNodes.map(n => n.id));
-            const extraLinks   = [];
+            const extraLinks = [];
             const seenLinkKeys = new Set(newLinks.map(l => `${l.from}|${l.to}`));
-
-            const REF_STYLE = { fillColor: "rgba(99,102,241,0.35)",  radius: 2,   toDecoration: "arrow" };
-            const REL_STYLE = { fillColor: "rgba(251,146,60,0.45)",  radius: 1.5, toDecoration: "arrow", dashSize: 4 };
 
             for (const [existingId, edges] of nodeEdgeMap.entries()) {
                 if (existingId === nodeId) continue;
@@ -231,7 +459,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             chart.addData({
                 nodes: newNodes,
                 links: [...newLinks, ...extraLinks],
-            });
+            }, nodeId);
 
         } catch (err) {
             console.error(`[expand] ${nodeId} failed:`, err);
@@ -245,114 +473,58 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     let pointerX = 0;
     let pointerY = 0;
 
-    container.addEventListener("mousemove", (e) => {
+    const onPointerMove = (e) => {
         pointerX = e.clientX;
         pointerY = e.clientY;
         if (_tooltip && _tooltip.style.display !== "none") {
             positionTooltip(pointerX, pointerY);
         }
-    });
+    };
+    const onUserMoved = () => { userMoved = true; };
 
-    // ── Chart init ───────────────────────────────────────────────────────────
+    container.addEventListener("pointermove", onPointerMove);
+    container.addEventListener("pointerdown", onUserMoved);
+    container.addEventListener("wheel", onUserMoved, { passive: true });
 
-    const chart = new window.NetChart({
-        container,
-        area:        { style: { fillColor: "#202124" } },
-        toolbar:     { enabled: false },
-        interaction: { resizing: { enabled: false }, zooming: { zoomExtent: [0.1, 200] } },
-        data:        { preloaded: chartData },
-        navigation: {
-            initialNodes:             initialNodes,
-            focusNodeExpansionRadius: 8,
-        },
-        style: {
-            node: {
-                display:   "text",
-                fillColor: "rgba(28,124,213,0.92)",
-                radius:    28,
-                lineColor: "rgba(0,0,0,0.15)",
-                lineWidth: 1,
-            },
+    // ── Renderer events ──────────────────────────────────────────────────────
+    // Confirmed against events.d.ts:
+    //   hoverchange → { hoverNodeId: string | null, hoverLinkId: string | null }
+    //   click / doubleclick → RendererPointerTargetPayload { nodeId: string | null, ... }
 
-            nodeStyleFunction: function (node) {
-                const d = node.data?.data;
-                if (!d) return;
-
-                if (d.radius    !== undefined) node.radius    = d.radius;
-                if (d.fillColor !== undefined) node.fillColor = d.fillColor;
-
-                if (node.id === "query") {
-                    node.display   = "text";
-                    node.image     = SEARCH_ICON;
-                    node.fillColor = "#ffffff";
-                    return;
-                }
-
-                const raw  = d.title || node.id;
-                node.label = stripHtml(raw);
-            },
-
-            nodeLabel: {
-                textStyle: {
-                    font:      "bold 12px Poppins, sans-serif",
-                    fillColor: "#000000",
-                },
-                padding:      10,
-                borderRadius: 6,
-            },
-
-            link: {
-                fillColor: "rgba(255,255,255,0.15)",
-                radius:    5,
-            },
-
-            linkStyleFunction: function (link) {
-                const s = link.data?.style;
-                if (!s) return;
-                if (s.fillColor    !== undefined) link.fillColor    = s.fillColor;
-                if (s.radius       !== undefined) link.radius       = s.radius;
-                if (s.toDecoration !== undefined) link.toDecoration = s.toDecoration;
-                if (s.dashSize     !== undefined) link.dashSize     = s.dashSize;
-            },
-        },
-
-        events: {
-            onHoverChange: function (event) {
-                if (event.hoverNode && event.hoverNode.id !== "query") {
-                    const d = event.hoverNode.data?.data;
-                    if (d) {
-                        showTooltip(d, pointerX, pointerY);
-                    } else {
-                        hideTooltip();
-                    }
+    const handleEvent = (event) => {
+        switch (event.type) {
+            case "hoverchange": {
+                const id = event.hoverNodeId;
+                if (id && id !== "query") {
+                    const d = fieldsById.get(id);
+                    if (d) showTooltip(d, pointerX, pointerY);
+                    else hideTooltip();
                 } else {
                     hideTooltip();
                 }
-            },
+                break;
+            }
 
-            onClick: function (event) {
-                if (!event.clickNode || event.clickNode.id === "query") return;
-                const d = event.clickNode.data?.data;
+            case "click": {
+                const id = event.nodeId;
+                if (!id || id === "query") return;
+                const d = fieldsById.get(id);
                 if (!d) return;
 
-                if (d.is_stub_node) {
-                    const oaId = d.openalex_id || event.clickNode.id;
+                if (d.is_stub_node || d.stub_document) {
+                    const oaId = d.openalex_id || id;
                     window.open(`https://openalex.org/${oaId}`, "_blank");
                     return;
                 }
 
-                if (d.stub_document) {
-                    const oaId = d.openalex_id || event.clickNode.id;
-                    window.open(`https://openalex.org/${oaId}`, "_blank");
-                    return;
-                }
+                expandNode(id);
+                break;
+            }
 
-                expandNode(event.clickNode.id);
-            },
-
-            onDoubleClick: function (event) {
-                if (!event.clickNode || event.clickNode.id === "query") return;
-                const d = event.clickNode.data?.data;
+            case "doubleclick": {
+                const id = event.nodeId;
+                if (!id || id === "query") return;
+                const d = fieldsById.get(id);
                 if (!d) return;
 
                 if (d.is_stub_node) {
@@ -369,8 +541,87 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
                     hideTooltip();
                     onOpenPdf(d);
                 }
-            },
+                break;
+            }
+
+            default:
+                break;
+        }
+    };
+
+    // ── Resize: the old chart had resizing disabled; the canvas must follow its box ──
+
+    const resizeObserver = typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver((entries) => {
+            const { width, height } = entries[0].contentRect;
+            if (width < 1 || height < 1) return;
+            latestSize = { w: Math.floor(width), h: Math.floor(height) };
+            if (renderer) safe((r) => r.resize(latestSize.w, latestSize.h), renderer);
+        })
+        : null;
+    if (resizeObserver) resizeObserver.observe(container);
+
+    // ── Public handle ────────────────────────────────────────────────────────
+
+    const chart = {
+        // Add nodes/links (same payload shape as the old NetChart addData).
+        // anchorId (optional) is the node the new ones fan out from.
+        addData(payload, anchorId = null) {
+            run((r) => applyData(r, payload, anchorId, false));
         },
+
+        remove() {
+            if (removed) return;
+            removed = true;
+            queue.length = 0;
+            if (fitTimer) clearTimeout(fitTimer);
+            if (resizeObserver) resizeObserver.disconnect();
+            container.removeEventListener("pointermove", onPointerMove);
+            container.removeEventListener("pointerdown", onUserMoved);
+            container.removeEventListener("wheel", onUserMoved);
+            hideTooltip();
+            if (offEvents) offEvents();
+            if (renderer) renderer.destroy();   // if still mounting, destroyed once it resolves
+            renderer = null;
+            canvas.remove();
+        },
+
+        get renderer() { return renderer; },
+    };
+
+    // ── Mount ────────────────────────────────────────────────────────────────
+
+    // _initialNodes: NetChart's "navigation" mode only showed nodes near these.
+    // Everything in the payload is shown now, so the arg is kept for signature
+    // compatibility but is intentionally unused.
+    run((r) => applyData(r, chartData, null, true));
+
+    // RendererOptions (types.d.ts): every key below is valid.
+    // Note: "viewer" + nodesMovable:true is unusual — if you actually want the
+    // user to drag nodes, switch to controlMode: "viewerEditable".
+    GraphRenderer.mount(canvas, {
+        darkModeEnabled: true,
+        controlMode: "viewer",
+        nodesMovable: true,
+        wheelEnabled: true,
+    }).then((r) => {
+        if (removed) { r.destroy(); return; }
+        renderer = r;
+
+        // RendererSettingsPatch = { backgroundColor?: string }
+        r.patchSettings({ backgroundColor: CHART_BG });
+
+        // GraphLayoutConfigPatch accepts { enabled?: boolean } (and many tunables)
+        r.setLayoutConfig({ enabled: true });
+
+        // onEvent returns an unsubscribe function
+        offEvents = r.onEvent(handleEvent);
+
+        if (latestSize) r.resize(latestSize.w, latestSize.h);
+
+        for (const fn of queue.splice(0)) safe(fn, r);
+    }).catch((err) => {
+        console.error("[chart] failed to mount graph renderer:", err);
     });
 
     return chart;

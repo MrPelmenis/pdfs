@@ -8,7 +8,7 @@ function StatusStep({ label, done }) {
   return (
     <div
       className={`flex items-center gap-2 text-xs transition-all duration-300 ${
-        done ? "text-ink-muted line-through opacity-40" : "text-chartizer-yellow font-medium"
+        done ? "text-theme-muted line-through opacity-40" : "text-chartizer-yellow font-medium"
       }`}
     >
       <span>{label}</span>
@@ -36,14 +36,14 @@ function SourceCard({ file, title, index }) {
     <div
       title={file}
       className="flex items-start gap-2 px-3 py-2 rounded-lg
-                 bg-surface border border-border flex-shrink-0
+                 bg-theme-bg-secondary border border-theme-border flex-shrink-0
                  w-44 select-none hover:border-chartizer-yellow/40 transition-colors duration-150"
     >
       <span className="text-xs font-semibold text-chartizer-yellow/70 mt-0.5 flex-shrink-0">
         {index}
       </span>
       <span
-        className="text-xs text-ink-dim leading-tight"
+        className="text-xs text-theme-text-dark leading-tight"
         style={{
           display:           "-webkit-box",
           WebkitLineClamp:   3,
@@ -61,7 +61,7 @@ function SourceGrid({ sources }) {
   if (!sources || sources.length === 0) return null;
   return (
     <div className="flex flex-col gap-1.5 mb-1">
-      <span className="text-xs text-ink-muted font-medium uppercase tracking-wide">
+      <span className="text-xs text-theme-muted font-medium uppercase tracking-wide">
         Sources
       </span>
       <div
@@ -76,26 +76,20 @@ function SourceGrid({ sources }) {
   );
 }
 
-
-
-// ── page ─────────────────────────────────────────────────────────────────────
-
 export default function ChatPage() {
   const [inputVal, setInputVal] = useState("");
   const bottomRef  = useRef(null);
   const inputRef   = useRef(null);
 
-  const messages    = useChatStore((s) => s.messages);
-  const streaming   = useChatStore((s) => s.streaming);
+  const messages     = useChatStore((s) => s.messages);
+  const streaming    = useChatStore((s) => s.streaming);
   const sendQuestion = useChatStore((s) => s.sendQuestion);
-  const clearChat   = useChatStore((s) => s.clearChat);
+  const clearChat    = useChatStore((s) => s.clearChat);
 
-  // auto-scroll on new content
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // refocus input when streaming stops
   useEffect(() => {
     if (!streaming) {
       setTimeout(() => inputRef.current?.focus(), 50);
@@ -120,14 +114,14 @@ export default function ChatPage() {
   const isEmpty = messages.length === 0;
 
   return (
-    <main className="h-screen overflow-hidden bg-main flex flex-col">
+    <main className="h-screen overflow-hidden bg-theme-bg flex flex-col">
 
       {/* ── Messages ── */}
       <div className="flex-1 overflow-y-auto px-5 py-6">
         <div className="max-w-2xl mx-auto flex flex-col gap-6">
 
           {isEmpty && (
-            <div className="flex flex-col items-center justify-center h-full pt-24 gap-3 text-ink-muted select-none">
+            <div className="flex flex-col items-center justify-center h-full pt-24 gap-3 text-theme-muted select-none">
               <svg className="w-10 h-10 opacity-25" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round"
                   d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -142,7 +136,7 @@ export default function ChatPage() {
               {/* ── User ── */}
               {msg.role === "user" && (
                 <div className="flex justify-end">
-                  <div className="max-w-[80%] bg-chartizer-yellow text-main rounded-2xl rounded-br-sm
+                  <div className="max-w-[80%] bg-chartizer-yellow text-theme-bg rounded-2xl rounded-br-sm
                                   px-4 py-2.5 text-sm font-medium leading-relaxed">
                     {msg.text}
                   </div>
@@ -161,7 +155,6 @@ export default function ChatPage() {
 
                   <div className="flex-1 min-w-0 flex flex-col gap-2">
 
-                    {/* Status steps */}
                     {(msg.statusSteps || []).length > 0 && (
                       <div className="flex flex-col gap-1">
                         {msg.statusSteps.map((step, si) => (
@@ -170,12 +163,10 @@ export default function ChatPage() {
                       </div>
                     )}
 
-                    {/* Sources */}
                     {msg.sources && msg.sources.length > 0 && (
                       <SourceGrid sources={msg.sources} />
                     )}
 
-                    {/* Answer */}
                     {msg.text ? (
                       <div className={msg.error ? "text-sm text-danger" : "prose prose-chat min-w-0 max-w-none"}>
                         <ReactMarkdown
@@ -191,7 +182,7 @@ export default function ChatPage() {
                           {[0, 1, 2].map((j) => (
                             <span
                               key={j}
-                              className="w-1.5 h-1.5 rounded-full bg-ink-muted"
+                              className="w-1.5 h-1.5 rounded-full bg-theme-muted"
                               style={{
                                 animation:      "pulse 1.2s ease-in-out infinite",
                                 animationDelay: `${j * 0.2}s`,
@@ -212,16 +203,15 @@ export default function ChatPage() {
       </div>
 
       {/* ── Input bar ── */}
-      <div className="flex-shrink-0 border-t border-border bg-main px-5 py-3">
+      <div className="flex-shrink-0 border-t border-theme-border bg-theme-bg px-5 py-3">
         <div className="max-w-2xl mx-auto flex flex-col gap-2">
 
-          {/* Clear button — only shown when there are messages */}
           {!isEmpty && (
             <div className="flex justify-end">
               <button
                 onClick={clearChat}
                 disabled={streaming}
-                className="text-xs text-ink-muted hover:text-danger transition-colors duration-150
+                className="text-xs text-theme-muted hover:text-danger transition-colors duration-150
                            disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 Clear chat
@@ -229,11 +219,8 @@ export default function ChatPage() {
             </div>
           )}
 
-          <form
-            onSubmit={handleSubmit}
-            className="flex items-end gap-2"
-          >
-            <div className="flex-1 flex items-end gap-2 bg-surface border border-border rounded-xl px-4 py-2.5
+          <form onSubmit={handleSubmit} className="flex items-end gap-2">
+            <div className="flex-1 flex items-end gap-2 bg-theme-bg-secondary border border-theme-border rounded-xl px-4 py-2.5
                             focus-within:border-chartizer-yellow focus-within:ring-1 focus-within:ring-chartizer-yellow/30
                             transition-all duration-200">
               <textarea
@@ -249,14 +236,14 @@ export default function ChatPage() {
                 placeholder="Ask about your papers…"
                 disabled={streaming}
                 style={{ resize: "none", minHeight: "1.25rem", maxHeight: "7.5rem" }}
-                className="flex-1 bg-transparent text-ink placeholder-ink-muted text-sm outline-none leading-relaxed"
+                className="flex-1 bg-transparent text-theme-text-primary placeholder-theme-muted text-sm outline-none leading-relaxed"
               />
             </div>
 
             <button
               type="submit"
               disabled={!inputVal.trim() || streaming}
-              className="px-4 py-2.5 rounded-xl bg-chartizer-yellow text-main text-sm font-semibold
+              className="px-4 py-2.5 rounded-xl bg-chartizer-yellow text-theme-bg text-sm font-semibold
                          hover:bg-chartizer-yellow/90 active:scale-95 transition-all duration-150
                          disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100"
             >

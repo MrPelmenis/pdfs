@@ -19,7 +19,7 @@ DEEPSEEK_CHAT_MODEL  = "deepseek-chat"   # used when PROVIDER=deepseek
 DEEPSEEK_QUERY_MODEL = "deepseek-chat"   # used when PROVIDER=deepseek
 
 CTX_MIN        = 2048
-CTX_MAX        = 65536
+CTX_MAX        = 131072
 CTX_HEADROOM   = 1.4
 ANSWER_RESERVE = 1024
 
@@ -49,7 +49,7 @@ Examples:
 User question: {question}
 Keywords:"""
 
-ANSWER_PROMPT = """b\
+ANSWER_PROMPT = """\
 You are a research assistant helping scientists explore a paper database.
 Answer the user's question using ONLY the provided paper excerpts below.
 
@@ -160,37 +160,32 @@ def _extract_token(data: dict) -> tuple[str, bool]:
 
 
 def _extract_query_response(data: dict) -> str:
-    """Extract the full text from a non-streaming response."""
     if PROVIDER == "deepseek":
         choices = data.get("choices", [])
         return (choices[0].get("message", {}).get("content") or "").strip() if choices else ""
     return data.get("message", {}).get("content", "").strip()
 
 
-# ---------------------------------------------------------------------------
-# Search + context helpers (unchanged)
-# ---------------------------------------------------------------------------
-
 def search_cp(query: str, cp_url: str, cp_user: str, cp_pass: str) -> list:
+    query = f'{{"{query}" ({query})}}'
+    
     body = (
-        f"<query><stub_document>no</stub_document>{query}*</query>"
-        f"<relevance>decending</relevance>"
+        f"<query><stub_document>no</stub_document>{query}</query>"
         f"<docs>{SEARCH_DOCS}</docs>"
         f"<list>"
         f"<title>yes</title>"
         f"<abstract>yes</abstract>"
         f"<authors>yes</authors>"
         f"<date>yes</date>"
+        f"<doi_number>yes</doi_number>"
         f"<full_text>yes</full_text>"
-        f"<figures>yes</figures>"
-        f"<conclusions>yes</conclusions>"
-        f"<methods>yes</methods>"
-        f"<topics>yes</topics>"
-        f"<keywords>yes</keywords>"
-        f"<concepts>yes</concepts>"
+        f"<keywords_text>yes</keywords_text>"
+        f"<methods_text>yes</methods_text>"
+        f"<conclusions_text>yes</conclusions_text>"
+        f"<figures_text>yes</figures_text>"
+        f"<tables_text>yes</tables_text>"
         f"</list>"
     )
-
     try:
         resp = req.post(
             cp_url.rstrip("/") + "/api/databases/pdfs/search/json",
@@ -352,9 +347,6 @@ def _estimate_num_ctx(prompt: str) -> int:
     return ctx
 
 
-# ---------------------------------------------------------------------------
-# Core pipeline
-# ---------------------------------------------------------------------------
 
 def _convert_to_query(question: str) -> str:
     prompt = QUERY_PROMPT.format(question=question)

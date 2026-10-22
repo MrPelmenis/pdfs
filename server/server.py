@@ -424,7 +424,7 @@ def extract_snippet(doc: dict) -> str | None:
 
 
 def buildFilterQuery(f_abstract="", f_methods="", f_conclusions="",
-                     f_figures="", f_topics="", f_keywords=""):
+                     f_figures="", f_topics="", f_keywords="", category_id=None):
     parts = []
     if f_abstract:
         parts.append(f"<abstract>{f_abstract}</abstract>")
@@ -438,6 +438,9 @@ def buildFilterQuery(f_abstract="", f_methods="", f_conclusions="",
         parts.append(f"<conclusions_text>{f_conclusions}</conclusions_text>")
     if f_figures:
         parts.append(f"<figures_text>{f_figures}</figures_text>")
+    if category_id:
+        parts.append(f"<category_id>{category_id}</category_id>")
+
     return "".join(parts)
 
 
@@ -458,7 +461,10 @@ def do_search(query, docs, date_start=None, date_end=None,
         f_figures=f_figures,
         f_topics=f_topics,
         f_keywords=f_keywords,
+        category_id = category_id,
     )
+
+    query = f'{{^+10 "{query}"^ ({query})}}'
 
     fullQ = (
         f"<query><stub_document>no</stub_document>{date_tag}{filter_query} {query}</query>"
@@ -487,8 +493,6 @@ def do_search(query, docs, date_start=None, date_end=None,
         f"</list>"
     )
 
-
-
     resp = requests.post(
         CP_URL + "/api/databases/pdfs/search/json",
         data=fullQ,
@@ -496,7 +500,6 @@ def do_search(query, docs, date_start=None, date_end=None,
     )
     resp.raise_for_status()
     data = resp.json()
-    print(resp.text)
 
     hits = int(
         data.get("cps:reply", {})

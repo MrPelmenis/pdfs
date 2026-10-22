@@ -31,8 +31,8 @@ code {
   --border-primary: 55, 65, 81; /* gray-700 */
   --border-secondary: 75, 85, 99; /* gray-600 */
   --comment-bg: 55, 65, 81; /* gray-700 */
-  --text-primary: 229, 229, 229;
-  --text-dark: 212, 212, 212;
+  --text-primary: 255, 255, 255;
+  --text-dark: 252, 252, 252;
   --text-accent: 255, 255, 255;
   --text-light: 229, 229, 229;
   --chartizer-green: 45, 189, 134;

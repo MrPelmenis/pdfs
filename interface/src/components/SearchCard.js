@@ -78,3 +78,4 @@ export default function SearchCard({ result, apiUrl, onOpenPdf }) {
     </article>
   );
 }
+
