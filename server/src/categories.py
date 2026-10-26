@@ -7,7 +7,8 @@ import requests
 from xml.sax.saxutils import escape
 
 
-CATEGORIES_FILE = os.path.join(os.path.dirname(__file__), "../files/categories.json")
+CATEGORIES_FILE = os.path.join(os.path.dirname(
+    __file__), "../files/categories.json")
 _lock = threading.Lock()
 
 NONE_CATEGORY = {"id": 0, "name": "none", "color": "rgba(170,170,170,0.92)"}
@@ -35,12 +36,18 @@ def _hsl_to_rgb(h, s, l):
     c = (1 - abs(2 * l - 1)) * s
     x = c * (1 - abs((h / 60) % 2 - 1))
     m = l - c / 2
-    if   0   <= h < 60:  r, g, b = c, x, 0
-    elif 60  <= h < 120: r, g, b = x, c, 0
-    elif 120 <= h < 180: r, g, b = 0, c, x
-    elif 180 <= h < 240: r, g, b = 0, x, c
-    elif 240 <= h < 300: r, g, b = x, 0, c
-    else:                r, g, b = c, 0, x
+    if 0 <= h < 60:
+        r, g, b = c, x, 0
+    elif 60 <= h < 120:
+        r, g, b = x, c, 0
+    elif 120 <= h < 180:
+        r, g, b = 0, c, x
+    elif 180 <= h < 240:
+        r, g, b = 0, x, c
+    elif 240 <= h < 300:
+        r, g, b = x, 0, c
+    else:
+        r, g, b = c, 0, x
     return (round((r + m) * 255), round((g + m) * 255), round((b + m) * 255))
 
 
@@ -55,7 +62,7 @@ def _random_rgba_color() -> str:
     Returns an rgba() string matching the format used in categories.json.
     """
     GOLDEN_ANGLE = 137.508
-    SATURATION   = 68
+    SATURATION = 68
 
     hue = random.uniform(0, 360)
     for _ in range(20):          # max attempts to find a non-ugly hue
@@ -64,7 +71,7 @@ def _random_rgba_color() -> str:
             break
 
     lightness = 60 + 8 * math.sin(math.radians(hue))
-    r, g, b   = _hsl_to_rgb(hue, SATURATION, lightness)
+    r, g, b = _hsl_to_rgb(hue, SATURATION, lightness)
     return f"rgba({r},{g},{b},0.92)"
 
 
@@ -136,7 +143,8 @@ def get_category_by_name(name) -> dict:
         return NONE_CATEGORY
     with _lock:
         categories = _read()
-    found = next((c for c in categories if c["name"] == name.strip().lower()), None)
+    found = next(
+        (c for c in categories if c["name"] == name.strip().lower()), None)
     return found if found else NONE_CATEGORY
 
 
@@ -173,38 +181,24 @@ def find_or_create_by_field(field_name: str) -> dict:
         }
         categories.append(new_cat)
         _write(categories)
-        print(f"[categories] Created new category: '{normalised}' → {new_cat['color']}")
+        print(f"[categories] Created new category: '{
+              normalised}' → {new_cat['color']}")
         return new_cat
 
 
-def assign_category_to_document(
-    doc_id: str,
-    cat_id: int,
-    cp_url: str,
-    cp_user: str,
-    cp_pass: str,
-) -> dict:
+def assign_category_to_document(doc_id: str, cat_id: int) -> dict:
     cat = get_category_by_id(cat_id)
     if cat is None:
         return {"success": False, "error": f"Category id={cat_id} not found"}
 
-    xml_body = f"""<document>
-  <id>{escape(doc_id)}</id>
-  <category_id>{cat['id']}</category_id>
-</document>"""
+    from src import corelamo
+    resp = corelamo.partial_replace(
+        [{"id": doc_id, "patch": {"category_id": int(cat_id)}}])
 
-    url = f"{cp_url.rstrip('/')}/api/databases/pdfs/partial-replace"
-    try:
-        resp = requests.post(
-            url,
-            data=xml_body,
-            auth=(cp_user, cp_pass),
-            headers={"Content-Type": "application/xml"},
-            timeout=15,
-        )
-        resp.raise_for_status()
+    if resp.status_code in (200, 207):
         return {"success": True, "category": cat}
-    except requests.exceptions.HTTPError as e:
-        return {"success": False, "error": str(e), "response": resp.text}
-    except requests.exceptions.RequestException as e:
-        return {"success": False, "error": str(e)}
+    try:
+        detail = resp.json()
+    except Exception:
+        detail = resp.text
+    return {"success": False, "error": str(resp.status_code), "response": detail}

@@ -1,3 +1,23 @@
+from src.categories import (get_all_categories, create_category, edit_category, delete_category, get_random_category,
+                            assign_category_to_document, get_category_by_id, find_or_create_by_field, NONE_CATEGORY)
+import datetime
+from src.stub_worker import start_stub_worker, set_pdf_processing, document_exists, fetch_document, delete_document
+from src.json_builder import build_document, save_document, upload_document, extract_fallback_text
+
+
+from src.chatins import register_chat
+from src.hasher import _file_hash, _is_duplicate_file, _register_hash
+
+from src.stub_worker import start_stub_worker, set_pdf_processing, document_exists, fetch_document, delete_document
+from src.queue_manager import add_dois_to_queue
+from src.metadata_analyser import openalex_by_id, openalex_by_title
+from src.vision_extractor import extract_title_authors_from_image
+from src.parser import extract_paper_data
+import traceback
+from src.pdfToImage import generate_preview
+
+from src import corelamo
+
 import os
 import requests
 from flask import Flask, request, jsonify, send_from_directory, make_response
@@ -13,61 +33,48 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 background_executor = ThreadPoolExecutor(max_workers=1)
 
-from src.pdfToImage import generate_preview
 
-import traceback
-from src.parser import extract_paper_data
-from src.xml_builder import build_xml, save_xml, upload_xml, extract_fallback_text
+CORELAMO_URL = os.getenv("CORELAMO_URL",  "http://localhost:6006")
+CORELAMO_USER = os.getenv("CORELAMO_USER", "pdf_viever")
+CORELAMO_PASS = os.getenv("CORELAMO_PASS", "crtz1234")
+DB_NAME = os.getenv("CORELAMO_DB", "pdfs")
 
-from src.vision_extractor   import extract_title_authors_from_image
-from src.metadata_analyser  import openalex_by_id, openalex_by_title
+load_dotenv()
+corelamo.configure(CORELAMO_URL, CORELAMO_USER, CORELAMO_PASS, DB_NAME)
 
-from src.categories import (get_all_categories,create_category, edit_category, delete_category, get_random_category, assign_category_to_document, get_category_by_id, find_or_create_by_field,NONE_CATEGORY)
 
-from src.queue_manager import add_dois_to_queue
-from src.stub_worker import start_stub_worker, set_pdf_processing, cp_document_exists, fetch_cp_document, delete_cp_document
-import xml.etree.ElementTree as ET
-from xml.sax.saxutils import escape
-
-from src.hasher import _file_hash, _is_duplicate_file, _register_hash
-
-from src.chatins import register_chat
-
-#prieks gadiem 
-import datetime
+# prieks gadiem
 YEAR_MIN = 1800
 YEAR_MAX = datetime.date.today().year
 
-load_dotenv()
-
-CP_URL  = os.getenv("CP_URL")
-CP_USER = os.getenv("CP_USER")
-
-CP_PASS = os.getenv("CP_PASS")
 
 app = Flask(__name__)
 CORS(app)
 
-PREVIEW_DIR  = "./files/pdf-preview-images"
-PDF_DIR      = "./files/pdf-files"
-XML_OUT_PATH = "./files/xml-files"   
+PREVIEW_DIR = "./files/pdf-preview-images"
+PDF_DIR = "./files/pdf-files"
+DOCS_OUT_PATH = "./files/json-files"
 
 os.makedirs(PDF_DIR,      exist_ok=True)
 os.makedirs(PREVIEW_DIR,  exist_ok=True)
-os.makedirs(XML_OUT_PATH,  exist_ok=True)
+os.makedirs(DOCS_OUT_PATH,  exist_ok=True)
+
 
 def process_file_background(filename, save_path):
+    """New-document path after a PDF upload.
+
+    Parse + enrich the PDF, resolve a category, replace any existing stub with
+    the same id, then build a JSON document and insert it into Corelamo.
+    """
     set_pdf_processing(True)
     try:
-        confidence = "unknown"
-        missing    = []
-
-        image_path  = generate_preview(save_path, PREVIEW_DIR)
+        # ── 1. Parse the PDF, vision, and OCR fallback ────────────────────────
+        image_path = generate_preview(save_path, PREVIEW_DIR)
         parser_info = extract_paper_data(save_path)
 
         vision = extract_title_authors_from_image(image_path)
         if vision.get("title"):
-            parser_info["title"]   = vision["title"]
+            parser_info["title"] = vision["title"]
         if vision.get("authors"):
             parser_info["authors"] = vision["authors"]
 
@@ -76,16 +83,17 @@ def process_file_background(filename, save_path):
             if ocr_text.strip():
                 parser_info["full_text"] = ocr_text
 
+        # ── 2. Enrich from OpenAlex (by DOI, then by title) ───────────────────
         openalex_info = {}
-        parser_doi    = parser_info.get("doi")
+        parser_doi = parser_info.get("doi")
 
         if parser_doi:
             openalex_info = openalex_by_id(parser_doi)
 
         if not openalex_info:
             openalex_info = openalex_by_title(
-                title   = parser_info.get("title", ""),
-                authors = parser_info.get("authors", []),
+                title=parser_info.get("title", ""),
+                authors=parser_info.get("authors", []),
             )
 
         if openalex_info:
@@ -104,35 +112,48 @@ def process_file_background(filename, save_path):
             if openalex_info.get("topics"):
                 parser_info["topics"] = openalex_info["topics"]
 
-
-        field    = (openalex_info or {}).get("field")
+        # ── 3. Resolve the category from the OpenAlex field ───────────────────
+        field = (openalex_info or {}).get("field")
         category = find_or_create_by_field(field) if field else NONE_CATEGORY
         category_id = category["id"]
 
-        final_id = parser_info.get("openalex_id") or slugify(parser_info.get("title", ""))
+        # ── 4. Resolve the document id and drop any old stub for it ──────────
+        # id == openalex_id when available, otherwise a slug of the title.
+        final_id = parser_info.get("openalex_id") or slugify(
+            parser_info.get("title", ""))
         if final_id:
-            existing = fetch_cp_document(final_id, CP_URL, CP_USER, CP_PASS)
+            existing = fetch_document(final_id)
             if existing and existing.get("stub_document") == "yes":
-                delete_cp_document(final_id, CP_URL, CP_USER, CP_PASS)
+                delete_document(final_id)
 
-        xml_string = build_xml(openalex_info or None, parser_info, image_path, stub=False, category_id=category_id)
-        final_xml_name = f"{XML_OUT_PATH}/{os.path.splitext(filename)[0]}.xml"
-        save_xml(xml_string, final_xml_name)
+        # ── 5. Build + persist + upload the JSON document ─────────────────────
+        doc_json = build_document(
+            openalex_info or None,
+            parser_info,
+            image_path,
+            stub=False,
+            category_id=category_id,
+        )
+        final_json_name = f"{
+            DOCS_OUT_PATH}/{os.path.splitext(filename)[0]}.json"
+        save_document(doc_json, final_json_name)
 
-        upload_result = upload_xml(xml_string, CP_URL, CP_USER, CP_PASS)
+        upload_result = upload_document(doc_json)
 
         if upload_result["success"]:
             print(f"SUCCESS: [{filename[:20]}]")
             process_references = True
         else:
-            if upload_result.get("status_code") == 422 and "2626" in upload_result.get("response", ""):
+            # Corelamo insert of an existing id returns HTTP 409.
+            if upload_result.get("status_code") == 409:
                 print(f"SKIP: [{filename[:20]}] Already exists in database.")
-                process_references = True 
+                process_references = True
             else:
                 print(f"ERROR: [{filename}] {upload_result['error']}")
                 print(upload_result)
                 process_references = False
 
+        # ── 6. Queue references/related works for stub backfill ───────────────
         if process_references:
             ref_ids = parser_info.get("referenced_work_ids", [])
             rel_ids = parser_info.get("related_work_ids", [])
@@ -141,14 +162,15 @@ def process_file_background(filename, save_path):
                 added = add_dois_to_queue(all_ids)
                 print(f"[app] Added {added} OpenAlex IDs to stub queue")
 
-
     except Exception as e:
         print(f"FATAL: [{filename}] {str(e)}")
         traceback.print_exc()
     finally:
         set_pdf_processing(False)
 
-#title kaa id openalexx id vietaa
+# title kaa id openalexx id vietaa
+
+
 def slugify(text: str) -> str:
     import unicodedata
     text = unicodedata.normalize("NFKD", text)
@@ -165,76 +187,42 @@ def make_unique_filename(original_filename: str) -> str:
     return f"{stem}_{rand}.pdf"
 
 
-def retrieve_cp_document(doc_id: str) -> dict | None:
-    body = (
-        f"<document><id>{escape(doc_id).upper()}</id></document>"
-        f"<list>"
-        f"<title>yes</title>"
-        f"<openalex_id>yes</openalex_id>"
-        f"<doi_number>yes</doi_number>"
-        f"<abstract>yes</abstract>"
-        f"<authors>yes</authors>"
-        f"<date>yes</date>"
-        f"<cited_by_count>yes</cited_by_count>"
-        f"<topics>yes</topics>"
-        f"<concepts>yes</concepts>"
-        f"<keywords>yes</keywords>"
-        f"<referenced_work_ids>yes</referenced_work_ids>"
-        f"<related_work_ids>yes</related_work_ids>"
-        f"<stub_document>yes</stub_document>"
-        f"<category_id>yes</category_id>"
-        f"<img_preview_path>yes</img_preview_path>"
-        f"<file>yes</file>"
-        f"</list>"
-    )
-    try:
-        resp = requests.post(
-            CP_URL.rstrip("/") + "/api/databases/pdfs/retrieve",
-            data=body,
-            auth=(CP_USER, CP_PASS),
-            timeout=10,
-        )
-        resp.raise_for_status()
-        root = ET.fromstring(resp.text)
-        doc  = root.find(".//document")
-        if doc is None:
-            return None
-
-        def text(tag):
-            el = doc.find(tag)
-            return (el.text or "").strip() if el is not None else ""
-
-        def text_list(parent_tag, child_tag):
-            parent = doc.find(parent_tag)
-            if parent is None:
-                return []
-            return [el.text.strip() for el in parent.findall(child_tag) if el.text]
-
-        return {
-            "openalex_id":         text("openalex_id"),
-            "title":               text("title"),
-            "doi":                 text("doi_number"),
-            "abstract":            text("abstract"),
-            "date":                text("date"),
-            "cited_by_count":      int(text("cited_by_count") or 0),
-            "authors":             text_list("authors", "author"),
-            "topics":              text_list("topics", "topic"),
-            "concepts":            text_list("concepts", "concept"),
-            "keywords":            text_list("keywords", "keyword"),
-            "referenced_work_ids": text_list("referenced_work_ids", "referenced_work_id"),
-            "related_work_ids":    text_list("related_work_ids", "related_work_id"),
-            "category_id":         text("category_id"),
-            "img_preview_path":    text("img_preview_path"),
-            "file":                text("file"),
-        }
-    except Exception as e:
-        print(f"[retrieve_cp_document] failed for {doc_id}: {e}")
+def retrieve_document(doc_id: str) -> dict | None:
+    resp = corelamo.retrieve([doc_id])
+    if resp.status_code != 200:
         return None
+    docs = resp.json().get("data", {}).get("documents", [])
+    if not docs:
+        return None
+    d = docs[0].get("data", {})
+    return {
+        "openalex_id":         d.get("openalex_id", ""),
+        "title":               d.get("title", ""),
+        "doi":                 d.get("doi_number", ""),
+        "abstract":            d.get("abstract", ""),
+        "date":                str(d.get("date")) if d.get("date") is not None else "",
+        "cited_by_count":      int(d.get("cited_by_count") or 0),
+        "authors":             d.get("authors") or [],
+        "topics":              [],
+        "concepts":            [],
+        "keywords":            [],
+        "referenced_work_ids": d.get("referenced_work_ids") or [],
+        "related_work_ids":    d.get("related_work_ids") or [],
+        "category_id":         d.get("category_id"),
+        "img_preview_path":    d.get("img_preview_path", ""),
+        "file":                d.get("file", ""),
+    }
 
 
 def process_stub_upgrade(filename: str, save_path: str, openalex_id: str = "", doi: str = ""):
+    """Upgrade a stub (metadata-only) document into a full parsed document.
+
+    Resolves the OpenAlex id, fetches the existing stub's metadata from
+    Corelamo, rebuilds a full JSON document and uploads it (replacing the stub).
+    """
     try:
-        print(f"[stub_upgrade] Starting for openalex_id={openalex_id} doi={doi} file={filename}")
+        print(f"[stub_upgrade] Starting for openalex_id={
+              openalex_id} doi={doi} file={filename}")
 
         # ── 1. Resolve the document ID ────────────────────────────────────────
         resolved_id = openalex_id
@@ -246,22 +234,24 @@ def process_stub_upgrade(filename: str, save_path: str, openalex_id: str = "", d
                 resolved_id = openalex_info["openalex_id"]
                 print(f"[stub_upgrade] Resolved to: {resolved_id}")
             else:
-                print(f"[stub_upgrade] Could not resolve DOI to openalex_id, aborting")
+                print(
+                    f"[stub_upgrade] Could not resolve DOI to openalex_id, aborting")
                 return
 
         if not resolved_id:
             print(f"[stub_upgrade] No openalex_id or doi provided, aborting")
             return
 
-        # ── 2. Fetch existing stub metadata from CP ───────────────────────────
-        stub_data = retrieve_cp_document(resolved_id)
+        # ── 2. Fetch the existing stub from Corelamo ──────────────────────────
+        stub_data = retrieve_document(resolved_id)
         if not stub_data:
-            print(f"[stub_upgrade] No stub found in CP for {resolved_id}, aborting")
+            print(f"[stub_upgrade] No stub found in Corelamo for {
+                  resolved_id}, aborting")
             return
 
         print(f"[stub_upgrade] Found stub: {stub_data['title'][:60]}")
 
-        # ── 3. Generate preview image ─────────────────────────────────────────
+        # ── 3. Parse the PDF again (preview + full text) ──────────────────────
         image_path = generate_preview(save_path, PREVIEW_DIR)
 
         parser_info = extract_paper_data(save_path)
@@ -271,6 +261,10 @@ def process_stub_upgrade(filename: str, save_path: str, openalex_id: str = "", d
             if ocr_text.strip():
                 parser_info["full_text"] = ocr_text
 
+        # Merge the stub's metadata with the freshly parsed full text.
+        # NOTE: topics/concepts/keywords are intentionally left empty here
+        # (we only persist the flattened `keywords_text`), matching the old
+        # behaviour — carry them over here if you want them preserved.
         merged_info = {
             "openalex_id":         stub_data["openalex_id"],
             "doi":                 stub_data["doi"],
@@ -289,23 +283,28 @@ def process_stub_upgrade(filename: str, save_path: str, openalex_id: str = "", d
             "methods":             parser_info.get("methods", []),
         }
 
-        print(f"[stub_upgrade] Deleting stub {resolved_id} from CP")
-        delete_cp_document(resolved_id, CP_URL, CP_USER, CP_PASS)
+        print(f"[stub_upgrade] Deleting stub {resolved_id} from Corelamo")
+        delete_document(resolved_id)
 
-        xml_string = build_xml(
-            metadata_info = {"cited_by_count": stub_data["cited_by_count"]},
-            grobid_info   = merged_info,
-            image_path    = image_path,
-            stub          = False,
+        # NOTE: category_id is not carried over from the stub (build_document
+        # defaults it to 1). Pass category_id=stub_data["category_id"] if you
+        # want to keep the stub's category.
+        doc_json = build_document(
+            metadata_info={"cited_by_count": stub_data["cited_by_count"]},
+            grobid_info=merged_info,
+            image_path=image_path,
+            stub=False,
         )
 
-        final_xml_name = f"{XML_OUT_PATH}/{os.path.splitext(filename)[0]}.xml"
-        save_xml(xml_string, final_xml_name)
+        final_json_name = f"{
+            DOCS_OUT_PATH}/{os.path.splitext(filename)[0]}.json"
+        save_document(doc_json, final_json_name)
 
-        upload_result = upload_xml(xml_string, CP_URL, CP_USER, CP_PASS)
+        upload_result = upload_document(doc_json)
 
         if upload_result["success"]:
-            print(f"[stub_upgrade] SUCCESS: {resolved_id} upgraded to full document")
+            print(f"[stub_upgrade] SUCCESS: {
+                  resolved_id} upgraded to full document")
             all_ids = list(set(
                 merged_info.get("referenced_work_ids", []) +
                 merged_info.get("related_work_ids", [])
@@ -339,26 +338,28 @@ def upload():
             return jsonify({"error": f"'{filename}' is not a valid PDF file"}), 400
 
     openalex_id = (request.form.get("openalex_id") or "").strip()
-    doi         = (request.form.get("doi")         or "").strip()
-    is_upgrade  = bool(openalex_id or doi)
+    doi = (request.form.get("doi") or "").strip()
+    is_upgrade = bool(openalex_id or doi)
 
     file_hash = _file_hash(file.stream)
     if _is_duplicate_file(file_hash):
         return jsonify({"message": "File already uploaded"}), 200
 
     unique_filename = make_unique_filename(filename)
-    save_path       = os.path.join(PDF_DIR, unique_filename)
+    save_path = os.path.join(PDF_DIR, unique_filename)
     file.save(save_path)
-    _register_hash(file_hash)  
+    _register_hash(file_hash)
 
     if is_upgrade:
-        background_executor.submit(process_stub_upgrade, unique_filename, save_path, openalex_id=openalex_id, doi=doi)
+        background_executor.submit(
+            process_stub_upgrade, unique_filename, save_path, openalex_id=openalex_id, doi=doi)
         return jsonify({
             "message":  "Stub upgraded. Processing in background.",
             "filename": unique_filename,
         }), 200
     else:
-        background_executor.submit(process_file_background, unique_filename, save_path)
+        background_executor.submit(
+            process_file_background, unique_filename, save_path)
         return jsonify({
             "message":  "Upload successful. Processing in background.",
             "filename": unique_filename,
@@ -375,47 +376,15 @@ def clean_filename(file_path):
         return None
     return os.path.basename(file_path)
 
-def extract_snippet(doc: dict) -> str | None:
-    def find_highlight(text: str) -> str | None:
-        match = re.search(r'%%HLB%%.+?%%HLE%%', text)
-        if not match:
-            return None
-        start, end = match.start(), match.end()
-        before_words = [w for w in re.split(r'\s+', text[:start].strip()) if w]
-        after_words  = [w for w in re.split(r'\s+', text[end:].strip())   if w]
-        prefix = " ".join(before_words[-10:])
-        suffix = " ".join(after_words[:10])
-        lead   = "…" if len(before_words) > 10 else ""
-        trail  = "…" if len(after_words)  > 10 else ""
-        snippet = f"{lead}{prefix} {text[start:end]} {suffix}{trail}".strip()
-        return snippet.replace("%%HLB%%", "<b>").replace("%%HLE%%", "</b>")
 
-    def search_in(value) -> str | None:
-        if isinstance(value, str):
-            return find_highlight(value)
-        if isinstance(value, list):
-            for item in value:
-                result = search_in(item)
-                if result:
-                    return result
-        if isinstance(value, dict):
-            for v in value.values():
-                result = search_in(v)
-                if result:
-                    return result
-        return None
-
-    priority_fields = ["abstract", "conclusions_text", "methods_text", "figures_text", "topics", "keywords_text", "full_text"]
-
-    for field in priority_fields:
-        value = doc.get(field)
-        if value is None:
-            continue
-        result = search_in(value)
-        if result:
-            return result
-
-    fallback = (doc.get("abstract") or doc.get("full_text") or "").strip()
+def extract_snippet(item: dict) -> str | None:
+    highlights = item.get("highlights") or []
+    if highlights:
+        return " … ".join(
+            h.replace("<em>", "<b>").replace("</em>", "</b>") for h in highlights
+        )
+    doc = item.get("data") or {}
+    fallback = (doc.get("abstract") or "").strip()
     if not fallback:
         return None
     words = fallback.split()
@@ -423,134 +392,62 @@ def extract_snippet(doc: dict) -> str | None:
     return " ".join(words[:30]) + trail
 
 
-def buildFilterQuery(f_abstract="", f_methods="", f_conclusions="",
-                     f_figures="", f_topics="", f_keywords="", category_id=None):
-    parts = []
-    if f_abstract:
-        parts.append(f"<abstract>{f_abstract}</abstract>")
-    if f_topics:
-        parts.append(f"<keywords_text>{f_topics}</keywords_text>")
-    if f_keywords:
-        parts.append(f"<keywords_text>{f_keywords}</keywords_text>")
-    if f_methods:
-        parts.append(f"<methods_text>{f_methods}</methods_text>")
-    if f_conclusions:
-        parts.append(f"<conclusions_text>{f_conclusions}</conclusions_text>")
-    if f_figures:
-        parts.append(f"<figures_text>{f_figures}</figures_text>")
-    if category_id:
-        parts.append(f"<category_id>{category_id}</category_id>")
-
-    return "".join(parts)
-
-
 def do_search(query, docs, date_start=None, date_end=None,
               f_abstract="", f_methods="", f_conclusions="",
               f_figures="", category_id=None, f_topics="", f_keywords=""):
 
-    date_tag = ""
+    filters = {"stub_document": {"exact": "no"}}
+
     if date_start is not None or date_end is not None:
         ds = int(date_start) if date_start is not None else YEAR_MIN
-        de = int(date_end)   if date_end   is not None else YEAR_MAX
-        date_tag = f"<date>{ds} .. {de}</date>"
+        de = int(date_end) if date_end is not None else YEAR_MAX
+        filters["date"] = {"range": f"{ds}..{de}"}
 
-    filter_query = buildFilterQuery(
-        f_abstract=f_abstract,
-        f_methods=f_methods,
-        f_conclusions=f_conclusions,
-        f_figures=f_figures,
-        f_topics=f_topics,
-        f_keywords=f_keywords,
-        category_id = category_id,
-    )
+    if f_abstract:
+        filters["abstract"] = f_abstract
+    if f_topics or f_keywords:
+        filters["keywords_text"] = " ".join(
+            x for x in (f_topics, f_keywords) if x)
+    if f_methods:
+        filters["methods_text"] = f_methods
+    if f_conclusions:
+        filters["conclusions_text"] = f_conclusions
+    if f_figures:
+        filters["figures_text"] = f_figures
+    if category_id:
+        filters["category_id"] = {"range": str(category_id)}
 
-    query = f'{{^+10 "{query}"^ ({query})}}'
+    # exclude the heavy/structured fields from the payload; snippet comes from highlights
+    return_fields = {
+        "full_text": False, "methods": False, "conclusions": False,
+        "figures": False, "tables": False,
+    }
 
-    fullQ = (
-        f"<query><stub_document>no</stub_document>{date_tag}{filter_query} {query}</query>"
-        f"<docs>{docs}</docs>"
-        f"<list>"
-        f"<id>yes</id>"
-        f"<openalex_id>yes</openalex_id>"
-        f"<title>yes</title>"
-        f"<abstract>highlight</abstract>"
-        f"<authors>yes</authors>"
-        f"<date>yes</date>"
-        f"<doi_number>yes</doi_number>"
-        f"<cited_by_count>yes</cited_by_count>"
-        f"<file>yes</file>"
-        f"<img_preview_path>yes</img_preview_path>"
-        f"<full_text>snippet</full_text>"
-        f"<stub_document>yes</stub_document>"
-        f"<category_id>yes</category_id>"
-        f"<keywords_text>highlight</keywords_text>"
-        f"<methods_text>highlight</methods_text>"
-        f"<conclusions_text>highlight</conclusions_text>"
-        f"<figures_text>highlight</figures_text>"
-        f"<tables_text>highlight</tables_text>"
-        f"<referenced_work_ids>yes</referenced_work_ids>"
-        f"<related_work_ids>yes</related_work_ids>"
-        f"</list>"
-    )
-
-    resp = requests.post(
-        CP_URL + "/api/databases/pdfs/search/json",
-        data=fullQ,
-        auth=(CP_USER, CP_PASS),
-    )
+    resp = corelamo.search(
+        query, docs=docs, filters=filters, return_fields=return_fields)
     resp.raise_for_status()
     data = resp.json()
 
-    hits = int(
-        data.get("cps:reply", {})
-            .get("cps:content", {})
-            .get("hits", 0)
-    )
-
-    documents = (
-        data.get("cps:reply", {})
-            .get("cps:content", {})
-            .get("results", {})
-            .get("document", [])
-    )
-    if isinstance(documents, dict):
-        documents = [documents]
+    hits = (data.get("total_hits") or {}).get("value", 0)
+    items = data.get("data") or []
+    if isinstance(items, dict):
+        items = [items]
 
     results = []
-    for doc in documents:
-        raw_authors = doc.get("authors")
-        if raw_authors is None:
-            authors = []
-        else:
-            a = raw_authors.get("author", [])
-            authors = [a] if isinstance(a, str) else a
+    for item in items:
+        doc = item.get("data") or {}
+        doc_id = item.get("id") or doc.get("id")
 
-        # Referenced work IDs
-        raw_ref_ids = doc.get("referenced_work_ids")
-        if raw_ref_ids is None:
-            referenced_work_ids = []
-        else:
-            r = raw_ref_ids.get("referenced_work_id", [])
-            referenced_work_ids = [r] if isinstance(r, str) else r
-
-        # Related work IDs
-        raw_rel_ids = doc.get("related_work_ids")
-        if raw_rel_ids is None:
-            related_work_ids = []
-        else:
-            r = raw_rel_ids.get("related_work_id", [])
-            related_work_ids = [r] if isinstance(r, str) else r
-
-        file_path    = doc.get("file")
-        filename     = clean_filename(file_path)
+        file_path = doc.get("file")
+        filename = clean_filename(file_path)
         preview_name = get_preview_filename(file_path) if file_path else None
         preview_exists = preview_name and os.path.exists(
-            os.path.join(PREVIEW_DIR, preview_name)
-        )
+            os.path.join(PREVIEW_DIR, preview_name))
 
         try:
             cat_id_raw = doc.get("category_id")
-            category = get_category_by_id(int(cat_id_raw)) if cat_id_raw is not None else None
+            category = get_category_by_id(
+                int(cat_id_raw)) if cat_id_raw is not None else None
             if not category:
                 category = NONE_CATEGORY
         except (TypeError, ValueError):
@@ -558,12 +455,12 @@ def do_search(query, docs, date_start=None, date_end=None,
 
         results.append({
             "title":               doc.get("title"),
-            "id":                  doc.get("id"),
+            "id":                  doc_id,
             "openalex_id":         doc.get("openalex_id", ""),
             "file":                filename,
-            "date":                doc.get("date"),
-            "full_text":           doc.get("full_text"),
-            "authors":             authors,
+            "date":                str(doc.get("date")) if doc.get("date") is not None else None,
+            "full_text":           None,
+            "authors":             doc.get("authors") or [],
             "abstract":            doc.get("abstract"),
             "preview":             f"/previews/{preview_name}" if preview_exists else None,
             "doi_number":          doc.get("doi_number", ""),
@@ -573,78 +470,136 @@ def do_search(query, docs, date_start=None, date_end=None,
             "conclusions_text":    doc.get("conclusions_text", ""),
             "figures_text":        doc.get("figures_text", ""),
             "tables_text":         doc.get("tables_text", ""),
-            "referenced_work_ids": referenced_work_ids,
-            "related_work_ids":    related_work_ids,
+            "referenced_work_ids": doc.get("referenced_work_ids") or [],
+            "related_work_ids":    doc.get("related_work_ids") or [],
             "category":            category,
             "stub_document":       doc.get("stub_document", "no"),
-            "snippet":             extract_snippet(doc),
+            "snippet":             extract_snippet(item),
         })
 
-    return results, hits 
+    return results, hits
 
- 
+
+def do_search(query, docs, date_start=None, date_end=None,
+              f_abstract="", f_methods="", f_conclusions="",
+              f_figures="", category_id=None, f_topics="", f_keywords=""):
+
+    filters = {"stub_document": {"exact": "no"}}
+
+    if date_start is not None or date_end is not None:
+        ds = int(date_start) if date_start is not None else YEAR_MIN
+        de = int(date_end) if date_end is not None else YEAR_MAX
+        filters["date"] = {"range": f"{ds}..{de}"}
+
+    if f_abstract:
+        filters["abstract"] = f_abstract
+    if f_topics or f_keywords:
+        filters["keywords_text"] = " ".join(
+            x for x in (f_topics, f_keywords) if x)
+    if f_methods:
+        filters["methods_text"] = f_methods
+    if f_conclusions:
+        filters["conclusions_text"] = f_conclusions
+    if f_figures:
+        filters["figures_text"] = f_figures
+    if category_id:
+        filters["category_id"] = {"range": str(category_id)}
+
+    # exclude the heavy/structured fields from the payload; snippet comes from highlights
+    return_fields = {
+        "full_text": False, "methods": False, "conclusions": False,
+        "figures": False, "tables": False,
+    }
+
+    resp = corelamo.search(
+        query, docs=docs, filters=filters, return_fields=return_fields)
+    resp.raise_for_status()
+    data = resp.json()
+
+    hits = (data.get("total_hits") or {}).get("value", 0)
+    items = data.get("data") or []
+    if isinstance(items, dict):
+        items = [items]
+
+    results = []
+    for item in items:
+        doc = item.get("data") or {}
+        doc_id = item.get("id") or doc.get("id")
+
+        file_path = doc.get("file")
+        filename = clean_filename(file_path)
+        preview_name = get_preview_filename(file_path) if file_path else None
+        preview_exists = preview_name and os.path.exists(
+            os.path.join(PREVIEW_DIR, preview_name))
+
+        try:
+            cat_id_raw = doc.get("category_id")
+            category = get_category_by_id(
+                int(cat_id_raw)) if cat_id_raw is not None else None
+            if not category:
+                category = NONE_CATEGORY
+        except (TypeError, ValueError):
+            category = NONE_CATEGORY
+
+        results.append({
+            "title":               doc.get("title"),
+            "id":                  doc_id,
+            "openalex_id":         doc.get("openalex_id", ""),
+            "file":                filename,
+            "date":                str(doc.get("date")) if doc.get("date") is not None else None,
+            "full_text":           None,
+            "authors":             doc.get("authors") or [],
+            "abstract":            doc.get("abstract"),
+            "preview":             f"/previews/{preview_name}" if preview_exists else None,
+            "doi_number":          doc.get("doi_number", ""),
+            "cited_by_count":      doc.get("cited_by_count"),
+            "keywords_text":       doc.get("keywords_text", ""),
+            "methods_text":        doc.get("methods_text", ""),
+            "conclusions_text":    doc.get("conclusions_text", ""),
+            "figures_text":        doc.get("figures_text", ""),
+            "tables_text":         doc.get("tables_text", ""),
+            "referenced_work_ids": doc.get("referenced_work_ids") or [],
+            "related_work_ids":    doc.get("related_work_ids") or [],
+            "category":            category,
+            "stub_document":       doc.get("stub_document", "no"),
+            "snippet":             extract_snippet(item),
+        })
+
+    return results, hits
+
+
 def _enrich_and_sort(work_ids: list, limit: int) -> list[tuple[str, dict | None]]:
     enriched_map = {}
     for wid in work_ids:
         enriched_map[wid] = lookup_gray_node(wid)
- 
+
     def cited_count(item):
         _, enriched = item
         return enriched["cited"] if enriched else 0
- 
+
     sorted_items = sorted(enriched_map.items(), key=cited_count, reverse=True)
     return sorted_items[:limit]
- 
- 
+
+
 def lookup_gray_node(openalex_id: str) -> dict | None:
     if not openalex_id:
         return None
-    body = (
-        f"<document><id>{escape(openalex_id).upper()}</id></document>"
-        f"<list>"
-        f"<title>yes</title>"
-        f"<cited_by_count>yes</cited_by_count>"
-        f"<authors>yes</authors>"
-        f"<abstract>yes</abstract>"
-        f"<stub_document>yes</stub_document>"
-        f"<doi_number>yes</doi_number>"
-        f"<referenced_work_ids>yes</referenced_work_ids>"
-        f"<related_work_ids>yes</related_work_ids>"
-        f"</list>"
-    )
-    try:
-        resp = requests.post(
-            CP_URL.rstrip("/") + "/api/databases/pdfs/lookup",
-            data=body,
-            auth=(CP_USER, CP_PASS),
-            timeout=10,
-        )
-        resp.raise_for_status()
-        if "<found>1</found>" not in resp.text:
-            return None
-        root = ET.fromstring(resp.text)
-        doc  = root.find(".//document")
-        if doc is None:
-            return None
- 
-        title    = (doc.findtext("title") or "").strip()
-        cited    = int(doc.findtext("cited_by_count") or 0)
-        abstract = (doc.findtext("abstract") or "").strip()
-        stub     = (doc.findtext("stub_document") or "no").strip() == "yes"
-        authors  = [a.text.strip() for a in doc.findall(".//authors/author") if a.text]
- 
-        return {
-            "title":         title,
-            "cited":         cited,
-            "abstract":      abstract,
-            "authors":       authors,
-            "stub_document": stub,
-        }
-    except Exception as e:
-        print(f"[lookup_gray_node] failed for {openalex_id}: {e}")
+    resp = corelamo.lookup([openalex_id])
+    if resp.status_code != 200:
         return None
- 
- 
+    docs = resp.json().get("data", {}).get("documents", [])
+    if not docs:
+        return None
+    d = docs[0].get("data", {})
+    return {
+        "title":         (d.get("title") or "").strip(),
+        "cited":         int(d.get("cited_by_count") or 0),
+        "abstract":      (d.get("abstract") or "").strip(),
+        "authors":       d.get("authors") or [],
+        "stub_document": (d.get("stub_document") or "no").strip() == "yes",
+    }
+
+
 @app.route("/search")
 def search():
     query = request.args.get("query", "").strip()
@@ -655,20 +610,19 @@ def search():
     except (ValueError, TypeError):
         docs = 10
 
-    f_abstract    = request.args.get("abstract",    "").strip()
-    f_methods     = request.args.get("methods",     "").strip()
+    f_abstract = request.args.get("abstract",    "").strip()
+    f_methods = request.args.get("methods",     "").strip()
     f_conclusions = request.args.get("conclusions", "").strip()
-    f_figures     = request.args.get("figures",     "").strip()
+    f_figures = request.args.get("figures",     "").strip()
     f_topics = request.args.get("topics", "").strip()
 
- 
     has_any = query or f_abstract or f_methods or f_conclusions or f_figures or f_topics
     if not has_any:
         return jsonify({"error": "query is required"}), 400
 
     try:
         date_start = request.args.get("date_start", type=int)
-        date_end   = request.args.get("date_end",   type=int)
+        date_end = request.args.get("date_end",   type=int)
         category_id = request.args.get("category_id", "").strip() or None
 
         results, hits = do_search(
@@ -681,14 +635,14 @@ def search():
             f_conclusions=f_conclusions,
             f_figures=f_figures,
             category_id=category_id,
-            f_topics= f_topics,
+            f_topics=f_topics,
         )
 
-        all_nodes     = []
-        links         = []
+        all_nodes = []
+        links = []
         initial_nodes = ["query"]
-        seen_ids      = set()
-        seen_links    = set()
+        seen_ids = set()
+        seen_links = set()
 
         def add_link(from_id, to_id, style):
             key = (from_id, to_id)
@@ -739,8 +693,8 @@ def search():
         rel_ids_by_node = {}   # node_id -> [related_work_ids]
 
         for doc in results:
-            cited   = int(doc["cited_by_count"] or 0)
-            title   = doc["title"] or doc["doi_number"]
+            cited = int(doc["cited_by_count"] or 0)
+            title = doc["title"] or doc["doi_number"]
             node_id = doc["openalex_id"] or doc["id"] or doc["doi_number"]
             if not node_id or node_id in seen_ids:
                 continue
@@ -761,7 +715,7 @@ def search():
                     "file":         doc["file"],
                     "radius":       node_radius(cited),
                     "abstract":     doc["abstract"] or "",
-                    "snippet":  doc["snippet"] or "",   
+                    "snippet":  doc["snippet"] or "",
                     "fillColor":    category["color"],
                     "preview":      doc["preview"],
                     "category":     category,
@@ -773,7 +727,7 @@ def search():
             initial_nodes.append(node_id)
             result_node_ids.append(node_id)
             ref_ids_by_node[node_id] = doc["referenced_work_ids"] or []
-            rel_ids_by_node[node_id] = doc["related_work_ids"]    or []
+            rel_ids_by_node[node_id] = doc["related_work_ids"] or []
 
             add_link("query", node_id, REF_STYLE)
 
@@ -789,8 +743,6 @@ def search():
             for rel_id in rel_ids_by_node[node_id]:
                 if rel_id in result_id_set:
                     add_link(node_id, rel_id, REL_STYLE)
-
-
 
         return jsonify({
             "query":         query,
@@ -808,281 +760,29 @@ def search():
 def batch_lookup(ids: list) -> dict:
     if not ids:
         return {}
-    body = "".join(f"<document><id>{escape(wid).upper()}</id></document>" for wid in ids)
-    body += (
-        "<list>"
-        "<title>yes</title>"
-        "<cited_by_count>yes</cited_by_count>"
-        "<authors>yes</authors>"
-        "<abstract>yes</abstract>"
-        "<stub_document>yes</stub_document>"
-        "<doi_number>yes</doi_number>"
-        "<file>yes</file>"
-        "<category_id>yes</category_id>"
-        "<img_preview_path>yes</img_preview_path>"
-        "<referenced_work_ids>yes</referenced_work_ids>"
-        "<related_work_ids>yes</related_work_ids>"
-        "</list>"
-    )
-    try:
-        resp = requests.post(
-            CP_URL.rstrip("/") + "/api/databases/pdfs/lookup/json",
-            data=body,
-            auth=(CP_USER, CP_PASS),
-            timeout=15,
-        )
-        resp.raise_for_status()
-        docs = resp.json().get("cps:reply", {}).get("cps:content", {}).get("document", [])
-        if isinstance(docs, dict):
-            docs = [docs]
-        result = {}
-        for doc in docs:
-            wid = doc.get("id") or doc.get("openalex_id")
-            if not wid:
-                continue
-
-            raw_authors = doc.get("authors") or {}
-            a = raw_authors.get("author", [])
-            authors = [a] if isinstance(a, str) else a
-
-            raw_ref = doc.get("referenced_work_ids") or {}
-            r = raw_ref.get("referenced_work_id", [])
-            ref_ids = [r] if isinstance(r, str) else r
-
-            raw_rel = doc.get("related_work_ids") or {}
-            r = raw_rel.get("related_work_id", [])
-            rel_ids = [r] if isinstance(r, str) else r
-
-            result[wid] = {
-                "title":               (doc.get("title") or "").strip(),
-                "cited":               int(doc.get("cited_by_count") or 0),
-                "abstract":            (doc.get("abstract") or "").strip(),
-                "authors":             authors,
-                "stub_document":       (doc.get("stub_document") or "no") == "yes",
-                "doi_number":          doc.get("doi_number", ""),
-                "referenced_work_ids": ref_ids,
-                "related_work_ids":    rel_ids,
-                "file":        doc.get("file", ""),
-                "category_id": doc.get("category_id"),
-            }
-        return result
-    except Exception as e:
-        print(f"[batch_lookup] failed: {e}")
+    resp = corelamo.lookup(ids)
+    if resp.status_code != 200:
         return {}
-
-
-@app.route("/expand", methods=["POST"])
-def expand():
-    body = request.get_json(force=True)
-
-    openalex_id    = (body.get("openalex_id") or "").strip()
-    shown_node_ids = set(body.get("shown_node_ids") or [])
-    shown_ref_ids  = set(body.get("shown_ref_ids")  or [])
-    shown_rel_ids  = set(body.get("shown_rel_ids")  or [])
-
-    if not openalex_id:
-        return jsonify({"error": "openalex_id is required"}), 400
-
-    body_xml = (
-        f"<document><id>{escape(openalex_id).upper()}</id></document>"
-        f"<list>"
-        f"<referenced_work_ids>yes</referenced_work_ids>"
-        f"<related_work_ids>yes</related_work_ids>"
-        f"<referenced_work_id>yes</referenced_work_id>"
-        f"<related_work_id>yes</related_work_id>"
-        f"</list>"
-    )
-    try:
-        resp = requests.post(
-            CP_URL.rstrip("/") + "/api/databases/pdfs/lookup",
-            data=body_xml,
-            auth=(CP_USER, CP_PASS),
-            timeout=10,
-        )
-        resp.raise_for_status()
-        root = ET.fromstring(resp.text)
-        doc  = root.find(".//document")
-        if doc is None:
-            return jsonify({"error": "Node document not found"}), 404
-
-        def _ids(parent_tag, child_tag):
-            parent = doc.find(parent_tag)
-            if parent is None:
-                return []
-            return [el.text for el in parent.findall(child_tag) if el.text]
-
-        all_ref_ids = _ids("referenced_work_ids", "referenced_work_id")
-        all_rel_ids = _ids("related_work_ids",    "related_work_id")
-
-    except Exception as e:
-        return jsonify({"error": f"CP lookup failed: {e}"}), 500
-
-    # ── 2. Filter already-shown, batch-lookup candidates ────────────────────
-    candidate_ref_ids = [i for i in all_ref_ids if i not in shown_ref_ids]
-    candidate_rel_ids = [i for i in all_rel_ids if i not in shown_rel_ids]
-    all_candidates    = list(set(candidate_ref_ids + candidate_rel_ids))
-
-    # batch_lookup returns full CP data including stub_document and file fields
-    enriched_map = batch_lookup(all_candidates)
-
-    # ── 3. Sort by cited_by_count desc, take next 5 refs / 3 rels ───────────
-    def sorted_candidates(id_list, limit):
-        scored = [(wid, enriched_map.get(wid, {}).get("cited", 0)) for wid in id_list]
-        scored.sort(key=lambda x: x[1], reverse=True)
-        return [wid for wid, _ in scored[:limit]]
-
-    new_ref_ids = sorted_candidates(candidate_ref_ids, 5)
-    new_rel_ids = sorted_candidates(candidate_rel_ids, 3)
-
-    # ── 4. Build nodes ───────────────────────────────────────────────────────
-    new_nodes      = []
-    new_links      = []
-    seen_new       = set()
-    seen_links_set = set()
-
-    def node_radius(cited, fallback=45):
-        return min(200, round(70 + math.sqrt(cited) * 2, 1)) if cited else fallback
-
-    REF_STYLE = {"fillColor": "rgba(99,102,241,0.35)",  "radius": 2,   "toDecoration": "arrow"}
-    REL_STYLE = {"fillColor": "rgba(251,146,60,0.45)",  "radius": 1.5, "toDecoration": "arrow", "dashSize": 4}
-
-    def add_link(from_id, to_id, style):
-        key = (from_id, to_id)
-        if key in seen_links_set or from_id == to_id:
-            return
-        seen_links_set.add(key)
-        new_links.append({"from": from_id, "to": to_id, "style": style})
-
-    def make_node(wid, enriched, link_style):
-        if not enriched:
-            return {
-                "id":     wid,
-                "loaded": False,
-                "style":  {"label": wid},
-                "data": {
-                    "title":                wid,
-                    "authors":              [],
-                    "abstract":             "",
-                    "cited":                0,
-                    "doi":                  "",
-                    "openalex_id":          wid,
-                    "radius":               15,
-                    "fillColor":            "rgba(120,120,120,0.7)",
-                    "preview":              None,
-                    "category":             None,
-                    "is_stub_node":         True,
-                    "stub_document":        False,
-                    "referenced_work_ids":  [],
-                    "related_work_ids":     [],
-                },
-            }
-
-        cited      = enriched.get("cited", 0)
-        is_stub_doc = enriched.get("stub_document", True)
-
-        if not is_stub_doc:
-            # ── Full document in our DB ──────────────────────────────────────
-            file_path    = enriched.get("file", "")
-            filename     = clean_filename(file_path)
-            preview_name = get_preview_filename(file_path) if file_path else None
-            preview_exists = preview_name and os.path.exists(
-                os.path.join(PREVIEW_DIR, preview_name)
-            )
-
-            try:
-                cat_id_raw = enriched.get("category_id")
-                category   = get_category_by_id(int(cat_id_raw)) if cat_id_raw is not None else None
-                if not category:
-                    category = NONE_CATEGORY
-            except (TypeError, ValueError):
-                category = NONE_CATEGORY
-
-            return {
-                "id":     wid,
-                "loaded": True,
-                "style":  {"label": enriched.get("title", wid)},
-                "data": {
-                    "title":                enriched.get("title",    wid),
-                    "authors":              enriched.get("authors",  []),
-                    "abstract":             enriched.get("abstract", ""),
-                    "cited":                cited,
-                    "doi":                  enriched.get("doi_number", ""),
-                    "openalex_id":          wid,
-                    "id":                   wid,
-                    "file":                 filename,
-                    "radius":               node_radius(cited),
-                    "fillColor":            category["color"],
-                    "preview":              f"/previews/{preview_name}" if preview_exists else None,
-                    "category":             category,
-                    "is_stub_node":         False,
-                    "stub_document":        False,
-                    "referenced_work_ids":  enriched.get("referenced_work_ids", []),
-                    "related_work_ids":     enriched.get("related_work_ids",    []),
-                },
-            }
-        else:
-            # ── Stub node (metadata only) ────────────────────────────────────
-            fill_color = (
-                "rgba(120,120,120,0.7)"
-                if link_style is REF_STYLE
-                else "rgba(180,120,60,0.6)"
-            )
-            return {
-                "id":     wid,
-                "loaded": False,
-                "style":  {"label": enriched.get("title", wid)},
-                "data": {
-                    "title":                enriched.get("title",    wid),
-                    "authors":              enriched.get("authors",  []),
-                    "abstract":             enriched.get("abstract", ""),
-                    "cited":                cited,
-                    "doi":                  enriched.get("doi_number", ""),
-                    "openalex_id":          wid,
-                    "radius":               node_radius(cited),
-                    "fillColor":            fill_color,
-                    "preview":              None,
-                    "category":             None,
-                    "is_stub_node":         True,
-                    "stub_document":        True,
-                    "referenced_work_ids":  enriched.get("referenced_work_ids", []),
-                    "related_work_ids":     enriched.get("related_work_ids",    []),
-                },
-            }
-
-    for wid in new_ref_ids:
-        if wid not in shown_node_ids and wid not in seen_new:
-            new_nodes.append(make_node(wid, enriched_map.get(wid), REF_STYLE))
-            seen_new.add(wid)
-        add_link(openalex_id, wid, REF_STYLE)
-
-    for wid in new_rel_ids:
-        if wid not in shown_node_ids and wid not in seen_new:
-            new_nodes.append(make_node(wid, enriched_map.get(wid), REL_STYLE))
-            seen_new.add(wid)
-        add_link(openalex_id, wid, REL_STYLE)
-
-    # ── 5. Cross-links ───────────────────────────────────────────────────────
-    all_now_visible = shown_node_ids | seen_new | {openalex_id}
-
-    for node in new_nodes:
-        wid      = node["id"]
-        enriched = enriched_map.get(wid)
-        if not enriched:
+    docs = resp.json().get("data", {}).get("documents", [])
+    result = {}
+    for entry in docs:
+        d = entry.get("data") or {}
+        wid = entry.get("id") or d.get("id") or d.get("openalex_id")
+        if not wid:
             continue
-        for ref_id in enriched.get("referenced_work_ids", []):
-            if ref_id in all_now_visible and ref_id != wid:
-                add_link(wid, ref_id, REF_STYLE)
-        for rel_id in enriched.get("related_work_ids", []):
-            if rel_id in all_now_visible and rel_id != wid:
-                add_link(wid, rel_id, REL_STYLE)
-
-    return jsonify({
-        "nodes":       new_nodes,
-        "links":       new_links,
-        "new_ref_ids": new_ref_ids,
-        "new_rel_ids": new_rel_ids,
-    })
-
+        result[wid] = {
+            "title":               (d.get("title") or "").strip(),
+            "cited":               int(d.get("cited_by_count") or 0),
+            "abstract":            (d.get("abstract") or "").strip(),
+            "authors":             d.get("authors") or [],
+            "stub_document":       (d.get("stub_document") or "no") == "yes",
+            "doi_number":          d.get("doi_number", ""),
+            "referenced_work_ids": d.get("referenced_work_ids") or [],
+            "related_work_ids":    d.get("related_work_ids") or [],
+            "file":                d.get("file", ""),
+            "category_id":         d.get("category_id"),
+        }
+    return result
 
 
 @app.route("/pdf-file/<path:filename>")
@@ -1109,7 +809,7 @@ def route_get_all_categories():
 @app.route("/create-category", methods=["POST"])
 def route_create_category():
     body = request.get_json(silent=True) or {}
-    name  = body.get("name", "").strip()
+    name = body.get("name", "").strip()
     color = body.get("color", "").strip()
     if not name:
         return jsonify({"error": "name is required"}), 400
@@ -1121,8 +821,8 @@ def route_create_category():
 
 @app.route("/edit-category/<int:cat_id>", methods=["PATCH"])
 def route_edit_category(cat_id):
-    body  = request.get_json(silent=True) or {}
-    name  = body.get("name")
+    body = request.get_json(silent=True) or {}
+    name = body.get("name")
     color = body.get("color")
     if name is not None:
         name = name.strip()
@@ -1146,7 +846,7 @@ def route_delete_category(cat_id):
 
 @app.route("/assign-category", methods=["POST"])
 def route_assign_category():
-    body   = request.get_json(silent=True) or {}
+    body = request.get_json(silent=True) or {}
     doc_id = body.get("document_id", "").strip()
     cat_id = body.get("category_id")
 
@@ -1159,14 +859,14 @@ def route_assign_category():
     except (TypeError, ValueError):
         return jsonify({"error": "category_id must be an integer"}), 400
 
-    result = assign_category_to_document(doc_id, cat_id, CP_URL, CP_USER, CP_PASS)
+    result = assign_category_to_document(doc_id, cat_id)
     if not result["success"]:
         return jsonify({"error": result.get("error"), "detail": result.get("response")}), 500
     return jsonify(result), 200
 
 
-register_chat(app, CP_URL, CP_USER, CP_PASS)
+register_chat(app)
 
 if __name__ == "__main__":
-    start_stub_worker(CP_URL, CP_USER, CP_PASS)
+    start_stub_worker()
     app.run(host="0.0.0.0", port=3002, debug=True, threaded=True)

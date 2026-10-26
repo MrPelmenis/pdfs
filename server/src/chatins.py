@@ -3,24 +3,24 @@ import os
 import traceback
 import requests as req
 
-OLLAMA_URL     = "http://localhost:11434/api/chat"
-DEEPSEEK_URL   = "https://api.deepseek.com/v1/chat/completions"
-DEEPSEEK_KEY   = os.getenv("DEEPSEEK_KEY", "")
+OLLAMA_URL = "http://localhost:11434/api/chat"
+DEEPSEEK_URL = "https://api.deepseek.com/v1/chat/completions"
+DEEPSEEK_KEY = os.getenv("DEEPSEEK_KEY", "")
 OLLAMA_TIMEOUT = 120
 DEEPSEEK_TIMEOUT = 60
 
 # "ollama" or "deepseek"
 PROVIDER = os.getenv("PROVIDER", "ollama")
 
-CHAT_MODEL  = "gemma4:e4b"        # used when PROVIDER=ollama
+CHAT_MODEL = "gemma4:e4b"        # used when PROVIDER=ollama
 QUERY_MODEL = "gemma4:e4b"        # used when PROVIDER=ollama
 
-DEEPSEEK_CHAT_MODEL  = "deepseek-chat"   # used when PROVIDER=deepseek
+DEEPSEEK_CHAT_MODEL = "deepseek-chat"   # used when PROVIDER=deepseek
 DEEPSEEK_QUERY_MODEL = "deepseek-chat"   # used when PROVIDER=deepseek
 
-CTX_MIN        = 2048
-CTX_MAX        = 131072
-CTX_HEADROOM   = 1.4
+CTX_MIN = 2048
+CTX_MAX = 131072
+CTX_HEADROOM = 1.4
 ANSWER_RESERVE = 1024
 
 SEARCH_DOCS = 10
@@ -104,7 +104,8 @@ def ollama_generate(prompt: str, stream: bool = False, model: str = CHAT_MODEL):
         },
         "messages": [{"role": "user", "content": prompt}],
     }
-    resp = req.post(OLLAMA_URL, json=payload, timeout=OLLAMA_TIMEOUT, stream=stream)
+    resp = req.post(OLLAMA_URL, json=payload,
+                    timeout=OLLAMA_TIMEOUT, stream=stream)
     return resp
 
 
@@ -119,7 +120,8 @@ def deepseek_generate(prompt: str, stream: bool = False, model: str = DEEPSEEK_C
         "Authorization": f"Bearer {DEEPSEEK_KEY}",
         "Content-Type":  "application/json",
     }
-    resp = req.post(DEEPSEEK_URL, json=payload, headers=headers, timeout=DEEPSEEK_TIMEOUT, stream=stream)
+    resp = req.post(DEEPSEEK_URL, json=payload, headers=headers,
+                    timeout=DEEPSEEK_TIMEOUT, stream=stream)
     return resp
 
 
@@ -139,7 +141,7 @@ def _generate(prompt: str, stream: bool = False, use_query_model: bool = False):
 
 def _extract_token_ollama(data: dict) -> tuple[str, bool]:
     token = data.get("message", {}).get("content", "")
-    done  = data.get("done", False)
+    done = data.get("done", False)
     return token, done
 
 
@@ -148,8 +150,9 @@ def _extract_token_deepseek(data: dict) -> tuple[str, bool]:
     if not choices:
         return "", False
     choice = choices[0]
-    token  = (choice.get("delta") or choice.get("message") or {}).get("content") or ""
-    done   = choice.get("finish_reason") is not None
+    token = (choice.get("delta") or choice.get(
+        "message") or {}).get("content") or ""
+    done = choice.get("finish_reason") is not None
     return token, done
 
 
@@ -166,134 +169,51 @@ def _extract_query_response(data: dict) -> str:
     return data.get("message", {}).get("content", "").strip()
 
 
-def search_cp(query: str, cp_url: str, cp_user: str, cp_pass: str) -> list:
-    query = f'{{"{query}" ({query})}}'
-    
-    body = (
-        f"<query><stub_document>no</stub_document>{query}</query>"
-        f"<docs>{SEARCH_DOCS}</docs>"
-        f"<list>"
-        f"<title>yes</title>"
-        f"<abstract>yes</abstract>"
-        f"<authors>yes</authors>"
-        f"<date>yes</date>"
-        f"<doi_number>yes</doi_number>"
-        f"<full_text>yes</full_text>"
-        f"<keywords_text>yes</keywords_text>"
-        f"<methods_text>yes</methods_text>"
-        f"<conclusions_text>yes</conclusions_text>"
-        f"<figures_text>yes</figures_text>"
-        f"<tables_text>yes</tables_text>"
-        f"</list>"
-    )
+def search_in_riets(query: str) -> list:
+    from src import corelamo
+    resp = corelamo.search(query, docs=SEARCH_DOCS, filters={
+                           "stub_document": {"exact": "no"}})
     try:
-        resp = req.post(
-            cp_url.rstrip("/") + "/api/databases/pdfs/search/json",
-            data=body,
-            auth=(cp_user, cp_pass),
-            timeout=10,
-        )
         resp.raise_for_status()
         data = resp.json()
     except Exception:
         return []
 
-    documents = (
-        data.get("cps:reply", {})
-            .get("cps:content", {})
-            .get("results", {})
-            .get("document", [])
-    )
-    if isinstance(documents, dict):
-        documents = [documents]
+    items = data.get("data") or []
+    if isinstance(items, dict):
+        items = [items]
 
     results = []
-    for doc in documents:
-
-        def _list(parent_key, child_key):
-            raw = doc.get(parent_key)
-            if raw is None:
-                return []
-            val = raw.get(child_key, [])
-            return [val] if isinstance(val, str) else val
-
-        def _method_list():
-            raw = doc.get("methods")
-            if not raw:
-                return []
-            items = raw.get("method", [])
-            if isinstance(items, dict):
-                items = [items]
-            return [
-                {"heading": m.get("heading", ""), "text": m.get("text", "")}
-                for m in items
-            ]
-
-        def _conclusion_list():
-            raw = doc.get("conclusions")
-            if not raw:
-                return []
-            items = raw.get("conclusion", [])
-            if isinstance(items, dict):
-                items = [items]
-            return [
-                {"heading": c.get("heading", ""), "text": c.get("text", "")}
-                for c in items
-            ]
-
-        def _figure_list():
-            raw = doc.get("figures")
-            if not raw:
-                return []
-            items = raw.get("figure", [])
-            if isinstance(items, dict):
-                items = [items]
-            return [
-                {"label": f.get("figure_label", ""), "caption": f.get("caption", "")}
-                for f in items
-                if f.get("caption")
-            ]
-
-        def _table_list():
-            raw = doc.get("tables")
-            if not raw:
-                return []
-            items = raw.get("table", [])
-            if isinstance(items, dict):
-                items = [items]
-            return [
-                t.get("content", "").strip()
-                for t in items
-                if t.get("content", "").strip()
-            ]
-
+    for item in items:
+        d = item.get("data") or {}
         results.append({
-            "file":               (doc.get("file")      or "").strip(),
-            "title":              (doc.get("title")     or "").strip(),
-            "abstract":           (doc.get("abstract")  or "").strip(),
-            "full_text":          (doc.get("full_text") or "").strip(),
-            "authors":            _list("authors", "author"),
-            "date":               (doc.get("date")      or "").strip(),
-            "keywords":           _list("keywords", "keyword"),
-            "keywords_extracted": _list("keywords_extracted", "keyword"),
-            "topics":             _list("topics", "topic"),
-            "methods":            _method_list(),
-            "conclusions":        _conclusion_list(),
-            "figures":            _figure_list(),
-            "tables":             _table_list(),
+            "file":               (d.get("file") or "").strip(),
+            "title":              (d.get("title") or "").strip(),
+            "abstract":           (d.get("abstract") or "").strip(),
+            "full_text":          (d.get("full_text") or "").strip(),
+            "authors":            d.get("authors") or [],
+            "date":               str(d.get("date") or ""),
+            "keywords":           [],
+            "keywords_extracted": [],
+            "topics":             [],
+            "methods":            d.get("methods") or [],
+            "conclusions":        d.get("conclusions") or [],
+            "figures":            [{"label": f.get("figure_label", ""), "caption": f.get("caption", "")}
+                                   for f in (d.get("figures") or []) if f.get("caption")],
+            "tables":             ["\n".join(" | ".join(str(c) for c in row) for row in (t.get("grid") or []))
+                                   for t in (d.get("tables") or [])],
         })
-
     return results
 
 
 def _build_context(results: list) -> str:
     parts = []
     for i, doc in enumerate(results, 1):
-        title     = doc.get("title")    or "Unknown"
-        abstract  = doc.get("abstract") or ""
+        title = doc.get("title") or "Unknown"
+        abstract = doc.get("abstract") or ""
         full_text = doc.get("full_text") or ""
-        authors   = ", ".join(doc.get("authors") or [])
-        date      = doc.get("date")     or ""
+        authors = ", ".join(doc.get("authors") or [])
+        date = doc.get("date") or ""
 
         kw_all = list(dict.fromkeys(
             (doc.get("keywords") or []) + (doc.get("keywords_extracted") or [])
@@ -302,14 +222,19 @@ def _build_context(results: list) -> str:
         topics = ", ".join((doc.get("topics") or [])[:5])
 
         lines = [f"[{i}] {title}"]
-        if authors:   lines.append(f"Authors: {authors}" + (f" ({date})" if date else ""))
-        if topics:    lines.append(f"Topics: {topics}")
-        if kw_str:    lines.append(f"Keywords: {kw_str}")
-        if abstract:  lines.append(f"Abstract: {abstract}")
+        if authors:
+            lines.append(f"Authors: {authors}" +
+                         (f" ({date})" if date else ""))
+        if topics:
+            lines.append(f"Topics: {topics}")
+        if kw_str:
+            lines.append(f"Keywords: {kw_str}")
+        if abstract:
+            lines.append(f"Abstract: {abstract}")
 
         for m in (doc.get("methods") or []):
             heading = m.get("heading", "")
-            text    = m.get("text") or ""
+            text = m.get("text") or ""
             if text:
                 lines.append(f"Method ({heading}): {text}")
 
@@ -320,7 +245,7 @@ def _build_context(results: list) -> str:
 
         for f in (doc.get("figures") or []):
             caption = f.get("caption", "")
-            label   = f.get("label", "")
+            label = f.get("label", "")
             if caption:
                 lines.append(f"Figure {label}: {caption}")
 
@@ -332,7 +257,6 @@ def _build_context(results: list) -> str:
             lines.append(f"Full text:\n{full_text}")
 
         parts.append("\n".join(lines))
-        
 
     return "\n\n---\n\n".join(parts)
 
@@ -347,34 +271,37 @@ def _estimate_num_ctx(prompt: str) -> int:
     return ctx
 
 
-
 def _convert_to_query(question: str) -> str:
     prompt = QUERY_PROMPT.format(question=question)
     try:
         resp = _generate(prompt, stream=False, use_query_model=True)
         resp.raise_for_status()
-        body  = resp.json()
+        body = resp.json()
         query = _extract_query_response(body)
         first_line = query.splitlines()[0] if query else ""
-        words      = first_line.replace(",", " ").replace(";", " ").split()
-        query      = " ".join(words[:4])
+        words = first_line.replace(",", " ").replace(";", " ").split()
+        query = " ".join(words[:4])
         print(f"[chat/_convert_to_query] provider={PROVIDER} result='{query}'")
         return query or question
     except Exception as e:
-        print(f"[chat/_convert_to_query] FAILED: {e} — falling back to raw question")
+        print(
+            f"[chat/_convert_to_query] FAILED: {e} — falling back to raw question")
         return question
 
 
 def send_status_update(msg: str):
     return f"status: {msg}\n\n"
 
+
 def send_sources(results: list):
     sources = [
-        {"file": doc.get("file", ""), "title": doc.get("title", "") or doc.get("file", "")}
+        {"file": doc.get("file", ""), "title": doc.get(
+            "title", "") or doc.get("file", "")}
         for doc in results
         if doc.get("file") or doc.get("title")
     ]
     return f"sources: {json.dumps(sources)}\n\n"
+
 
 def _sse_token(token: str):
     parts = token.split("\n")
@@ -392,7 +319,7 @@ def generate(question: str, cp_url: str, cp_user: str, cp_pass: str):
         cp_query = _convert_to_query(question)
 
         yield send_status_update("Finding documents…")
-        results = search_cp(cp_query, cp_url, cp_user, cp_pass)
+        results = search_in_riets(cp_query, cp_url, cp_user, cp_pass)
 
         if not results:
             print("[chat/generate] No results, falling back to general knowledge")
@@ -403,7 +330,7 @@ def generate(question: str, cp_url: str, cp_user: str, cp_pass: str):
             yield send_sources(results)
             yield send_status_update("Analysing papers…")
             context = _build_context(results)
-            prompt  = ANSWER_PROMPT.format(context=context, question=question)
+            prompt = ANSWER_PROMPT.format(context=context, question=question)
 
         yield send_status_update("Generating response…")
         resp = _generate(prompt, stream=True, use_query_model=False)
@@ -413,13 +340,14 @@ def generate(question: str, cp_url: str, cp_user: str, cp_pass: str):
             if not raw_line:
                 continue
             try:
-                line = raw_line.decode("utf-8") if isinstance(raw_line, bytes) else raw_line
+                line = raw_line.decode(
+                    "utf-8") if isinstance(raw_line, bytes) else raw_line
                 # DeepSeek SSE lines are prefixed with "data: "
                 if line.startswith("data: "):
                     line = line[6:]
                 if line == "[DONE]":
                     break
-                data  = json.loads(line)
+                data = json.loads(line)
                 token, done = _extract_token(data)
 
                 if token:

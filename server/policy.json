@@ -1,0 +1,118 @@
+{
+    "id": {
+        "$type": "id"
+    },
+    "openalex_id": {
+        "$type": "text"
+    },
+    "file": {
+        "$type": "text",
+        "$weight": {
+            "min": 90,
+            "max": 95
+        }
+    },
+    "title": {
+        "$type": "text",
+        "$weight": {
+            "min": 90,
+            "max": 95
+        },
+        "$exact": true
+    },
+    "cited_by_count": {
+        "$type": "int",
+        "$searchable": true
+    },
+    "date": {
+        "$type": "int",
+        "$searchable": true
+    },
+    "doi_number": {
+        "$type": "text"
+    },
+    "img_preview_path": {
+        "$type": "text",
+        "$searchable": false
+    },
+    "stub_document": {
+        "$type": "text",
+        "$exact": true
+    },
+    "category_id": {
+        "$type": "int",
+        "$searchable": true
+    },
+    "authors": {
+        "$type": "text",
+        "$repeated": true,
+        "$weight": {
+            "min": 70,
+            "max": 80
+        }
+    },
+    "abstract": {
+        "$type": "text",
+        "$weight": {
+            "min": 70,
+            "max": 80
+        },
+        "$vector": true
+    },
+    "keywords_text": {
+        "$type": "text",
+        "$weight": {
+            "min": 70,
+            "max": 80
+        },
+        "$vector": true
+    },
+    "methods_text": {
+        "$type": "text",
+        "$weight": {
+            "min": 55,
+            "max": 65
+        },
+        "$vector": true
+    },
+    "conclusions_text": {
+        "$type": "text",
+        "$weight": {
+            "min": 55,
+            "max": 65
+        },
+        "$vector": true
+    },
+    "figures_text": {
+        "$type": "text",
+        "$weight": {
+            "min": 50,
+            "max": 60
+        },
+        "$vector": true
+    },
+    "tables_text": {
+        "$type": "text",
+        "$weight": {
+            "min": 50,
+            "max": 60
+        },
+        "$vector": true
+    },
+    "full_text": {
+        "$type": "text",
+        "$weight": {
+            "min": 30,
+            "max": 40
+        },
+        "$stemming": "english"
+    },
+    "referenced_work_ids": {
+        "$type": "text",
+        "$repeated": true
+    },
+    "related_work_ids": {
+        "$type": "text",
+        "$repeated": true
+    }
+}
