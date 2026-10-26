@@ -313,13 +313,13 @@ def _sse_token(token: str):
     return out
 
 
-def generate(question: str, cp_url: str, cp_user: str, cp_pass: str):
+def generate(question: str):
     try:
         yield send_status_update(f"Converting query… [{PROVIDER}]")
         cp_query = _convert_to_query(question)
 
         yield send_status_update("Finding documents…")
-        results = search_in_riets(cp_query, cp_url, cp_user, cp_pass)
+        results = search_in_riets(cp_query)
 
         if not results:
             print("[chat/generate] No results, falling back to general knowledge")
@@ -374,7 +374,7 @@ def generate(question: str, cp_url: str, cp_user: str, cp_pass: str):
         yield "data: [DONE]\n\n"
 
 
-def register_chat(app, cp_url: str, cp_user: str, cp_pass: str):
+def register_chat(app):
     from flask import request, jsonify
 
     @app.route("/chat")
@@ -386,7 +386,7 @@ def register_chat(app, cp_url: str, cp_user: str, cp_pass: str):
             return jsonify({"error": "question is required"}), 400
 
         return app.response_class(
-            generate(question, cp_url, cp_user, cp_pass),
+            generate(question),
             mimetype="text/event-stream",
             headers={
                 "Cache-Control":     "no-cache",

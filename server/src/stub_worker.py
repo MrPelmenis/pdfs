@@ -1,7 +1,6 @@
 import time
 import random
 import threading
-import requests
 import src.corelamo
 
 from src.metadata_analyser import openalex_by_id

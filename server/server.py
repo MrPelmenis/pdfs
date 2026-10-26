@@ -8,7 +8,6 @@ from src.json_builder import build_document, save_document, upload_document, ext
 from src.chatins import register_chat
 from src.hasher import _file_hash, _is_duplicate_file, _register_hash
 
-from src.stub_worker import start_stub_worker, set_pdf_processing, document_exists, fetch_document, delete_document
 from src.queue_manager import add_dois_to_queue
 from src.metadata_analyser import openalex_by_id, openalex_by_title
 from src.vision_extractor import extract_title_authors_from_image
@@ -19,23 +18,20 @@ from src.pdfToImage import generate_preview
 from src import corelamo
 
 import os
-import requests
 from flask import Flask, request, jsonify, send_from_directory, make_response
 from flask_cors import CORS
 from dotenv import load_dotenv
-import sys
 import json
 import random
 import re
 import math
-import time
 
 from concurrent.futures import ThreadPoolExecutor
 background_executor = ThreadPoolExecutor(max_workers=1)
 
 
 CORELAMO_URL = os.getenv("CORELAMO_URL",  "http://localhost:6006")
-CORELAMO_USER = os.getenv("CORELAMO_USER", "pdf_viever")
+CORELAMO_USER = os.getenv("CORELAMO_USER", "pdf_fujaks")
 CORELAMO_PASS = os.getenv("CORELAMO_PASS", "crtz1234")
 DB_NAME = os.getenv("CORELAMO_DB", "pdfs")
 
@@ -480,94 +476,6 @@ def do_search(query, docs, date_start=None, date_end=None,
     return results, hits
 
 
-def do_search(query, docs, date_start=None, date_end=None,
-              f_abstract="", f_methods="", f_conclusions="",
-              f_figures="", category_id=None, f_topics="", f_keywords=""):
-
-    filters = {"stub_document": {"exact": "no"}}
-
-    if date_start is not None or date_end is not None:
-        ds = int(date_start) if date_start is not None else YEAR_MIN
-        de = int(date_end) if date_end is not None else YEAR_MAX
-        filters["date"] = {"range": f"{ds}..{de}"}
-
-    if f_abstract:
-        filters["abstract"] = f_abstract
-    if f_topics or f_keywords:
-        filters["keywords_text"] = " ".join(
-            x for x in (f_topics, f_keywords) if x)
-    if f_methods:
-        filters["methods_text"] = f_methods
-    if f_conclusions:
-        filters["conclusions_text"] = f_conclusions
-    if f_figures:
-        filters["figures_text"] = f_figures
-    if category_id:
-        filters["category_id"] = {"range": str(category_id)}
-
-    # exclude the heavy/structured fields from the payload; snippet comes from highlights
-    return_fields = {
-        "full_text": False, "methods": False, "conclusions": False,
-        "figures": False, "tables": False,
-    }
-
-    resp = corelamo.search(
-        query, docs=docs, filters=filters, return_fields=return_fields)
-    resp.raise_for_status()
-    data = resp.json()
-
-    hits = (data.get("total_hits") or {}).get("value", 0)
-    items = data.get("data") or []
-    if isinstance(items, dict):
-        items = [items]
-
-    results = []
-    for item in items:
-        doc = item.get("data") or {}
-        doc_id = item.get("id") or doc.get("id")
-
-        file_path = doc.get("file")
-        filename = clean_filename(file_path)
-        preview_name = get_preview_filename(file_path) if file_path else None
-        preview_exists = preview_name and os.path.exists(
-            os.path.join(PREVIEW_DIR, preview_name))
-
-        try:
-            cat_id_raw = doc.get("category_id")
-            category = get_category_by_id(
-                int(cat_id_raw)) if cat_id_raw is not None else None
-            if not category:
-                category = NONE_CATEGORY
-        except (TypeError, ValueError):
-            category = NONE_CATEGORY
-
-        results.append({
-            "title":               doc.get("title"),
-            "id":                  doc_id,
-            "openalex_id":         doc.get("openalex_id", ""),
-            "file":                filename,
-            "date":                str(doc.get("date")) if doc.get("date") is not None else None,
-            "full_text":           None,
-            "authors":             doc.get("authors") or [],
-            "abstract":            doc.get("abstract"),
-            "preview":             f"/previews/{preview_name}" if preview_exists else None,
-            "doi_number":          doc.get("doi_number", ""),
-            "cited_by_count":      doc.get("cited_by_count"),
-            "keywords_text":       doc.get("keywords_text", ""),
-            "methods_text":        doc.get("methods_text", ""),
-            "conclusions_text":    doc.get("conclusions_text", ""),
-            "figures_text":        doc.get("figures_text", ""),
-            "tables_text":         doc.get("tables_text", ""),
-            "referenced_work_ids": doc.get("referenced_work_ids") or [],
-            "related_work_ids":    doc.get("related_work_ids") or [],
-            "category":            category,
-            "stub_document":       doc.get("stub_document", "no"),
-            "snippet":             extract_snippet(item),
-        })
-
-    return results, hits
-
-
 def _enrich_and_sort(work_ids: list, limit: int) -> list[tuple[str, dict | None]]:
     enriched_map = {}
     for wid in work_ids:
@@ -783,6 +691,202 @@ def batch_lookup(ids: list) -> dict:
             "category_id":         d.get("category_id"),
         }
     return result
+
+
+@app.route("/expand", methods=["POST"])
+def expand():
+    body = request.get_json(force=True)
+
+    openalex_id    = (body.get("openalex_id") or "").strip()
+    shown_node_ids = set(body.get("shown_node_ids") or [])
+    shown_ref_ids  = set(body.get("shown_ref_ids")  or [])
+    shown_rel_ids  = set(body.get("shown_rel_ids")  or [])
+
+    if not openalex_id:
+        return jsonify({"error": "openalex_id is required"}), 400
+
+    # ── 1. Fetch this node's reference/related lists from Corelamo ────────────
+    try:
+        resp = corelamo.lookup([openalex_id])
+    except Exception as e:
+        return jsonify({"error": f"Corelamo lookup failed: {e}"}), 500
+
+    if resp.status_code != 200:
+        return jsonify({"error": f"Corelamo lookup failed: {resp.status_code}"}), 500
+
+    docs = resp.json().get("data", {}).get("documents", [])
+    if not docs:
+        return jsonify({"error": "Node document not found"}), 404
+
+    data        = docs[0].get("data", {})
+    all_ref_ids = data.get("referenced_work_ids") or []
+    all_rel_ids = data.get("related_work_ids")    or []
+
+    # ── 2. Filter already-shown, batch-lookup candidates ─────────────────────
+    candidate_ref_ids = [i for i in all_ref_ids if i not in shown_ref_ids]
+    candidate_rel_ids = [i for i in all_rel_ids if i not in shown_rel_ids]
+    all_candidates    = list(set(candidate_ref_ids + candidate_rel_ids))
+
+    # batch_lookup returns full Corelamo data including stub_document and file fields
+    enriched_map = batch_lookup(all_candidates)
+
+    # ── 3. Sort by cited_by_count desc, take next 5 refs / 3 rels ────────────
+    def sorted_candidates(id_list, limit):
+        scored = [(wid, enriched_map.get(wid, {}).get("cited", 0)) for wid in id_list]
+        scored.sort(key=lambda x: x[1], reverse=True)
+        return [wid for wid, _ in scored[:limit]]
+
+    new_ref_ids = sorted_candidates(candidate_ref_ids, 5)
+    new_rel_ids = sorted_candidates(candidate_rel_ids, 3)
+
+    # ── 4. Build nodes ───────────────────────────────────────────────────────
+    new_nodes      = []
+    new_links      = []
+    seen_new       = set()
+    seen_links_set = set()
+
+    def node_radius(cited, fallback=45):
+        return min(200, round(70 + math.sqrt(cited) * 2, 1)) if cited else fallback
+
+    REF_STYLE = {"fillColor": "rgba(99,102,241,0.35)",  "radius": 2,   "toDecoration": "arrow"}
+    REL_STYLE = {"fillColor": "rgba(251,146,60,0.45)",  "radius": 1.5, "toDecoration": "arrow", "dashSize": 4}
+
+    def add_link(from_id, to_id, style):
+        key = (from_id, to_id)
+        if key in seen_links_set or from_id == to_id:
+            return
+        seen_links_set.add(key)
+        new_links.append({"from": from_id, "to": to_id, "style": style})
+
+    def make_node(wid, enriched, link_style):
+        if not enriched:
+            return {
+                "id":     wid,
+                "loaded": False,
+                "style":  {"label": wid},
+                "data": {
+                    "title":                wid,
+                    "authors":              [],
+                    "abstract":             "",
+                    "cited":                0,
+                    "doi":                  "",
+                    "openalex_id":          wid,
+                    "radius":               15,
+                    "fillColor":            "rgba(120,120,120,0.7)",
+                    "preview":              None,
+                    "category":             None,
+                    "is_stub_node":         True,
+                    "stub_document":        False,
+                    "referenced_work_ids":  [],
+                    "related_work_ids":     [],
+                },
+            }
+
+        cited       = enriched.get("cited", 0)
+        is_stub_doc = enriched.get("stub_document", True)
+
+        if not is_stub_doc:
+            # ── Full document in our DB ──────────────────────────────────────
+            file_path    = enriched.get("file", "")
+            filename     = clean_filename(file_path)
+            preview_name = get_preview_filename(file_path) if file_path else None
+            preview_exists = preview_name and os.path.exists(
+                os.path.join(PREVIEW_DIR, preview_name)
+            )
+
+            try:
+                cat_id_raw = enriched.get("category_id")
+                category   = get_category_by_id(int(cat_id_raw)) if cat_id_raw is not None else None
+                if not category:
+                    category = NONE_CATEGORY
+            except (TypeError, ValueError):
+                category = NONE_CATEGORY
+
+            return {
+                "id":     wid,
+                "loaded": True,
+                "style":  {"label": enriched.get("title", wid)},
+                "data": {
+                    "title":                enriched.get("title",    wid),
+                    "authors":              enriched.get("authors",  []),
+                    "abstract":             enriched.get("abstract", ""),
+                    "cited":                cited,
+                    "doi":                  enriched.get("doi_number", ""),
+                    "openalex_id":          wid,
+                    "id":                   wid,
+                    "file":                 filename,
+                    "radius":               node_radius(cited),
+                    "fillColor":            category["color"],
+                    "preview":              f"/previews/{preview_name}" if preview_exists else None,
+                    "category":             category,
+                    "is_stub_node":         False,
+                    "stub_document":        False,
+                    "referenced_work_ids":  enriched.get("referenced_work_ids", []),
+                    "related_work_ids":     enriched.get("related_work_ids",    []),
+                },
+            }
+        else:
+            # ── Stub node (metadata only) ────────────────────────────────────
+            fill_color = (
+                "rgba(120,120,120,0.7)"
+                if link_style is REF_STYLE
+                else "rgba(180,120,60,0.6)"
+            )
+            return {
+                "id":     wid,
+                "loaded": False,
+                "style":  {"label": enriched.get("title", wid)},
+                "data": {
+                    "title":                enriched.get("title",    wid),
+                    "authors":              enriched.get("authors",  []),
+                    "abstract":             enriched.get("abstract", ""),
+                    "cited":                cited,
+                    "doi":                  enriched.get("doi_number", ""),
+                    "openalex_id":          wid,
+                    "radius":               node_radius(cited),
+                    "fillColor":            fill_color,
+                    "preview":              None,
+                    "category":             None,
+                    "is_stub_node":         True,
+                    "stub_document":        True,
+                    "referenced_work_ids":  enriched.get("referenced_work_ids", []),
+                    "related_work_ids":     enriched.get("related_work_ids",    []),
+                },
+            }
+
+    for wid in new_ref_ids:
+        if wid not in shown_node_ids and wid not in seen_new:
+            new_nodes.append(make_node(wid, enriched_map.get(wid), REF_STYLE))
+            seen_new.add(wid)
+        add_link(openalex_id, wid, REF_STYLE)
+
+    for wid in new_rel_ids:
+        if wid not in shown_node_ids and wid not in seen_new:
+            new_nodes.append(make_node(wid, enriched_map.get(wid), REL_STYLE))
+            seen_new.add(wid)
+        add_link(openalex_id, wid, REL_STYLE)
+
+    # ── 5. Cross-links between the newly added nodes ─────────────────────────
+    all_now_visible = shown_node_ids | seen_new | {openalex_id}
+
+    for node in new_nodes:
+        wid      = node["id"]
+        enriched = enriched_map.get(wid)
+        if not enriched:
+            continue
+        for ref_id in enriched.get("referenced_work_ids", []):
+            if ref_id in all_now_visible and ref_id != wid:
+                add_link(wid, ref_id, REF_STYLE)
+        for rel_id in enriched.get("related_work_ids", []):
+            if rel_id in all_now_visible and rel_id != wid:
+                add_link(wid, rel_id, REL_STYLE)
+
+    return jsonify({
+        "nodes":       new_nodes,
+        "links":       new_links,
+        "new_ref_ids": new_ref_ids,
+        "new_rel_ids": new_rel_ids,
+    })
 
 
 @app.route("/pdf-file/<path:filename>")

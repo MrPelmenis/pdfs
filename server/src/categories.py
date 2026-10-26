@@ -3,8 +3,6 @@ import math
 import os
 import random
 import threading
-import requests
-from xml.sax.saxutils import escape
 
 
 CATEGORIES_FILE = os.path.join(os.path.dirname(
