@@ -1,25 +1,35 @@
 import { GraphRenderer } from "@chartizer/graph-renderer";
 
-
 const SEARCH_ICON = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/500px-Search_Icon.svg.png?_=20181016161702";
 const API = process.env.REACT_APP_SERVER_URL;
 
-// ── Visual constants (ported from the old NetChart style block) ──────────────
+// ── Visual constants (ported from the NetChart style block) ──────────────────
 
-const CHART_BG = "#262626";
+const CHART_BG = "#202124";
 const NODE_FILL = "rgba(28,124,213,0.92)";
 const NODE_STROKE = "rgba(0,0,0,0.15)";
 const QUERY_NODE_RADIUS = 28;
 const LABEL_MAX_WIDTH = 240;
 const LINK_FILL = "rgba(255,255,255,0.15)";
 const DEFAULT_LINK_RADIUS = 5;
-// NetChart styled links by "radius"; the new renderer takes a line width.
-// This assumes radius is half the thickness. Tweak if lines look too thick/thin.
+// NetChart styled links by "radius" (half the thickness); the renderer takes a line width.
 const LINK_WIDTH_PER_RADIUS = 2;
 const GOLDEN_ANGLE = 2.399963229728653;
+// NetChart navigation: show nodes within this many hops of the initial / clicked nodes.
+const FOCUS_RADIUS = 8;
 
 const REF_STYLE = { fillColor: "rgba(99,102,241,0.35)", radius: 2, toDecoration: "arrow" };
 const REL_STYLE = { fillColor: "rgba(251,146,60,0.45)", radius: 1.5, toDecoration: "arrow", dashSize: 4 };
+
+// Force layout that keeps settling (the default stops ~2 s after a change and for good
+// after ~30 s, which leaves expanded nodes half-placed). Upserting nodes restarts it.
+const LAYOUT = {
+    enabled: true,
+    maxActiveTicks: 1_000_000,
+    minActiveTicks: 600,
+    stableTickThreshold: 300,
+    temperatureDecay: 0.998,
+};
 
 function stripHtml(str) {
     if (!str) return str;
@@ -155,12 +165,7 @@ function showTooltip(d, x, y) {
     tip.style.display = "block";
 }
 
-// ── Data mapping: server node/link  →  @chartizer/graph-renderer snapshots ───
-//
-// Shapes and styles below are confirmed against snapshot.d.ts:
-//   GraphRendererNodeShape  = circle | rect | paragraph | container | autoText | labelBox
-//   GraphRendererNodeStyle  = { fillColor, strokeColor, strokeWidth, imageUrl, label: {...} }
-//   GraphRendererLinkStyle  = { color, width, dashed, arrow, curveStyle: "straight"|"curved", ... }
+// ── Data mapping: server node/link → @chartizer/graph-renderer snapshots ─────
 
 function toRendererNode(item, x, y) {
     const id = String(item.id);
@@ -180,8 +185,8 @@ function toRendererNode(item, x, y) {
         };
     }
 
-    // Document nodes: rounded label box (old `display: "text"`), coloured by d.fillColor.
-    // NOTE: d.radius no longer changes the size — autoText nodes size to their label.
+    // Document nodes: rounded label box (NetChart's display "text"), coloured by d.fillColor.
+    // autoText nodes size to their label, so d.radius does not change the size.
     return {
         id, x, y,
         label: stripHtml(d.title || id),
@@ -220,8 +225,8 @@ function toRendererLink(link) {
     };
 }
 
-// The renderer needs a starting x/y for every node (its force layout then settles
-// them). Fan new nodes out around the node they connect to, or a spiral at the origin.
+// Every node needs a starting x/y (the force layout then settles it). New nodes fan out
+// around the node they connect to; with nothing to connect to, a spiral at the origin.
 function seedPosition(index, anchor) {
     const angle = index * GOLDEN_ANGLE;
     if (!anchor) {
@@ -241,17 +246,18 @@ function pushTo(map, key, value) {
 // ── Chart ────────────────────────────────────────────────────────────────────
 
 /**
- * Drop-in replacement for the old NetChart-based CreateChart.
- * Returns a handle { addData({nodes, links}), remove(), renderer } immediately;
+ * Drop-in replacement for the NetChart-based CreateChart.
+ * Returns a handle { addData({nodes, links}, anchorId?), remove(), renderer } immediately;
  * the WASM renderer mounts asynchronously and calls made before that are queued.
+ * Call remove() when the React component unmounts (React 18 strict mode mounts twice).
  */
-const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUploadStub = null) => {
+const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadStub = null) => {
     const container = document.getElementById("megachart");
     if (!container) return null;
 
     const chartData = data ?? { nodes: [], links: [] };
 
-    // Tracks every node ID currently visible in the graph
+    // Tracks every node ID currently visible in the graph (sent to /expand)
     const shownNodeIds = new Set();
     // Tracks which ref/rel IDs have already been shown per node (for pagination)
     const shownRefsByNode = new Map();
@@ -266,8 +272,48 @@ const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUpload
     const knownNodeIds = new Set();
     const knownLinkIds = new Set();
 
+    // NetChart's navigation showed only nodes within FOCUS_RADIUS hops of the initial
+    // nodes, and brought in more around each clicked node. Every node and link the
+    // chart was given is kept here; `focusOn` decides which of them are drawn.
+    const allNodes = new Map();      // id -> server node
+    const allLinks = [];             // server links
+    const adjacency = new Map();     // id -> neighbour ids
+
+    function remember(payload) {
+        for (const n of payload?.nodes ?? []) {
+            if (n?.id == null) continue;
+            const id = String(n.id);
+            allNodes.set(id, n);
+            fieldsById.set(id, fieldsOf(n));
+        }
+        for (const l of payload?.links ?? []) {
+            if (l?.from == null || l?.to == null) continue;
+            allLinks.push(l);
+            pushTo(adjacency, String(l.from), String(l.to));
+            pushTo(adjacency, String(l.to), String(l.from));
+        }
+    }
+
+    // Ids within FOCUS_RADIUS hops of the given ones (breadth-first over all known links).
+    function around(ids) {
+        const seen = new Set(ids.map(String).filter((id) => allNodes.has(id)));
+        let frontier = [...seen];
+        for (let hop = 0; hop < FOCUS_RADIUS && frontier.length; hop++) {
+            const next = [];
+            for (const id of frontier) {
+                for (const nb of adjacency.get(id) ?? []) {
+                    if (!seen.has(nb) && allNodes.has(nb)) {
+                        seen.add(nb);
+                        next.push(nb);
+                    }
+                }
+            }
+            frontier = next;
+        }
+        return seen;
+    }
+
     for (const node of chartData.nodes) {
-        shownNodeIds.add(node.id);
         const d = fieldsOf(node);
         if (!d) continue;
         nodeEdgeMap.set(node.id, {
@@ -312,26 +358,14 @@ const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUpload
         else queue.push(fn);
     };
 
-    // Push nodes/links into the renderer (initial load and expansions).
-    function applyData(r, payload, anchorId, isInitial) {
-        const nodes = payload?.nodes ?? [];
-        const links = payload?.links ?? [];
-
-        const neighbours = new Map();
-        for (const l of links) {
-            pushTo(neighbours, String(l.from), String(l.to));
-            pushTo(neighbours, String(l.to), String(l.from));
-        }
-
-        const fresh = [];
-        for (const n of nodes) {
-            if (n?.id == null) continue;
-            fieldsById.set(String(n.id), fieldsOf(n));
-            if (!knownNodeIds.has(String(n.id))) fresh.push(n);
-        }
+    // Draw the given server nodes (those not drawn yet) and every known link whose two
+    // ends are now drawn. Upserting restarts the force layout by itself; no autoLayout(),
+    // which would re-place the whole graph on every expansion.
+    function draw(r, ids, anchorId, isInitial) {
+        const fresh = [...ids].map(String).filter((id) => allNodes.has(id) && !knownNodeIds.has(id));
 
         const anchorFor = (id) => {
-            for (const nb of neighbours.get(id) ?? []) {
+            for (const nb of adjacency.get(id) ?? []) {
                 if (!knownNodeIds.has(nb)) continue;
                 const p = r.getNodePosition(nb);
                 if (p) return p;
@@ -343,11 +377,9 @@ const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUpload
         };
 
         const perAnchor = new Map();
-        const rendererNodes = fresh.map((n) => {
-            const id = String(n.id);
-            if (Number.isFinite(n.x) && Number.isFinite(n.y)) {
-                return toRendererNode(n, n.x, n.y);
-            }
+        const rendererNodes = fresh.map((id) => {
+            const n = allNodes.get(id);
+            if (Number.isFinite(n.x) && Number.isFinite(n.y)) return toRendererNode(n, n.x, n.y);
             const anchor = anchorFor(id);
             const key = anchor ? `${anchor.x}|${anchor.y}` : "origin";
             const index = perAnchor.get(key) ?? 0;
@@ -358,14 +390,16 @@ const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUpload
 
         if (rendererNodes.length) {
             r.upsertNodes(rendererNodes);
-            for (const n of rendererNodes) knownNodeIds.add(n.id);
+            for (const n of rendererNodes) {
+                knownNodeIds.add(n.id);
+                shownNodeIds.add(allNodes.get(n.id).id);
+            }
         }
 
+        // links go in after their nodes: a link to a node the renderer lacks is not drawn
         const rendererLinks = [];
-        for (const l of links) {
-            if (l?.from == null || l?.to == null) continue;
+        for (const l of allLinks) {
             const rl = toRendererLink(l);
-            // Links to nodes the renderer doesn't have can't be drawn — skip them.
             if (!knownNodeIds.has(rl.from) || !knownNodeIds.has(rl.to)) continue;
             if (knownLinkIds.has(rl.id)) continue;
             knownLinkIds.add(rl.id);
@@ -373,15 +407,18 @@ const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUpload
         }
         if (rendererLinks.length) r.upsertLinks(rendererLinks);
 
-        if (rendererNodes.length || rendererLinks.length) r.autoLayout();
-
         if (isInitial && rendererNodes.length) {
             r.fitToScreen(60);
-            // Re-fit once the layout has had a moment to spread out, unless the user already moved the view.
+            // Re-fit once the layout has spread out, unless the user has panned or zoomed.
             fitTimer = setTimeout(() => {
                 if (!removed && renderer && !userMoved) renderer.fitToScreen(60);
-            }, 900);
+            }, 1500);
         }
+    }
+
+    // Show the nodes within FOCUS_RADIUS hops of these (NetChart focus navigation).
+    function focusOn(ids, anchorId = null, isInitial = false) {
+        run((r) => draw(r, around(ids), anchorId, isInitial));
     }
 
     // ── Expand a node on click ───────────────────────────────────────────────
@@ -416,7 +453,6 @@ const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUpload
 
             // Register new nodes before addData so the cross-link pass sees them
             for (const node of newNodes) {
-                shownNodeIds.add(node.id);
                 const d = fieldsOf(node) ?? {};
                 nodeEdgeMap.set(node.id, {
                     ref_ids: d.referenced_work_ids || [],
@@ -468,10 +504,11 @@ const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUpload
         }
     }
 
-    // ── Pointer tracking (for tooltip positioning) ───────────────────────────
+    // ── Pointer tracking (tooltip position; "the user moved the view") ────────
 
     let pointerX = 0;
     let pointerY = 0;
+    let pressed = null;
 
     const onPointerMove = (e) => {
         pointerX = e.clientX;
@@ -479,17 +516,21 @@ const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUpload
         if (_tooltip && _tooltip.style.display !== "none") {
             positionTooltip(pointerX, pointerY);
         }
+        // a press that travels is a pan or a drag: stop re-fitting the view after that
+        if (pressed && Math.hypot(e.clientX - pressed.x, e.clientY - pressed.y) > 6) userMoved = true;
     };
-    const onUserMoved = () => { userMoved = true; };
+    const onPointerDown = (e) => { pressed = { x: e.clientX, y: e.clientY }; };
+    const onPointerUp = () => { pressed = null; };
+    const onWheel = () => { userMoved = true; };
 
     container.addEventListener("pointermove", onPointerMove);
-    container.addEventListener("pointerdown", onUserMoved);
-    container.addEventListener("wheel", onUserMoved, { passive: true });
+    container.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("pointerup", onPointerUp);
+    container.addEventListener("wheel", onWheel, { passive: true });
 
     // ── Renderer events ──────────────────────────────────────────────────────
-    // Confirmed against events.d.ts:
-    //   hoverchange → { hoverNodeId: string | null, hoverLinkId: string | null }
-    //   click / doubleclick → RendererPointerTargetPayload { nodeId: string | null, ... }
+    //   hoverchange → { hoverNodeId, hoverLinkId }
+    //   click / doubleclick → { nodeId, linkId, screenX, screenY, chartX, chartY, ... }
 
     const handleEvent = (event) => {
         switch (event.type) {
@@ -517,6 +558,8 @@ const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUpload
                     return;
                 }
 
+                // NetChart focused the clicked node: bring in what is near it, then fetch more
+                focusOn([id], id);
                 expandNode(id);
                 break;
             }
@@ -549,7 +592,7 @@ const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUpload
         }
     };
 
-    // ── Resize: the old chart had resizing disabled; the canvas must follow its box ──
+    // ── Resize: the canvas must follow its box ───────────────────────────────
 
     const resizeObserver = typeof ResizeObserver !== "undefined"
         ? new ResizeObserver((entries) => {
@@ -564,10 +607,12 @@ const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUpload
     // ── Public handle ────────────────────────────────────────────────────────
 
     const chart = {
-        // Add nodes/links (same payload shape as the old NetChart addData).
+        // Add nodes/links (same payload shape as NetChart's addData); all of them are shown.
         // anchorId (optional) is the node the new ones fan out from.
         addData(payload, anchorId = null) {
-            run((r) => applyData(r, payload, anchorId, false));
+            remember(payload);
+            const ids = (payload?.nodes ?? []).filter((n) => n?.id != null).map((n) => String(n.id));
+            run((r) => draw(r, ids, anchorId, false));
         },
 
         remove() {
@@ -577,8 +622,9 @@ const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUpload
             if (fitTimer) clearTimeout(fitTimer);
             if (resizeObserver) resizeObserver.disconnect();
             container.removeEventListener("pointermove", onPointerMove);
-            container.removeEventListener("pointerdown", onUserMoved);
-            container.removeEventListener("wheel", onUserMoved);
+            container.removeEventListener("pointerdown", onPointerDown);
+            window.removeEventListener("pointerup", onPointerUp);
+            container.removeEventListener("wheel", onWheel);
             hideTooltip();
             if (offEvents) offEvents();
             if (renderer) renderer.destroy();   // if still mounting, destroyed once it resolves
@@ -591,28 +637,25 @@ const CreateChart = (data = null, _initialNodes = [], onOpenPdf = null, onUpload
 
     // ── Mount ────────────────────────────────────────────────────────────────
 
-    // _initialNodes: NetChart's "navigation" mode only showed nodes near these.
-    // Everything in the payload is shown now, so the arg is kept for signature
-    // compatibility but is intentionally unused.
-    run((r) => applyData(r, chartData, null, true));
+    remember(chartData);
+    // With initialNodes, only their neighbourhood shows at first (as NetChart navigation
+    // did); without, everything.
+    const seeds = (initialNodes ?? []).map(String).filter((id) => allNodes.has(id));
+    focusOn(seeds.length ? seeds : [...allNodes.keys()], null, true);
 
-    // RendererOptions (types.d.ts): every key below is valid.
-    // Note: "viewer" + nodesMovable:true is unusual — if you actually want the
-    // user to drag nodes, switch to controlMode: "viewerEditable".
+    // "viewer": pan, zoom, select and drag nodes, no editing.
     GraphRenderer.mount(canvas, {
         darkModeEnabled: true,
         controlMode: "viewer",
-        nodesMovable: true,
         wheelEnabled: true,
     }).then((r) => {
         if (removed) { r.destroy(); return; }
         renderer = r;
 
-        // RendererSettingsPatch = { backgroundColor?: string }
         r.patchSettings({ backgroundColor: CHART_BG });
-
-        // GraphLayoutConfigPatch accepts { enabled?: boolean } (and many tunables)
-        r.setLayoutConfig({ enabled: true });
+        // snap to grid is on by default and makes the layout stiff and blocky
+        r.setSnapToGrid({ enabled: false, gridSize: 32 });
+        r.setLayoutConfig(LAYOUT);
 
         // onEvent returns an unsubscribe function
         offEvents = r.onEvent(handleEvent);

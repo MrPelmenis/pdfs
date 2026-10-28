@@ -2,6 +2,8 @@
 node_modules
 .venv
 
+server/files/
+
 # output
 out
 dist

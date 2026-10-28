@@ -1,16 +1,17 @@
+
 import base64
 import json
 import re
 import requests
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
-#gemma4:e4b bija ok, no 0001 lidz 0010 8/10
-#MODEL      = "qwen2.5vl:7b"   
-#MODEL =     "gemma4:e4b"
-#MODEL = "minicpm-v:latest"
-MODEL =     "qwen2.5vl:7b"
-#MODEL = "gemma4:26b"
-TIMEOUT    = 60           
+# gemma4:e4b bija ok, no 0001 lidz 0010 8/10
+# MODEL      = "qwen2.5vl:7b"
+# MODEL =     "gemma4:e4b"
+# MODEL = "minicpm-v:latest"
+MODEL = "qwen2.5vl:7b"
+# MODEL = "gemma4:26b"
+TIMEOUT = 60
 
 PROMPT = (
     "I am giving you an image of a single scientific paper PDF"
@@ -30,6 +31,7 @@ PROMPT = (
     'Not some {"papers":{"paprer":....}} NO i need the exact structure i just gave you, the rest of the code depends on it '
     "No markdown, no code fences, no explanation. JSON only."
 )
+
 
 def extract_title_authors_from_image(image_path: str) -> dict:
     try:
@@ -74,9 +76,8 @@ def extract_title_authors_from_image(image_path: str) -> dict:
         print(f"[vision_extractor] Request failed: {e}")
         return {}
 
-    
     raw = resp.json().get("response", "")
-    #print(raw)
+    # print(raw)
     result = _parse_json_safe(raw)
 
     return {
@@ -86,7 +87,7 @@ def extract_title_authors_from_image(image_path: str) -> dict:
 
 
 def _parse_json_safe(text: str) -> dict:
-    #panemam json ar drosibas siknsinu ja LLM tweako
+    # panemam json ar drosibas siknsinu ja LLM tweako
     if not text:
         return {}
 
@@ -98,7 +99,8 @@ def _parse_json_safe(text: str) -> dict:
 
     match = re.search(r"\{.*\}", text, re.DOTALL)
     if not match:
-        print(f"[vision_extractor] No JSON object found in response: {text[:200]}")
+        print(f"[vision_extractor] No JSON object found in response: {
+              text[:200]}")
         return {}
 
     candidate = match.group(0)

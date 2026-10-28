@@ -88,10 +88,12 @@ def partial_replace(items):
     return _c().request("POST", _p("/partial-replace"), items)
 
 
-def search(query, docs=10, offset=0, filters=None, return_fields=None):
+def search(query, docs=10, offset=0, filters=None, return_fields=None, highlight=None):
     body = {"query": query, "docs": docs, "offset": offset}
     if filters:
         body["filters"] = filters
     if return_fields is not None:
         body["return_fields"] = return_fields
+    if highlight is not None:
+        body["highlight"] = highlight
     return _c().request("POST", _p("/search"), body)

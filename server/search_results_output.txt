@@ -1,0 +1,172 @@
+========================================================
+QUERY: β-tricalcium phosphate
+========================================================
+10 hit(s) for 'String("β-tricalcium phosphate")'
+Effect of grain orientation and magnesium doping on β-tricalcium phosphate resorption behavior
+Biochemical changes on the repair of surgical bone defects grafted with biphasic synthetic micro-granular HA + β-tricalcium phosphate induced by laser and LED phototherapies assessed by Raman spectroscopy
+Structural characterization of room-temperature synthesized nano-sized β-tricalcium phosphate
+Computer graphics of hydroxyapatite and β-tricalcium phosphate
+Novel highly biodegradable biphasic tricalcium phosphates composed of α-tricalcium phosphate and β-tricalcium phosphate
+Preparation of α- and β-tricalcium phosphate ceramics, with and without magnesium addition
+Isomorphous substitutions in β-tricalcium phosphate: The different effects of zinc and strontium
+Calcium phosphate cements: study of the β-tricalcium phosphate — dicalcium phosphate — calcite cements
+Characterization of the transformation from calcium-deficient apatite to β-tricalcium phosphate
+Characterization of the transformation from calcium-deficient apatite to β-tricalcium phosphate
+
+
+========================================================
+QUERY: Ca/P ratios
+========================================================
+10 hit(s) for 'String("Ca/P ratios")'
+Phase transitions in amorphous calcium phosphates with different Ca/P ratios
+Electrical conductivity of calcium phosphate ceramics with various Ca/P ratios
+Preparation and properties of nanoparticles of calcium phosphates with various Ca/P ratios
+The kinetics of dissolution of octacalcium phosphate II. The combined effects of pH and solution Ca/P ratio
+A Single-section Model for Enamel De- and Remineralization Studies. 1. The Effects of Different Ca/P Ratios in Remineralization Solutions
+A new route for the synthesis of calcium-deficient hydroxyapatites with low Ca/P ratio: Both spectroscopic and electric characterization
+In vitro synthesis and characterization of amorphous calcium phosphates with various Ca/P atomic ratios
+Effect of the calcium to phosphate ratio of tetracalcium phosphate on the properties of calcium phosphate bone cement
+Effect of Calcium to Phosphorus Ratio in Its Utilization in Growing Laboratory Rhesus Monkey
+An Analysis of Hydroxyapatite Surface Layer Formation
+
+
+========================================================
+QUERY: 5′-end structure
+========================================================
+10 hit(s) for 'String("5′-end structure")'
+The 5′-end structure of ovalbumin mRNA in isolated nuclei and polysomes
+Structure, function and adaptation of compact bone
+Structure, Function, and Adaptation of Compact Bone
+Structural, morphological & optical studies of Hydroxyapatite microplates synthesized using hydrothermal technique
+Structural characterization of room-temperature synthesized nano-sized β-tricalcium phosphate
+Crystal structure of mattheddleite: a Pb, S, Si phase with the apatite structure
+Crystal structure of vanadinite: Refinement of anisotropic displacement parameters
+Structural Order and Dielectric Behaviour of Hydroxyapatite
+Structural derivation and crystal chemistry of apatites
+268. The structure of brushite, CaHPO4,2H2O
+
+
+========================================================
+QUERY: Preparation and properties of nanoparticles
+========================================================
+10 hit(s) for 'String("Preparation and properties of nanoparticles")'
+Preparation and properties of nanoparticles of calcium phosphates with various Ca/P ratios
+Calcium Phosphate Nanoparticles for Transcutaneous Vaccine Delivery
+Phase Transformation Mechanism of Amorphous Calcium Phosphate to Hydroxyapatite Investigated by Liquid-Cell Transmission Electron Microscopy
+Polydopamine-mediated synthesis of core–shell gold@calcium phosphate nanoparticles for enzyme immobilization
+Superparamagnetic Fe3O4 Nanoparticles: Synthesis by Thermal Decomposition of Iron(III) Glucuronate and Application in Magnetic Resonance Imaging
+Citrate-Stabilized Amorphous Calcium Phosphate Nanoparticles as an Effective Adsorbent for Defluorination
+Stability and Relaxation Mechanisms of Citric Acid Coated Magnetite Nanoparticles for Magnetic Hyperthermia
+Effect of preparation conditions on the nanostructure of hydroxyapatite and brushite phases
+Microwave-Assisted Preparation of Inorganic Nanostructures in Liquid Phase
+Applications of Nanoparticles in Biology
+
+
+========================================================
+QUERY: Controlled release of drugs
+========================================================
+10 hit(s) for 'String("Controlled release of drugs")'
+The Effects of Formulation Factors on the Moist Granulation Technique for Controlled-Release Tablets
+Use of a Moist Granulation Technique (MGT) to Develop Controlled-Release Dosage Forms of Acetaminophen
+Solid Dispersion Controlled Release: Effect of Particle Size, Compression Force and Temperature
+Nano-hydroxyapatite/β-tricalcium phosphate ceramics scaffolds loaded with cationic liposomal ceftazidime: preparation, release characteristicsin vitroand inhibition toStaphylococcus aureusbiofilms
+Hollow Mesoporous Silica/Poly( l -lysine) Particles for Codelivery of Drug and Gene with Enzyme-Triggered Release Property
+Calcium phosphates as adsorbents for the controlled release of carbofuran
+Evaluation of Ethylcellulose as A Matrix for Prolonged Release Formulations. I. Water Soluble Drugs: Acetaminophen and Theophylline
+Liposomes as a novel drug delivery system
+Hollow hydroxyapatite/polyelectrolyte hybrid microparticles with controllable size, wall thickness and drug delivery properties
+Controlled Drug Release from Polymeric Devices I: Technique for Rapid in vitro Release Studies
+
+
+========================================================
+QUERY: Antibacterial activity of hybrid chitosan
+========================================================
+10 hit(s) for 'String("Antibacterial activity of hybrid chitosan")'
+Antibacterial activity of hybrid chitosan–cupric oxide nanoparticles on cotton fabric
+Treatment of experimental osteomyelitis by liposomal antibiotics
+Impartation of apatite‐forming ability to chitosan nanofibres by using apatite nuclei
+Poly-l-lysine/hydroxyapatite/carbon nanotube hybrid nanocomposite applied for piezoelectric immunoassay of carbohydrateantigen 19-9
+Enzyme immobilisation on poly- l -lysine-containing calcium phosphate particles for highly sensitive glucose detection
+Investigation of the antibacterial effect, osteogenic activity, and tracing properties of hydroxyapatite co-doped with Tb 3+ and Zn 2+
+Preparation and antibacterial activity of chitosan nanoparticles
+Synthesis of porous-magnetic chitosan beads for removal of cadmium ions from wastewater
+Green synthesis of AgMgOnHaP nanoparticles supported on chitosan matrix: Defluoridation and antibacterial effects in groundwater
+Biomimetic Coating of Laminin–Apatite Composite on Titanium Metal and Its Excellent Cell‐Adhesive Properties
+
+
+========================================================
+QUERY: how do nanoparticles penetrate cell membranes
+========================================================
+10 hit(s) for 'String("how do nanoparticles penetrate cell membranes")'
+Vincristine-sulphate–loaded liposome-templated calcium phosphate nanoshell as potential tumor-targeting delivery system
+Enhancement of Drug Delivery in Tumors by Using Interaction of Nanoparticles with Ultrasound Radiation
+Nano-hydroxyapatite/β-tricalcium phosphate ceramics scaffolds loaded with cationic liposomal ceftazidime: preparation, release characteristicsin vitroand inhibition toStaphylococcus aureusbiofilms
+Calcium Phosphate Nanoparticles for Transcutaneous Vaccine Delivery
+Phase Transformation Mechanism of Amorphous Calcium Phosphate to Hydroxyapatite Investigated by Liquid-Cell Transmission Electron Microscopy
+Applications of Nanoparticles in Biology
+Nanoparticle Size and Surface Chemistry Determine Serum Protein Adsorption and Macrophage Uptake
+Transfection of cells with custom-made calcium phosphate nanoparticles coated with DNA
+Just-in-time vaccines: Biomineralized calcium phosphate core-immunogen shell nanoparticles induce long-lasting CD8+ T cell responses in mice
+Independent effect of polymeric nanoparticle zeta potential/surface charge, on their cytotoxicity and affinity to cells
+
+
+========================================================
+QUERY: bone regeneration using ceramic scaffolds and growth factors
+========================================================
+10 hit(s) for 'String("bone regeneration using ceramic scaffolds and growth factors")'
+A novel amorphous calcium phosphate polymer ceramic for bone repair: I. Synthesis and characterization
+Nano-hydroxyapatite/β-tricalcium phosphate ceramics scaffolds loaded with cationic liposomal ceftazidime: preparation, release characteristicsin vitroand inhibition toStaphylococcus aureusbiofilms
+Different Calcium Phosphate Granules for 3‐D Printing of Bone Tissue Engineering Scaffolds
+Engineering new bone tissuein vitro on highly porous poly(?-hydroxyl acids)/hydroxyapatite composite scaffolds
+A novel calcium phosphate ceramic–magnetic nanoparticle composite as a potential bone substitute
+Bioceramics
+Three-dimensional degradable porous polymer-ceramic matrices for use in bone repair
+Potential of ceramic materials as permanently implantable skeletal prostheses
+Printability of calcium phosphate powders for three-dimensional printing of tissue engineering scaffolds
+Ceramic scaffolds produced by computer‐assisted 3D printing and sintering: Characterization and biocompatibility investigations
+
+
+========================================================
+QUERY: mechanisms of drug release from polymer matrices
+========================================================
+10 hit(s) for 'String("mechanisms of drug release from polymer matrices")'
+Solid Dispersion Controlled Release: Effect of Particle Size, Compression Force and Temperature
+Nano-hydroxyapatite/β-tricalcium phosphate ceramics scaffolds loaded with cationic liposomal ceftazidime: preparation, release characteristicsin vitroand inhibition toStaphylococcus aureusbiofilms
+Exchange Reactions at Calcium Phosphates Surface and Applications to Biomaterials
+Nanoparticles - A review
+Kinetics of drug release from solid matrices: effect of compaction pressure
+Vincristine-sulphate–loaded liposome-templated calcium phosphate nanoshell as potential tumor-targeting delivery system
+Modified Drug Release From Beads Prepared with Combinations of Two Grades of Microcrystalline Cellulose
+The Effects of Formulation Factors on the Moist Granulation Technique for Controlled-Release Tablets
+Dissolution of a Soluble Drug Substance from Vinyl Polymer Matrices
+Evaluation of Ethylcellulose as A Matrix for Prolonged Release Formulations. I. Water Soluble Drugs: Acetaminophen and Theophylline
+
+
+========================================================
+QUERY: calcjum phosphaet nanoparticles
+========================================================
+10 hit(s) for 'String("calcjum phosphaet nanoparticles")'
+Functionalized Calcium Phosphate Nanoparticles for Biomedical Application
+Just-in-time vaccines: Biomineralized calcium phosphate core-immunogen shell nanoparticles induce long-lasting CD8+ T cell responses in mice
+Calcium Phosphate Nanoparticles for Transcutaneous Vaccine Delivery
+Applications of Nanoparticles in Biology
+Nanoparticle vaccines
+Functionalisation of calcium phosphate nanoparticles by oligonucleotides and their application for gene silencing
+Independent effect of polymeric nanoparticle zeta potential/surface charge, on their cytotoxicity and affinity to cells
+Role of calcium phosphate nanoclusters in the control of calcification
+STUDY ON THE EFFECT OF NANOPARTICLES ON THE RESISTIVITY OF POROUS MEDIUM CONTAINING TWO-PHASE FLUID
+Transfection of cells with custom-made calcium phosphate nanoparticles coated with DNA
+
+
+========================================================
+QUERY: xyzqwerty123456789
+========================================================
+0 hit(s) for 'String("xyzqwerty123456789")'
+
+
+========================================================
+QUERY: batman
+========================================================
+0 hit(s) for 'String("batman")'
+
+

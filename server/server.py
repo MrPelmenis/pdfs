@@ -1,32 +1,32 @@
-from src.categories import (get_all_categories, create_category, edit_category, delete_category, get_random_category,
+from concurrent.futures import ThreadPoolExecutor
+import math
+import re
+import random
+import json
+from flask_cors import CORS
+from flask import Flask, request, jsonify, send_from_directory, make_response
+import os
+from src import corelamo
+from src.pdfToImage import generate_preview
+import traceback
+from src.parser import extract_paper_data
+from src.vision_extractor import extract_title_authors_from_image
+from src.metadata_analyser import openalex_by_id, openalex_by_title
+from src.queue_manager import add_dois_to_queue
+from src.hasher import _file_hash, _is_duplicate_file, _register_hash
+from src.categories import (get_all_categories, create_category, edit_category, delete_category,
                             assign_category_to_document, get_category_by_id, find_or_create_by_field, NONE_CATEGORY)
 import datetime
-from src.stub_worker import start_stub_worker, set_pdf_processing, document_exists, fetch_document, delete_document
+from src.stub_worker import start_stub_worker, set_pdf_processing, fetch_document, delete_document
 from src.json_builder import build_document, save_document, upload_document, extract_fallback_text
 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from src.chatins import register_chat
-from src.hasher import _file_hash, _is_duplicate_file, _register_hash
 
-from src.queue_manager import add_dois_to_queue
-from src.metadata_analyser import openalex_by_id, openalex_by_title
-from src.vision_extractor import extract_title_authors_from_image
-from src.parser import extract_paper_data
-import traceback
-from src.pdfToImage import generate_preview
 
-from src import corelamo
-
-import os
-from flask import Flask, request, jsonify, send_from_directory, make_response
-from flask_cors import CORS
-from dotenv import load_dotenv
-import json
-import random
-import re
-import math
-
-from concurrent.futures import ThreadPoolExecutor
 background_executor = ThreadPoolExecutor(max_workers=1)
 
 
@@ -35,7 +35,6 @@ CORELAMO_USER = os.getenv("CORELAMO_USER", "pdf_fujaks")
 CORELAMO_PASS = os.getenv("CORELAMO_PASS", "crtz1234")
 DB_NAME = os.getenv("CORELAMO_DB", "pdfs")
 
-load_dotenv()
 corelamo.configure(CORELAMO_URL, CORELAMO_USER, CORELAMO_PASS, DB_NAME)
 
 
@@ -419,8 +418,22 @@ def do_search(query, docs, date_start=None, date_end=None,
         "figures": False, "tables": False,
     }
 
+    # tell Corelamo to return highlighted fragments -> these become `snippet`
+    hl = {"fragment_size": 150, "number_of_fragments": 2,
+          "pre_tags": ["<b>"], "post_tags": ["</b>"]}
+    highlight = {
+        "fields": {
+            "abstract":         hl,
+            "keywords_text":    hl,
+            "methods_text":     hl,
+            "conclusions_text": hl,
+            "figures_text":     hl,
+            "tables_text":      hl,
+        }
+    }
+
     resp = corelamo.search(
-        query, docs=docs, filters=filters, return_fields=return_fields)
+        query, docs=docs, filters=filters, return_fields=return_fields, highlight=highlight)
     resp.raise_for_status()
     data = resp.json()
 
@@ -697,10 +710,10 @@ def batch_lookup(ids: list) -> dict:
 def expand():
     body = request.get_json(force=True)
 
-    openalex_id    = (body.get("openalex_id") or "").strip()
+    openalex_id = (body.get("openalex_id") or "").strip()
     shown_node_ids = set(body.get("shown_node_ids") or [])
-    shown_ref_ids  = set(body.get("shown_ref_ids")  or [])
-    shown_rel_ids  = set(body.get("shown_rel_ids")  or [])
+    shown_ref_ids = set(body.get("shown_ref_ids") or [])
+    shown_rel_ids = set(body.get("shown_rel_ids") or [])
 
     if not openalex_id:
         return jsonify({"error": "openalex_id is required"}), 400
@@ -718,21 +731,22 @@ def expand():
     if not docs:
         return jsonify({"error": "Node document not found"}), 404
 
-    data        = docs[0].get("data", {})
+    data = docs[0].get("data", {})
     all_ref_ids = data.get("referenced_work_ids") or []
-    all_rel_ids = data.get("related_work_ids")    or []
+    all_rel_ids = data.get("related_work_ids") or []
 
     # ── 2. Filter already-shown, batch-lookup candidates ─────────────────────
     candidate_ref_ids = [i for i in all_ref_ids if i not in shown_ref_ids]
     candidate_rel_ids = [i for i in all_rel_ids if i not in shown_rel_ids]
-    all_candidates    = list(set(candidate_ref_ids + candidate_rel_ids))
+    all_candidates = list(set(candidate_ref_ids + candidate_rel_ids))
 
     # batch_lookup returns full Corelamo data including stub_document and file fields
     enriched_map = batch_lookup(all_candidates)
 
     # ── 3. Sort by cited_by_count desc, take next 5 refs / 3 rels ────────────
     def sorted_candidates(id_list, limit):
-        scored = [(wid, enriched_map.get(wid, {}).get("cited", 0)) for wid in id_list]
+        scored = [(wid, enriched_map.get(wid, {}).get("cited", 0))
+                  for wid in id_list]
         scored.sort(key=lambda x: x[1], reverse=True)
         return [wid for wid, _ in scored[:limit]]
 
@@ -740,16 +754,18 @@ def expand():
     new_rel_ids = sorted_candidates(candidate_rel_ids, 3)
 
     # ── 4. Build nodes ───────────────────────────────────────────────────────
-    new_nodes      = []
-    new_links      = []
-    seen_new       = set()
+    new_nodes = []
+    new_links = []
+    seen_new = set()
     seen_links_set = set()
 
     def node_radius(cited, fallback=45):
         return min(200, round(70 + math.sqrt(cited) * 2, 1)) if cited else fallback
 
-    REF_STYLE = {"fillColor": "rgba(99,102,241,0.35)",  "radius": 2,   "toDecoration": "arrow"}
-    REL_STYLE = {"fillColor": "rgba(251,146,60,0.45)",  "radius": 1.5, "toDecoration": "arrow", "dashSize": 4}
+    REF_STYLE = {
+        "fillColor": "rgba(99,102,241,0.35)",  "radius": 2,   "toDecoration": "arrow"}
+    REL_STYLE = {"fillColor": "rgba(251,146,60,0.45)",
+                 "radius": 1.5, "toDecoration": "arrow", "dashSize": 4}
 
     def add_link(from_id, to_id, style):
         key = (from_id, to_id)
@@ -782,21 +798,23 @@ def expand():
                 },
             }
 
-        cited       = enriched.get("cited", 0)
+        cited = enriched.get("cited", 0)
         is_stub_doc = enriched.get("stub_document", True)
 
         if not is_stub_doc:
             # ── Full document in our DB ──────────────────────────────────────
-            file_path    = enriched.get("file", "")
-            filename     = clean_filename(file_path)
-            preview_name = get_preview_filename(file_path) if file_path else None
+            file_path = enriched.get("file", "")
+            filename = clean_filename(file_path)
+            preview_name = get_preview_filename(
+                file_path) if file_path else None
             preview_exists = preview_name and os.path.exists(
                 os.path.join(PREVIEW_DIR, preview_name)
             )
 
             try:
                 cat_id_raw = enriched.get("category_id")
-                category   = get_category_by_id(int(cat_id_raw)) if cat_id_raw is not None else None
+                category = get_category_by_id(
+                    int(cat_id_raw)) if cat_id_raw is not None else None
                 if not category:
                     category = NONE_CATEGORY
             except (TypeError, ValueError):
@@ -870,7 +888,7 @@ def expand():
     all_now_visible = shown_node_ids | seen_new | {openalex_id}
 
     for node in new_nodes:
-        wid      = node["id"]
+        wid = node["id"]
         enriched = enriched_map.get(wid)
         if not enriched:
             continue
@@ -973,4 +991,5 @@ register_chat(app)
 
 if __name__ == "__main__":
     start_stub_worker()
-    app.run(host="0.0.0.0", port=3002, debug=True, threaded=True)
+    # ssl_context=("./proxy/cert.pem", "./proxy/key.pem"))
+    app.run(host="127.0.0.1", port=3002, threaded=True)

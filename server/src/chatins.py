@@ -10,20 +10,20 @@ OLLAMA_TIMEOUT = 120
 DEEPSEEK_TIMEOUT = 60
 
 # "ollama" or "deepseek"
-PROVIDER = os.getenv("PROVIDER", "ollama")
+PROVIDER = os.getenv("PROVIDER", "deepseek")
 
 CHAT_MODEL = "gemma4:e4b"        # used when PROVIDER=ollama
 QUERY_MODEL = "gemma4:e4b"        # used when PROVIDER=ollama
 
-DEEPSEEK_CHAT_MODEL = "deepseek-chat"   # used when PROVIDER=deepseek
-DEEPSEEK_QUERY_MODEL = "deepseek-chat"   # used when PROVIDER=deepseek
+DEEPSEEK_CHAT_MODEL = "deepseek-flash"   # used when PROVIDER=deepseek
+DEEPSEEK_QUERY_MODEL = "deepseek-flash"   # used when PROVIDER=deepseek
 
 CTX_MIN = 2048
 CTX_MAX = 131072
 CTX_HEADROOM = 1.4
 ANSWER_RESERVE = 1024
 
-SEARCH_DOCS = 10
+SEARCH_DOCS = 5
 
 QUERY_PROMPT = """\
 You are a search keyword extractor for a scientific document database.
