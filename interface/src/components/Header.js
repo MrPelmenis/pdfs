@@ -6,42 +6,46 @@ const links = [
   { href: "/chat", label: "Chat" },
 ];
 
+// Partner logos sit muted beside the brand. The RTU mark is dark teal, so it is drawn
+// in white to show on the dark header.
+const partners = [
+  { src: "https://chartizer.com/chartizericon.png", alt: "Chartizer", className: "" },
+  { src: "https://www.uniso.lv/logo.svg", alt: "Uniso", className: "h-5" },
+  { src: "https://upload.wikimedia.org/wikipedia/lv/f/fd/RTU_logo_2017.svg", alt: "RTU", className: "h-7 brightness-0 invert" },
+];
+
 export default function Header() {
   const { pathname } = useLocation();
 
   if (pathname === "/") return null;
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-theme-bg border-b border-theme-border">
-      <div className="w-full px-8 h-16 flex items-center justify-between">
+    <header className="flex-shrink-0 z-40 w-full bg-theme-bg border-b border-theme-border pt-[env(safe-area-inset-top)]">
+      <div className="w-full px-4 sm:px-8 h-14 sm:h-16 flex items-center justify-between gap-4">
         
-        <div className="flex items-center gap-6 flex-shrink-0">
-          
-          <div className="flex items-center gap-4 border-r border-theme-border pr-6">
-            <img src="https://chartizer.com/chartizericon.png" alt="Chartizer" className="h-8 w-auto object-contain" />
-            <img src="https://www.uniso.lv/logo.svg" alt="Uniso" className="h-8 w-auto object-contain" />
-            <img src="https://upload.wikimedia.org/wikipedia/lv/f/fd/RTU_logo_2017.svg" alt="RTU" className="h-8 w-auto object-contain" />
-          </div>
+        <div className="flex items-center gap-6 min-w-0">
 
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-lg border border-chartizer-yellow/40 bg-chartizer-yellow/10 flex items-center justify-center shadow-[0_0_20px_rgba(222,161,28,0.15)] group-hover:bg-chartizer-yellow/20 group-hover:border-chartizer-yellow/60 transition-all duration-300">
-              <svg className="w-5 h-5 text-chartizer-yellow" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
-              </svg>
-            </div>
-            
-            <div className="flex flex-col">
-              <span className="text-[10px] font-bold tracking-[0.2em] text-chartizer-yellow uppercase mb-0.5">
-                Knowledge Synthesis
-              </span>
-              <span className="text-base font-bold text-theme-text-primary tracking-tight">
-                Data Explorer
-              </span>
-            </div>
+          <Link to="/" className="flex items-baseline gap-2.5 group whitespace-nowrap" aria-label="BRIMS Data Explorer">
+            <span className="font-['Space_Grotesk'] text-[22px] sm:text-[26px] font-bold leading-none tracking-[-0.03em] text-theme-text-primary group-hover:text-chartizer-yellow transition-colors duration-200">
+              BRIMS
+            </span>
+            <span className="hidden sm:inline text-[15px] font-medium leading-none text-theme-secondary">Data Explorer</span>
           </Link>
+
+          <div className="hidden md:flex items-center gap-5 border-l border-theme-border pl-6">
+            {partners.map(({ src, alt, className }) => (
+              <img
+                key={alt}
+                src={src}
+                alt={alt}
+                title={alt}
+                className={`h-6 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-200 ${className}`}
+              />
+            ))}
+          </div>
         </div>
 
-        <nav className="flex items-center gap-6 flex-grow justify-end">
+        <nav className="flex items-center gap-5 sm:gap-6 justify-end">
           {links.map(({ href, label }) => {
             const active = pathname === href || pathname.startsWith(href + "?");
             return (

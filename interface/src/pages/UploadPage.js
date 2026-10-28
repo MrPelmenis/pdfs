@@ -68,7 +68,7 @@ export default function UploadPage() {
   }
 
   return (
-    <main className="min-h-screen bg-theme-bg text-theme-text-primary flex flex-col items-center justify-center p-8">
+    <main className="min-h-full bg-theme-bg text-theme-text-primary flex flex-col items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-[30rem] flex flex-col gap-3">
 
         {/* Drop zone */}

@@ -50,6 +50,10 @@ export default function SearchPage() {
     }, []);
 
     const [filtersOpen, setFiltersOpen] = useState(false);
+    // Phones and tablets in portrait show results or the graph; wider screens show both,
+    // and the results can be folded away to give the graph the full width.
+    const [mobileView, setMobileView] = useState("results");
+    const [resultsHidden, setResultsHidden] = useState(false);
     const [fieldFilters, setFieldFilters] = useState(
         Object.fromEntries(FIELD_FILTERS.map(({ key }) => [key, searchParams.get(key) || ""]))
     );
@@ -85,6 +89,9 @@ export default function SearchPage() {
     const [uploadNode, setUploadNode] = useState(null);
     const [uploadModalStage, setUploadModalStage] = useState("closed");
     const chartRef = useRef(null);
+    // the chart keeps the callbacks it was created with, so it reads the query from here
+    const searchedRef = useRef("");
+    useEffect(() => { searchedRef.current = searched; }, [searched]);
 
     const openPdf = useCallback((e, r) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -101,12 +108,12 @@ export default function SearchPage() {
     }, [searched]);
 
     const openPdfFromChart = useCallback((d) => {
-        if (!d.file || !d.preview) return;
+        if (!d.file) return;
         setModal({
             pdfUrl: `${API}/pdf-file/${encodeURIComponent(d.file)}`,
-            previewUrl: `${API}${d.preview}`,
+            previewUrl: d.preview ? `${API}${d.preview}` : null,
             documentId: d.id,
-            searchQuery: searched,
+            searchQuery: searchedRef.current,
             category: d.category ?? null,
             rect: {
                 top: window.innerHeight / 2 - 1,
@@ -117,7 +124,7 @@ export default function SearchPage() {
         });
         setModalStage("expanding");
         setTimeout(() => setModalStage("open"), 30);
-    }, [searched]);
+    }, []);
 
     const openUploadFromChart = useCallback((d) => {
         setUploadNode(d);
@@ -159,6 +166,7 @@ export default function SearchPage() {
         if (!hasAnyInput(q, ff)) return;
         setLoading(true);
         setSearched(q);
+        searchedRef.current = q;
         try {
             const res = await fetch(buildApiUrl(q, docs, ys, ye, ff, catId));
             const data = await res.json();
@@ -172,6 +180,7 @@ export default function SearchPage() {
                     data.initial_nodes,
                     openPdfFromChart,
                     openUploadFromChart,
+                    data.results ?? [],
                 );
             } else {
                 chartRef._pendingData = data.chart_data ?? null;
@@ -265,7 +274,7 @@ export default function SearchPage() {
     };
 
     return (
-        <main className="h-screen overflow-hidden bg-theme-bg flex flex-col">
+        <main className="h-full overflow-hidden bg-theme-bg flex flex-col">
 
             {/* ── Top bar ── */}
             <div
@@ -273,7 +282,7 @@ export default function SearchPage() {
                 className={`
           z-30 bg-theme-bg flex-shrink-0
           ${hasSearched
-                        ? "w-full px-5 pt-5 pb-0"
+                        ? "w-full px-3 sm:px-5 pt-3 sm:pt-5 pb-0"
                         : "flex flex-col items-center px-5 pt-[10vh]"
                     }
         `}
@@ -290,10 +299,10 @@ export default function SearchPage() {
                 {/* ── Search row ── */}
                 <form
                     onSubmit={handleSubmit}
-                    className="flex items-end gap-2 w-full max-w-4xl"
+                    className="flex flex-wrap sm:flex-nowrap items-end gap-2 w-full max-w-4xl"
                 >
                     {/* Main search input */}
-                    <div className="flex-1 flex items-center gap-2 bg-theme-bg-secondary border border-theme-border rounded-xl px-4 py-2.5
+                    <div className="order-1 sm:order-none flex-1 min-w-0 flex items-center gap-2 bg-theme-bg-secondary border border-theme-border rounded-xl px-4 py-2.5
                           focus-within:border-chartizer-yellow focus-within:ring-1 focus-within:ring-chartizer-yellow/30
                           transition-all duration-200">
                         <svg className="w-4 h-4 text-theme-muted flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -304,7 +313,8 @@ export default function SearchPage() {
                             value={inputVal}
                             onChange={(e) => setInputVal(e.target.value)}
                             placeholder="Search…"
-                            className="flex-1 bg-transparent text-theme-text-primary placeholder-theme-muted text-sm outline-none"
+                            enterKeyHint="search"
+                            className="flex-1 min-w-0 bg-transparent text-theme-text-primary placeholder-theme-muted text-base sm:text-sm outline-none"
                         />
                         {inputVal && (
                             <button type="button" onClick={() => setInputVal("")} className="text-theme-muted hover:text-theme-text-primary transition-colors">
@@ -315,6 +325,7 @@ export default function SearchPage() {
                         )}
                     </div>
 
+                    {hasSearched && <div className="order-3 w-full flex items-end gap-2 sm:contents">
                     {/* Filters toggle */}
                     {hasSearched && (
                         <button
@@ -353,14 +364,16 @@ export default function SearchPage() {
                     {/* Document count */}
                     {hasSearched && (
                         <div className="flex flex-col gap-1">
-                            <label className="text-xs text-theme-muted pl-1">Document Count</label>
+                            <label className="hidden sm:block text-xs text-theme-muted pl-1">Document Count</label>
                             <input
                                 type="number"
+                                inputMode="numeric"
+                                aria-label="Document count"
                                 min={1}
                                 value={docsInput}
                                 onChange={handleDocsChange}
                                 onKeyDown={handleFieldKeyDown}
-                                className="w-28 bg-theme-bg-secondary border border-theme-border rounded-xl px-3 py-2.5 text-sm text-theme-text-primary
+                                className="w-20 sm:w-28 bg-theme-bg-secondary border border-theme-border rounded-xl px-3 py-2.5 text-base sm:text-sm text-theme-text-primary
                            text-center outline-none appearance-none
                            focus:border-chartizer-yellow focus:ring-1 focus:ring-chartizer-yellow/30 transition-all duration-200"
                             />
@@ -379,10 +392,11 @@ export default function SearchPage() {
                             Load All
                         </button>
                     )}
+                    </div>}
 
                     <button
                         type="submit"
-                        className="px-4 py-2.5 rounded-xl bg-chartizer-yellow text-theme-bg text-sm ml-2 font-semibold
+                        className="order-2 sm:order-last px-4 py-2.5 rounded-xl bg-chartizer-yellow text-theme-bg text-sm sm:ml-2 font-semibold
                        hover:bg-chartizer-yellow/90 active:scale-95 transition-all duration-150"
                     >
                         Search
@@ -400,10 +414,10 @@ export default function SearchPage() {
                         className="w-full max-w-4xl"
                     >
                         <div className="overflow-hidden">
-                            <div className="pt-3 pb-4 flex flex-col gap-3">
+                            <div className="pt-3 pb-4 flex flex-col gap-3 max-lg:max-h-[55dvh] max-lg:overflow-y-auto overscroll-contain">
 
                                 {/* Field text inputs */}
-                                <div className="grid grid-cols-2 gap-2">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                     {FIELD_FILTERS.map(({ key, label, placeholder }) => (
                                         <div key={key} className="flex flex-col gap-1">
                                             <label className="text-xs text-theme-muted pl-1">{label}</label>
@@ -416,7 +430,7 @@ export default function SearchPage() {
                                                     onChange={e => updateField(key, e.target.value)}
                                                     onKeyDown={handleFieldKeyDown}
                                                     placeholder={placeholder}
-                                                    className="flex-1 bg-transparent text-theme-text-primary placeholder-theme-muted text-sm outline-none"
+                                                    className="flex-1 min-w-0 bg-transparent text-theme-text-primary placeholder-theme-muted text-base sm:text-sm outline-none"
                                                 />
                                                 {fieldFilters[key] && (
                                                     <button
@@ -435,7 +449,7 @@ export default function SearchPage() {
                                 </div>
 
                                 {/* Category + year range + clear */}
-                                <div className="flex items-end gap-3">
+                                <div className="flex flex-wrap items-end gap-3">
 
                                     <div className="flex flex-col gap-1">
                                         <label className="text-xs text-theme-muted pl-1">Category</label>
@@ -507,9 +521,18 @@ export default function SearchPage() {
 
             {/* ── Results + chart ── */}
             {hasSearched && (
-                <div className="flex flex-1 min-h-0">
-                    <div className="w-[550px] min-w-[420px] shrink-0 flex flex-col bg-theme-bg min-h-0">
-                        <div className="flex-1 overflow-y-auto px-5 pb-5 flex flex-col gap-3 pt-3">
+                <div className="relative flex flex-1 min-h-0">
+                    {/* below lg the two views are stacked and one is hidden; both keep their
+                        size so the graph lays out correctly while out of sight */}
+                    <section
+                        className={`
+                            max-lg:absolute max-lg:inset-0 lg:w-[clamp(340px,34vw,550px)] lg:shrink-0
+                            flex flex-col bg-theme-bg min-h-0
+                            ${mobileView === "graph" ? "max-lg:invisible max-lg:pointer-events-none" : ""}
+                            ${resultsHidden ? "lg:hidden" : ""}
+                        `}
+                    >
+                        <div className="flex-1 overflow-y-auto overscroll-contain px-3 sm:px-5 pb-24 lg:pb-5 flex flex-col gap-3 pt-3">
 
                             {!loading && hasSearched && (
                                 <p className="text-xs text-theme-muted mb-1">
@@ -541,19 +564,51 @@ export default function SearchPage() {
                                 </div>
                             )}
                         </div>
-                    </div>
+                    </section>
 
-                    <div className="flex-1 bg-theme-bg overflow-hidden relative">
+                    <section
+                        className={`
+                            max-lg:absolute max-lg:inset-0 lg:flex-1 bg-theme-bg overflow-hidden relative
+                            max-lg:[--chart-sheet-offset:76px]
+                            ${mobileView === "results" ? "max-lg:invisible max-lg:pointer-events-none" : ""}
+                        `}
+                    >
                         <div id="megachart" className="w-full h-full" />
-                        <div className="absolute bottom-4 right-4 bg-theme-bg-secondary/80 backdrop-blur-sm border border-theme-border rounded-xl px-3 py-2.5 flex flex-col gap-1.5 pointer-events-none">
-                            <div className="flex items-center gap-2">
-                                <span className="w-5 h-0.5 rounded-full" style={{ backgroundColor: "rgba(251,146,60,0.9)" }} />
-                                <span className="text-xs text-theme-muted">Related</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <span className="w-5 h-0.5 rounded-full" style={{ backgroundColor: "rgba(170,170,170,0.92)" }} />
-                                <span className="text-xs text-theme-muted">Referenced</span>
-                            </div>
+
+                        {/* lg+: fold the results away for a full-width graph */}
+                        <button
+                            type="button"
+                            onClick={() => setResultsHidden((h) => !h)}
+                            aria-label={resultsHidden ? "Show results" : "Hide results"}
+                            title={resultsHidden ? "Show results" : "Hide results"}
+                            className="hidden lg:flex absolute left-0 bottom-6 z-10 h-14 w-6 items-center justify-center
+                                       rounded-r-lg bg-theme-bg-secondary/90 border border-l-0 border-theme-border text-theme-muted
+                                       hover:text-theme-text-primary transition-colors"
+                        >
+                            <svg className={`w-3.5 h-3.5 transition-transform ${resultsHidden ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+                    </section>
+
+                    {/* below lg: switch between the results and the graph */}
+                    <div className="lg:hidden absolute inset-x-0 z-20 flex justify-center pointer-events-none"
+                         style={{ bottom: "calc(16px + env(safe-area-inset-bottom))" }}>
+                        <div className="pointer-events-auto flex p-1 gap-1 rounded-full bg-theme-bg-secondary/90 backdrop-blur border border-theme-border shadow-lg">
+                            {[
+                                { key: "results", label: `Results${results.length ? ` · ${results.length}` : ""}` },
+                                { key: "graph", label: "Graph" },
+                            ].map(({ key, label }) => (
+                                <button
+                                    key={key}
+                                    type="button"
+                                    onClick={() => setMobileView(key)}
+                                    className={`h-10 px-5 rounded-full text-sm font-semibold transition-colors duration-150
+                                        ${mobileView === key ? "bg-chartizer-yellow text-theme-bg" : "text-theme-muted"}`}
+                                >
+                                    {label}
+                                </button>
+                            ))}
                         </div>
                     </div>
                 </div>

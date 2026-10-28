@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
+import PdfViewer from "./PdfViewer";
 
 const API = process.env.REACT_APP_SERVER_URL;
 
@@ -173,7 +174,8 @@ function CategoryRow({ cat, isAssigned, saving, onAssign, onUpdated, onDeleted }
         display: "flex",
         alignItems: "center",
         gap: 7,
-        padding: "6px 10px",
+        padding: "8px 10px",
+        minHeight: 38,
         borderRadius: 7,
         border: isAssigned ? `1px solid ${cat.color}` : "1px solid transparent",
         background:   "transparent",
@@ -225,7 +227,7 @@ function CategoryRow({ cat, isAssigned, saving, onAssign, onUpdated, onDeleted }
   );
 }
 
-function CategoryPanel({ documentId, initialCategory, visible, onCategoryChange }) {
+function CategoryPanel({ documentId, initialCategory, visible, onCategoryChange, style }) {
   const [categories, setCategories] = useState([]);
   const [assigned, setAssigned]     = useState(null);
   const [newName, setNewName]       = useState("");
@@ -327,6 +329,7 @@ function CategoryPanel({ documentId, initialCategory, visible, onCategoryChange 
         transform: visible ? "translateX(0)" : "translateX(-12px)",
         transition: "opacity 280ms 80ms, transform 280ms 80ms",
         overflow: "hidden",
+        ...style,
       }}
     >
       <div style={{ padding: "18px 16px 12px", borderBottom: "1px solid rgba(255,255,255,0.07)", flexShrink: 0 }}>
@@ -448,9 +451,28 @@ function CategoryPanel({ documentId, initialCategory, visible, onCategoryChange 
   );
 }
 
+// Below this width (phones, iPad portrait) the viewer fills the screen and the category
+// panel slides over it instead of sitting beside it.
+const COMPACT_QUERY = "(max-width: 1023px)";
+
+function useCompact() {
+  const [compact, setCompact] = useState(() => window.matchMedia(COMPACT_QUERY).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(COMPACT_QUERY);
+    const onChange = () => setCompact(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return compact;
+}
+
 export default function PdfModal({ modal, modalStage, onClose, onCategoryChange }) {
   const isOpen    = modalStage === "open";
   const isClosing = modalStage === "closing";
+  const compact   = useCompact();
+  const [sideOpen, setSideOpen] = useState(false);
+
+  useEffect(() => { setSideOpen(false); }, [modal?.documentId]);
 
   useEffect(() => {
     if (modal) {
@@ -468,6 +490,9 @@ export default function PdfModal({ modal, modalStage, onClose, onCategoryChange 
 
   if (!modal) return null;
 
+  const query = (modal.searchQuery ?? "").replace(/[^\p{L}\p{N} ]/gu, " ").replace(/\s+/g, " ").trim();
+  const inset = compact ? 0 : "3vh 3vw";
+
   return (
     <div
       onClick={onClose}
@@ -481,39 +506,63 @@ export default function PdfModal({ modal, modalStage, onClose, onCategoryChange 
         onClick={(e) => e.stopPropagation()}
         style={{
           transition: "all 350ms cubic-bezier(0.4, 0, 0.2, 1)",
-          width:    isOpen ? "90vw" : `${modal.rect.width}px`,
-          height:   isOpen ? "90vh" : `${modal.rect.height}px`,
           position: "fixed",
-          top:      isOpen ? "5vh"  : `${modal.rect.top}px`,
-          left:     isOpen ? "5vw"  : `${modal.rect.left}px`,
-          borderRadius: isOpen ? "12px" : "4px",
+          ...(isOpen
+            ? { inset, width: "auto", height: "auto" }
+            : { top: modal.rect.top, left: modal.rect.left, width: modal.rect.width, height: modal.rect.height }),
+          borderRadius: isOpen && !compact ? "12px" : "4px",
           overflow: "hidden",
           boxShadow: isOpen ? "0 25px 60px rgba(0,0,0,0.8)" : "none",
           display: "flex",
           flexDirection: "row",
+          background: "#1e1f22",
+          paddingTop: compact ? "env(safe-area-inset-top)" : 0,
+          paddingBottom: compact ? "env(safe-area-inset-bottom)" : 0,
         }}
       >
-        <CategoryPanel
-          documentId={modal.documentId}
-          initialCategory={modal.category}
-          visible={isOpen}
-          onCategoryChange={onCategoryChange}
-        />
+        {!compact && (
+          <CategoryPanel
+            documentId={modal.documentId}
+            initialCategory={modal.category}
+            visible={isOpen}
+            onCategoryChange={onCategoryChange}
+          />
+        )}
         <div style={{ flex: 1, minWidth: 0, position: "relative" }}>
-          {!isOpen && (
+          {!isOpen && modal.previewUrl && (
             <img src={modal.previewUrl} alt="" className="w-full h-full object-cover" />
           )}
-            {isOpen && (
-              <embed
-                src={`${modal.pdfUrl}${
-                  modal.searchQuery
-                    ? `#search=${encodeURIComponent(modal.searchQuery.replace(/[^a-zA-Z ]/g, "").trim())}`
-                    : ""
-                }`}
-                className="w-full h-full border-0 bg-[#303134]"
-                title="PDF viewer"
+          {isOpen && (
+            <PdfViewer
+              url={modal.pdfUrl}
+              query={query}
+              onClose={onClose}
+              onToggleSide={compact ? () => setSideOpen((o) => !o) : undefined}
+              sideOpen={sideOpen}
+            />
+          )}
+
+          {/* compact: the category panel slides over the document */}
+          {compact && isOpen && (
+            <>
+              <div
+                onClick={() => setSideOpen(false)}
+                className={`absolute inset-0 top-[49px] bg-black/50 transition-opacity duration-200 ${sideOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
               />
-            )}
+              <div
+                className="absolute left-0 bottom-0 top-[49px] transition-transform duration-300 ease-out"
+                style={{ width: "min(320px, 85vw)", transform: sideOpen ? "translateX(0)" : "translateX(-105%)" }}
+              >
+                <CategoryPanel
+                  documentId={modal.documentId}
+                  initialCategory={modal.category}
+                  visible
+                  onCategoryChange={onCategoryChange}
+                  style={{ width: "100%", minWidth: 0, height: "100%", background: "#16171a", boxShadow: "12px 0 32px rgba(0,0,0,0.5)" }}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

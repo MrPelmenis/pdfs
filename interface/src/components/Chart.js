@@ -3,19 +3,76 @@ import { GraphRenderer } from "@chartizer/graph-renderer";
 const SEARCH_ICON = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/500px-Search_Icon.svg.png?_=20181016161702";
 const API = process.env.REACT_APP_SERVER_URL;
 
-// ── Visual constants (ported from the NetChart style block) ──────────────────
+// ── Visual constants ─────────────────────────────────────────────────────────
 
-const CHART_BG = "#202124";
-const NODE_FILL = "rgba(28,124,213,0.92)";
-const NODE_STROKE = "rgba(0,0,0,0.15)";
-const QUERY_NODE_RADIUS = 28;
-const LABEL_MAX_WIDTH = 240;
-const LINK_FILL = "rgba(255,255,255,0.15)";
-const DEFAULT_LINK_RADIUS = 5;
-// NetChart styled links by "radius" (half the thickness); the renderer takes a line width.
-const LINK_WIDTH_PER_RADIUS = 2;
+const CHART_BG = "#1e1f22";
+const NODE_FILL = "rgba(28,164,222,0.92)";
+const QUERY_FILL = "#dea11c";
+const QUERY_NODE_RADIUS = 20;
+
+// Article pills. The renderer draws the pill; the title is drawn on the overlay canvas,
+// wrapped by us, because the renderer clips text it wraps itself.
+const PILL_FONT_FAMILY = "Poppins, sans-serif";
+const PILL_FONT_SIZE = 13;
+const PILL_LINE_HEIGHT = 17;
+const PILL_TEXT_WIDTH = 220;     // world units; titles wrap to this
+const PILL_PAD_X = 16;
+const PILL_PAD_Y = 9;
+const PILL_MAX_CORNER = 18;
+const STUB_FONT_SIZE = 12;
+const STUB_LINE_HEIGHT = 16;
+const STUB_FILL = "#26272b";
+// Articles not in our library are outlined pills; the outline says how they were found.
+const STUB_REF_STROKE = "rgba(154,160,166,0.8)";
+const STUB_REL_STROKE = "rgba(222,161,28,0.75)";
+const STUB_TEXT = "rgba(232,234,237,0.85)";
+const EXPANDED_STROKE = "rgba(255,255,255,0.95)";
+const MIN_TEXT_PX = 3;           // below this on screen, titles are skipped
+
+const LINK_LABEL_STYLE = {
+    visible: true,
+    fontFamily: PILL_FONT_FAMILY,
+    fontSize: 9,
+    backgroundColor: CHART_BG,
+    paddingX: 4,
+    paddingY: 1,
+    cornerRadius: 3,
+    mode: "badge",
+};
+const LINK_STYLES = {
+    query: {
+        color: "rgba(232,234,237,0.16)", width: 1, arrow: false, dashed: false, label: "search hit",
+        labelStyle: { ...LINK_LABEL_STYLE, textColor: "rgba(232,234,237,0.45)" },
+    },
+    ref: {
+        color: "rgba(138,180,248,0.45)", width: 1.2, arrow: true, dashed: false, label: "cites",
+        labelStyle: { ...LINK_LABEL_STYLE, textColor: "rgba(138,180,248,0.95)" },
+    },
+    rel: {
+        color: "rgba(246,174,45,0.4)", width: 1, arrow: false, dashed: true, label: "related work",
+        labelStyle: { ...LINK_LABEL_STYLE, textColor: "rgba(246,174,45,0.95)" },
+    },
+};
+
+// Nodes pop in (grow with an overshoot) and pop out (shrink away).
+const POP_IN_MS = 420;
+const POP_OUT_MS = 240;
+const POP_STAGGER_MS = 35;       // first results pop in one after another
+const POP_MIN_SCALE = 0.05;
+const POP_START_MS = 30;          // the shrink to a dot lands before growing starts
+// Expansion marker (the renderer's small patch of hairs) for a node we haven't counted yet.
+const UNKNOWN_EXPANSION_COUNT = 10;
+const LONG_PRESS_MS = 600;
+
+const MAX_FIT_ZOOM = 1.1;
+// On a phone the whole graph only fits at a zoom where titles can't be read, so the view
+// starts on the search node at a readable zoom instead; the rest is a swipe away.
+const NARROW_WIDTH = 700;
+const NARROW_ZOOM = 0.7;
+const FIT_DELAY_MS = 2600;
+const FIT_GLIDE_MS = 900;
 const GOLDEN_ANGLE = 2.399963229728653;
-// NetChart navigation: show nodes within this many hops of the initial / clicked nodes.
+// NetChart navigation: show nodes within this many hops of the initial nodes.
 const FOCUS_RADIUS = 8;
 
 const REF_STYLE = { fillColor: "rgba(99,102,241,0.35)", radius: 2, toDecoration: "arrow" };
@@ -29,6 +86,8 @@ const LAYOUT = {
     minActiveTicks: 600,
     stableTickThreshold: 300,
     temperatureDecay: 0.998,
+    chargeStrength: 60000,
+    chargeMinDistance: 80,
 };
 
 function stripHtml(str) {
@@ -47,6 +106,113 @@ function linkStyleOf(link) {
     return link?.style ?? link?.data?.style ?? {};
 }
 
+function isStub(d) {
+    return !!(d?.is_stub_node || d?.stub_document);
+}
+
+// ── Colour helpers ───────────────────────────────────────────────────────────
+
+function parseColor(str) {
+    const s = String(str ?? "").trim();
+    let m = s.match(/^#([0-9a-f]{6})$/i);
+    if (m) {
+        const n = parseInt(m[1], 16);
+        return { r: n >> 16, g: (n >> 8) & 255, b: n & 255, a: 1 };
+    }
+    m = s.match(/^rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)(?:[\s,/]+([\d.]+))?\s*\)$/i);
+    if (m) return { r: +m[1], g: +m[2], b: +m[3], a: m[4] == null ? 1 : +m[4] };
+    return null;
+}
+
+// Pills must be opaque or the links show through them: flatten the colour onto the background.
+function solidColor(str) {
+    const c = parseColor(str);
+    const bg = parseColor(CHART_BG);
+    if (!c) return str;
+    const mix = (fg, back) => Math.round(fg * c.a + back * (1 - c.a));
+    return `rgb(${mix(c.r, bg.r)},${mix(c.g, bg.g)},${mix(c.b, bg.b)})`;
+}
+
+function textColorOn(fill) {
+    const c = parseColor(fill);
+    if (!c) return "#111";
+    const lin = (v) => {
+        const x = v / 255;
+        return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
+    };
+    const lum = 0.2126 * lin(c.r) + 0.7152 * lin(c.g) + 0.0722 * lin(c.b);
+    return lum > 0.22 ? "#111317" : "#f5f6f7";
+}
+
+// ── Pill layout ──────────────────────────────────────────────────────────────
+
+let _measureCtx = null;
+const _pillCache = new Map();
+
+// Wraps the full title into lines and sizes the pill around them (world units).
+function pillLayout(title, stub) {
+    const key = `${stub ? 1 : 0}|${title}`;
+    const cached = _pillCache.get(key);
+    if (cached) return cached;
+
+    _measureCtx ||= document.createElement("canvas").getContext("2d");
+    const fontSize = stub ? STUB_FONT_SIZE : PILL_FONT_SIZE;
+    const lineHeight = stub ? STUB_LINE_HEIGHT : PILL_LINE_HEIGHT;
+    const weight = stub ? 400 : 500;
+    _measureCtx.font = `${weight} ${fontSize}px ${PILL_FONT_FAMILY}`;
+    const width = (t) => _measureCtx.measureText(t).width;
+
+    const lines = [];
+    let line = "";
+    for (const word of title.split(" ")) {
+        const next = line ? `${line} ${word}` : word;
+        if (line && width(next) > PILL_TEXT_WIDTH) {
+            lines.push(line);
+            line = word;
+        } else {
+            line = next;
+        }
+    }
+    if (line) lines.push(line);
+
+    const textWidth = Math.min(PILL_TEXT_WIDTH, Math.max(...lines.map(width)));
+    const h = lines.length * lineHeight + 2 * PILL_PAD_Y;
+    const layout = {
+        lines, fontSize, lineHeight, weight,
+        w: Math.ceil(textWidth + 2 * PILL_PAD_X),
+        h,
+        corner: Math.min(h / 2, PILL_MAX_CORNER),
+    };
+    _pillCache.set(key, layout);
+    return layout;
+}
+
+function escapeHtml(str) {
+    return String(str ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+}
+
+// ── Engine failure ───────────────────────────────────────────────────────────
+
+// Errors that mean the WASM engine itself has faulted, as opposed to a bad call.
+function isEngineFault(err) {
+    return (typeof WebAssembly !== "undefined" && err instanceof WebAssembly.RuntimeError)
+        || /memory access|unreachable|null pointer passed to rust|recursive use of an object/i.test(err?.message ?? "");
+}
+
+function adapterOf(r) {
+    try { return r?.getCompatAdapter?.() ?? null; } catch { return null; }
+}
+
+function titleOf(d, id) {
+    return (stripHtml(d?.title || id) || "").replace(/\s+/g, " ").trim();
+}
+
+// Same curves as the renderer's "ease-out-back" / "ease-in-back", so titles drawn on the
+// overlay scale in step with their pill.
+const BACK = 1.70158;
+const easeOutBack = (t) => 1 + (BACK + 1) * (t - 1) ** 3 + BACK * (t - 1) ** 2;
+const easeInBack = (t) => (BACK + 1) * t ** 3 - BACK * t ** 2;
+
 // ── Tooltip ──────────────────────────────────────────────────────────────────
 
 let _tooltip = null;
@@ -58,17 +224,18 @@ function getTooltip() {
         position: "fixed",
         pointerEvents: "none",
         zIndex: "99999",
-        background: "rgba(15,15,20,0.95)",
-        color: "#e8e8e8",
-        border: "1px solid rgba(255,255,255,0.1)",
-        borderRadius: "8px",
-        padding: "8px 12px",
+        background: "rgba(38,38,38,0.94)",
+        backdropFilter: "blur(8px)",
+        color: "#e8eaed",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: "12px",
+        padding: "10px 14px",
         fontSize: "11px",
-        lineHeight: "1.5",
+        lineHeight: "1.55",
         width: "360px",
-        boxShadow: "0 4px 20px rgba(0,0,0,0.55)",
+        boxShadow: "0 12px 32px rgba(0,0,0,0.45)",
         display: "none",
-        fontFamily: "sans-serif",
+        fontFamily: "Poppins, sans-serif",
         wordBreak: "break-word",
     });
     document.body.appendChild(_tooltip);
@@ -114,7 +281,7 @@ function buildSnippetHtml(d) {
         );
 }
 
-function showTooltip(d, x, y) {
+function showTooltip(d, x, y, remaining) {
     const tip = getTooltip();
     const title = d.title || "—";
     const oaId = d.openalex_id || "—";
@@ -126,9 +293,11 @@ function showTooltip(d, x, y) {
 
     const snippetHtml = buildSnippetHtml(d);
 
-    const isStub = !!d.is_stub_node;
-    const clickHint = isStub ? "Click to open on OpenAlex" : "Click to expand references";
-    const dblHint = isStub ? "Double-click to upload this document" : (d.stub_document ? "Double-click for DOI info" : "Double-click to view PDF");
+    const isStubNode = !!d.is_stub_node;
+    let clickHint = "Click to expand references";
+    if (isStubNode || d.stub_document) clickHint = "Click to open on OpenAlex";
+    else if (remaining === 0) clickHint = "Nothing more to explore";
+    const dblHint = isStubNode ? "Double-click to upload" : (d.stub_document ? "" : "Double-click to view PDF");
 
     // Category badge — only shown if category exists and isn't "none" (id 0)
     const cat = d.category;
@@ -148,16 +317,17 @@ function showTooltip(d, x, y) {
         : "";
 
     tip.innerHTML = `
-        <div style="font-weight:600;font-size:12px;color:#fff;margin-bottom:5px">${title}</div>
+        <div style="font-weight:600;font-size:12.5px;color:#fff;margin-bottom:6px;line-height:1.4">${title}</div>
         ${categoryHtml}
-        <div style="color:#94a3b8;margin-bottom:2px"><span style="color:#64748b">Authors </span>${authors}</div>
-        <div style="color:#94a3b8;margin-bottom:2px"><span style="color:#64748b">OpenAlex </span><span style="color:#7dd3fc">${oaId}</span></div>
-        ${doi !== "—" ? `<div style="color:#94a3b8;margin-bottom:2px"><span style="color:#64748b">DOI </span><span style="color:#7dd3fc">${doi}</span></div>` : ""}
-        <div style="color:#94a3b8;margin-bottom:5px"><span style="color:#64748b">Cited by </span>${cited}</div>
-        ${snippetHtml ? `<div style="color:#94a3b8;margin-bottom:5px;font-style:italic;font-size:12px">${snippetHtml}</div>` : ""}
-        <div style="color:#475569;font-size:10px;border-top:1px solid rgba(255,255,255,0.07);padding-top:5px">
-            <span style="margin-right:12px">${clickHint}</span>
+        <div style="color:#9aa0a6;margin-bottom:2px"><span style="color:#5f6368">Authors </span>${authors}</div>
+        <div style="color:#9aa0a6;margin-bottom:2px"><span style="color:#5f6368">OpenAlex </span><span style="color:#8ab4f8">${oaId}</span></div>
+        ${doi !== "—" ? `<div style="color:#9aa0a6;margin-bottom:2px"><span style="color:#5f6368">DOI </span><span style="color:#8ab4f8">${doi}</span></div>` : ""}
+        <div style="color:#9aa0a6;margin-bottom:6px"><span style="color:#5f6368">Cited by </span>${cited}</div>
+        ${snippetHtml ? `<div style="color:#bdc1c6;margin-bottom:6px;font-style:italic;font-size:11.5px">${snippetHtml}</div>` : ""}
+        <div style="color:#5f6368;font-size:10px;border-top:1px solid rgba(255,255,255,0.07);padding-top:6px;display:flex;flex-wrap:wrap;gap:4px 12px">
+            <span>${clickHint}</span>
             ${dblHint ? `<span>${dblHint}</span>` : ""}
+            <span>Hold to remove</span>
         </div>
     `.trim();
 
@@ -165,49 +335,108 @@ function showTooltip(d, x, y) {
     tip.style.display = "block";
 }
 
+// ── Legend ───────────────────────────────────────────────────────────────────
+
+function legendRow(swatch, text) {
+    return `<div style="display:flex;align-items:center;gap:8px;min-width:0">
+        <span style="flex:none;display:inline-flex;width:22px;justify-content:center">${swatch}</span>
+        <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${text.charAt(0).toUpperCase()}${text.slice(1)}</span>
+    </div>`;
+}
+
+function legendSection(title, rows) {
+    if (!rows.length) return "";
+    return `<div style="display:flex;flex-direction:column;gap:5px">
+        <div style="font-size:9.5px;letter-spacing:0.08em;text-transform:uppercase;color:#5f6368;font-weight:600">${title}</div>
+        ${rows.join("")}
+    </div>`;
+}
+
+const pillSwatch = (fill, stroke = "transparent") =>
+    `<span style="width:20px;height:11px;border-radius:6px;background:${fill};border:1.5px solid ${stroke};box-sizing:border-box"></span>`;
+const lineSwatch = (color, dashed, arrow) =>
+    `<svg width="22" height="10" viewBox="0 0 22 10"><line x1="1" y1="5" x2="${arrow ? 16 : 21}" y2="5" stroke="${color}" stroke-width="1.6" ${dashed ? 'stroke-dasharray="3 2.5"' : ""}/>${arrow ? `<path d="M15 1.5 L21 5 L15 8.5 Z" fill="${color}"/>` : ""}</svg>`;
+
 // ── Data mapping: server node/link → @chartizer/graph-renderer snapshots ─────
 
-function toRendererNode(item, x, y) {
+// Articles outside the library found through "related works" come back coloured brown.
+function isRelatedStub(d) {
+    return parseColor(d?.fillColor)?.r === 180;
+}
+
+// Fill, outline and text colours of an article pill.
+function pillColors(d, expanded) {
+    if (isStub(d)) {
+        return {
+            fill: STUB_FILL,
+            stroke: expanded ? EXPANDED_STROKE : (isRelatedStub(d) ? STUB_REL_STROKE : STUB_REF_STROKE),
+            strokeWidth: expanded ? 2.5 : 1.5,
+            text: STUB_TEXT,
+        };
+    }
+    const fill = solidColor(d.fillColor ?? NODE_FILL);
+    return {
+        fill,
+        stroke: expanded ? EXPANDED_STROKE : CHART_BG,
+        strokeWidth: expanded ? 2.5 : 1.5,
+        text: textColorOn(fill),
+    };
+}
+
+function toRendererNode(item, x, y, expanded = false, pinned = false) {
     const id = String(item.id);
     const d = fieldsOf(item) ?? {};
 
-    // The search "query" node: white circle with the search icon, no label.
+    // The search "query" node: accent circle with the search icon and the query as label.
     if (id === "query") {
         return {
             id, x, y,
-            shape: { kind: "circle", radius: d.radius ?? QUERY_NODE_RADIUS },
+            label: titleOf(d, "") || undefined,
+            shape: { kind: "circle", radius: QUERY_NODE_RADIUS },
+            flags: { pinned },
             style: {
-                fillColor: "#ffffff",
-                strokeColor: NODE_STROKE,
-                strokeWidth: 1,
+                fillColor: QUERY_FILL,
+                strokeColor: CHART_BG,
+                strokeWidth: 3,
                 imageUrl: SEARCH_ICON,
+                label: {
+                    textColor: QUERY_FILL,
+                    fontFamily: PILL_FONT_FAMILY,
+                    fontSize: 13,
+                    backgroundColor: "rgba(30,31,34,0.8)",
+                    paddingX: 6,
+                    paddingY: 2,
+                    cornerRadius: 4,
+                },
             },
         };
     }
 
-    // Document nodes: rounded label box (NetChart's display "text"), coloured by d.fillColor.
-    // autoText nodes size to their label, so d.radius does not change the size.
+    // No label: the title is drawn on the overlay, inside the pill.
+    const pill = pillLayout(titleOf(d, id), isStub(d));
+    const colors = pillColors(d, expanded);
     return {
         id, x, y,
-        label: stripHtml(d.title || id),
-        shape: { kind: "autoText", maxWidth: LABEL_MAX_WIDTH, padding: 10, cornerRadius: 6 },
+        shape: { kind: "rect", width: pill.w, height: pill.h, cornerRadius: pill.corner },
+        flags: { pinned },
         style: {
-            fillColor: d.fillColor ?? NODE_FILL,
-            strokeColor: NODE_STROKE,
-            strokeWidth: 1,
-            label: {
-                textColor: "#000000",
-                fontFamily: "Poppins, sans-serif",
-                fontSize: 12,
-            },
+            fillColor: colors.fill,
+            strokeColor: colors.stroke,
+            strokeWidth: colors.strokeWidth,
         },
     };
+}
+
+function linkKind(link) {
+    if (String(link.from) === "query" || String(link.to) === "query") return "query";
+    return linkStyleOf(link).dashSize !== undefined ? "rel" : "ref";
 }
 
 function toRendererLink(link) {
     const s = linkStyleOf(link);
     const from = String(link.from);
     const to = String(link.to);
+    const kind = linkKind(link);
     return {
         // NetChart links had no ids; the renderer needs one. Include the colour so a
         // "referenced" and a "related" link between the same pair can coexist.
@@ -215,13 +444,8 @@ function toRendererLink(link) {
         from,
         to,
         points: [],
-        style: {
-            color: s.fillColor ?? LINK_FILL,
-            width: (s.radius ?? DEFAULT_LINK_RADIUS) * LINK_WIDTH_PER_RADIUS,
-            arrow: s.toDecoration === "arrow",
-            dashed: s.dashSize !== undefined,
-            curveStyle: "straight",
-        },
+        weight: kind === "query" ? 1 : 2,
+        style: { ...LINK_STYLES[kind], curveStyle: "straight" },
     };
 }
 
@@ -230,10 +454,10 @@ function toRendererLink(link) {
 function seedPosition(index, anchor) {
     const angle = index * GOLDEN_ANGLE;
     if (!anchor) {
-        const r = 90 * Math.sqrt(index + 1);
+        const r = 220 * Math.sqrt(index + 1);
         return { x: r * Math.cos(angle), y: r * Math.sin(angle) };
     }
-    const r = 170 + 20 * Math.sqrt(index);
+    const r = 260 + 30 * Math.sqrt(index);
     return { x: anchor.x + r * Math.cos(angle), y: anchor.y + r * Math.sin(angle) };
 }
 
@@ -250,8 +474,10 @@ function pushTo(map, key, value) {
  * Returns a handle { addData({nodes, links}, anchorId?), remove(), renderer } immediately;
  * the WASM renderer mounts asynchronously and calls made before that are queued.
  * Call remove() when the React component unmounts (React 18 strict mode mounts twice).
+ * `results` (the /search result rows) supply reference lists the chart nodes lack, so
+ * search hits know whether they have anything to expand into.
  */
-const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadStub = null) => {
+const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadStub = null, results = []) => {
     const container = document.getElementById("megachart");
     if (!container) return null;
 
@@ -271,12 +497,17 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     // Ids actually handed to the renderer
     const knownNodeIds = new Set();
     const knownLinkIds = new Set();
+    // Nodes the user clicked (expanded), the node each revealed node came from, and
+    // nodes the server has nothing more for
+    const expandedIds = new Set();
+    const parentOf = new Map();
+    const exhaustedIds = new Set();
 
     // NetChart's navigation showed only nodes within FOCUS_RADIUS hops of the initial
-    // nodes, and brought in more around each clicked node. Every node and link the
-    // chart was given is kept here; `focusOn` decides which of them are drawn.
+    // nodes. Every node and link the chart was given is kept here; `focusOn` decides
+    // which of them are drawn.
     const allNodes = new Map();      // id -> server node
-    const allLinks = [];             // server links
+    let allLinks = [];               // server links
     const adjacency = new Map();     // id -> neighbour ids
 
     function remember(payload) {
@@ -313,20 +544,47 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         return seen;
     }
 
-    for (const node of chartData.nodes) {
+    function registerEdges(node) {
         const d = fieldsOf(node);
-        if (!d) continue;
-        nodeEdgeMap.set(node.id, {
+        if (!d) return;
+        nodeEdgeMap.set(String(node.id), {
             ref_ids: d.referenced_work_ids || [],
             rel_ids: d.related_work_ids || [],
         });
-        shownRefsByNode.set(node.id, new Set());
-        shownRelsByNode.set(node.id, new Set());
+        shownRefsByNode.set(String(node.id), new Set());
+        shownRelsByNode.set(String(node.id), new Set());
+    }
+
+    for (const node of chartData.nodes) {
+        // search hits carry no ref/rel lists of their own; take them from the result rows
+        if (!fieldsOf(node)?.referenced_work_ids) continue;
+        registerEdges(node);
+    }
+    for (const row of results ?? []) {
+        const id = row.openalex_id || row.id || row.doi_number;
+        if (!id) continue;
+        registerEdges({ id, data: { referenced_work_ids: row.referenced_work_ids, related_work_ids: row.related_work_ids } });
+    }
+
+    // How many articles this node could still reveal: null when unknown, 0 when none.
+    function remainingFor(id) {
+        const d = fieldsById.get(id);
+        if (id === "query" || !d || isStub(d) || exhaustedIds.has(id)) return 0;
+        const edges = nodeEdgeMap.get(id);
+        if (!edges) return null;
+        const shownRefs = shownRefsByNode.get(id) ?? new Set();
+        const shownRels = shownRelsByNode.get(id) ?? new Set();
+        const left = new Set();
+        for (const ref of edges.ref_ids) if (!shownRefs.has(ref) && !knownNodeIds.has(ref)) left.add(ref);
+        for (const rel of edges.rel_ids) if (!shownRels.has(rel) && !knownNodeIds.has(rel)) left.add(rel);
+        return left.size;
     }
 
     // ── Renderer lifecycle ───────────────────────────────────────────────────
 
     if (!container.style.position) container.style.position = "relative";
+    // a long press removes an article; keep iOS from also selecting text or showing a callout
+    Object.assign(container.style, { WebkitTouchCallout: "none", WebkitUserSelect: "none", userSelect: "none" });
 
     const canvas = document.createElement("canvas");
     Object.assign(canvas.style, {
@@ -340,23 +598,400 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     });
     container.appendChild(canvas);
 
+    // Pill titles are drawn on a 2D canvas above the graph.
+    const overlay = document.createElement("canvas");
+    Object.assign(overlay.style, {
+        position: "absolute",
+        top: "0",
+        left: "0",
+        width: "100%",
+        height: "100%",
+        display: "block",
+        pointerEvents: "none",
+    });
+    container.appendChild(overlay);
+    const octx = overlay.getContext("2d");
+
+    const legend = document.createElement("div");
+    Object.assign(legend.style, {
+        position: "absolute",
+        left: "16px",
+        top: "16px",
+        maxWidth: "250px",
+        maxHeight: "calc(100% - 32px)",
+        overflowY: "auto",
+        display: "none",
+        flexDirection: "column",
+        gap: "12px",
+        padding: "12px 14px",
+        background: "rgba(38,38,38,0.88)",
+        backdropFilter: "blur(8px)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: "12px",
+        boxShadow: "0 8px 24px rgba(0,0,0,0.35)",
+        color: "#bdc1c6",
+        fontFamily: PILL_FONT_FAMILY,
+        fontSize: "11px",
+        lineHeight: "1.3",
+        zIndex: "2",
+    });
+    const legendHeader = document.createElement("button");
+    legendHeader.type = "button";
+    Object.assign(legendHeader.style, {
+        all: "unset",
+        cursor: "pointer",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        gap: "12px",
+        fontSize: "11px",
+        fontWeight: "600",
+        color: "#e8eaed",
+    });
+    const legendBody = document.createElement("div");
+    Object.assign(legendBody.style, { display: "flex", flexDirection: "column", gap: "12px" });
+    let legendOpen = container.clientWidth >= 640;
+    const renderLegendHeader = () => {
+        legendHeader.innerHTML = `<span>Legend</span><span style="color:#9aa0a6;font-size:10px">${legendOpen ? "Hide" : "Show"}</span>`;
+        legendBody.style.display = legendOpen ? "flex" : "none";
+    };
+    legendHeader.addEventListener("click", () => { legendOpen = !legendOpen; renderLegendHeader(); });
+    renderLegendHeader();
+    legend.append(legendHeader, legendBody);
+    container.appendChild(legend);
+
     let renderer = null;
     let removed = false;
     let latestSize = null;
     let fitTimer = null;
     let userMoved = false;
     let offEvents = null;
+    let frame = 0;
     const queue = [];
 
     const safe = (fn, r) => {
-        try { fn(r); } catch (err) { console.error("[chart]", err); }
+        try {
+            fn(r);
+        } catch (err) {
+            if (isEngineFault(err) || adapterOf(r)?.destroyed) engineFailed(err);
+            else console.error("[chart]", err);
+        }
     };
+
+    // When the WASM engine faults inside its frame loop, the renderer (0.1.11) marks itself
+    // destroyed but its destroy() then returns early: the faulted engine stays attached,
+    // with its pointer listeners. Every later touch or position read calls into it and
+    // throws again ("Out of bounds memory access"). So: finish the teardown, stop calling
+    // it, and offer a reload in place of the graph.
+    let failed = false;
+    function engineFailed(err) {
+        if (failed || removed) return;
+        failed = true;
+        console.error("[chart] graph engine failed", err);
+        const adapter = adapterOf(renderer);
+        if (adapter?.engine) {
+            adapter.destroyed = false;
+            try { adapter.destroy(); } catch { /* already broken */ }
+        }
+        renderer = null;
+        queue.length = 0;
+        if (fitTimer) clearTimeout(fitTimer);
+        cancelAnimationFrame(frame);
+        hideTooltip();
+        canvas.style.visibility = "hidden";
+        overlay.style.visibility = "hidden";
+        legend.style.display = "none";
+        sheet.style.display = "none";
+
+        const notice = document.createElement("div");
+        Object.assign(notice.style, {
+            position: "absolute",
+            inset: "0",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "14px",
+            padding: "24px",
+            textAlign: "center",
+            color: "#bdc1c6",
+            fontFamily: PILL_FONT_FAMILY,
+            fontSize: "13px",
+            zIndex: "4",
+        });
+        notice.innerHTML = `
+            <div>The graph stopped working.</div>
+            <button type="button" style="all:unset;cursor:pointer;height:40px;padding:0 18px;border-radius:10px;
+                background:${QUERY_FILL};color:#1e1f22;font-weight:600">Reload graph</button>`;
+        notice.querySelector("button").addEventListener("click", () => window.location.reload());
+        container.appendChild(notice);
+    }
     // Run now if the renderer is up, otherwise once it has mounted.
     const run = (fn) => {
         if (removed) return;
         if (renderer) safe(fn, renderer);
         else queue.push(fn);
     };
+
+    // Lists what is actually on screen: categories of the articles shown, the two kinds
+    // of articles outside the library, and each link type.
+    function updateLegend() {
+        const categories = new Map();
+        let refStubs = false;
+        let relStubs = false;
+        const linkKinds = new Set();
+        for (const id of knownNodeIds) {
+            const d = fieldsById.get(id);
+            if (!d || id === "query") continue;
+            if (isStub(d)) {
+                if (isRelatedStub(d)) relStubs = true;
+                else refStubs = true;
+            } else {
+                const cat = d.category ?? { id: 0, name: "uncategorised", color: d.fillColor ?? NODE_FILL };
+                if (!categories.has(cat.id)) categories.set(cat.id, cat);
+            }
+        }
+        for (const l of allLinks) {
+            if (knownNodeIds.has(String(l.from)) && knownNodeIds.has(String(l.to))) linkKinds.add(linkKind(l));
+        }
+
+        const categoryRows = [...categories.values()]
+            .sort((a, b) => (a.id === 0) - (b.id === 0) || a.name.localeCompare(b.name))
+            .map((cat) => legendRow(pillSwatch(solidColor(cat.color)), cat.id === 0 ? "uncategorised" : cat.name));
+        const outsideRows = [
+            refStubs && legendRow(pillSwatch(STUB_FILL, STUB_REF_STROKE), "cited, not in library"),
+            relStubs && legendRow(pillSwatch(STUB_FILL, STUB_REL_STROKE), "related, not in library"),
+        ].filter(Boolean);
+        const linkRows = [
+            linkKinds.has("ref") && legendRow(lineSwatch("rgba(138,180,248,0.95)", false, true), "cites"),
+            linkKinds.has("rel") && legendRow(lineSwatch("rgba(246,174,45,0.95)", true, false), "related work"),
+            linkKinds.has("query") && legendRow(lineSwatch("rgba(232,234,237,0.5)", false, false), "search hit"),
+        ].filter(Boolean);
+        const markerRows = [
+            legendRow(pillSwatch("transparent", EXPANDED_STROKE), "expanded"),
+            legendRow(`<svg width="22" height="12" viewBox="0 0 22 12"><g stroke="#9aa0a6" stroke-width="1.2" stroke-linecap="round"><line x1="4" y1="1" x2="4" y2="4"/><line x1="11" y1="0.5" x2="11" y2="3.5"/><line x1="18" y1="1" x2="18" y2="4"/></g><rect x="1" y="5.5" width="20" height="6" rx="3" fill="#9aa0a6"/></svg>`, "more to explore"),
+        ];
+
+        const body = [
+            legendSection("In library", categoryRows),
+            legendSection("Outside library", outsideRows),
+            legendSection("Links", linkRows),
+            legendSection("Markers", markerRows),
+        ].join("");
+        if (legendBody.innerHTML !== body) legendBody.innerHTML = body;
+        legend.style.display = knownNodeIds.size > 1 ? "flex" : "none";
+    }
+
+    // ── Expansion markers ────────────────────────────────────────────────────
+
+    // id -> count last given to the renderer's expansion marker (a small patch of hairs
+    // beside a node that still has articles to reveal; a count of 0 removes it)
+    const markers = new Map();
+
+    // ── Details sheet: what hover shows on desktop, for touch screens ────────
+
+    const sheet = document.createElement("div");
+    Object.assign(sheet.style, {
+        position: "absolute",
+        left: "50%",
+        bottom: "calc(var(--chart-sheet-offset, 16px) + env(safe-area-inset-bottom))",
+        width: "min(520px, calc(100% - 24px))",
+        transform: "translate(-50%, 16px)",
+        opacity: "0",
+        pointerEvents: "none",
+        transition: "opacity 180ms ease, transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1)",
+        zIndex: "3",
+        padding: "14px 16px 12px",
+        background: "rgba(38,38,38,0.96)",
+        backdropFilter: "blur(10px)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: "16px",
+        boxShadow: "0 16px 40px rgba(0,0,0,0.5)",
+        color: "#e8eaed",
+        fontFamily: PILL_FONT_FAMILY,
+    });
+    container.appendChild(sheet);
+    let sheetId = null;
+
+    const sheetButton = (action, label, primary = false, danger = false) => `
+        <button type="button" data-action="${action}" style="
+            all:unset;cursor:pointer;box-sizing:border-box;height:40px;padding:0 14px;border-radius:10px;
+            display:inline-flex;align-items:center;font-size:13px;font-weight:600;white-space:nowrap;
+            background:${primary ? QUERY_FILL : "rgba(255,255,255,0.07)"};
+            color:${primary ? "#1e1f22" : danger ? "#f28b82" : "#e8eaed"}">${label}</button>`;
+
+    function renderSheet() {
+        const d = sheetId && fieldsById.get(sheetId);
+        if (!d) { hideSheet(); return; }
+        const remaining = remainingFor(sheetId);
+        const authors = Array.isArray(d.authors) && d.authors.length
+            ? d.authors.slice(0, 3).join(", ") + (d.authors.length > 3 ? ` +${d.authors.length - 3}` : "")
+            : "";
+        const meta = escapeHtml([authors, d.cited ? `Cited by ${d.cited}` : ""].filter(Boolean).join(" · "));
+        const cat = d.category && d.category.id !== 0
+            ? `<span style="background:${d.category.color};color:#000;font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:0.04em">${escapeHtml(d.category.name)}</span>`
+            : isStub(d) ? `<span style="font-size:11px;color:#9aa0a6">Not in library</span>` : "";
+        const actions = [];
+        if (!isStub(d) && d.file && onOpenPdf) actions.push(sheetButton("open", "Open PDF", true));
+        if (!isStub(d) && remaining !== 0) {
+            actions.push(sheetButton("expand", expandingNodes.has(sheetId) ? "Loading…" : remaining ? `Show more · ${remaining}` : "Show more"));
+        }
+        if (isStub(d)) actions.push(sheetButton("openalex", "OpenAlex", !d.is_stub_node || !onUploadStub));
+        if (d.is_stub_node && onUploadStub) actions.push(sheetButton("upload", "Upload", true));
+        actions.push(sheetButton("remove", "Remove", false, true));
+
+        sheet.innerHTML = `
+            <div style="display:flex;gap:10px;align-items:flex-start">
+                <div style="flex:1;min-width:0">
+                    <div style="font-size:14px;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">${escapeHtml(titleOf(d, sheetId))}</div>
+                    ${meta ? `<div style="font-size:11.5px;color:#9aa0a6;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${meta}</div>` : ""}
+                    ${cat ? `<div style="margin-top:8px">${cat}</div>` : ""}
+                </div>
+                <button type="button" data-action="close" aria-label="Close" style="all:unset;cursor:pointer;width:32px;height:32px;margin:-6px -8px 0 0;display:flex;align-items:center;justify-content:center;color:#9aa0a6;font-size:20px;line-height:1">×</button>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px;overflow-x:auto">${actions.join("")}</div>`;
+        Object.assign(sheet.style, { opacity: "1", transform: "translate(-50%, 0)", pointerEvents: "auto" });
+    }
+
+    function showSheet(id) {
+        sheetId = id;
+        renderSheet();
+    }
+
+    function hideSheet() {
+        sheetId = null;
+        Object.assign(sheet.style, { opacity: "0", transform: "translate(-50%, 16px)", pointerEvents: "none" });
+    }
+
+    sheet.addEventListener("click", (e) => {
+        const action = e.target.closest("[data-action]")?.dataset.action;
+        const id = sheetId;
+        const d = id && fieldsById.get(id);
+        if (!action || !d) return;
+        if (action === "close") hideSheet();
+        else if (action === "open") onOpenPdf(d);
+        else if (action === "expand") expandNode(id);
+        else if (action === "openalex") window.open(`https://openalex.org/${d.openalex_id || id}`, "_blank");
+        else if (action === "upload") onUploadStub(d);
+        else if (action === "remove") removeArticle(id);
+    });
+
+    function refreshExpansion() {
+        if (sheetId) renderSheet();
+        run((r) => {
+            for (const id of knownNodeIds) {
+                const remaining = remainingFor(id);
+                const count = remaining == null ? UNKNOWN_EXPANSION_COUNT : remaining;
+                if ((markers.get(id) ?? 0) === count) continue;
+                r.setNodeExpansion(id, { previewNodeIds: [], previewLinkIds: [], loadedCount: 0, totalCount: count });
+                if (count) markers.set(id, count);
+                else markers.delete(id);
+            }
+        });
+        updateLegend();
+    }
+
+    // ── Pop in / pop out ─────────────────────────────────────────────────────
+
+    // id -> { start, ms, from, to, ease }: the scale the overlay draws a node's title at
+    const pops = new Map();
+    // id -> node fields, for nodes shrinking away (already dropped from every other map)
+    const leaving = new Map();
+
+    function scaleOf(id, now) {
+        const pop = pops.get(id);
+        if (!pop) return 1;
+        const t = Math.min(1, Math.max(0, (now - pop.start) / pop.ms));
+        if (t >= 1 && !leaving.has(id)) pops.delete(id);
+        return pop.from + (pop.to - pop.from) * pop.ease(t);
+    }
+
+    // Nodes arrive at full size, so the layout spaces them for it (it keeps a node's
+    // size from when it was added). Before the next frame they are shrunk to a dot, then
+    // each grows back with an overshoot; growing back to the real size also restores
+    // the corner radius, so nothing is re-sent afterwards.
+    function popIn(r, ids, stagger) {
+        const now = performance.now();
+        const sizeOf = (id) => {
+            if (id === "query") return null;
+            const d = fieldsById.get(id);
+            return pillLayout(titleOf(d, id), isStub(d));
+        };
+        const resize = (rr, id, scale, opts) => {
+            const pill = sizeOf(id);
+            return pill
+                ? rr.animateNodeSize(id, pill.w * scale, pill.h * scale, opts)
+                : rr.animateNodeRadius(id, QUERY_NODE_RADIUS * scale, opts);
+        };
+
+        ids.forEach((id, i) => {
+            if (!resize(r, id, POP_MIN_SCALE, { durationMs: 1, easing: "linear", commit: true })) {
+                r.setNodePinned(id, false);   // no animation: just show it
+                return;
+            }
+            const delay = POP_START_MS + (stagger ? i * POP_STAGGER_MS : 0);
+            pops.set(id, { start: now + delay, ms: POP_IN_MS, from: POP_MIN_SCALE, to: 1, ease: easeOutBack });
+            setTimeout(() => {
+                if (removed || !renderer || !knownNodeIds.has(id)) return;
+                safe((rr) => resize(rr, id, 1, { durationMs: POP_IN_MS, easing: "ease-out-back", commit: true }), renderer);
+            }, delay);
+            // held in place while small: the layout would otherwise pull it into a spot
+            // its full size doesn't fit
+            setTimeout(() => {
+                if (!removed && renderer && knownNodeIds.has(id)) safe((rr) => rr.setNodePinned(id, false), renderer);
+            }, delay + POP_IN_MS);
+        });
+    }
+
+    function drawTitle(d, id, c, zoom) {
+        const pill = pillLayout(titleOf(d, id), isStub(d));
+        const px = pill.fontSize * zoom;
+        if (px < MIN_TEXT_PX) return;
+        octx.font = `${pill.weight} ${px}px ${PILL_FONT_FAMILY}`;
+        octx.fillStyle = pillColors(d, expandedIds.has(id)).text;
+        const top = c.y - ((pill.lines.length - 1) * pill.lineHeight * zoom) / 2;
+        pill.lines.forEach((line, i) => octx.fillText(line, c.x, top + i * pill.lineHeight * zoom));
+    }
+
+    function drawOverlay(now) {
+        frame = requestAnimationFrame(drawOverlay);
+
+        const dpr = window.devicePixelRatio || 1;
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        if (overlay.width !== Math.round(w * dpr) || overlay.height !== Math.round(h * dpr)) {
+            overlay.width = Math.round(w * dpr);
+            overlay.height = Math.round(h * dpr);
+        }
+        octx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        octx.clearRect(0, 0, w, h);
+        if (!renderer) return;
+        if (adapterOf(renderer)?.destroyed) { engineFailed(new Error("renderer stopped")); return; }
+        try {
+            drawTitles(now, w, h);
+        } catch (err) {
+            if (isEngineFault(err)) engineFailed(err);
+            else throw err;
+        }
+    }
+
+    function drawTitles(now, w, h) {
+        const zoom = renderer.getViewport().zoom;
+        octx.textAlign = "center";
+        octx.textBaseline = "middle";
+        const drawn = (id) => (leaving.has(id) ? leaving.get(id) : fieldsById.get(id));
+        for (const id of [...knownNodeIds, ...leaving.keys()]) {
+            if (id === "query") continue;
+            const d = drawn(id);
+            const pos = d && renderer.getNodePosition(id);
+            if (!pos) continue;
+            const c = renderer.worldToScreen(pos.x, pos.y);
+            const pill = pillLayout(titleOf(d, id), isStub(d));
+            if (c.x + pill.w * zoom < 0 || c.x - pill.w * zoom > w || c.y + pill.h * zoom < 0 || c.y - pill.h * zoom > h) continue;
+            drawTitle(d, id, c, zoom * scaleOf(id, now));
+        }
+    }
+    frame = requestAnimationFrame(drawOverlay);
 
     // Draw the given server nodes (those not drawn yet) and every known link whose two
     // ends are now drawn. Upserting restarts the force layout by itself; no autoLayout(),
@@ -379,13 +1014,13 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         const perAnchor = new Map();
         const rendererNodes = fresh.map((id) => {
             const n = allNodes.get(id);
-            if (Number.isFinite(n.x) && Number.isFinite(n.y)) return toRendererNode(n, n.x, n.y);
+            if (Number.isFinite(n.x) && Number.isFinite(n.y)) return toRendererNode(n, n.x, n.y, false, true);
             const anchor = anchorFor(id);
             const key = anchor ? `${anchor.x}|${anchor.y}` : "origin";
             const index = perAnchor.get(key) ?? 0;
             perAnchor.set(key, index + 1);
             const { x, y } = seedPosition(index, anchor);
-            return toRendererNode(n, x, y);
+            return toRendererNode(n, x, y, false, true);
         });
 
         if (rendererNodes.length) {
@@ -394,6 +1029,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
                 knownNodeIds.add(n.id);
                 shownNodeIds.add(allNodes.get(n.id).id);
             }
+            popIn(r, rendererNodes.map((n) => n.id), isInitial);
         }
 
         // links go in after their nodes: a link to a node the renderer lacks is not drawn
@@ -407,13 +1043,38 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         }
         if (rendererLinks.length) r.upsertLinks(rendererLinks);
 
+        refreshExpansion();
+
         if (isInitial && rendererNodes.length) {
-            r.fitToScreen(60);
-            // Re-fit once the layout has spread out, unless the user has panned or zoomed.
+            fitView(r);
+            // Re-fit once the nodes have popped in and the layout has spread out, unless the
+            // user has panned or zoomed. The camera glides there instead of jumping.
             fitTimer = setTimeout(() => {
-                if (!removed && renderer && !userMoved) renderer.fitToScreen(60);
-            }, 1500);
+                if (!removed && renderer && !userMoved) safe(glideToFit, renderer);
+            }, FIT_DELAY_MS);
         }
+    }
+
+    // Fit everything, but never zoom in past about 1:1 so a small graph isn't blown up.
+    function fitView(r) {
+        if (container.clientWidth < NARROW_WIDTH) {
+            const pos = r.getNodePosition("query");
+            if (pos) {
+                r.setViewport({ centerX: pos.x, centerY: pos.y, zoom: NARROW_ZOOM });
+                return;
+            }
+        }
+        r.fitToScreen(60);
+        const vp = r.getViewport();
+        if (vp.zoom > MAX_FIT_ZOOM) r.setViewport({ centerX: vp.centerX, centerY: vp.centerY, zoom: MAX_FIT_ZOOM });
+    }
+
+    function glideToFit(r) {
+        if (container.clientWidth < NARROW_WIDTH && knownNodeIds.has("query")) {
+            r.focusNode("query", { maxZoom: NARROW_ZOOM, durationMs: FIT_GLIDE_MS });
+            return;
+        }
+        r.focusNodes(r.getVisibleNodeIds(), { paddingPx: 60, maxZoom: MAX_FIT_ZOOM, durationMs: FIT_GLIDE_MS });
     }
 
     // Show the nodes within FOCUS_RADIUS hops of these (NetChart focus navigation).
@@ -421,11 +1082,97 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         run((r) => draw(r, around(ids), anchorId, isInitial));
     }
 
+    // Re-send a node at full size with its current outline; keeps its live position.
+    // Upserting drops the node's expansion marker, so that is sent again too.
+    function restyle(r, id) {
+        const n = allNodes.get(id);
+        const pos = r.getNodePosition(id);
+        if (!n || !pos) return;
+        r.upsertNode(toRendererNode(n, pos.x, pos.y, expandedIds.has(id)));
+        if (markers.has(id)) {
+            r.setNodeExpansion(id, { previewNodeIds: [], previewLinkIds: [], loadedCount: 0, totalCount: markers.get(id) });
+        }
+    }
+
+    // ── Long press: remove an article ────────────────────────────────────────
+
+    // Removes the node; for an expanded node, also the articles it revealed that were
+    // never clicked themselves (unless another expanded node links to them as well).
+    function removeArticle(id) {
+        if (id === "query" || !knownNodeIds.has(id)) return;
+
+        const doomed = new Set([id]);
+        if (expandedIds.has(id)) {
+            for (const [child, parent] of parentOf) {
+                if (parent !== id || expandedIds.has(child) || !knownNodeIds.has(child)) continue;
+                const heldElsewhere = (adjacency.get(child) ?? []).some(
+                    (nb) => nb !== id && expandedIds.has(nb) && knownNodeIds.has(nb),
+                );
+                if (!heldElsewhere) doomed.add(child);
+            }
+        }
+
+        hideTooltip();
+        if (doomed.has(sheetId)) hideSheet();
+
+        const linkIds = [];
+        allLinks = allLinks.filter((l) => {
+            if (!doomed.has(String(l.from)) && !doomed.has(String(l.to))) return true;
+            const rl = toRendererLink(l);
+            if (knownLinkIds.delete(rl.id)) linkIds.push(rl.id);
+            return false;
+        });
+        for (const gone of doomed) {
+            leaving.set(gone, fieldsById.get(gone));
+            for (const nb of adjacency.get(gone) ?? []) {
+                const list = adjacency.get(nb);
+                if (list) adjacency.set(nb, list.filter((x) => x !== gone));
+            }
+            adjacency.delete(gone);
+            allNodes.delete(gone);
+            fieldsById.delete(gone);
+            nodeEdgeMap.delete(gone);
+            knownNodeIds.delete(gone);
+            shownNodeIds.delete(gone);
+            expandedIds.delete(gone);
+            parentOf.delete(gone);
+        }
+        refreshExpansion();
+
+        // shrink away, then drop the nodes and their links from the renderer
+        const now = performance.now();
+        run((r) => {
+            for (const gone of doomed) {
+                pops.set(gone, { start: now, ms: POP_OUT_MS, from: 1, to: POP_MIN_SCALE, ease: easeInBack });
+                if (markers.delete(gone)) r.setNodeExpansion(gone, { previewNodeIds: [], previewLinkIds: [], loadedCount: 0, totalCount: 0 });
+                const d = leaving.get(gone);
+                const pill = pillLayout(titleOf(d, gone), isStub(d));
+                r.animateNodeSize(gone, pill.w * POP_MIN_SCALE, pill.h * POP_MIN_SCALE, { durationMs: POP_OUT_MS, easing: "ease-in-back", commit: true });
+            }
+            setTimeout(() => {
+                for (const gone of doomed) {
+                    leaving.delete(gone);
+                    pops.delete(gone);
+                }
+                if (removed || !renderer) return;
+                safe((rr) => {
+                    rr.removeLinks(linkIds);
+                    rr.removeNodes([...doomed]);
+                }, renderer);
+            }, POP_OUT_MS);
+        });
+    }
+
     // ── Expand a node on click ───────────────────────────────────────────────
 
     async function expandNode(nodeId) {
         if (expandingNodes.has(nodeId)) return;
         expandingNodes.add(nodeId);
+        if (sheetId === nodeId) renderSheet();
+        if (!expandedIds.has(nodeId)) {
+            expandedIds.add(nodeId);
+            run((r) => restyle(r, nodeId));
+        }
 
         const shownRefs = shownRefsByNode.get(nodeId) ?? new Set();
         const shownRels = shownRelsByNode.get(nodeId) ?? new Set();
@@ -444,8 +1191,10 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
 
             if (!resp.ok) {
                 console.warn(`[expand] ${nodeId} → HTTP ${resp.status}`);
+                if (resp.status === 404) exhaustedIds.add(nodeId);
                 return;
             }
+            if (removed || !knownNodeIds.has(nodeId)) return;   // removed while loading
 
             const payload = await resp.json();
             const newNodes = payload.nodes ?? [];
@@ -453,13 +1202,8 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
 
             // Register new nodes before addData so the cross-link pass sees them
             for (const node of newNodes) {
-                const d = fieldsOf(node) ?? {};
-                nodeEdgeMap.set(node.id, {
-                    ref_ids: d.referenced_work_ids || [],
-                    rel_ids: d.related_work_ids || [],
-                });
-                shownRefsByNode.set(node.id, new Set());
-                shownRelsByNode.set(node.id, new Set());
+                registerEdges({ id: node.id, data: fieldsOf(node) ?? {} });
+                if (!parentOf.has(String(node.id))) parentOf.set(String(node.id), nodeId);
             }
 
             // Update pagination cursors for the expanded node
@@ -467,6 +1211,9 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             if (!shownRelsByNode.has(nodeId)) shownRelsByNode.set(nodeId, new Set());
             for (const id of payload.new_ref_ids ?? []) shownRefsByNode.get(nodeId).add(id);
             for (const id of payload.new_rel_ids ?? []) shownRelsByNode.get(nodeId).add(id);
+            if (!(payload.new_ref_ids ?? []).length && !(payload.new_rel_ids ?? []).length) {
+                exhaustedIds.add(nodeId);
+            }
 
             // Client-side cross-link pass: existing nodes → new nodes
             // (server handles new→existing and new→new)
@@ -501,10 +1248,11 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             console.error(`[expand] ${nodeId} failed:`, err);
         } finally {
             expandingNodes.delete(nodeId);
+            refreshExpansion();
         }
     }
 
-    // ── Pointer tracking (tooltip position; "the user moved the view") ────────
+    // ── Pointer tracking (tooltip position; "the user moved the view") ──────────
 
     let pointerX = 0;
     let pointerY = 0;
@@ -519,26 +1267,31 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         // a press that travels is a pan or a drag: stop re-fitting the view after that
         if (pressed && Math.hypot(e.clientX - pressed.x, e.clientY - pressed.y) > 6) userMoved = true;
     };
-    const onPointerDown = (e) => { pressed = { x: e.clientX, y: e.clientY }; };
+    let pointerType = "mouse";
+    const onPointerDown = (e) => {
+        pressed = { x: e.clientX, y: e.clientY };
+        pointerType = e.pointerType || "mouse";
+        if (pointerType !== "mouse") hideTooltip();
+    };
     const onPointerUp = () => { pressed = null; };
     const onWheel = () => { userMoved = true; };
 
     container.addEventListener("pointermove", onPointerMove);
-    container.addEventListener("pointerdown", onPointerDown);
+    container.addEventListener("pointerdown", onPointerDown, true);
     window.addEventListener("pointerup", onPointerUp);
     container.addEventListener("wheel", onWheel, { passive: true });
 
     // ── Renderer events ──────────────────────────────────────────────────────
     //   hoverchange → { hoverNodeId, hoverLinkId }
-    //   click / doubleclick → { nodeId, linkId, screenX, screenY, chartX, chartY, ... }
+    //   click / doubleclick / longpress → { nodeId, linkId, screenX, screenY, chartX, chartY, ... }
 
     const handleEvent = (event) => {
         switch (event.type) {
             case "hoverchange": {
                 const id = event.hoverNodeId;
-                if (id && id !== "query") {
+                if (id && id !== "query" && pointerType === "mouse") {
                     const d = fieldsById.get(id);
-                    if (d) showTooltip(d, pointerX, pointerY);
+                    if (d) showTooltip(d, pointerX, pointerY, remainingFor(id));
                     else hideTooltip();
                 } else {
                     hideTooltip();
@@ -546,21 +1299,38 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
                 break;
             }
 
+            case "nodeexpand": {
+                // a click on the expansion marker; the articles come from the server
+                const id = event.nodeId;
+                if (id && fieldsById.has(id) && remainingFor(id) !== 0) expandNode(id);
+                break;
+            }
+
+            case "longpress": {
+                // the adapter suppresses the click that would follow the release
+                if (event.nodeId) removeArticle(event.nodeId);
+                break;
+            }
+
             case "click": {
                 const id = event.nodeId;
-                if (!id || id === "query") return;
+                const touch = pointerType !== "mouse";
+                if (!id || id === "query") {
+                    if (touch) hideSheet();
+                    return;
+                }
                 const d = fieldsById.get(id);
                 if (!d) return;
 
-                if (d.is_stub_node || d.stub_document) {
-                    const oaId = d.openalex_id || id;
-                    window.open(`https://openalex.org/${oaId}`, "_blank");
+                if (isStub(d)) {
+                    // on touch the sheet offers OpenAlex instead of leaving the page at once
+                    if (touch) showSheet(id);
+                    else window.open(`https://openalex.org/${d.openalex_id || id}`, "_blank");
                     return;
                 }
 
-                // NetChart focused the clicked node: bring in what is near it, then fetch more
-                focusOn([id], id);
-                expandNode(id);
+                if (remainingFor(id) !== 0) expandNode(id);
+                if (touch) showSheet(id);
                 break;
             }
 
@@ -620,9 +1390,10 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             removed = true;
             queue.length = 0;
             if (fitTimer) clearTimeout(fitTimer);
+            cancelAnimationFrame(frame);
             if (resizeObserver) resizeObserver.disconnect();
             container.removeEventListener("pointermove", onPointerMove);
-            container.removeEventListener("pointerdown", onPointerDown);
+            container.removeEventListener("pointerdown", onPointerDown, true);
             window.removeEventListener("pointerup", onPointerUp);
             container.removeEventListener("wheel", onWheel);
             hideTooltip();
@@ -630,6 +1401,9 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             if (renderer) renderer.destroy();   // if still mounting, destroyed once it resolves
             renderer = null;
             canvas.remove();
+            overlay.remove();
+            legend.remove();
+            sheet.remove();
         },
 
         get renderer() { return renderer; },
@@ -643,12 +1417,23 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     const seeds = (initialNodes ?? []).map(String).filter((id) => allNodes.has(id));
     focusOn(seeds.length ? seeds : [...allNodes.keys()], null, true);
 
+    // Pills are sized from measured text, so wait for Poppins before the first draw.
+    const fontsReady = document.fonts
+        ? Promise.all([
+            document.fonts.load(`500 ${PILL_FONT_SIZE}px Poppins`),
+            document.fonts.load(`400 ${STUB_FONT_SIZE}px Poppins`),
+        ]).catch(() => null)
+        : Promise.resolve();
+
     // "viewer": pan, zoom, select and drag nodes, no editing.
-    GraphRenderer.mount(canvas, {
-        darkModeEnabled: true,
-        controlMode: "viewer",
-        wheelEnabled: true,
-    }).then((r) => {
+    Promise.all([
+        GraphRenderer.mount(canvas, {
+            darkModeEnabled: true,
+            controlMode: "viewer",
+            wheelEnabled: true,
+        }),
+        fontsReady,
+    ]).then(([r]) => {
         if (removed) { r.destroy(); return; }
         renderer = r;
 
@@ -656,9 +1441,10 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         // snap to grid is on by default and makes the layout stiff and blocky
         r.setSnapToGrid({ enabled: false, gridSize: 32 });
         r.setLayoutConfig(LAYOUT);
+        r.setLongPressOptions({ enabled: true, durationMs: LONG_PRESS_MS, movementTolerancePx: 10 });
 
         // onEvent returns an unsubscribe function
-        offEvents = r.onEvent(handleEvent);
+        offEvents = r.onEvent((event) => safe(() => handleEvent(event), r));
 
         if (latestSize) r.resize(latestSize.w, latestSize.h);
 

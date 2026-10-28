@@ -53,3 +53,21 @@ code {
   border-radius: 2px;
   padding: 0 2px;
 }
+
+/* pdf.js pages on the dark viewer background */
+.pdf-scroll .pdfViewer {
+  --page-margin: 12px auto;
+  --page-border: none;
+  padding-bottom: 24px;
+}
+.pdf-scroll .pdfViewer .page {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  border-radius: 2px;
+}
+
+/* iOS zooms the page into any focused field with text under 16px */
+@media (pointer: coarse) {
+  input, textarea, select {
+    font-size: max(16px, 1em) !important;
+  }
+}

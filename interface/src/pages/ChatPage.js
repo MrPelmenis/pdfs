@@ -114,7 +114,7 @@ export default function ChatPage() {
   const isEmpty = messages.length === 0;
 
   return (
-    <main className="h-screen overflow-hidden bg-theme-bg flex flex-col">
+    <main className="h-full overflow-hidden bg-theme-bg flex flex-col">
 
       {/* ── Messages ── */}
       <div className="flex-1 overflow-y-auto px-5 py-6">

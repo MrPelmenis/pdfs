@@ -10,6 +10,7 @@
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^13.5.0",
     "katex": "^0.16.46",
+    "pdfjs-dist": "^5.4.624",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-markdown": "^10.1.0",
