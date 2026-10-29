@@ -259,6 +259,14 @@ export default function SearchPage() {
         const docs = Math.max(1, docsInput || 1);
         if (!hasAnyInput(q, fieldFilters)) return;
         setHasSearched(true);
+        // a new query starts clean: the old one's field / year / category filters go
+        // (a search made only of field filters, with no query text, keeps them)
+        if (q && q !== searched) {
+            const ff = Object.fromEntries(FIELD_FILTERS.map(({ key }) => [key, ""]));
+            clearAllFilters();
+            navigate(buildNavUrl(q, docs, YEAR_MIN, YEAR_MAX, ff, ""));
+            return;
+        }
         navigate(buildNavUrl(q, docs, yearStart, yearEnd, fieldFilters, categoryId));
     };
 

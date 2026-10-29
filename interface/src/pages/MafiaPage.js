@@ -232,7 +232,7 @@ function FieldList({ categories, counts, selected, onChange }) {
             </div>
             <div className="flex items-center gap-2.5 px-2 h-8">
                 <span className="w-3 flex-none text-center text-theme-muted font-bold leading-none"><span className="text-[9px]">A</span><span className="text-[13px]">A</span></span>
-                <span className="text-[13px] text-theme-muted">Name size: career citations</span>
+                <span className="text-[13px] text-theme-muted">Name size: citation rank on the map</span>
             </div>
         </div>
     );
@@ -557,6 +557,8 @@ export default function MafiaPage() {
         try {
             const p = networkParams(filtersRef.current);
             p.set("count", EXPAND_COUNT);
+            // open at the strength the map was drawn at (the server may have relaxed it)
+            if (net.min_weight != null) p.set("min_weight", net.min_weight);
             const resp = await fetch(`${API}/mafia/expand/${encodeURIComponent(id)}?${p}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -784,6 +786,10 @@ export default function MafiaPage() {
                             {wide && stats && (
                                 <div className="text-right text-xs text-theme-muted leading-tight whitespace-nowrap">
                                     <div><b className="text-theme-text-primary font-semibold">{stats.authors_shown}</b> of {stats.authors_total.toLocaleString()} authors</div>
+                                    {/* the server lowered the link strength to fill the map */}
+                                    {network.min_weight < network.requested_min_weight && (
+                                        <div className="text-chartizer-yellow">links ≥ {network.min_weight} to fill the map</div>
+                                    )}
                                     {/* fewer than asked for: that's everyone with a link here */}
                                     {!lonely && stats.authors_shown < n && (
                                         <div className="text-chartizer-yellow">all connected ones here</div>

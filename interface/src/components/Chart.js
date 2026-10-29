@@ -1576,6 +1576,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     container.addEventListener("pointerdown", onPointerDown, true);
     window.addEventListener("pointerup", onPointerUp);
     container.addEventListener("wheel", onWheel, { passive: true });
+    const unguardHover = guardHover(container);
 
     // ── Renderer events ──────────────────────────────────────────────────────
     //   hoverchange → { hoverNodeId, hoverLinkId }
@@ -1704,6 +1705,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             container.removeEventListener("pointerdown", onPointerDown, true);
             window.removeEventListener("pointerup", onPointerUp);
             container.removeEventListener("wheel", onWheel);
+            unguardHover();
             hideTooltip();
             if (offEvents) offEvents();
             if (renderer) renderer.destroy();   // if still mounting, destroyed once it resolves
@@ -1764,9 +1766,35 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     return chart;
 };
 
+// The engine hit-tests hover on every window pointermove inside the graph's
+// rectangle, even over a panel floating above it (results, filters, legend, author
+// card), so a node under a panel would light up and show its tooltip. Moves that aren't
+// over the graph's canvas stop at the document and never reach the engine's window
+// listener; moves during a press that began on the graph (a pan, a node drag) pass.
+function guardHover(container) {
+    let pressOnGraph = false;
+    const onGraph = (e) => e.target instanceof HTMLCanvasElement && container.contains(e.target);
+    const down = (e) => { pressOnGraph = onGraph(e); };
+    const up = () => { pressOnGraph = false; };
+    const move = (e) => {
+        if (onGraph(e) || (pressOnGraph && e.buttons)) return;
+        e.stopPropagation();
+    };
+    document.addEventListener("pointerdown", down, true);
+    window.addEventListener("pointerup", up, true);
+    window.addEventListener("pointercancel", up, true);
+    document.addEventListener("pointermove", move);
+    return () => {
+        document.removeEventListener("pointerdown", down, true);
+        window.removeEventListener("pointerup", up, true);
+        window.removeEventListener("pointercancel", up, true);
+        document.removeEventListener("pointermove", move);
+    };
+}
+
 // Shared with the author network (MafiaChart).
 export {
-    drawHairs, hairHit, MARKER_MAX_HAIRS,
+    drawHairs, hairHit, MARKER_MAX_HAIRS, guardHover,
     CHART_BG, PILL_FONT_FAMILY, LINK_LABEL_STYLE, LONG_PRESS_MS, MIN_TEXT_PX,
     POP_IN_MS, POP_OUT_MS, POP_MIN_SCALE, POP_START_MS, POP_STAGGER_MS, MAX_FIT_ZOOM, FIT_GLIDE_MS,
     parseColor, solidColor, textColorOn, escapeHtml, isEngineFault, adapterOf, easeOutBack, easeInBack,

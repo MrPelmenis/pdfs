@@ -4,7 +4,7 @@ import {
     CHART_BG, PILL_FONT_FAMILY, LINK_LABEL_STYLE, LONG_PRESS_MS, MIN_TEXT_PX,
     POP_IN_MS, POP_OUT_MS, POP_MIN_SCALE, POP_START_MS, POP_STAGGER_MS, MAX_FIT_ZOOM, FIT_GLIDE_MS,
     solidColor, textColorOn, escapeHtml, isEngineFault, adapterOf, easeOutBack, easeInBack,
-    drawHairs, hairHit, MARKER_MAX_HAIRS,
+    drawHairs, hairHit, MARKER_MAX_HAIRS, guardHover,
     getTooltip, positionTooltip, hideTooltip, legendRow, legendSection, pillSwatch, lineSwatch,
 } from "./Chart";
 
@@ -17,10 +17,14 @@ import {
 const MULTI_FILL = "#eef0f2";
 const NO_FIELD_FILL = "#5f6368";
 const SELECTED_STROKE = "#ffffff";
-// Name size = the scientist's career citations (OpenAlex), on a log scale squared so
-// the most cited stand out: ~100 citations ≈ 13px, ~10k ≈ 21px, the top ≈ 30px.
-const NAME_MIN_FONT = 11;
-const NAME_FONT_RANGE = 19;
+// Name size = how the scientist ranks by career citations (OpenAlex) among the authors
+// on the map: the most cited is biggest, the least cited smallest, the rest spread in
+// between (a little more room at the top). Sizing by the citation numbers themselves
+// left half of the authors within a few pixels of each other: counts run from tens to
+// hundreds of thousands, so most land in the same middle band.
+const NAME_MIN_FONT = 10;
+const NAME_FONT_RANGE = 34;
+const NAME_RANK_CURVE = 2.2;
 const CITE_COLOR = (a) => `rgba(232,234,237,${a})`;
 const COAUTHOR_COLOR = (a) => `rgba(45,212,191,${a})`;
 
@@ -81,9 +85,21 @@ export function profileUrl(author) {
         : `https://scholar.google.com/citations?view_op=search_authors&mauthors=${encodeURIComponent(author.name)}`;
 }
 
-function nameSize(author, maxCitations) {
-    const t = Math.log1p(author.citations ?? 0) / Math.log1p(Math.max(maxCitations, 10));
-    return Math.round(NAME_MIN_FONT + NAME_FONT_RANGE * t * t);
+// author id -> 0..1, their place by citations among `authors` (ties share a place)
+function citationRanks(authors) {
+    const sorted = [...authors].sort((a, b) => (a.citations ?? 0) - (b.citations ?? 0));
+    const ranks = new Map();
+    const last = Math.max(1, sorted.length - 1);
+    let place = 0;
+    sorted.forEach((a, i) => {
+        if (i > 0 && (a.citations ?? 0) !== (sorted[i - 1].citations ?? 0)) place = i;
+        ranks.set(a.id, place / last);
+    });
+    return ranks;
+}
+
+function nameSize(rank) {
+    return Math.round(NAME_MIN_FONT + NAME_FONT_RANGE * rank ** NAME_RANK_CURVE);
 }
 
 let _measureCtx = null;
@@ -681,7 +697,7 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
             network = { ...fullNetwork, authors: fullNetwork.authors.filter((a) => linked.has(a.id)) };
         }
         const next = new Map(network.authors.map((a) => [a.id, a]));
-        const maxCitations = Math.max(1, ...fullNetwork.authors.map((a) => a.citations ?? 0));
+        const ranks = citationRanks(network.authors);
 
         // links first: a link must not outlive one of its ends
         const maxWeight = Math.max(1, ...links.map((l) => l.weight));
@@ -700,7 +716,7 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
         const freshNodes = [];
         const restyled = [];
         for (const a of network.authors) {
-            const pill = nameLayout(a.name, nameSize(a, maxCitations));
+            const pill = nameLayout(a.name, nameSize(ranks.get(a.id) ?? 0));
             const prevPill = layouts.get(a.id);
             const known = authors.has(a.id) || leaving.has(a.id);
             authors.set(a.id, a);
@@ -802,6 +818,7 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
     container.addEventListener("pointerdown", onPointerDown, true);
     window.addEventListener("pointerup", onPointerUp);
     container.addEventListener("wheel", onWheel, { passive: true });
+    const unguardHover = guardHover(container);
 
     const handleEvent = (event) => {
         if (event.type === "hoverchange") {
@@ -906,6 +923,7 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
             container.removeEventListener("pointermove", onPointerMove);
             container.removeEventListener("pointerdown", onPointerDown, true);
             window.removeEventListener("pointerup", onPointerUp);
+            unguardHover();
             container.removeEventListener("wheel", onWheel);
             hideTooltip();
             if (offEvents) offEvents();

@@ -266,7 +266,8 @@ def _selection(category_ids=None, year_from=None, year_to=None, paper_ids=None,
                 neighbours[b][a] = w
 
     result = {
-        "sel": sel, "author_papers": author_papers, "coauthor": coauthor,
+        # a plain dict: reading a missing author mustn't add them to the cached selection
+        "sel": sel, "author_papers": dict(author_papers), "coauthor": coauthor,
         "cites": cites, "field_matrix": field_matrix, "cites_out": cites_out,
         "cites_in": cites_in, "coauthored": coauthored, "neighbours": neighbours,
     }
@@ -277,31 +278,45 @@ def _selection(category_ids=None, year_from=None, year_to=None, paper_ids=None,
     return result
 
 
-def _author_row(st, sx, aid, shown, min_weight):
+def _library():
+    """The whole library as one selection (no filters). Opening an author reaches
+    their connections here, so it still works once everyone in a narrow selection
+    (one topic, field or decade) is on the map."""
+    return _selection()
+
+
+def _author_row(st, sx, aid, shown, min_weight, lib=None):
+    lib = lib or _library()
+    # someone opened into the map from outside the selection: described by the whole library
+    outside = aid not in sx["author_papers"]
+    if outside:
+        sx = lib
     papers = st["papers"]
-    fields = collections.Counter(papers[pid]["category_id"] for pid in sx["author_papers"][aid])
+    fields = collections.Counter(papers[pid]["category_id"] for pid in sx["author_papers"].get(aid, ()))
     real = [c for c in fields if c != 0]
     profile = st.get("profiles", {}).get(aid) or {}
     return {
         "id": aid,
         "name": st["authors"].get(aid, ""),
-        "papers": len(sx["author_papers"][aid]),
+        "papers": len(sx["author_papers"].get(aid, ())),
         "fields": {str(c): n for c, n in fields.most_common()},
         "category_id": real[0] if len(real) == 1 else (None if real else 0),
         "multi": len(real) > 1,
         "cites_out": sx["cites_out"][aid],
         "cited_in": sx["cites_in"][aid],
         "coauthored": sx["coauthored"][aid],
-        "more": _hidden_count(sx, aid, shown, min_weight),
+        "more": _hidden_count(lib, aid, shown, min_weight),
+        "outside": outside,
         # their whole career, from the authors database
         "citations": profile.get("cited_by_count") or 0,
         "h_index": profile.get("h_index") or 0,
     }
 
 
-def _hidden_count(sx, aid, shown, min_weight):
-    """How many authors this one links to (at min_weight) that aren't on the map."""
-    return sum(1 for b, w in sx["neighbours"].get(aid, {}).items()
+def _hidden_count(lib, aid, shown, min_weight):
+    """How many authors this one links to (at min_weight, anywhere in the library)
+    that aren't on the map."""
+    return sum(1 for b, w in lib["neighbours"].get(aid, {}).items()
                if w >= min_weight and b not in shown)
 
 
@@ -312,6 +327,25 @@ def _links_between(sx, new, everyone, min_weight):
         for (a, b), w in counter.items():
             if w >= min_weight and (a in new or b in new) and a in everyone and b in everyone:
                 links.append({"from": a, "to": b, "type": kind, "weight": w})
+    return links
+
+
+def _map_links(sx, lib, new, everyone, min_weight, opened=()):
+    """Links for the map: between authors of the selection, counted in the selection
+    (so a topic map's weights stay about the topic); touching an author opened in
+    (`opened`, or from outside the selection), counted in the whole library, since
+    that is the link they were opened through."""
+    links = _links_between(sx, new, everyone, min_weight)
+    if lib is sx:
+        return links
+    inside = sx["author_papers"]
+    special = set(opened) | {a for a in everyone if a not in inside}
+    if not special:
+        return links
+    have = {(l["from"], l["to"], l["type"]) for l in links}
+    for l in _links_between(lib, new, everyone, min_weight):
+        if (l["from"] in special or l["to"] in special) and (l["from"], l["to"], l["type"]) not in have:
+            links.append(l)
     return links
 
 
@@ -374,17 +408,26 @@ def network(category_ids=None, year_from=None, year_to=None, paper_ids=None,
         return ((profiles.get(aid) or {}).get("cited_by_count") or 0, connectivity(aid))
 
     order = sorted(author_papers, key=rank, reverse=True)
+    requested_weight = min_weight
     if linked_only:
         ranked = _pick_connected(order, sx["neighbours"], min_weight, max(1, limit))
+        # A narrow selection (a topic, a decade, one field) seldom has `limit` authors
+        # linked this strongly: relax the link strength a step at a time until the map
+        # fills. Links, hidden counts and opening all use the strength the map ended on.
+        while len(ranked) < limit and min_weight > 1:
+            min_weight -= 1
+            ranked = _pick_connected(order, sx["neighbours"], min_weight, max(1, limit))
     else:
         ranked = order[:max(1, limit)]
-    # authors the user expanded into the map stay on it while they're in the selection
-    extra = [a for a in (include or ()) if a in author_papers and a not in set(ranked)]
-    ranked += extra
+    # authors the user opened into the map stay on it, from the selection or beyond it
+    lib = _library()
+    picked = set(ranked)
+    ranked += [a for a in dict.fromkeys(include or ())
+               if a in lib["author_papers"] and a not in picked]
     shown = set(ranked)
 
-    out_authors = [_author_row(st, sx, aid, shown, min_weight) for aid in ranked]
-    links = _links_between(sx, shown, shown, min_weight)
+    out_authors = [_author_row(st, sx, aid, shown, min_weight, lib) for aid in ranked]
+    links = _map_links(sx, lib, shown, shown, min_weight, set(include or ()))
 
     field_matrix = sx["field_matrix"]
     used_cats = sorted({c for pair in field_matrix for c in pair}
@@ -397,6 +440,9 @@ def network(category_ids=None, year_from=None, year_to=None, paper_ids=None,
         "authors": out_authors,
         "links": links,
         "linked_only": linked_only,
+        # the link strength the map was drawn at (below the one asked for when relaxed)
+        "min_weight": min_weight,
+        "requested_min_weight": requested_weight,
         "field_matrix": {"category_ids": used_cats, "counts": matrix,
                          "papers": [per_category.get(c, 0) for c in used_cats]},
         "categories": get_all_categories(),
@@ -415,25 +461,29 @@ def network(category_ids=None, year_from=None, year_to=None, paper_ids=None,
 
 def expand_author(author_id, shown, count=12, min_weight=1, **filters):
     """The `count` strongest connections of an author that aren't on the map yet,
-    with their links to everyone on it, and the new hidden-connection counts."""
+    with their links to everyone on it, and the new hidden-connection counts.
+    Connections come from the whole library, those inside the selection first: the
+    filters pick the starting map, opening an author follows them anywhere."""
     st = _get_state()
     sx = _selection(**filters)
+    lib = _library()
     shown = set(shown) | {author_id}
+    inside = sx["author_papers"]
     candidates = sorted(
-        ((b, w) for b, w in sx["neighbours"].get(author_id, {}).items()
+        ((b, w) for b, w in lib["neighbours"].get(author_id, {}).items()
          if w >= min_weight and b not in shown),
-        key=lambda bw: -bw[1],
+        key=lambda bw: (bw[0] not in inside, -bw[1]),
     )[:max(1, count)]
     new = {b for b, _ in candidates}
     everyone = shown | new
 
-    links = _links_between(sx, new, everyone, min_weight)
+    links = _map_links(sx, lib, new, everyone, min_weight, new | {author_id})
     touched = new | {author_id} | {l["from"] for l in links} | {l["to"] for l in links}
     return {
-        "authors": [_author_row(st, sx, b, everyone, min_weight) for b, _ in candidates],
+        "authors": [_author_row(st, sx, b, everyone, min_weight, lib) for b, _ in candidates],
         "links": links,
         # hidden counts that changed: the new authors, and everyone they link to
-        "more": {a: _hidden_count(sx, a, everyone, min_weight) for a in touched if a in everyone},
+        "more": {a: _hidden_count(lib, a, everyone, min_weight) for a in touched if a in everyone},
     }
 
 
