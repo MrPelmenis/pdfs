@@ -5,6 +5,7 @@ import src.corelamo
 
 from src.metadata_analyser import openalex_by_id
 from src.json_builder import build_document, upload_document
+from src.classify import resolve_category
 from src.queue_manager import peek_next_id, remove_first_id
 
 
@@ -48,11 +49,19 @@ def delete_document(doc_id: str) -> bool:
 
 
 def build_stub_document(openalex_data: dict) -> dict:
+    category = resolve_category(
+        field=openalex_data.get("field"),
+        title=openalex_data.get("title") or "",
+        abstract=openalex_data.get("abstract") or "",
+        keywords=" ".join((openalex_data.get("topics") or [])
+                          + (openalex_data.get("keywords") or [])),
+    )
     return build_document(
         metadata_info=openalex_data,
         grobid_info={},
         image_path="",
         stub=True,
+        category_id=category["id"],
     )
 
 

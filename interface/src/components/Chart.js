@@ -18,7 +18,6 @@ const PILL_LINE_HEIGHT = 17;
 const PILL_TEXT_WIDTH = 220;     // world units; titles wrap to this
 const PILL_PAD_X = 16;
 const PILL_PAD_Y = 9;
-const PILL_MAX_CORNER = 18;
 const STUB_FONT_SIZE = 12;
 const STUB_LINE_HEIGHT = 16;
 const STUB_FILL = "#26272b";
@@ -60,8 +59,13 @@ const POP_OUT_MS = 240;
 const POP_STAGGER_MS = 35;       // first results pop in one after another
 const POP_MIN_SCALE = 0.05;
 const POP_START_MS = 30;          // the shrink to a dot lands before growing starts
-// Expansion marker (the renderer's small patch of hairs) for a node we haven't counted yet.
-const UNKNOWN_EXPANSION_COUNT = 10;
+// Expansion marker (the renderer's small patch of hairs). The patch has a fixed width and
+// packs one hair per count into it, so the count is capped to keep the hairs spaced out.
+const MARKER_MAX_HAIRS = 5;
+const HAIR_COLOR = "rgba(189,193,198,0.9)";
+const HAIR_LENGTH = 9;           // world units, like the pills
+const HAIR_GAP = 3;              // between the pill edge and the hair
+const HAIR_SPACING = 7;          // along the edge, between hairs
 const LONG_PRESS_MS = 600;
 
 const MAX_FIT_ZOOM = 1.1;
@@ -177,11 +181,18 @@ function pillLayout(title, stub) {
 
     const textWidth = Math.min(PILL_TEXT_WIDTH, Math.max(...lines.map(width)));
     const h = lines.length * lineHeight + 2 * PILL_PAD_Y;
+    // A true pill: the ends are half circles. On a multi-line pill the top and bottom
+    // lines would run into them, so the sides get as much room as the curve takes away
+    // at the height of the text's top edge.
+    const r = h / 2;
+    const textTop = r - PILL_PAD_Y;
+    const curveInset = r - Math.sqrt(Math.max(0, r * r - textTop * textTop));
+    const padX = Math.max(PILL_PAD_X, curveInset + 8);
     const layout = {
         lines, fontSize, lineHeight, weight,
-        w: Math.ceil(textWidth + 2 * PILL_PAD_X),
+        w: Math.ceil(textWidth + 2 * padX),
         h,
-        corner: Math.min(h / 2, PILL_MAX_CORNER),
+        corner: r,
     };
     _pillCache.set(key, layout);
     return layout;
@@ -213,6 +224,130 @@ const BACK = 1.70158;
 const easeOutBack = (t) => 1 + (BACK + 1) * (t - 1) ** 3 + BACK * (t - 1) ** 2;
 const easeInBack = (t) => (BACK + 1) * t ** 3 - BACK * t ** 2;
 
+// ── Expansion hairs ──────────────────────────────────────────────────────────
+//
+// The renderer's own expansion marker sits where the engine puts it (no option to move
+// it), so the hairs are drawn on the overlay instead: a small fan on the pill's edge,
+// in the middle of the widest gap between the links leaving the pill — as far as
+// possible from where links come in.
+
+// The point on a pill's edge (a w×h stadium, centred on 0,0) in direction `angle`, and
+// the outward normal there.
+function pillEdgePoint(w, h, angle) {
+    const r = h / 2;
+    const a = Math.max(0, w / 2 - r);
+    const dx = Math.cos(angle);
+    const dy = Math.sin(angle);
+    let lo = 0;
+    let hi = w / 2 + h;
+    for (let i = 0; i < 22; i++) {
+        const t = (lo + hi) / 2;
+        const px = t * dx;
+        const py = t * dy;
+        const qx = Math.max(-a, Math.min(a, px));
+        if (Math.hypot(px - qx, py) < r) lo = t;
+        else hi = t;
+    }
+    const x = lo * dx;
+    const y = lo * dy;
+    const qx = Math.max(-a, Math.min(a, x));
+    const n = Math.hypot(x - qx, y) || 1;
+    return { x, y, nx: (x - qx) / n, ny: y / n, dist: lo };
+}
+
+// A pill's outline (a w×h stadium centred on 0,0) walked by distance: from the left end
+// of the top edge, clockwise. Spacing hairs by distance along it keeps them evenly apart
+// on the flat edges as well as round the ends.
+function pillOutline(w, h) {
+    const r = h / 2;
+    const a = Math.max(0, w / 2 - r);
+    const arc = Math.PI * r;
+    const length = 4 * a + 2 * arc;
+
+    // the point and outward normal at distance s along the outline
+    const at = (s) => {
+        let d = ((s % length) + length) % length;
+        if (d < 2 * a) return { x: -a + d, y: -r, nx: 0, ny: -1 };
+        d -= 2 * a;
+        if (d < arc) {
+            const t = -Math.PI / 2 + d / r;
+            return { x: a + r * Math.cos(t), y: r * Math.sin(t), nx: Math.cos(t), ny: Math.sin(t) };
+        }
+        d -= arc;
+        if (d < 2 * a) return { x: a - d, y: r, nx: 0, ny: 1 };
+        d -= 2 * a;
+        const t = Math.PI / 2 + d / r;
+        return { x: -a + r * Math.cos(t), y: r * Math.sin(t), nx: Math.cos(t), ny: Math.sin(t) };
+    };
+
+    // distance along the outline of a point on it
+    const distanceOf = ({ x, y }) => {
+        if (Math.abs(x) <= a) return y < 0 ? x + a : 2 * a + arc + (a - x);
+        if (x > a) return 2 * a + (Math.atan2(y, x - a) + Math.PI / 2) * r;
+        let t = Math.atan2(y, x + a);
+        if (t < Math.PI / 2) t += 2 * Math.PI;
+        return 4 * a + arc + (t - Math.PI / 2) * r;
+    };
+
+    return { at, distanceOf };
+}
+
+// Middle of the widest angular gap between the directions to `points` (straight up
+// when there are none).
+function hairAngle(cx, cy, points) {
+    if (!points.length) return -Math.PI / 2;
+    const angles = points.map((p) => Math.atan2(p.y - cy, p.x - cx)).sort((x, y) => x - y);
+    let widest = -1;
+    let at = -Math.PI / 2;
+    angles.forEach((a, i) => {
+        const b = i + 1 < angles.length ? angles[i + 1] : angles[0] + 2 * Math.PI;
+        if (b - a > widest) { widest = b - a; at = a + (b - a) / 2; }
+    });
+    return at;
+}
+
+// Draws `count` hairs on a pill centred at (cx, cy) on screen, w×h in world units, at
+// `zoom`; `neighbours` are the screen points its links go to. Returns a hit area for
+// clicks ({ x, y, r } on screen), or null when too small to draw.
+function drawHairs(ctx, cx, cy, w, h, zoom, count, neighbours) {
+    if (!count || h * zoom < 8) return null;
+    const angle = hairAngle(cx, cy, neighbours);
+    const sw = w * zoom;
+    const sh = h * zoom;
+    const outline = pillOutline(sw, sh);
+    const middle = outline.distanceOf(pillEdgePoint(sw, sh, angle));
+    const centre = outline.at(middle);
+    ctx.save();
+    ctx.strokeStyle = HAIR_COLOR;
+    ctx.lineWidth = Math.max(1, 1.5 * zoom);
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    for (let i = 0; i < count; i++) {
+        const e = outline.at(middle + (i - (count - 1) / 2) * HAIR_SPACING * zoom);
+        const x0 = cx + e.x + e.nx * HAIR_GAP * zoom;
+        const y0 = cy + e.y + e.ny * HAIR_GAP * zoom;
+        ctx.moveTo(x0, y0);
+        ctx.lineTo(x0 + e.nx * HAIR_LENGTH * zoom, y0 + e.ny * HAIR_LENGTH * zoom);
+    }
+    ctx.stroke();
+    ctx.restore();
+    const reach = (HAIR_GAP + HAIR_LENGTH / 2) * zoom;
+    return {
+        x: cx + centre.x + centre.nx * reach,
+        y: cy + centre.y + centre.ny * reach,
+        r: Math.max(14, (HAIR_LENGTH + count * HAIR_SPACING) * zoom * 0.7),
+    };
+}
+
+function hairHit(hits, x, y) {
+    let best = null;
+    for (const h of hits) {
+        const d = Math.hypot(h.x - x, h.y - y);
+        if (d <= h.r && (!best || d < best.d)) best = { id: h.id, d };
+    }
+    return best?.id ?? null;
+}
+
 // ── Tooltip ──────────────────────────────────────────────────────────────────
 
 let _tooltip = null;
@@ -220,20 +355,17 @@ let _tooltip = null;
 function getTooltip() {
     if (_tooltip) return _tooltip;
     _tooltip = document.createElement("div");
+    _tooltip.className = "glass";
     Object.assign(_tooltip.style, {
         position: "fixed",
         pointerEvents: "none",
         zIndex: "99999",
-        background: "rgba(38,38,38,0.94)",
-        backdropFilter: "blur(8px)",
         color: "#e8eaed",
-        border: "1px solid rgba(255,255,255,0.08)",
         borderRadius: "12px",
         padding: "10px 14px",
         fontSize: "11px",
         lineHeight: "1.55",
         width: "360px",
-        boxShadow: "0 12px 32px rgba(0,0,0,0.45)",
         display: "none",
         fontFamily: "Poppins, sans-serif",
         wordBreak: "break-word",
@@ -337,11 +469,13 @@ function showTooltip(d, x, y, remaining) {
 
 // ── Legend ───────────────────────────────────────────────────────────────────
 
-function legendRow(swatch, text) {
-    return `<div style="display:flex;align-items:center;gap:8px;min-width:0">
-        <span style="flex:none;display:inline-flex;width:22px;justify-content:center">${swatch}</span>
-        <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${text.charAt(0).toUpperCase()}${text.slice(1)}</span>
-    </div>`;
+function legendRow(swatch, text, filterKey = null, hidden = false) {
+    const label = `<span style="flex:none;display:inline-flex;width:22px;justify-content:center">${swatch}</span>
+        <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;${hidden ? "text-decoration:line-through" : ""}">${text.charAt(0).toUpperCase()}${text.slice(1)}</span>`;
+    if (!filterKey) return `<div style="display:flex;align-items:center;gap:8px;min-width:0">${label}</div>`;
+    // a filter: click to hide / show what it stands for
+    return `<button type="button" class="legend-filter" data-filter="${filterKey}" aria-pressed="${!hidden}" title="${hidden ? "Show" : "Hide"}"
+        style="all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;min-width:0;margin:-3px -6px;padding:3px 6px;border-radius:6px;opacity:${hidden ? 0.38 : 1}">${label}</button>`;
 }
 
 function legendSection(title, rows) {
@@ -383,7 +517,9 @@ function pillColors(d, expanded) {
     };
 }
 
-function toRendererNode(item, x, y, expanded = false, pinned = false) {
+// The engine always gets the plain outline: the "expanded" ring is drawn on the overlay,
+// because changing a node's style in the engine means re-sending (re-creating) it.
+function toRendererNode(item, x, y, pinned = false) {
     const id = String(item.id);
     const d = fieldsOf(item) ?? {};
 
@@ -414,7 +550,7 @@ function toRendererNode(item, x, y, expanded = false, pinned = false) {
 
     // No label: the title is drawn on the overlay, inside the pill.
     const pill = pillLayout(titleOf(d, id), isStub(d));
-    const colors = pillColors(d, expanded);
+    const colors = pillColors(d, false);
     return {
         id, x, y,
         shape: { kind: "rect", width: pill.w, height: pill.h, cornerRadius: pill.corner },
@@ -497,6 +633,11 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     // Ids actually handed to the renderer
     const knownNodeIds = new Set();
     const knownLinkIds = new Set();
+    // Legend filters. Keys: "cat:<id>", "stub:ref", "stub:rel" (articles), "link:ref",
+    // "link:rel", "link:query" (links). Articles hidden by a filter stay loaded, with the
+    // spot they were at, and come back there.
+    const hiddenKeys = new Set();
+    const filteredOut = new Map();   // id -> { x, y }
     // Nodes the user clicked (expanded), the node each revealed node came from, and
     // nodes the server has nothing more for
     const expandedIds = new Set();
@@ -575,8 +716,9 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         const shownRefs = shownRefsByNode.get(id) ?? new Set();
         const shownRels = shownRelsByNode.get(id) ?? new Set();
         const left = new Set();
-        for (const ref of edges.ref_ids) if (!shownRefs.has(ref) && !knownNodeIds.has(ref)) left.add(ref);
-        for (const rel of edges.rel_ids) if (!shownRels.has(rel) && !knownNodeIds.has(rel)) left.add(rel);
+        const onMap = (x) => knownNodeIds.has(x) || filteredOut.has(x);
+        for (const ref of edges.ref_ids) if (!shownRefs.has(ref) && !onMap(ref)) left.add(ref);
+        for (const rel of edges.rel_ids) if (!shownRels.has(rel) && !onMap(rel)) left.add(rel);
         return left.size;
     }
 
@@ -613,9 +755,11 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     const octx = overlay.getContext("2d");
 
     const legend = document.createElement("div");
+    legend.className = "glass";
     Object.assign(legend.style, {
+        // top right: the results panel slides over the left of the graph
         position: "absolute",
-        left: "16px",
+        right: "16px",
         top: "16px",
         maxWidth: "250px",
         maxHeight: "calc(100% - 32px)",
@@ -624,11 +768,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         flexDirection: "column",
         gap: "12px",
         padding: "12px 14px",
-        background: "rgba(38,38,38,0.88)",
-        backdropFilter: "blur(8px)",
-        border: "1px solid rgba(255,255,255,0.08)",
         borderRadius: "12px",
-        boxShadow: "0 8px 24px rgba(0,0,0,0.35)",
         color: "#bdc1c6",
         fontFamily: PILL_FONT_FAMILY,
         fontSize: "11px",
@@ -650,7 +790,8 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     });
     const legendBody = document.createElement("div");
     Object.assign(legendBody.style, { display: "flex", flexDirection: "column", gap: "12px" });
-    let legendOpen = container.clientWidth >= 640;
+    // folded at first unless there is room beside the results panel (not on iPad portrait)
+    let legendOpen = container.clientWidth >= 1100;
     const renderLegendHeader = () => {
         legendHeader.innerHTML = `<span>Legend</span><span style="color:#9aa0a6;font-size:10px">${legendOpen ? "Hide" : "Show"}</span>`;
         legendBody.style.display = legendOpen ? "flex" : "none";
@@ -729,9 +870,37 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     // Run now if the renderer is up, otherwise once it has mounted.
     const run = (fn) => {
         if (removed) return;
+        invalidate();
         if (renderer) safe(fn, renderer);
         else queue.push(fn);
     };
+
+    // The overlay (titles, rings, hairs) is only redrawn while something can change it:
+    // the camera moved, the layout is running, a pop is playing, or something just
+    // happened (a touch, new data). An idle graph costs nothing per frame (iPad battery).
+    let dirtyUntil = 0;
+    let lastView = "";
+    function invalidate(ms = 500) {
+        dirtyUntil = Math.max(dirtyUntil, performance.now() + ms);
+    }
+    let lastRedraws = -1;
+    function overlayIdle(now, w, h) {
+        const vp = renderer.getViewport();
+        const view = `${w}|${h}|${vp.centerX}|${vp.centerY}|${vp.zoom}`;
+        const changed = view !== lastView;
+        lastView = view;
+        // the engine drew a new frame (layout moving, an animation): follow it
+        const redraws = renderer.getPerfStats?.()?.redraws;
+        const engineDrew = redraws === undefined || redraws !== lastRedraws;
+        lastRedraws = redraws;
+        // finished pops (some, like the search node's, are never drawn here) are dropped
+        let popping = false;
+        for (const [id, pop] of pops) {
+            if (now < pop.start + pop.ms + 32) popping = true;
+            else if (!leaving.has(id)) pops.delete(id);
+        }
+        return !changed && !engineDrew && !popping && !leaving.size && now >= dirtyUntil;
+    }
 
     // Lists what is actually on screen: categories of the articles shown, the two kinds
     // of articles outside the library, and each link type.
@@ -740,7 +909,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         let refStubs = false;
         let relStubs = false;
         const linkKinds = new Set();
-        for (const id of knownNodeIds) {
+        for (const id of [...knownNodeIds, ...filteredOut.keys()]) {
             const d = fieldsById.get(id);
             if (!d || id === "query") continue;
             if (isStub(d)) {
@@ -751,21 +920,23 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
                 if (!categories.has(cat.id)) categories.set(cat.id, cat);
             }
         }
+        const onMap = (x) => knownNodeIds.has(x) || filteredOut.has(x);
         for (const l of allLinks) {
-            if (knownNodeIds.has(String(l.from)) && knownNodeIds.has(String(l.to))) linkKinds.add(linkKind(l));
+            if (onMap(String(l.from)) && onMap(String(l.to))) linkKinds.add(linkKind(l));
         }
+        const row = (swatch, text, key) => legendRow(swatch, text, key, hiddenKeys.has(key));
 
         const categoryRows = [...categories.values()]
             .sort((a, b) => (a.id === 0) - (b.id === 0) || a.name.localeCompare(b.name))
-            .map((cat) => legendRow(pillSwatch(solidColor(cat.color)), cat.id === 0 ? "uncategorised" : cat.name));
+            .map((cat) => row(pillSwatch(solidColor(cat.color)), cat.id === 0 ? "uncategorised" : cat.name, `cat:${cat.id}`));
         const outsideRows = [
-            refStubs && legendRow(pillSwatch(STUB_FILL, STUB_REF_STROKE), "cited, not in library"),
-            relStubs && legendRow(pillSwatch(STUB_FILL, STUB_REL_STROKE), "related, not in library"),
+            refStubs && row(pillSwatch(STUB_FILL, STUB_REF_STROKE), "cited, not in library", "stub:ref"),
+            relStubs && row(pillSwatch(STUB_FILL, STUB_REL_STROKE), "related, not in library", "stub:rel"),
         ].filter(Boolean);
         const linkRows = [
-            linkKinds.has("ref") && legendRow(lineSwatch("rgba(138,180,248,0.95)", false, true), "cites"),
-            linkKinds.has("rel") && legendRow(lineSwatch("rgba(246,174,45,0.95)", true, false), "related work"),
-            linkKinds.has("query") && legendRow(lineSwatch("rgba(232,234,237,0.5)", false, false), "search hit"),
+            linkKinds.has("ref") && row(lineSwatch("rgba(138,180,248,0.95)", false, true), "cites", "link:ref"),
+            linkKinds.has("rel") && row(lineSwatch("rgba(246,174,45,0.95)", true, false), "related work", "link:rel"),
+            linkKinds.has("query") && row(lineSwatch("rgba(232,234,237,0.5)", false, false), "search hit", "link:query"),
         ].filter(Boolean);
         const markerRows = [
             legendRow(pillSwatch("transparent", EXPANDED_STROKE), "expanded"),
@@ -773,40 +944,46 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         ];
 
         const body = [
+            hiddenKeys.size
+                ? `<div style="display:flex;justify-content:space-between;align-items:center;font-size:10.5px;color:#9aa0a6">
+                       <span>Click to hide or show</span>
+                       <button type="button" data-filter="*" style="all:unset;cursor:pointer;color:${QUERY_FILL};font-weight:600">Show all</button>
+                   </div>`
+                : `<div style="font-size:10.5px;color:#9aa0a6">Click to hide or show</div>`,
             legendSection("In library", categoryRows),
             legendSection("Outside library", outsideRows),
             legendSection("Links", linkRows),
             legendSection("Markers", markerRows),
         ].join("");
         if (legendBody.innerHTML !== body) legendBody.innerHTML = body;
-        legend.style.display = knownNodeIds.size > 1 ? "flex" : "none";
+        legend.style.display = knownNodeIds.size + filteredOut.size > 1 ? "flex" : "none";
     }
 
     // ── Expansion markers ────────────────────────────────────────────────────
 
-    // id -> count last given to the renderer's expansion marker (a small patch of hairs
-    // beside a node that still has articles to reveal; a count of 0 removes it)
+    // id -> number of hairs (drawn on the overlay) for an article that still has
+    // articles to reveal; hairHits are where they were drawn last frame, for clicks
     const markers = new Map();
+    let hairHits = [];
 
     // ── Details sheet: what hover shows on desktop, for touch screens ────────
 
     const sheet = document.createElement("div");
+    sheet.className = "glass";
     Object.assign(sheet.style, {
+        // centred in the part of the graph not under the results panel
+        // (--chart-left-inset: that panel's width while it is open)
         position: "absolute",
-        left: "50%",
+        left: "calc(50% + var(--chart-left-inset, 0px) / 2)",
         bottom: "calc(var(--chart-sheet-offset, 16px) + env(safe-area-inset-bottom))",
-        width: "min(520px, calc(100% - 24px))",
+        width: "min(520px, calc(100% - var(--chart-left-inset, 0px) - 24px))",
         transform: "translate(-50%, 16px)",
         opacity: "0",
         pointerEvents: "none",
         transition: "opacity 180ms ease, transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1)",
         zIndex: "3",
         padding: "14px 16px 12px",
-        background: "rgba(38,38,38,0.96)",
-        backdropFilter: "blur(10px)",
-        border: "1px solid rgba(255,255,255,0.08)",
         borderRadius: "16px",
-        boxShadow: "0 16px 40px rgba(0,0,0,0.5)",
         color: "#e8eaed",
         fontFamily: PILL_FONT_FAMILY,
     });
@@ -881,9 +1058,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         run((r) => {
             for (const id of knownNodeIds) {
                 const remaining = remainingFor(id);
-                const count = remaining == null ? UNKNOWN_EXPANSION_COUNT : remaining;
-                if ((markers.get(id) ?? 0) === count) continue;
-                r.setNodeExpansion(id, { previewNodeIds: [], previewLinkIds: [], loadedCount: 0, totalCount: count });
+                const count = remaining == null ? MARKER_MAX_HAIRS : Math.min(remaining, MARKER_MAX_HAIRS);
                 if (count) markers.set(id, count);
                 else markers.delete(id);
             }
@@ -925,30 +1100,41 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         };
 
         ids.forEach((id, i) => {
-            if (!resize(r, id, POP_MIN_SCALE, { durationMs: 1, easing: "linear", commit: true })) {
-                r.setNodePinned(id, false);   // no animation: just show it
-                return;
-            }
+            if (!resize(r, id, POP_MIN_SCALE, { durationMs: 1, easing: "linear", commit: true })) return;
             const delay = POP_START_MS + (stagger ? i * POP_STAGGER_MS : 0);
             pops.set(id, { start: now + delay, ms: POP_IN_MS, from: POP_MIN_SCALE, to: 1, ease: easeOutBack });
             setTimeout(() => {
                 if (removed || !renderer || !knownNodeIds.has(id)) return;
                 safe((rr) => resize(rr, id, 1, { durationMs: POP_IN_MS, easing: "ease-out-back", commit: true }), renderer);
             }, delay);
-            // held in place while small: the layout would otherwise pull it into a spot
-            // its full size doesn't fit
-            setTimeout(() => {
-                if (!removed && renderer && knownNodeIds.has(id)) safe((rr) => rr.setNodePinned(id, false), renderer);
-            }, delay + POP_IN_MS);
+            // Not pinned while it grows: it was inserted at full size, so the layout
+            // already gives it room, and it drifts into place as it grows. (Holding it and
+            // letting go afterwards made it jump: a second "pop".)
         });
+    }
+
+    // The white ring of an article that has been opened (expanded), around its pill.
+    function drawExpandedRing(pill, c, zoom) {
+        const w = pill.w * zoom;
+        const h = pill.h * zoom;
+        if (h < 4) return;
+        const width = Math.max(1, 2.5 * zoom);
+        octx.save();
+        octx.strokeStyle = EXPANDED_STROKE;
+        octx.lineWidth = width;
+        octx.beginPath();
+        octx.roundRect(c.x - w / 2 - width / 2, c.y - h / 2 - width / 2, w + width, h + width, h / 2 + width / 2);
+        octx.stroke();
+        octx.restore();
     }
 
     function drawTitle(d, id, c, zoom) {
         const pill = pillLayout(titleOf(d, id), isStub(d));
+        if (expandedIds.has(id)) drawExpandedRing(pill, c, zoom);
         const px = pill.fontSize * zoom;
         if (px < MIN_TEXT_PX) return;
         octx.font = `${pill.weight} ${px}px ${PILL_FONT_FAMILY}`;
-        octx.fillStyle = pillColors(d, expandedIds.has(id)).text;
+        octx.fillStyle = pillColors(d, false).text;
         const top = c.y - ((pill.lines.length - 1) * pill.lineHeight * zoom) / 2;
         pill.lines.forEach((line, i) => octx.fillText(line, c.x, top + i * pill.lineHeight * zoom));
     }
@@ -963,11 +1149,12 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             overlay.width = Math.round(w * dpr);
             overlay.height = Math.round(h * dpr);
         }
-        octx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        octx.clearRect(0, 0, w, h);
-        if (!renderer) return;
+        if (!renderer) { octx.clearRect(0, 0, overlay.width, overlay.height); return; }
         if (adapterOf(renderer)?.destroyed) { engineFailed(new Error("renderer stopped")); return; }
         try {
+            if (overlayIdle(now, w, h)) return;
+            octx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            octx.clearRect(0, 0, w, h);
             drawTitles(now, w, h);
         } catch (err) {
             if (isEngineFault(err)) engineFailed(err);
@@ -990,6 +1177,27 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             if (c.x + pill.w * zoom < 0 || c.x - pill.w * zoom > w || c.y + pill.h * zoom < 0 || c.y - pill.h * zoom > h) continue;
             drawTitle(d, id, c, zoom * scaleOf(id, now));
         }
+
+        // hairs, away from where this article's links come in
+        const hits = [];
+        for (const [id, count] of markers) {
+            if (!knownNodeIds.has(id) || leaving.has(id) || pops.has(id)) continue;
+            const pos = renderer.getNodePosition(id);
+            if (!pos) continue;
+            const c = renderer.worldToScreen(pos.x, pos.y);
+            if (c.x < -200 || c.x > w + 200 || c.y < -200 || c.y > h + 200) continue;
+            const d = fieldsById.get(id);
+            const pill = pillLayout(titleOf(d, id), isStub(d));
+            const neighbours = [];
+            for (const nb of adjacency.get(id) ?? []) {
+                if (!knownNodeIds.has(nb)) continue;
+                const p = renderer.getNodePosition(nb);
+                if (p) neighbours.push(renderer.worldToScreen(p.x, p.y));
+            }
+            const hit = drawHairs(octx, c.x, c.y, pill.w, pill.h, zoom, count, neighbours);
+            if (hit) hits.push({ id, ...hit });
+        }
+        hairHits = hits;
     }
     frame = requestAnimationFrame(drawOverlay);
 
@@ -997,7 +1205,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     // ends are now drawn. Upserting restarts the force layout by itself; no autoLayout(),
     // which would re-place the whole graph on every expansion.
     function draw(r, ids, anchorId, isInitial) {
-        const fresh = [...ids].map(String).filter((id) => allNodes.has(id) && !knownNodeIds.has(id));
+        const fresh = [...ids].map(String).filter((id) => allNodes.has(id) && !knownNodeIds.has(id) && !filteredOut.has(id));
 
         const anchorFor = (id) => {
             for (const nb of adjacency.get(id) ?? []) {
@@ -1014,22 +1222,26 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         const perAnchor = new Map();
         const rendererNodes = fresh.map((id) => {
             const n = allNodes.get(id);
-            if (Number.isFinite(n.x) && Number.isFinite(n.y)) return toRendererNode(n, n.x, n.y, false, true);
+            if (Number.isFinite(n.x) && Number.isFinite(n.y)) return toRendererNode(n, n.x, n.y);
             const anchor = anchorFor(id);
             const key = anchor ? `${anchor.x}|${anchor.y}` : "origin";
             const index = perAnchor.get(key) ?? 0;
             perAnchor.set(key, index + 1);
             const { x, y } = seedPosition(index, anchor);
-            return toRendererNode(n, x, y, false, true);
+            return toRendererNode(n, x, y);
         });
 
-        if (rendererNodes.length) {
-            r.upsertNodes(rendererNodes);
-            for (const n of rendererNodes) {
-                knownNodeIds.add(n.id);
-                shownNodeIds.add(allNodes.get(n.id).id);
-            }
-            popIn(r, rendererNodes.map((n) => n.id), isInitial);
+        // articles of a category hidden in the legend wait, placed, until it is shown
+        const visibleNodes = [];
+        for (const n of rendererNodes) {
+            shownNodeIds.add(allNodes.get(n.id).id);
+            if (isNodeHidden(n.id)) filteredOut.set(n.id, { x: n.x, y: n.y });
+            else visibleNodes.push(n);
+        }
+        if (visibleNodes.length) {
+            r.upsertNodes(visibleNodes);
+            for (const n of visibleNodes) knownNodeIds.add(n.id);
+            popIn(r, visibleNodes.map((n) => n.id), isInitial);
         }
 
         // links go in after their nodes: a link to a node the renderer lacks is not drawn
@@ -1037,7 +1249,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         for (const l of allLinks) {
             const rl = toRendererLink(l);
             if (!knownNodeIds.has(rl.from) || !knownNodeIds.has(rl.to)) continue;
-            if (knownLinkIds.has(rl.id)) continue;
+            if (knownLinkIds.has(rl.id) || !isLinkShown(l)) continue;
             knownLinkIds.add(rl.id);
             rendererLinks.push(rl);
         }
@@ -1045,7 +1257,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
 
         refreshExpansion();
 
-        if (isInitial && rendererNodes.length) {
+        if (isInitial && visibleNodes.length) {
             fitView(r);
             // Re-fit once the nodes have popped in and the layout has spread out, unless the
             // user has panned or zoomed. The camera glides there instead of jumping.
@@ -1082,17 +1294,96 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         run((r) => draw(r, around(ids), anchorId, isInitial));
     }
 
-    // Re-send a node at full size with its current outline; keeps its live position.
-    // Upserting drops the node's expansion marker, so that is sent again too.
-    function restyle(r, id) {
-        const n = allNodes.get(id);
-        const pos = r.getNodePosition(id);
-        if (!n || !pos) return;
-        r.upsertNode(toRendererNode(n, pos.x, pos.y, expandedIds.has(id)));
-        if (markers.has(id)) {
-            r.setNodeExpansion(id, { previewNodeIds: [], previewLinkIds: [], loadedCount: 0, totalCount: markers.get(id) });
-        }
+    // ── Legend filters ───────────────────────────────────────────────────────
+
+    function nodeFilterKey(id) {
+        const d = fieldsById.get(id);
+        if (id === "query" || !d) return null;
+        if (isStub(d)) return isRelatedStub(d) ? "stub:rel" : "stub:ref";
+        return `cat:${d.category?.id ?? 0}`;
     }
+    function isNodeHidden(id) {
+        const key = nodeFilterKey(id);
+        return key != null && hiddenKeys.has(key);
+    }
+    function isLinkShown(l) {
+        return !hiddenKeys.has(`link:${linkKind(l)}`);
+    }
+
+    // Brings the graph in line with the legend filters: newly hidden articles shrink away
+    // (keeping their spot), newly shown ones pop back in where they were, and links follow.
+    function applyFilters(r) {
+        const hide = [...knownNodeIds].filter(isNodeHidden);
+        const show = [...filteredOut.keys()].filter((id) => !isNodeHidden(id));
+        const hideSet = new Set(hide);
+
+        const linkIds = [];
+        for (const l of allLinks) {
+            const rl = toRendererLink(l);
+            if (!knownLinkIds.has(rl.id)) continue;
+            if (hideSet.has(rl.from) || hideSet.has(rl.to) || !isLinkShown(l)) {
+                knownLinkIds.delete(rl.id);
+                linkIds.push(rl.id);
+            }
+        }
+        if (linkIds.length) r.removeLinks(linkIds);
+
+        if (hide.length) {
+            if (hideSet.has(sheetId)) hideSheet();
+            hideTooltip();
+            const now = performance.now();
+            for (const id of hide) {
+                filteredOut.set(id, r.getNodePosition(id) ?? { x: 0, y: 0 });
+                knownNodeIds.delete(id);
+                leaving.set(id, fieldsById.get(id));
+                pops.set(id, { start: now, ms: POP_OUT_MS, from: 1, to: POP_MIN_SCALE, ease: easeInBack });
+                markers.delete(id);
+                const d = fieldsById.get(id);
+                const pill = pillLayout(titleOf(d, id), isStub(d));
+                r.animateNodeSize(id, pill.w * POP_MIN_SCALE, pill.h * POP_MIN_SCALE, { durationMs: POP_OUT_MS, easing: "ease-in-back", commit: true });
+            }
+            setTimeout(() => {
+                // shown again in the meantime: leave it
+                const gone = hide.filter((id) => filteredOut.has(id) && leaving.has(id));
+                for (const id of gone) { leaving.delete(id); pops.delete(id); }
+                if (!removed && renderer && gone.length) safe((rr) => rr.removeNodes(gone), renderer);
+            }, POP_OUT_MS);
+        }
+
+        if (show.length) {
+            const nodes = show.map((id) => {
+                const pos = filteredOut.get(id);
+                filteredOut.delete(id);
+                leaving.delete(id);
+                pops.delete(id);
+                return toRendererNode(allNodes.get(id), pos.x, pos.y);
+            });
+            r.upsertNodes(nodes);
+            for (const n of nodes) knownNodeIds.add(n.id);
+            popIn(r, nodes.map((n) => n.id), false);
+        }
+
+        const rendererLinks = [];
+        for (const l of allLinks) {
+            const rl = toRendererLink(l);
+            if (!knownNodeIds.has(rl.from) || !knownNodeIds.has(rl.to)) continue;
+            if (knownLinkIds.has(rl.id) || !isLinkShown(l)) continue;
+            knownLinkIds.add(rl.id);
+            rendererLinks.push(rl);
+        }
+        if (rendererLinks.length) r.upsertLinks(rendererLinks);
+        refreshExpansion();
+    }
+
+    legendBody.addEventListener("click", (e) => {
+        const key = e.target.closest("[data-filter]")?.dataset.filter;
+        if (!key) return;
+        if (key === "*") hiddenKeys.clear();
+        else if (hiddenKeys.has(key)) hiddenKeys.delete(key);
+        else hiddenKeys.add(key);
+        run(applyFilters);
+        updateLegend();
+    });
 
     // ── Long press: remove an article ────────────────────────────────────────
 
@@ -1133,6 +1424,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             fieldsById.delete(gone);
             nodeEdgeMap.delete(gone);
             knownNodeIds.delete(gone);
+            filteredOut.delete(gone);
             shownNodeIds.delete(gone);
             expandedIds.delete(gone);
             parentOf.delete(gone);
@@ -1144,7 +1436,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         run((r) => {
             for (const gone of doomed) {
                 pops.set(gone, { start: now, ms: POP_OUT_MS, from: 1, to: POP_MIN_SCALE, ease: easeInBack });
-                if (markers.delete(gone)) r.setNodeExpansion(gone, { previewNodeIds: [], previewLinkIds: [], loadedCount: 0, totalCount: 0 });
+                markers.delete(gone);
                 const d = leaving.get(gone);
                 const pill = pillLayout(titleOf(d, gone), isStub(d));
                 r.animateNodeSize(gone, pill.w * POP_MIN_SCALE, pill.h * POP_MIN_SCALE, { durationMs: POP_OUT_MS, easing: "ease-in-back", commit: true });
@@ -1169,10 +1461,8 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         if (expandingNodes.has(nodeId)) return;
         expandingNodes.add(nodeId);
         if (sheetId === nodeId) renderSheet();
-        if (!expandedIds.has(nodeId)) {
-            expandedIds.add(nodeId);
-            run((r) => restyle(r, nodeId));
-        }
+        // the ring is drawn on the overlay: nothing is re-sent to the engine
+        expandedIds.add(nodeId);
 
         const shownRefs = shownRefsByNode.get(nodeId) ?? new Set();
         const shownRels = shownRelsByNode.get(nodeId) ?? new Set();
@@ -1259,6 +1549,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     let pressed = null;
 
     const onPointerMove = (e) => {
+        if (pressed) invalidate();
         pointerX = e.clientX;
         pointerY = e.clientY;
         if (_tooltip && _tooltip.style.display !== "none") {
@@ -1269,13 +1560,18 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     };
     let pointerType = "mouse";
     const onPointerDown = (e) => {
+        invalidate();
         pressed = { x: e.clientX, y: e.clientY };
         pointerType = e.pointerType || "mouse";
         if (pointerType !== "mouse") hideTooltip();
     };
-    const onPointerUp = () => { pressed = null; };
-    const onWheel = () => { userMoved = true; };
+    const onPointerUp = () => { pressed = null; invalidate(); };
+    const onWheel = () => { userMoved = true; invalidate(); };
 
+    // iPad Safari: a pinch on the graph zooms the graph, never the page
+    const onGesture = (e) => e.preventDefault();
+    container.addEventListener("gesturestart", onGesture);
+    container.addEventListener("gesturechange", onGesture);
     container.addEventListener("pointermove", onPointerMove);
     container.addEventListener("pointerdown", onPointerDown, true);
     window.addEventListener("pointerup", onPointerUp);
@@ -1315,6 +1611,15 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             case "click": {
                 const id = event.nodeId;
                 const touch = pointerType !== "mouse";
+                // a click on an article's hairs: reveal more of it
+                const rect = container.getBoundingClientRect();
+                const sx = Number.isFinite(event.screenX) ? event.screenX : pointerX - rect.left;
+                const sy = Number.isFinite(event.screenY) ? event.screenY : pointerY - rect.top;
+                const hairId = !id && hairHit(hairHits, sx, sy);
+                if (hairId && fieldsById.has(hairId) && remainingFor(hairId) !== 0) {
+                    expandNode(hairId);
+                    return;
+                }
                 if (!id || id === "query") {
                     if (touch) hideSheet();
                     return;
@@ -1369,6 +1674,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             const { width, height } = entries[0].contentRect;
             if (width < 1 || height < 1) return;
             latestSize = { w: Math.floor(width), h: Math.floor(height) };
+            invalidate();
             if (renderer) safe((r) => r.resize(latestSize.w, latestSize.h), renderer);
         })
         : null;
@@ -1392,6 +1698,8 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             if (fitTimer) clearTimeout(fitTimer);
             cancelAnimationFrame(frame);
             if (resizeObserver) resizeObserver.disconnect();
+            container.removeEventListener("gesturestart", onGesture);
+            container.removeEventListener("gesturechange", onGesture);
             container.removeEventListener("pointermove", onPointerMove);
             container.removeEventListener("pointerdown", onPointerDown, true);
             window.removeEventListener("pointerup", onPointerUp);
@@ -1456,4 +1764,12 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     return chart;
 };
 
+// Shared with the author network (MafiaChart).
+export {
+    drawHairs, hairHit, MARKER_MAX_HAIRS,
+    CHART_BG, PILL_FONT_FAMILY, LINK_LABEL_STYLE, LONG_PRESS_MS, MIN_TEXT_PX,
+    POP_IN_MS, POP_OUT_MS, POP_MIN_SCALE, POP_START_MS, POP_STAGGER_MS, MAX_FIT_ZOOM, FIT_GLIDE_MS,
+    parseColor, solidColor, textColorOn, escapeHtml, isEngineFault, adapterOf, easeOutBack, easeInBack,
+    getTooltip, positionTooltip, hideTooltip, legendRow, legendSection, pillSwatch, lineSwatch,
+};
 export default CreateChart;

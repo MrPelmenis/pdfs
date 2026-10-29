@@ -9,6 +9,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^13.5.0",
+    "d3-force": "^3.0.0",
     "katex": "^0.16.46",
     "pdfjs-dist": "^5.4.624",
     "react": "^19.2.5",

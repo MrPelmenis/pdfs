@@ -71,3 +71,102 @@ code {
     font-size: max(16px, 1em) !important;
   }
 }
+
+/* Liquid glass. `glass` is for floating panels (legends, tooltips, sheets, side panels):
+   nearly opaque so text stays crisp over the graph, with a heavy blur, a faint top
+   highlight and a hairline edge. `glass-pane` is the quieter version for a column that
+   sits beside the graph (the search results). */
+.glass {
+  background: linear-gradient(180deg, rgba(60, 61, 66, 0.97) 0%, rgba(44, 45, 49, 0.96) 100%);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 14px 36px rgba(0, 0, 0, 0.45);
+}
+
+.glass-pane {
+  background-image:
+    radial-gradient(120% 60% at 0% 0%, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0.012) 100%);
+  box-shadow:
+    inset -1px 0 0 rgba(255, 255, 255, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Touch (iPad / phone). Buttons react at once: no double-tap-to-zoom delay (pinching
+   the page still works). Graph canvases take every gesture themselves, so a pinch zooms
+   the graph, not the page. */
+html {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.graph-surface,
+.graph-surface canvas {
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Number fields without the browser's tiny up/down spinner */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Range sliders: a thumb big enough for a finger */
+input[type="range"].touch-range {
+  -webkit-appearance: none;
+  appearance: none;
+}
+input[type="range"].touch-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgb(222, 161, 28);
+  border: 3px solid #26272b;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+input[type="range"].touch-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgb(222, 161, 28);
+  border: 3px solid #26272b;
+}
+@media (pointer: coarse) {
+  input[type="range"].touch-range::-webkit-slider-thumb {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* Legend filter rows: a finger-sized target on touch screens */
+@media (pointer: coarse) {
+  .legend-filter {
+    padding-top: 7px !important;
+    padding-bottom: 7px !important;
+  }
+}
+
+/* Result cards follow the width of their column (the results panel on an iPad is
+   narrow even though the screen is not): tighter padding and a smaller thumbnail. */
+.results-list {
+  container-type: inline-size;
+}
+@container (max-width: 440px) {
+  .search-card {
+    padding: 14px;
+    gap: 12px;
+  }
+  .search-card-thumb {
+    width: 64px;
+  }
+}

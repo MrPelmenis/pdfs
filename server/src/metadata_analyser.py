@@ -43,6 +43,40 @@ def openalex_by_id(openalex_id: str) -> dict:
     return _parse_work(resp.json())
 
 
+def openalex_batch(openalex_ids: list, select: str = "id,primary_topic,authorships") -> dict:
+    """Fetch many works at once (50 per request). Returns {WORK_ID: work}."""
+    out = {}
+    ids = [i.strip().upper() for i in openalex_ids if i and re.match(r"^[Ww]\d+$", i.strip())]
+    for start in range(0, len(ids), 50):
+        chunk = ids[start:start + 50]
+        try:
+            resp = requests.get(
+                OPENALEX_BASE,
+                params={"filter": "openalex:" + "|".join(chunk),
+                        "per-page": 50, "select": select},
+                headers={"User-Agent": USER_AGENT},
+                timeout=30,
+            )
+        except requests.exceptions.RequestException as e:
+            print(f"[metadata_analyser] Batch request failed: {e}")
+            continue
+        if resp.status_code != 200:
+            print(f"[metadata_analyser] Batch HTTP {resp.status_code}")
+            continue
+        for work in resp.json().get("results", []):
+            wid = (work.get("id") or "").replace("https://openalex.org/", "").upper()
+            if wid:
+                out[wid] = work
+    return out
+
+
+def field_of_work(work: dict) -> str | None:
+    """primary_topic.field.display_name, falling back to the domain."""
+    pt = (work or {}).get("primary_topic") or {}
+    return ((pt.get("field") or {}).get("display_name")
+            or (pt.get("domain") or {}).get("display_name") or None)
+
+
 def openalex_by_title(title: str, authors: list) -> dict:
     if not title:
         return {}
@@ -118,10 +152,12 @@ def _parse_work(work: dict) -> dict:
     year   = work.get("publication_year") or None
     cited  = work.get("cited_by_count") or 0
 
-    authors = [
-        a["author"]["display_name"]
-        for a in work.get("authorships", [])
-        if a.get("author", {}).get("display_name")
+    authorships = [a for a in work.get("authorships", []) if a.get("author", {}).get("display_name")]
+    authors = [a["author"]["display_name"] for a in authorships]
+    # OpenAlex author ids, in the same order as `authors` (ids of the `authors` database)
+    author_ids = [
+        (a["author"].get("id") or "").replace("https://openalex.org/", "")
+        for a in authorships
     ]
 
     abstract = _reconstruct_abstract(work.get("abstract_inverted_index"))
@@ -158,22 +194,14 @@ def _parse_work(work: dict) -> dict:
 
     # ── Field extraction from primary_topic ──────────────────────────────────
     # primary_topic.field.display_name → fallback to primary_topic.domain.display_name
-    field = None
-    primary_topic = work.get("primary_topic") or {}
-    if primary_topic:
-        field_obj  = primary_topic.get("field")  or {}
-        domain_obj = primary_topic.get("domain") or {}
-        field = (
-            field_obj.get("display_name")
-            or domain_obj.get("display_name")
-            or None
-        )
+    field = field_of_work(work)
 
     return {
         "openalex_id":         openalex_id,
         "doi":                 doi,
         "title":               title,
         "authors":             authors,
+        "author_ids":          author_ids,
         "abstract":            abstract,
         "year":                year,
         "cited_by_count":      cited,

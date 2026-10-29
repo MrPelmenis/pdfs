@@ -75,7 +75,7 @@ def _clean_year(raw: str) -> str:
     return m.group(0) if m else ""
 
 
-def build_document(metadata_info, grobid_info, image_path, stub=False, category_id=1) -> dict:
+def build_document(metadata_info, grobid_info, image_path, stub=False, category_id=0) -> dict:
     meta = metadata_info or {}
     grobi = grobid_info or {}
 
@@ -95,6 +95,11 @@ def build_document(metadata_info, grobid_info, image_path, stub=False, category_
     date_val = _clean_year(raw_date)
 
     authors = meta.get("authors") or grobi.get("authors") or []
+    # ids in the authors database, parallel to `authors`; only when they came together
+    # from OpenAlex (names read off a PDF have no ids)
+    author_ids = meta.get("author_ids") or grobi.get("author_ids") or []
+    if len(author_ids) != len(authors):
+        author_ids = []
     file_path = grobi.get("file", "")
 
     doc = {
@@ -107,6 +112,7 @@ def build_document(metadata_info, grobid_info, image_path, stub=False, category_
         "stub_document":    "yes" if stub else "no",
         "category_id":      int(category_id),
         "authors":          list(authors),
+        "author_ids":       list(author_ids),
         "abstract":         abstract,
     }
     if openalex_id:

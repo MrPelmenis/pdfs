@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import SearchPage from "./pages/SearchPage";
 import UploadPage from "./pages/UploadPage";
 import ChatPage from "./pages/ChatPage";
+import MafiaPage from "./pages/MafiaPage";
 import "./index.css";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/upload" element={<UploadPage />} />
             <Route path="/chat" element={<ChatPage/>} />
+            <Route path="/mafia" element={<MafiaPage />} />
           </Routes>
         </div>
       </div>

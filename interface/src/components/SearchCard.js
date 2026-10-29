@@ -21,7 +21,7 @@ export default function SearchCard({ result, apiUrl, onOpenPdf }) {
 
   return (
     <article
-      className="group flex gap-5 bg-surface rounded-2xl p-5 transition-colors duration-150"
+      className="search-card group flex gap-5 bg-surface rounded-2xl p-5 transition-colors duration-150"
       style={{ border: `1px solid ${borderColor}` }}
     >
       <div className="flex-1 min-w-0 flex flex-col gap-2">
@@ -63,7 +63,7 @@ export default function SearchCard({ result, apiUrl, onOpenPdf }) {
       {previewUrl && (
         <button
           onClick={(e) => onOpenPdf(e, result)}
-          className="flex-shrink-0 w-28 self-start rounded-xl overflow-hidden border border-border
+          className="search-card-thumb flex-shrink-0 w-28 self-start rounded-xl overflow-hidden border border-border
                      hover:border-accent/60 transition-all duration-200 hover:scale-105
                      hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-accent/40"
           title="Open PDF"

@@ -19,6 +19,8 @@ from src.categories import (get_all_categories, create_category, edit_category, 
 import datetime
 from src.stub_worker import start_stub_worker, set_pdf_processing, fetch_document, delete_document
 from src.json_builder import build_document, save_document, upload_document, extract_fallback_text
+from src.classify import resolve_category
+from src import mafia
 
 from dotenv import load_dotenv
 
@@ -100,6 +102,7 @@ def process_file_background(filename, save_path):
                 parser_info["abstract"] = openalex_info["abstract"]
             if openalex_info.get("authors"):
                 parser_info["authors"] = openalex_info["authors"]
+                parser_info["author_ids"] = openalex_info.get("author_ids") or []
             if openalex_info.get("referenced_work_ids"):
                 parser_info["referenced_work_ids"] = openalex_info["referenced_work_ids"]
             if openalex_info.get("related_work_ids"):
@@ -108,8 +111,14 @@ def process_file_background(filename, save_path):
                 parser_info["topics"] = openalex_info["topics"]
 
         # ── 3. Resolve the category from the OpenAlex field ───────────────────
-        field = (openalex_info or {}).get("field")
-        category = find_or_create_by_field(field) if field else NONE_CATEGORY
+        # Falls back to a Gemma classification of the paper's text when
+        # OpenAlex has no field for it.
+        category = resolve_category(
+            field=(openalex_info or {}).get("field"),
+            title=parser_info.get("title") or "",
+            abstract=parser_info.get("abstract") or "",
+            keywords=" ".join(parser_info.get("topics") or []),
+        )
         category_id = category["id"]
 
         # ── 4. Resolve the document id and drop any old stub for it ──────────
@@ -198,6 +207,7 @@ def retrieve_document(doc_id: str) -> dict | None:
         "date":                str(d.get("date")) if d.get("date") is not None else "",
         "cited_by_count":      int(d.get("cited_by_count") or 0),
         "authors":             d.get("authors") or [],
+        "author_ids":          d.get("author_ids") or [],
         "topics":              [],
         "concepts":            [],
         "keywords":            [],
@@ -266,6 +276,7 @@ def process_stub_upgrade(filename: str, save_path: str, openalex_id: str = "", d
             "title":               stub_data["title"],
             "abstract":            stub_data["abstract"],
             "authors":             stub_data["authors"],
+            "author_ids":          stub_data["author_ids"],
             "date":                stub_data["date"],
             "topics":              stub_data["topics"],
             "concepts":            stub_data["concepts"],
@@ -281,14 +292,13 @@ def process_stub_upgrade(filename: str, save_path: str, openalex_id: str = "", d
         print(f"[stub_upgrade] Deleting stub {resolved_id} from Corelamo")
         delete_document(resolved_id)
 
-        # NOTE: category_id is not carried over from the stub (build_document
-        # defaults it to 1). Pass category_id=stub_data["category_id"] if you
-        # want to keep the stub's category.
+        # Stubs are classified when they are created, so keep their category.
         doc_json = build_document(
             metadata_info={"cited_by_count": stub_data["cited_by_count"]},
             grobid_info=merged_info,
             image_path=image_path,
             stub=False,
+            category_id=stub_data.get("category_id") or 0,
         )
 
         final_json_name = f"{
@@ -985,6 +995,80 @@ def route_assign_category():
     if not result["success"]:
         return jsonify({"error": result.get("error"), "detail": result.get("response")}), 500
     return jsonify(result), 200
+
+
+def _int_arg(name):
+    raw = request.args.get(name, "").strip()
+    return int(raw) if raw.lstrip("-").isdigit() else None
+
+
+def _mafia_filters(body):
+    cats = [int(c) for c in request.args.get("categories", "").split(",") if c.strip().isdigit()]
+    paper_ids = body.get("paper_ids")
+    return dict(
+        category_ids=frozenset(cats) or None,
+        year_from=_int_arg("year_from"),
+        year_to=_int_arg("year_to"),
+        paper_ids=set(paper_ids) if isinstance(paper_ids, list) else None,
+        query=request.args.get("q", "").strip() or None,
+        expand=request.args.get("expand") == "1",
+        full_only=request.args.get("full_only") == "1",
+    )
+
+
+@app.route("/mafia", methods=["GET", "POST"])
+def route_mafia():
+    """Author network. POST body: {"paper_ids": [...]} limits it to those papers,
+    {"include": [author ids]} keeps those authors on the map."""
+    body = request.get_json(silent=True) or {}
+    include = body.get("include")
+    try:
+        data = mafia.network(
+            **_mafia_filters(body),
+            limit=min(_int_arg("limit") or 250, 2000),
+            min_weight=max(_int_arg("min_weight") or 1, 1),
+            include=include if isinstance(include, list) else None,
+            linked_only=request.args.get("linked_only", "1") != "0",
+            refresh=request.args.get("refresh") == "1",
+        )
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+    return jsonify(data), 200
+
+
+@app.route("/mafia/expand/<path:author_id>", methods=["POST"])
+def route_mafia_expand(author_id):
+    """An author's strongest connections not yet on the map. Body: {"shown": [ids]}."""
+    body = request.get_json(silent=True) or {}
+    shown = body.get("shown") if isinstance(body.get("shown"), list) else []
+    try:
+        data = mafia.expand_author(
+            author_id, shown,
+            count=min(_int_arg("count") or 12, 100),
+            min_weight=max(_int_arg("min_weight") or 1, 1),
+            **_mafia_filters(body),
+        )
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+    return jsonify(data), 200
+
+
+@app.route("/mafia/profile/<path:author_id>", methods=["GET"])
+def route_mafia_profile(author_id):
+    try:
+        profile = mafia.author_profile(author_id)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 502
+    if profile is None:
+        return jsonify({"error": "no OpenAlex profile"}), 404
+    return jsonify(profile), 200
+
+
+@app.route("/mafia/author/<path:author_id>", methods=["GET"])
+def route_mafia_author(author_id):
+    return jsonify(mafia.author_papers(author_id)), 200
 
 
 register_chat(app)

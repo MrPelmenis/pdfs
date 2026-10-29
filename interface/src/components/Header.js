@@ -2,16 +2,20 @@ import { Link, useLocation } from "react-router-dom";
 
 const links = [
   { href: "/search", label: "Search" },
+  { href: "/mafia", label: "Mafia" },
   { href: "/upload", label: "Upload" },
   { href: "/chat", label: "Chat" },
 ];
 
-// Partner logos sit muted beside the brand. The RTU mark is dark teal, so it is drawn
-// in white to show on the dark header.
+// Partner logos beside the brand, each linking to the partner. The RTU mark is dark teal,
+// so it is drawn in white to show on the dark header.
 const partners = [
-  { src: "https://chartizer.com/chartizericon.png", alt: "Chartizer", className: "" },
-  { src: "https://www.uniso.lv/logo.svg", alt: "Uniso", className: "h-5" },
-  { src: "https://upload.wikimedia.org/wikipedia/lv/f/fd/RTU_logo_2017.svg", alt: "RTU", className: "h-7 brightness-0 invert" },
+  {
+    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuCHArU1t68kJIBc2K3FOqEenENdQrHc5AP-Itx74yVD5PZ5iXUa-rv9-c4aQ8iETxHzU6T-Bku2IDaimpyRTJQ0dGbGTF7dtmjTC2OgM0lcLaSjxapkAaTcnGp3tyQBmiGJuggVfx-0_X-UHRX6lxToOefdwr4FjrRk1wR9c1arrtaY2oDHb1jniscCeVy33e_sl4HnLDkDS2mRTIjZyhq2oSnRzRiW-y4kMjfnOz22DQeyps5IyqSAZ6FvUMq_88niLVpb6nuMo44G",
+    alt: "Chartizer", href: "https://chartizer.com/", className: "h-7 sm:h-8 rounded-md",
+  },
+  { src: "https://www.uniso.lv/logo.svg", alt: "Uniso", href: "https://www.uniso.lv/", className: "h-5 sm:h-6" },
+  { src: "https://www.rtu.lv/images/logo_lv.svg?v=1.1", alt: "RTU", href: "https://www.rtu.lv/", className: "h-7 sm:h-9 brightness-0 invert" },
 ];
 
 export default function Header() {
@@ -25,22 +29,22 @@ export default function Header() {
         
         <div className="flex items-center gap-6 min-w-0">
 
-          <Link to="/" className="flex items-baseline gap-2.5 group whitespace-nowrap" aria-label="BRIMS Data Explorer">
+          <Link to="/" className="flex items-baseline gap-2.5 group whitespace-nowrap" aria-label="BRIMS Knowledge Bank">
             <span className="font-['Space_Grotesk'] text-[22px] sm:text-[26px] font-bold leading-none tracking-[-0.03em] text-theme-text-primary group-hover:text-chartizer-yellow transition-colors duration-200">
               BRIMS
             </span>
-            <span className="hidden sm:inline text-[15px] font-medium leading-none text-theme-secondary">Data Explorer</span>
+            <span className="hidden sm:inline text-[15px] font-medium leading-none text-theme-secondary">Knowledge Bank</span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-5 border-l border-theme-border pl-6">
-            {partners.map(({ src, alt, className }) => (
-              <img
-                key={alt}
-                src={src}
-                alt={alt}
-                title={alt}
-                className={`h-6 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-200 ${className}`}
-              />
+          <div className="hidden sm:flex items-center gap-4 lg:gap-6 border-l border-theme-border pl-4 lg:pl-6">
+            {partners.map(({ src, alt, href, className }) => (
+              <a key={alt} href={href} target="_blank" rel="noopener noreferrer" title={alt} className="flex-none">
+                <img
+                  src={src}
+                  alt={alt}
+                  className={`w-auto object-contain opacity-90 hover:opacity-100 transition-opacity duration-200 ${className}`}
+                />
+              </a>
             ))}
           </div>
         </div>
