@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 // The bar above both graphs (Search and the author map): the search box in the middle,
@@ -50,23 +50,85 @@ export function useSidePanel() {
     return [open, setOpen];
 }
 
-// Papers | Mafia: the two graph modes. Sits at the same spot in both toolbars.
-export function ModeSwitch({ mode, papersHref, mafiaHref }) {
-    const item = (key, href, label) => (
-        <Link
-            to={href}
-            aria-current={mode === key ? "page" : undefined}
-            className={`h-full px-3.5 rounded-[10px] flex items-center text-sm font-semibold transition-colors
-                ${mode === key ? "bg-chartizer-yellow text-theme-bg" : "text-theme-muted hover:text-theme-text-primary"}`}
-        >
-            {label}
-        </Link>
+// Phones show one view at a time: the results list, the paper graph or the author map.
+export const PHONE = "(max-width: 767px)";
+
+// Adds the phone view ("results" | "graph") to a /search link.
+export function withView(href, view) {
+    const [path, query = ""] = href.split("?");
+    const p = new URLSearchParams(query);
+    p.set("view", view);
+    return `${path}?${p}`;
+}
+
+// The view switch. Sits at the same spot in both toolbars. md+: Papers | Mafia (the
+// results and the graph share the screen there). Phones: Results | Graph | Mafia, every
+// view one tap away. On Search, `onView` switches results / graph in place; on the
+// author map they link back to Search.
+export function ModeSwitch({ mode, papersHref, mafiaHref, view = "results", onView = null }) {
+    const phone = useMediaQuery(PHONE);
+    const cls = (on) => `h-full px-3.5 max-md:px-0 max-md:flex-1 justify-center rounded-[10px] flex items-center text-sm font-semibold transition-colors
+        ${on ? "bg-chartizer-yellow text-theme-bg" : "text-theme-muted hover:text-theme-text-primary"}`;
+    const link = (on, href, label) => (
+        <Link key={label} to={href} aria-current={on ? "page" : undefined} className={cls(on)}>{label}</Link>
     );
+    const paperView = (key, label) => {
+        const on = mode === "papers" && view === key;
+        return onView
+            ? <button key={key} type="button" aria-pressed={on} onClick={() => onView(key)} className={cls(on)}>{label}</button>
+            : link(on, withView(papersHref, key), label);
+    };
     return (
-        <div className="h-10 flex-none flex p-0.5 rounded-xl border border-theme-border bg-theme-bg-secondary">
-            {item("papers", papersHref, "Papers")}
-            {item("mafia", mafiaHref, "Mafia")}
+        <div className="h-10 flex-none max-md:flex-1 flex p-0.5 rounded-xl border border-theme-border bg-theme-bg-secondary">
+            {phone
+                ? [paperView("results", "Results"), paperView("graph", "Graph"), link(mode === "mafia", mafiaHref, "Mafia")]
+                : [link(mode === "papers", papersHref, "Papers"), link(mode === "mafia", mafiaHref, "Mafia")]}
         </div>
+    );
+}
+
+// Phones: the grab bar on top of a bottom sheet (the results on Search, the author card
+// on the author map). Tap toggles the sheet, a swipe up opens it, a swipe down closes
+// it. With a label it is also the sheet's peek when closed ("12 results ⌃").
+export const SHEET_PEEK_PX = 52;
+export function SheetHandle({ open, onToggle, label = null }) {
+    const startY = useRef(null);
+    const onPointerDown = (e) => {
+        startY.current = e.clientY;
+        e.currentTarget.setPointerCapture(e.pointerId);
+    };
+    const onPointerUp = (e) => {
+        if (startY.current == null) return;
+        const dy = e.clientY - startY.current;
+        startY.current = null;
+        if (Math.abs(dy) < 12) onToggle(!open);
+        else if (dy < 0 && !open) onToggle(true);
+        else if (dy > 0 && open) onToggle(false);
+    };
+    return (
+        <button
+            type="button"
+            aria-expanded={open}
+            aria-label={open ? "Close" : "Open"}
+            onPointerDown={onPointerDown}
+            onPointerUp={onPointerUp}
+            onPointerCancel={() => { startY.current = null; }}
+            // keyboard (pointer clicks are handled above)
+            onClick={(e) => { if (e.detail === 0) onToggle(!open); }}
+            style={{ height: SHEET_PEEK_PX }}
+            className="w-full flex-none flex flex-col items-center justify-center gap-1.5 touch-none select-none"
+        >
+            <span className="w-10 h-1 rounded-full bg-white/30" />
+            {label && (
+                <span className="flex items-center gap-1.5 max-w-[85vw] text-sm font-semibold text-theme-text-primary">
+                    <span className="truncate">{label}</span>
+                    <svg className={`w-3.5 h-3.5 flex-none text-theme-muted transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+                        fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+                    </svg>
+                </span>
+            )}
+        </button>
     );
 }
 
@@ -95,7 +157,7 @@ export function FiltersIcon() {
 export default function ChartToolbar({ value, onChange, onSubmit, placeholder = "Search…", left = null, right = null }) {
     return (
         <div className="w-full flex flex-wrap items-center gap-2 xl:grid xl:grid-cols-[minmax(max-content,1fr)_minmax(0,40rem)_minmax(max-content,1fr)] xl:gap-4">
-            <div className="order-2 xl:order-none flex items-center gap-2 min-w-0">{left}</div>
+            <div className="order-2 xl:order-none max-md:flex-1 flex items-center gap-2 min-w-0">{left}</div>
 
             <form
                 onSubmit={(e) => { e.preventDefault(); onSubmit(); }}

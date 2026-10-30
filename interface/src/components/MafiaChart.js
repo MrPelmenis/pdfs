@@ -4,7 +4,7 @@ import {
     CHART_BG, PILL_FONT_FAMILY, LINK_LABEL_STYLE, LONG_PRESS_MS, MIN_TEXT_PX,
     POP_IN_MS, POP_OUT_MS, POP_MIN_SCALE, POP_START_MS, POP_STAGGER_MS, MAX_FIT_ZOOM, FIT_GLIDE_MS,
     solidColor, textColorOn, escapeHtml, isEngineFault, adapterOf, easeOutBack, easeInBack,
-    drawHairs, hairHit, MARKER_MAX_HAIRS, guardHover,
+    drawHairs, hairHit, MARKER_MAX_HAIRS, guardHover, centerOnClickSetting, glideToCenter,
     getTooltip, positionTooltip, hideTooltip, legendRow, legendSection, pillSwatch, lineSwatch,
 } from "./Chart";
 
@@ -60,6 +60,19 @@ const COAUTHOR_WIDTH_PER = 1;
 const LINK_MAX_WIDTH = 14;
 
 // Field the author publishes in most (ignoring "none"), or null.
+// What the map draws of a network, given the link toggles: the links of the shown
+// kinds (cross-field only, if asked) and, with hideLonely, only authors left with one.
+// The page counts from this too, so its numbers match the screen.
+export function visibleNetwork(network, { cites = true, coauthors = true, crossField = false, hideLonely = false } = {}) {
+    const byId = new Map(network.authors.map((a) => [a.id, a]));
+    const fieldOf = (id) => dominantField(byId.get(id));
+    const links = network.links.filter((l) => (l.type === "cite" ? cites : coauthors)
+        && (!crossField || fieldOf(l.from) !== fieldOf(l.to)));
+    if (!hideLonely) return { authors: network.authors, links };
+    const linked = new Set(links.flatMap((l) => [l.from, l.to]));
+    return { authors: network.authors.filter((a) => linked.has(a.id)), links };
+}
+
 export function dominantField(author) {
     let best = null;
     for (const [id, n] of Object.entries(author.fields ?? {})) {
@@ -247,6 +260,8 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
     let hairHits = [];                 // where hairs were drawn last frame, for clicks
     const neighbours = new Map();      // id -> ids it has a drawn link to
     let selectedId = null;
+    let centerOnClick = centerOnClickSetting();   // shared with the paper graph
+    let stopGlide = () => {};
 
     let renderer = null;
     let removed = false;
@@ -686,16 +701,9 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
     // or colour is animated / re-sent for them alone), new ones pop in, gone ones pop out.
     function apply(r, fullNetwork, show) {
         categories = new Map((fullNetwork.categories ?? []).map((c) => [c.id, c]));
-        // cross-field: only links between authors whose main fields differ
-        const byId = new Map(fullNetwork.authors.map((a) => [a.id, a]));
-        const fieldOf = (id) => dominantField(byId.get(id));
-        const links = fullNetwork.links.filter((l) => (l.type === "cite" ? show.cites : show.coauthors)
-            && (!show.crossField || fieldOf(l.from) !== fieldOf(l.to)));
-        let network = fullNetwork;
-        if (show.hideLonely) {
-            const linked = new Set(links.flatMap((l) => [l.from, l.to]));
-            network = { ...fullNetwork, authors: fullNetwork.authors.filter((a) => linked.has(a.id)) };
-        }
+        const visible = visibleNetwork(fullNetwork, show);
+        const links = visible.links;
+        const network = { ...fullNetwork, authors: visible.authors };
         const next = new Map(network.authors.map((a) => [a.id, a]));
         const ranks = citationRanks(network.authors);
 
@@ -778,6 +786,21 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
         r.upsertNode(toRendererNode(a, pos.x, pos.y, false));
     }
 
+    // Glides the view so the author sits in the middle of the part of the map not under
+    // the filters. A touch or the wheel stops it.
+    function centerOn(id) {
+        run((r) => {
+            const pos = r.getNodePosition(id);
+            if (!pos) return;
+            userMoved = true;
+            stopGlide();
+            stopGlide = glideToCenter(r, container, pos.x, pos.y, {
+                call: (fn) => { if (!removed && renderer === r) safe(fn, r); },
+                onFrame: invalidate,
+            });
+        });
+    }
+
     function select(id, notify = false) {
         const prev = selectedId;
         selectedId = id && authors.has(id) ? id : null;
@@ -803,13 +826,14 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
     };
     const onPointerDown = (e) => {
         invalidate();
+        stopGlide();
         pressed = { x: e.clientX, y: e.clientY };
         pointerType = e.pointerType || "mouse";
         if (pointerType !== "mouse") hideTooltip();
     };
     // also here: a drag released outside the graph never reaches the renderer
     const onPointerUp = () => { pressed = null; dragEnd(); invalidate(); };
-    const onWheel = () => { userMoved = true; invalidate(); };
+    const onWheel = () => { userMoved = true; stopGlide(); invalidate(); };
     // iPad Safari: a pinch on the graph zooms the graph, never the page
     const onGesture = (e) => e.preventDefault();
     container.addEventListener("gesturestart", onGesture);
@@ -854,6 +878,7 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
             }
             const a = event.nodeId && authors.get(event.nodeId);
             select(a ? a.id : null, true);
+            if (a && centerOnClick) centerOn(a.id);
             // like the citation graph: a click also brings in their hidden connections
             if (a?.more && onExpand) onExpand(a.id);
         }
@@ -904,6 +929,7 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
             mount();
         },
         select: (id) => select(id),
+        setCenterOnClick(on) { centerOnClick = on; },
         // Glide to an author, e.g. one picked from the side panel.
         focus(id) {
             run((r) => {
@@ -916,6 +942,7 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
             queue.length = 0;
             cancelAnimationFrame(frame);
             cancelAnimationFrame(simFrame);
+            stopGlide();
             if (sim) sim.stop();
             if (resizeObserver) resizeObserver.disconnect();
             container.removeEventListener("gesturestart", onGesture);

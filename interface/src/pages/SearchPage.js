@@ -53,9 +53,9 @@ export default function SearchPage() {
     }, []);
 
     const [filtersOpen, setFiltersOpen] = useState(false);
-    // Phones and tablets in portrait show results or the graph; wider screens show both,
-    // and the results can be folded away to give the graph the full width.
-    const [mobileView, setMobileView] = useState("results");
+    // Phones show the results or the graph, picked in the toolbar's Results | Graph | Mafia
+    // switch (?view=graph when coming back from the author map). Wider screens show both.
+    const [mobileView, setMobileView] = useState(searchParams.get("view") === "graph" ? "graph" : "results");
     // lg+: the results slide over the graph (shared open/closed state with the author map)
     const [panelOpen, setPanelOpen] = useSidePanel();
     const wide = useMediaQuery("(min-width: 768px)");
@@ -259,6 +259,7 @@ export default function SearchPage() {
         const docs = Math.max(1, docsInput || 1);
         if (!hasAnyInput(q, fieldFilters)) return;
         setHasSearched(true);
+        setMobileView("results");
         // a new query starts clean: the old one's field / year / category filters go
         // (a search made only of field filters, with no query text, keeps them)
         if (q && q !== searched) {
@@ -325,7 +326,8 @@ export default function SearchPage() {
                                 <PanelIcon />
                                 Results
                             </ToolbarButton>
-                            <ModeSwitch mode="papers" papersHref={`/search?${searchParams}`} mafiaHref={mafiaUrl} />
+                            <ModeSwitch mode="papers" papersHref={`/search?${searchParams}`} mafiaHref={mafiaUrl}
+                                view={mobileView} onView={setMobileView} />
                         </>
                     )}
                     right={hasSearched && (
@@ -495,21 +497,22 @@ export default function SearchPage() {
             {/* ── Results + chart ── */}
             {hasSearched && (
                 <div className="relative flex flex-1 min-h-0">
-                    {/* below lg the two views are stacked and one is hidden; both keep their
-                        size so the graph lays out correctly while out of sight */}
-                    {/* lg+: the results slide over the graph, like the author map's filters, so
-                        opening / closing them never resizes (or moves) the graph */}
+                    {/* md+: the results slide over the graph, like the author map's filters, so
+                        opening / closing them never resizes (or moves) the graph. Phones: the
+                        results or the graph fill the screen; both keep their size, so the
+                        graph lays out correctly while out of sight. */}
                     <section
-                        aria-hidden={wide && !panelOpen}
+                        aria-hidden={wide ? !panelOpen : mobileView !== "results"}
                         className={`
-                            absolute inset-0 md:right-auto md:z-20 md:w-[clamp(340px,40vw,550px)]
-                            flex flex-col min-h-0 md:transition-transform md:duration-300 md:ease-out
-                            ${wide ? "glass !rounded-none !border-y-0 !border-l-0" : "bg-theme-bg glass-pane"}
-                            ${mobileView === "graph" ? "max-md:invisible max-md:pointer-events-none" : ""}
+                            absolute z-20 flex flex-col min-h-0
+                            ${wide
+                                ? "inset-y-0 left-0 w-[clamp(340px,40vw,550px)] glass !rounded-none !border-y-0 !border-l-0 transition-transform duration-300 ease-out"
+                                : "inset-0 bg-theme-bg glass-pane"}
                             ${wide && !panelOpen ? "-translate-x-full pointer-events-none" : ""}
+                            ${!wide && mobileView !== "results" ? "invisible pointer-events-none" : ""}
                         `}
                     >
-                        <div className="results-list flex-1 overflow-y-auto overscroll-contain px-3 sm:px-5 pb-24 md:pb-5 flex flex-col gap-3 pt-3">
+                        <div className="results-list flex-1 overflow-y-auto overscroll-contain px-3 sm:px-5 pb-[calc(20px+env(safe-area-inset-bottom))] md:pb-5 flex flex-col gap-3 pt-3">
 
                             {!loading && hasSearched && (
                                 <div className="flex items-center gap-3 mb-1">
@@ -554,33 +557,11 @@ export default function SearchPage() {
                         style={{ "--chart-left-inset": wide && panelOpen ? "clamp(340px, 40vw, 550px)" : "0px" }}
                         className={`
                             absolute inset-0 bg-theme-bg overflow-hidden
-                            max-md:[--chart-sheet-offset:76px]
-                            ${mobileView === "results" ? "max-md:invisible max-md:pointer-events-none" : ""}
                         `}
                     >
                         <div id="megachart" className="graph-surface w-full h-full" />
                     </section>
 
-                    {/* phones: switch between the results and the graph (iPads get the panel) */}
-                    <div className="md:hidden absolute inset-x-0 z-20 flex justify-center pointer-events-none"
-                         style={{ bottom: "calc(16px + env(safe-area-inset-bottom))" }}>
-                        <div className="glass pointer-events-auto flex p-1 gap-1 rounded-full">
-                            {[
-                                { key: "results", label: `Results${results.length ? ` · ${results.length}` : ""}` },
-                                { key: "graph", label: "Graph" },
-                            ].map(({ key, label }) => (
-                                <button
-                                    key={key}
-                                    type="button"
-                                    onClick={() => setMobileView(key)}
-                                    className={`h-10 px-5 rounded-full text-sm font-semibold transition-colors duration-150
-                                        ${mobileView === key ? "bg-chartizer-yellow text-theme-bg" : "text-theme-muted"}`}
-                                >
-                                    {label}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
                 </div>
             )}
 

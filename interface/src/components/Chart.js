@@ -28,6 +28,21 @@ const STUB_TEXT = "rgba(232,234,237,0.85)";
 const EXPANDED_STROKE = "rgba(255,255,255,0.95)";
 const MIN_TEXT_PX = 3;           // below this on screen, titles are skipped
 
+// Pill sizes. The search hits are sized by their rank (the top hit biggest); articles
+// revealed later by their citations. The last clicked article grows to the size of the
+// biggest on the map and wears a ring until another is clicked.
+const RANK_SCALE_TOP = 2.3;
+const RANK_SCALE_LAST = 0.75;
+const RANK_CURVE = 1.4;          // >1: the size drops fastest over the first few hits
+const CITE_SCALE_MIN = 0.65;     // never cited
+const CITE_SCALE_MAX = 2.0;      // CITE_SCALE_FULL citations and more
+const CITE_SCALE_FULL = 10000;
+const SELECT_MS = 320;
+const SELECT_STROKE = QUERY_FILL;
+// "Center on click": the clicked article glides to the middle of the visible graph.
+const CENTER_KEY = "brims.centerOnClick";
+const CENTER_MS = 520;
+
 const LINK_LABEL_STYLE = {
     visible: true,
     fontFamily: PILL_FONT_FAMILY,
@@ -40,15 +55,15 @@ const LINK_LABEL_STYLE = {
 };
 const LINK_STYLES = {
     query: {
-        color: "rgba(232,234,237,0.16)", width: 1, arrow: false, dashed: false, label: "search hit",
+        color: "rgba(232,234,237,0.38)", width: 1.2, arrow: false, dashed: false, label: "search hit",
         labelStyle: { ...LINK_LABEL_STYLE, textColor: "rgba(232,234,237,0.45)" },
     },
     ref: {
-        color: "rgba(138,180,248,0.45)", width: 1.2, arrow: true, dashed: false, label: "cites",
+        color: "rgba(138,180,248,0.75)", width: 1.6, arrow: true, dashed: false, label: "cites",
         labelStyle: { ...LINK_LABEL_STYLE, textColor: "rgba(138,180,248,0.95)" },
     },
     rel: {
-        color: "rgba(246,174,45,0.4)", width: 1, arrow: false, dashed: true, label: "related work",
+        color: "rgba(246,174,45,0.7)", width: 1.4, arrow: false, dashed: true, label: "related work",
         labelStyle: { ...LINK_LABEL_STYLE, textColor: "rgba(246,174,45,0.95)" },
     },
 };
@@ -154,7 +169,8 @@ let _measureCtx = null;
 const _pillCache = new Map();
 
 // Wraps the full title into lines and sizes the pill around them (world units).
-function pillLayout(title, stub) {
+function pillLayout(title, stub, scale = 1) {
+    if (scale !== 1) return scaledPill(pillLayout(title, stub), stub, title, scale);
     const key = `${stub ? 1 : 0}|${title}`;
     const cached = _pillCache.get(key);
     if (cached) return cached;
@@ -196,6 +212,30 @@ function pillLayout(title, stub) {
     };
     _pillCache.set(key, layout);
     return layout;
+}
+
+// The same pill, every measure times `scale` (the lines wrap the same way).
+function scaledPill(base, stub, title, scale) {
+    const key = `${stub ? 1 : 0}|${scale}|${title}`;
+    const cached = _pillCache.get(key);
+    if (cached) return cached;
+    const layout = {
+        ...base,
+        fontSize: base.fontSize * scale,
+        lineHeight: base.lineHeight * scale,
+        w: Math.ceil(base.w * scale),
+        h: base.h * scale,
+        corner: base.corner * scale,
+    };
+    _pillCache.set(key, layout);
+    return layout;
+}
+
+// How big an article revealed by expanding is: by its citations, on a log scale.
+function citeScale(d) {
+    const cited = Math.max(0, Number(d?.cited) || 0);
+    const t = Math.min(1, Math.log10(cited + 1) / Math.log10(CITE_SCALE_FULL + 1));
+    return CITE_SCALE_MIN + (CITE_SCALE_MAX - CITE_SCALE_MIN) * t;
 }
 
 function escapeHtml(str) {
@@ -519,7 +559,7 @@ function pillColors(d, expanded) {
 
 // The engine always gets the plain outline: the "expanded" ring is drawn on the overlay,
 // because changing a node's style in the engine means re-sending (re-creating) it.
-function toRendererNode(item, x, y, pinned = false) {
+function toRendererNode(item, x, y, scale = 1, pinned = false) {
     const id = String(item.id);
     const d = fieldsOf(item) ?? {};
 
@@ -549,7 +589,7 @@ function toRendererNode(item, x, y, pinned = false) {
     }
 
     // No label: the title is drawn on the overlay, inside the pill.
-    const pill = pillLayout(titleOf(d, id), isStub(d));
+    const pill = pillLayout(titleOf(d, id), isStub(d), scale);
     const colors = pillColors(d, false);
     return {
         id, x, y,
@@ -643,6 +683,23 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     const expandedIds = new Set();
     const parentOf = new Map();
     const exhaustedIds = new Set();
+    // Search hits' sizes by rank (id -> scale); everything else goes by citations. The
+    // last clicked article is drawn bigger, with a ring.
+    const rankScale = new Map();
+    let selectedId = null;
+
+    // the selected article's scale: set when it is clicked
+    let selectedScale = 1;
+    function baseScale(id, d = fieldsById.get(id)) {
+        return rankScale.get(id) ?? citeScale(d);
+    }
+    function nodeScale(id, d = fieldsById.get(id)) {
+        return id === selectedId ? selectedScale : baseScale(id, d);
+    }
+
+    function pillOf(id, d = fieldsById.get(id)) {
+        return pillLayout(titleOf(d, id), isStub(d), nodeScale(id, d));
+    }
 
     // NetChart's navigation showed only nodes within FOCUS_RADIUS hops of the initial
     // nodes. Every node and link the chart was given is kept here; `focusOn` decides
@@ -801,11 +858,16 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     legend.append(legendHeader, legendBody);
     container.appendChild(legend);
 
+    // "Center on click" (a checkbox in the legend), on by default.
+    let centerOnClick = centerOnClickSetting();
+
+
     let renderer = null;
     let removed = false;
     let latestSize = null;
     let fitTimer = null;
     let userMoved = false;
+    let stopGlide = () => {};
     let offEvents = null;
     let frame = 0;
     const queue = [];
@@ -954,6 +1016,11 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             legendSection("Outside library", outsideRows),
             legendSection("Links", linkRows),
             legendSection("Markers", markerRows),
+            legendSection("View", [`<label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin:-3px -6px;padding:3px 6px">
+                <input type="checkbox" data-center ${centerOnClick ? "checked" : ""}
+                    style="flex:none;width:14px;height:14px;margin:0 4px;accent-color:${QUERY_FILL};cursor:pointer">
+                <span>Center on click</span>
+            </label>`]),
         ].join("");
         if (legendBody.innerHTML !== body) legendBody.innerHTML = body;
         legend.style.display = knownNodeIds.size + filteredOut.size > 1 ? "flex" : "none";
@@ -1089,8 +1156,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         const now = performance.now();
         const sizeOf = (id) => {
             if (id === "query") return null;
-            const d = fieldsById.get(id);
-            return pillLayout(titleOf(d, id), isStub(d));
+            return pillOf(id);
         };
         const resize = (rr, id, scale, opts) => {
             const pill = sizeOf(id);
@@ -1128,9 +1194,84 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         octx.restore();
     }
 
+    // The last clicked article: an accent ring with a soft glow.
+    function drawSelectedRing(pill, c, zoom) {
+        const w = pill.w * zoom;
+        const h = pill.h * zoom;
+        if (h < 4) return;
+        const width = Math.max(1.5, 3 * zoom);
+        const gap = Math.max(1, 2 * zoom);
+        const off = gap + width / 2;
+        octx.save();
+        octx.strokeStyle = SELECT_STROKE;
+        octx.lineWidth = width;
+        octx.shadowColor = "rgba(222,161,28,0.6)";
+        octx.shadowBlur = 14 * Math.min(1, zoom);
+        octx.beginPath();
+        octx.roundRect(c.x - w / 2 - off, c.y - h / 2 - off, w + 2 * off, h + 2 * off, h / 2 + off);
+        octx.stroke();
+        octx.restore();
+    }
+
+    // Glides the view so the article sits in the middle of the part of the graph not
+    // under the results panel. A touch or the wheel stops it.
+    function centerOn(id) {
+        run((r) => {
+            const pos = r.getNodePosition(id);
+            if (!pos) return;
+            userMoved = true;   // no re-fit after this
+            stopGlide();
+            stopGlide = glideToCenter(r, container, pos.x, pos.y, {
+                call: (fn) => { if (!removed && renderer === r) safe(fn, r); },
+                onFrame: invalidate,
+            });
+        });
+    }
+
+    // Makes `id` the last clicked article (null: none). Its pill grows, the previous one
+    // shrinks back; the title follows through `pops`.
+    function select(id) {
+        if (id && centerOnClick) centerOn(id);
+        if (id === selectedId) return;
+        const prev = selectedId;
+        const before = (nid) => (nid ? nodeScale(nid) : 1);
+        const prevFrom = before(prev);
+        const idFrom = before(id);
+        selectedId = id;
+        // as big as the biggest article on the map
+        if (id) {
+            let biggest = 0;
+            for (const nid of knownNodeIds) if (nid !== "query") biggest = Math.max(biggest, baseScale(nid));
+            selectedScale = biggest;
+        }
+        run((r) => {
+            const now = performance.now();
+            const resize = (nid, from) => {
+                if (!nid || !knownNodeIds.has(nid) || leaving.has(nid)) return;
+                const pill = pillOf(nid);
+                if (!r.animateNodeSize(nid, pill.w, pill.h, { durationMs: SELECT_MS, easing: "ease-out-back", commit: true })) return;
+                pops.set(nid, { start: now, ms: SELECT_MS, from, to: 1, ease: easeOutBack });
+                // A resize keeps the old corner radius, which leaves square-ish ends on a
+                // pill that grew (and links stopping short of one that shrank): once it
+                // has its size, the pill is re-sent with the right one.
+                setTimeout(() => {
+                    if (removed || !renderer || !knownNodeIds.has(nid) || leaving.has(nid)) return;
+                    safe((rr) => {
+                        const pos = rr.getNodePosition(nid);
+                        if (pos) rr.upsertNode(toRendererNode(allNodes.get(nid), pos.x, pos.y, nodeScale(nid)));
+                    }, renderer);
+                }, SELECT_MS + 30);
+            };
+            if (prev) resize(prev, prevFrom / nodeScale(prev));
+            if (id) resize(id, idFrom / nodeScale(id));
+            invalidate(SELECT_MS + 100);
+        });
+    }
+
     function drawTitle(d, id, c, zoom) {
-        const pill = pillLayout(titleOf(d, id), isStub(d));
-        if (expandedIds.has(id)) drawExpandedRing(pill, c, zoom);
+        const pill = pillOf(id, d);
+        if (id === selectedId) drawSelectedRing(pill, c, zoom);
+        else if (expandedIds.has(id)) drawExpandedRing(pill, c, zoom);
         const px = pill.fontSize * zoom;
         if (px < MIN_TEXT_PX) return;
         octx.font = `${pill.weight} ${px}px ${PILL_FONT_FAMILY}`;
@@ -1162,8 +1303,53 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         }
     }
 
+    // The engine ends a link at the pill's bounding box, not its round ends, so towards a
+    // big pill a link stops short in the empty corner beside the curve. The rest of the
+    // way, from that box to the pill's edge, is drawn here.
+    function drawLinkEnds(zoom) {
+        const pillEnd = (id, other) => {
+            if (id === "query" || pops.has(id)) return null;
+            const a = renderer.getNodePosition(id);
+            const b = renderer.getNodePosition(other);
+            if (!a || !b) return null;
+            const pill = pillOf(id);
+            const angle = Math.atan2(b.y - a.y, b.x - a.x);
+            const dx = Math.cos(angle);
+            const dy = Math.sin(angle);
+            const box = Math.min(Math.abs(dx) > 1e-6 ? pill.w / 2 / Math.abs(dx) : Infinity, Math.abs(dy) > 1e-6 ? pill.h / 2 / Math.abs(dy) : Infinity);
+            const edge = pillEdgePoint(pill.w, pill.h, angle).dist;
+            if (box - edge < 1) return null;
+            return [
+                renderer.worldToScreen(a.x + dx * edge, a.y + dy * edge),
+                renderer.worldToScreen(a.x + dx * box, a.y + dy * box),
+            ];
+        };
+        octx.save();
+        octx.lineCap = "butt";
+        for (const l of allLinks) {
+            const from = String(l.from);
+            const to = String(l.to);
+            if (!knownNodeIds.has(from) || !knownNodeIds.has(to)) continue;
+            const rl = toRendererLink(l);
+            if (!knownLinkIds.has(rl.id)) continue;
+            const style = LINK_STYLES[linkKind(l)];
+            octx.strokeStyle = style.color;
+            octx.lineWidth = Math.max(1, style.width * zoom);
+            octx.setLineDash(style.dashed ? [4 * zoom, 3 * zoom] : []);
+            for (const end of [pillEnd(from, to), pillEnd(to, from)]) {
+                if (!end) continue;
+                octx.beginPath();
+                octx.moveTo(end[0].x, end[0].y);
+                octx.lineTo(end[1].x, end[1].y);
+                octx.stroke();
+            }
+        }
+        octx.restore();
+    }
+
     function drawTitles(now, w, h) {
         const zoom = renderer.getViewport().zoom;
+        drawLinkEnds(zoom);
         octx.textAlign = "center";
         octx.textBaseline = "middle";
         const drawn = (id) => (leaving.has(id) ? leaving.get(id) : fieldsById.get(id));
@@ -1173,7 +1359,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             const pos = d && renderer.getNodePosition(id);
             if (!pos) continue;
             const c = renderer.worldToScreen(pos.x, pos.y);
-            const pill = pillLayout(titleOf(d, id), isStub(d));
+            const pill = pillOf(id, d);
             if (c.x + pill.w * zoom < 0 || c.x - pill.w * zoom > w || c.y + pill.h * zoom < 0 || c.y - pill.h * zoom > h) continue;
             drawTitle(d, id, c, zoom * scaleOf(id, now));
         }
@@ -1186,8 +1372,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             if (!pos) continue;
             const c = renderer.worldToScreen(pos.x, pos.y);
             if (c.x < -200 || c.x > w + 200 || c.y < -200 || c.y > h + 200) continue;
-            const d = fieldsById.get(id);
-            const pill = pillLayout(titleOf(d, id), isStub(d));
+            const pill = pillOf(id);
             const neighbours = [];
             for (const nb of adjacency.get(id) ?? []) {
                 if (!knownNodeIds.has(nb)) continue;
@@ -1222,13 +1407,13 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         const perAnchor = new Map();
         const rendererNodes = fresh.map((id) => {
             const n = allNodes.get(id);
-            if (Number.isFinite(n.x) && Number.isFinite(n.y)) return toRendererNode(n, n.x, n.y);
+            if (Number.isFinite(n.x) && Number.isFinite(n.y)) return toRendererNode(n, n.x, n.y, nodeScale(id));
             const anchor = anchorFor(id);
             const key = anchor ? `${anchor.x}|${anchor.y}` : "origin";
             const index = perAnchor.get(key) ?? 0;
             perAnchor.set(key, index + 1);
             const { x, y } = seedPosition(index, anchor);
-            return toRendererNode(n, x, y);
+            return toRendererNode(n, x, y, nodeScale(id));
         });
 
         // articles of a category hidden in the legend wait, placed, until it is shown
@@ -1338,8 +1523,8 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
                 leaving.set(id, fieldsById.get(id));
                 pops.set(id, { start: now, ms: POP_OUT_MS, from: 1, to: POP_MIN_SCALE, ease: easeInBack });
                 markers.delete(id);
-                const d = fieldsById.get(id);
-                const pill = pillLayout(titleOf(d, id), isStub(d));
+                if (selectedId === id) selectedId = null;
+                const pill = pillOf(id);
                 r.animateNodeSize(id, pill.w * POP_MIN_SCALE, pill.h * POP_MIN_SCALE, { durationMs: POP_OUT_MS, easing: "ease-in-back", commit: true });
             }
             setTimeout(() => {
@@ -1356,7 +1541,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
                 filteredOut.delete(id);
                 leaving.delete(id);
                 pops.delete(id);
-                return toRendererNode(allNodes.get(id), pos.x, pos.y);
+                return toRendererNode(allNodes.get(id), pos.x, pos.y, nodeScale(id));
             });
             r.upsertNodes(nodes);
             for (const n of nodes) knownNodeIds.add(n.id);
@@ -1375,6 +1560,11 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         refreshExpansion();
     }
 
+    legendBody.addEventListener("change", (e) => {
+        if (!e.target.matches("[data-center]")) return;
+        centerOnClick = e.target.checked;
+        saveCenterOnClick(centerOnClick);
+    });
     legendBody.addEventListener("click", (e) => {
         const key = e.target.closest("[data-filter]")?.dataset.filter;
         if (!key) return;
@@ -1437,8 +1627,8 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             for (const gone of doomed) {
                 pops.set(gone, { start: now, ms: POP_OUT_MS, from: 1, to: POP_MIN_SCALE, ease: easeInBack });
                 markers.delete(gone);
-                const d = leaving.get(gone);
-                const pill = pillLayout(titleOf(d, gone), isStub(d));
+                if (selectedId === gone) selectedId = null;
+                const pill = pillOf(gone, leaving.get(gone));
                 r.animateNodeSize(gone, pill.w * POP_MIN_SCALE, pill.h * POP_MIN_SCALE, { durationMs: POP_OUT_MS, easing: "ease-in-back", commit: true });
             }
             setTimeout(() => {
@@ -1561,12 +1751,13 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     let pointerType = "mouse";
     const onPointerDown = (e) => {
         invalidate();
+        stopGlide();
         pressed = { x: e.clientX, y: e.clientY };
         pointerType = e.pointerType || "mouse";
         if (pointerType !== "mouse") hideTooltip();
     };
     const onPointerUp = () => { pressed = null; invalidate(); };
-    const onWheel = () => { userMoved = true; invalidate(); };
+    const onWheel = () => { userMoved = true; stopGlide(); invalidate(); };
 
     // iPad Safari: a pinch on the graph zooms the graph, never the page
     const onGesture = (e) => e.preventDefault();
@@ -1596,10 +1787,19 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
                 break;
             }
 
+            case "selectionchange": {
+                // the engine's own (blue) selection outline would sit next to our ring
+                if (event.selectedNodeIds?.length || event.selectedLinkIds?.length) renderer?.clearSelection();
+                break;
+            }
+
             case "nodeexpand": {
                 // a click on the expansion marker; the articles come from the server
                 const id = event.nodeId;
-                if (id && fieldsById.has(id) && remainingFor(id) !== 0) expandNode(id);
+                if (id && fieldsById.has(id) && remainingFor(id) !== 0) {
+                    select(id);
+                    expandNode(id);
+                }
                 break;
             }
 
@@ -1618,6 +1818,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
                 const sy = Number.isFinite(event.screenY) ? event.screenY : pointerY - rect.top;
                 const hairId = !id && hairHit(hairHits, sx, sy);
                 if (hairId && fieldsById.has(hairId) && remainingFor(hairId) !== 0) {
+                    select(hairId);
                     expandNode(hairId);
                     return;
                 }
@@ -1627,6 +1828,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
                 }
                 const d = fieldsById.get(id);
                 if (!d) return;
+                select(id);
 
                 if (isStub(d)) {
                     // on touch the sheet offers OpenAlex instead of leaving the page at once
@@ -1698,6 +1900,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             queue.length = 0;
             if (fitTimer) clearTimeout(fitTimer);
             cancelAnimationFrame(frame);
+            stopGlide();
             if (resizeObserver) resizeObserver.disconnect();
             container.removeEventListener("gesturestart", onGesture);
             container.removeEventListener("gesturechange", onGesture);
@@ -1725,6 +1928,11 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     // With initialNodes, only their neighbourhood shows at first (as NetChart navigation
     // did); without, everything.
     const seeds = (initialNodes ?? []).map(String).filter((id) => allNodes.has(id));
+    const hits = seeds.filter((id) => id !== "query");
+    hits.forEach((id, i) => {
+        const t = hits.length > 1 ? i / (hits.length - 1) : 0;
+        rankScale.set(id, RANK_SCALE_LAST + (RANK_SCALE_TOP - RANK_SCALE_LAST) * (1 - t) ** RANK_CURVE);
+    });
     focusOn(seeds.length ? seeds : [...allNodes.keys()], null, true);
 
     // Pills are sized from measured text, so wait for Poppins before the first draw.
@@ -1766,6 +1974,47 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     return chart;
 };
 
+// "Center on click": one setting for the paper graph and the author map.
+function centerOnClickSetting() {
+    try { return localStorage.getItem(CENTER_KEY) !== "0"; } catch { return true; }
+}
+function saveCenterOnClick(on) {
+    try { localStorage.setItem(CENTER_KEY, on ? "1" : "0"); } catch { /* private mode */ }
+}
+
+// Glides the view (same zoom) so the world point (x, y) sits in the middle of the part
+// of `container` not under a side panel (--chart-left-inset / --chart-right-inset: the
+// panels' widths). They are read every frame: a panel can open with the click itself.
+// `call(fn)` runs fn(renderer) safely. Returns a function that stops the glide.
+function glideToCenter(r, container, x, y, { call = (fn) => fn(r), onFrame = null } = {}) {
+    const probe = document.createElement("div");
+    Object.assign(probe.style, { position: "absolute", height: "0", visibility: "hidden", pointerEvents: "none" });
+    const inset = (side) => {
+        probe.style.width = `var(--chart-${side}-inset, 0px)`;
+        return probe.offsetWidth;
+    };
+
+    const from = r.getViewport();
+    const start = performance.now();
+    let frame = 0;
+    const step = (now) => {
+        container.appendChild(probe);
+        const toX = x - (inset("left") - inset("right")) / 2 / from.zoom;
+        probe.remove();
+        const t = Math.min(1, (now - start) / CENTER_MS);
+        const e = 1 - (1 - t) ** 3;
+        call((rr) => rr.setViewport({
+            centerX: from.centerX + (toX - from.centerX) * e,
+            centerY: from.centerY + (y - from.centerY) * e,
+            zoom: rr.getViewport().zoom,
+        }));
+        onFrame?.();
+        if (t < 1) frame = requestAnimationFrame(step);
+    };
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
+}
+
 // The engine hit-tests hover on every window pointermove inside the graph's
 // rectangle, even over a panel floating above it (results, filters, legend, author
 // card), so a node under a panel would light up and show its tooltip. Moves that aren't
@@ -1794,7 +2043,7 @@ function guardHover(container) {
 
 // Shared with the author network (MafiaChart).
 export {
-    drawHairs, hairHit, MARKER_MAX_HAIRS, guardHover,
+    drawHairs, hairHit, MARKER_MAX_HAIRS, guardHover, centerOnClickSetting, saveCenterOnClick, glideToCenter,
     CHART_BG, PILL_FONT_FAMILY, LINK_LABEL_STYLE, LONG_PRESS_MS, MIN_TEXT_PX,
     POP_IN_MS, POP_OUT_MS, POP_MIN_SCALE, POP_START_MS, POP_STAGGER_MS, MAX_FIT_ZOOM, FIT_GLIDE_MS,
     parseColor, solidColor, textColorOn, escapeHtml, isEngineFault, adapterOf, easeOutBack, easeInBack,

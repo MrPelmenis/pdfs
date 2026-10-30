@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
-import createMafiaChart, { dominantField, profileUrl } from "../components/MafiaChart";
-import { solidColor } from "../components/Chart";
+import createMafiaChart, { dominantField, profileUrl, visibleNetwork } from "../components/MafiaChart";
+import { solidColor, centerOnClickSetting, saveCenterOnClick } from "../components/Chart";
 import YearRangeSlider, { YEAR_MIN, YEAR_MAX } from "../components/DualSlider";
 import PdfModal from "../components/PdfModal";
 import ChartToolbar, {
-    ToolbarButton, FiltersIcon, ModeSwitch, useMediaQuery, useSidePanel,
+    ToolbarButton, FiltersIcon, ModeSwitch, useMediaQuery, useSidePanel, SheetHandle,
 } from "../components/ChartToolbar";
 
 const API = process.env.REACT_APP_SERVER_URL;
@@ -133,7 +133,10 @@ function Segmented({ options, value, onChange, format = String }) {
 
 // How many authors to show. It follows the thumb while dragging and only reloads the
 // map when it is let go (or on each arrow key press).
-function AuthorCountSlider({ value, onChange }) {
+// The number is what is on the map now (`shown`: the starting set plus authors opened
+// into it, after the link toggles); the slider sets the starting set. While dragging,
+// the number follows the slider.
+function AuthorCountSlider({ value, onChange, shown = null }) {
     const [local, setLocal] = useState(value);
     useEffect(() => setLocal(value), [value]);
     const commit = () => { if (local !== value) onChange(local); };
@@ -148,9 +151,16 @@ function AuthorCountSlider({ value, onChange }) {
     return (
         <div className="flex flex-col gap-1.5">
             <div className="flex items-baseline justify-between">
-                <span className="text-2xl font-semibold text-theme-text-primary tabular-nums leading-none">{local}</span>
-                <span className="text-[11px] text-theme-muted">authors</span>
+                <span className="text-2xl font-semibold text-theme-text-primary tabular-nums leading-none">
+                    {local !== value || shown == null ? local : shown}
+                </span>
+                <span className="text-[11px] text-theme-muted">authors on the map</span>
             </div>
+            {local === value && shown != null && shown !== value && (
+                <span className="-mt-0.5 text-[11px] text-theme-muted tabular-nums">
+                    starting set {value}{shown > value ? ` + ${shown - value} opened` : " (all there are here)"}
+                </span>
+            )}
             <input
                 type="range"
                 min={AUTHORS_MIN}
@@ -497,6 +507,13 @@ export default function MafiaPage() {
 
     const chartBox = useRef(null);
     const chart = useRef(null);
+    // one setting with the paper graph's legend checkbox
+    const [centerOnClick, setCenterOnClick] = useState(centerOnClickSetting);
+    const toggleCenter = (on) => {
+        setCenterOnClick(on);
+        saveCenterOnClick(on);
+        chart.current?.setCenterOnClick(on);
+    };
 
     const categories = useMemo(
         () => new Map((network?.categories ?? allCategories).map((c) => [c.id, c])),
@@ -509,6 +526,10 @@ export default function MafiaPage() {
 
     // ── fetch the network whenever a server-side filter changes ──
     const { q, around, fields, from, to, full, n, min, lonely } = filters;
+    // the link toggles, as the chart applies them (and the stats count them)
+    const show = useMemo(() => ({
+        cites: filters.cites, coauthors: filters.coauthors, crossField: filters.cross, hideLonely: !filters.lonely,
+    }), [filters.cites, filters.coauthors, filters.cross, filters.lonely]);
     const fieldsKey = [...fields].sort().join(",");
     // authors brought in by expanding stay on the map when the filters change
     const included = useRef(new Set());
@@ -600,10 +621,8 @@ export default function MafiaPage() {
         if (!network) return;
         const anchor = anchorRef.current;
         anchorRef.current = null;
-        chart.current?.setData(network, {
-            cites: filters.cites, coauthors: filters.coauthors, crossField: filters.cross, hideLonely: !filters.lonely, anchor,
-        });
-    }, [network, filters.cites, filters.coauthors, filters.cross, filters.lonely]);
+        chart.current?.setData(network, { ...show, anchor });
+    }, [network, show]);
 
     const selected = network?.authors.find((a) => a.id === selectedId) ?? null;
     useEffect(() => {
@@ -669,9 +688,22 @@ export default function MafiaPage() {
     };
 
     const stats = network?.stats;
+    // what is actually on screen, after the link toggles (the server's counts aren't)
+    const onScreen = useMemo(() => (network ? visibleNetwork(network, show) : null), [network, show]);
     const spots = useMemo(() => blindSpots(network?.field_matrix), [network]);
     const activeCount = [fields.size > 0, from > YEAR_MIN || to < YEAR_MAX, full, !filters.cites || !filters.coauthors || filters.cross || filters.lonely, min !== 3]
         .filter(Boolean).length;
+    const filtersButton = (
+        <ToolbarButton
+            active={wide ? filtersVisible : sheet === "filters"}
+            dot={activeCount > 0}
+            onClick={toggleFilters}
+            className="md:w-28 justify-center"
+        >
+            <FiltersIcon />
+            Filters
+        </ToolbarButton>
+    );
 
     const filterPanel = (
         <div className="flex flex-col gap-6">
@@ -703,13 +735,23 @@ export default function MafiaPage() {
                 </div>
             </Section>
 
+            <Section title="View">
+                <Switch on={centerOnClick} onChange={toggleCenter} label="Center on click"
+                    hint="Move the author you click to the middle of the map"
+                    swatch={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-theme-muted">
+                        <circle cx="12" cy="12" r="7" /><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" />
+                        <line x1="12" y1="1.5" x2="12" y2="4.5" /><line x1="12" y1="19.5" x2="12" y2="22.5" />
+                        <line x1="1.5" y1="12" x2="4.5" y2="12" /><line x1="19.5" y1="12" x2="22.5" y2="12" />
+                    </svg>} />
+            </Section>
+
             <Section title="Papers">
                 <Segmented options={[false, true]} value={full} onChange={(v) => setFilter({ full: v })}
                     format={(v) => (v ? "Only with PDF" : "All papers")} />
             </Section>
 
             <Section title="Authors shown">
-                <AuthorCountSlider value={n} onChange={(v) => setFilter({ n: v })} />
+                <AuthorCountSlider value={n} shown={onScreen?.authors.length ?? null} onChange={(v) => setFilter({ n: v })} />
                 <span className="text-[11px] text-theme-muted leading-snug">The most cited scientists (career citations) in this selection. With “Hide unconnected” on, only ones linked to someone else on the map.</span>
             </Section>
 
@@ -761,22 +803,17 @@ export default function MafiaPage() {
                     onChange={changeQueryText}
                     onSubmit={submitQuery}
                     placeholder="Who works on… (a topic, e.g. vaccine adjuvant)"
+                    // md+: the side panel's toggle comes first, as Results does on Search.
+                    // Phones: the mode switch first and Filters on the right, as on Search.
                     left={
                         <>
-                            <ToolbarButton
-                                active={wide ? filtersVisible : sheet === "filters"}
-                                dot={activeCount > 0}
-                                onClick={toggleFilters}
-                                className="md:w-28 justify-center"
-                            >
-                                <FiltersIcon />
-                                Filters
-                            </ToolbarButton>
+                            {wide && filtersButton}
                             <ModeSwitch mode="mafia" papersHref={papersUrl} mafiaHref={`/mafia?${params}`} />
                         </>
                     }
                     right={
                         <>
+                            {!wide && filtersButton}
                             {q && wide && (
                                 <div className="flex-none w-56 [&>div]:h-10 [&_button]:h-full [&_button]:whitespace-nowrap">
                                     <Segmented options={[false, true]} value={around} onChange={(v) => setFilter({ around: v })}
@@ -785,7 +822,7 @@ export default function MafiaPage() {
                             )}
                             {wide && stats && (
                                 <div className="text-right text-xs text-theme-muted leading-tight whitespace-nowrap">
-                                    <div><b className="text-theme-text-primary font-semibold">{stats.authors_shown}</b> of {stats.authors_total.toLocaleString()} authors</div>
+                                    <div><b className="text-theme-text-primary font-semibold">{onScreen.authors.length}</b> of {stats.authors_total.toLocaleString()} authors</div>
                                     {/* the server lowered the link strength to fill the map */}
                                     {network.min_weight < network.requested_min_weight && (
                                         <div className="text-chartizer-yellow">links ≥ {network.min_weight} to fill the map</div>
@@ -794,7 +831,7 @@ export default function MafiaPage() {
                                     {!lonely && stats.authors_shown < n && (
                                         <div className="text-chartizer-yellow">all connected ones here</div>
                                     )}
-                                    <div>{stats.papers.toLocaleString()} papers · {(stats.cite_links + stats.coauthor_links).toLocaleString()} links</div>
+                                    <div>{stats.papers.toLocaleString()} papers · {onScreen.links.length.toLocaleString()} links</div>
                                 </div>
                             )}
                         </>
@@ -815,7 +852,8 @@ export default function MafiaPage() {
                 )}
 
                 {/* ── graph ── */}
-                <section className="relative flex-1 min-w-0 overflow-hidden">
+                <section className={`relative flex-1 min-w-0 overflow-hidden ${wide && authorPanel ? "[--chart-right-inset:380px] xl:[--chart-right-inset:420px]" : ""}`}
+                    style={{ "--chart-left-inset": wide && filtersVisible ? "300px" : "0px" }}>
                     <div ref={chartBox} className="graph-surface w-full h-full" />
 
                     {q && (
@@ -842,10 +880,10 @@ export default function MafiaPage() {
                         <div className="absolute inset-0 flex items-center justify-center text-sm text-theme-muted">No authors match these filters.</div>
                     )}
 
+                    {/* phones: the closed author card peeks at the bottom, like the results on Search */}
                     {!wide && selected && sheet !== "author" && (
-                        <div className="absolute inset-x-0 z-10 flex justify-center pointer-events-none" style={{ bottom: "calc(16px + env(safe-area-inset-bottom))" }}>
-                            <button type="button" onClick={() => setSheet("author")}
-                                className="pointer-events-auto h-10 px-5 rounded-full text-sm font-semibold bg-chartizer-yellow text-theme-bg shadow-lg max-w-[70vw] truncate">{selected.name}</button>
+                        <div className="glass absolute inset-x-2 z-10 rounded-2xl" style={{ bottom: "calc(8px + env(safe-area-inset-bottom))" }}>
+                            <SheetHandle open={false} onToggle={(o) => o && setSheet("author")} label={selected.name} />
                         </div>
                     )}
                 </section>
@@ -866,12 +904,13 @@ export default function MafiaPage() {
                     <div className={`absolute inset-x-0 bottom-0 z-20 transition-transform duration-300 ease-out ${sheet ? "translate-y-0" : "translate-y-[110%]"}`}>
                         <div className="glass mx-2 rounded-2xl max-h-[75dvh] flex flex-col relative"
                             style={{ marginBottom: "calc(8px + env(safe-area-inset-bottom))" }}>
-                            <div className="flex justify-center pt-2"><span className="w-10 h-1 rounded-full bg-theme-border" /></div>
+                            <SheetHandle open onToggle={(o) => { if (!o) setSheet(null); }}
+                                label={sheet === "author" && selected ? selected.name : null} />
                             {sheet === "filters" && (
                                 <button type="button" onClick={() => setSheet(null)} aria-label="Close"
                                     className="absolute right-3 top-2 w-9 h-9 flex items-center justify-center text-theme-muted text-xl">×</button>
                             )}
-                            <div className="overflow-y-auto overscroll-contain p-4 pt-3">
+                            <div className="overflow-y-auto overscroll-contain p-4 pt-0">
                                 {sheet === "filters" && (
                                     <div className="flex flex-col gap-6">
                                         {q && (
