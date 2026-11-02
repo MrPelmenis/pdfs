@@ -8,10 +8,13 @@ let pdfjsReady = null;
 function loadPdfjs() {
   pdfjsReady ||= (async () => {
     const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf.mjs");
-    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
-      "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
-      import.meta.url,
-    ).toString();
+    // Webpack bundles the worker as a .js chunk. Pointing workerSrc at the .mjs file
+    // breaks behind servers that send .mjs as application/octet-stream (nginx does):
+    // browsers refuse to run a module script with that type.
+    pdfjsLib.GlobalWorkerOptions.workerPort = new Worker(
+      new URL("pdfjs-dist/legacy/build/pdf.worker.min.mjs", import.meta.url),
+      { type: "module" },
+    );
     // the viewer module reads the library from this global
     window.pdfjsLib = pdfjsLib;
     const viewer = await import("pdfjs-dist/legacy/web/pdf_viewer.mjs");
