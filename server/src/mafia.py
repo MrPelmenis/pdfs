@@ -25,10 +25,12 @@ AUTHORSHIPS_FILE = os.path.join(CACHE_DIR, "authorships.json")
 # co-author pairs that say nothing about who works with whom.
 MAX_COAUTHORS = 25
 REBUILD_AFTER_S = 15 * 60
-# How many search hits a topic query scopes the map to.
-TOPIC_HITS = 400
-TOPIC_MIN_TIES = 2
-TOPIC_MIN_SHARE = 0.25
+# A topic map: the top search hits, and the papers they cite, that cite them and that
+# OpenAlex lists as related to them.
+TOPIC_HITS = 20
+# Authors of the hits are always on a topic map; of a hit with a long author list, only
+# the first few and the last (the group leader) are.
+HIT_FIRST_AUTHORS = 6
 
 _lock = threading.Lock()
 _state = None  # {"built_at", "doc_count", "papers", "authors", "citations", "profiles"}
@@ -38,7 +40,7 @@ _state = None  # {"built_at", "doc_count", "papers", "authors", "citations", "pr
 
 def _all_docs():
     fields = {"title": True, "authors": True, "category_id": True, "date": True,
-              "referenced_work_ids": True, "openalex_id": True,
+              "referenced_work_ids": True, "related_work_ids": True, "openalex_id": True,
               "stub_document": True, "cited_by_count": True, "file": True,
               "author_ids": True}
     docs = {}
@@ -120,6 +122,7 @@ def _build():
             "cited_by_count": d.get("cited_by_count") or 0,
             "file": d.get("file") or "",
             "authors": aids,
+            "related": d.get("related_work_ids") or [],
         }
 
     citations = [(pid, ref) for pid, d in docs.items()
@@ -155,31 +158,25 @@ def _get_state(refresh=False):
 
 # ── Network for a selection of papers ─────────────────────────────────────────
 
-def topic_papers(query, expand=False):
-    """Paper ids matching a search query, over every paper (stubs included).
-
-    With expand, also the papers tied to the hits by citation, so the map shows who
-    works around a topic, not only who wrote the matching titles. A paper qualifies
-    when it cites (or is cited by) at least TOPIC_MIN_TIES hits AND at least
-    TOPIC_MIN_SHARE of all its citation links in the library go to or from the hits:
-    the second rule keeps out the classics everybody cites (a 1951 protein assay is
-    tied to every topic, but only a sliver of its links are about any one of them).
-    """
+def topic_papers(query):
+    """A search topic: the top TOPIC_HITS search hits in rank order, and every paper of
+    the topic, which is the hits and the papers they cite, that cite them and that are
+    related to them (OpenAlex), when those are in the library (stubs included)."""
     st = _get_state()
+    papers = st["papers"]
     resp = corelamo.search(query, docs=TOPIC_HITS, return_fields={"title": True})
     resp.raise_for_status()
-    hits = {d["id"] for d in resp.json().get("data", []) if d["id"] in st["papers"]}
-    if expand:
-        ties = collections.Counter()
-        for src_pid, dst_pid in st["citations"]:
-            if dst_pid in hits and src_pid not in hits:
-                ties[src_pid] += 1
-            elif src_pid in hits and dst_pid not in hits:
-                ties[dst_pid] += 1
-        degree = st["degree"]
-        hits |= {pid for pid, n in ties.items()
-                 if n >= TOPIC_MIN_TIES and n / max(1, degree[pid]) >= TOPIC_MIN_SHARE}
-    return hits
+    hits = list(dict.fromkeys(d["id"] for d in resp.json().get("data", []) if d["id"] in papers))
+    hit_set = set(hits)
+    topic = set(hits)
+    for src_pid, dst_pid in st["citations"]:
+        if src_pid in hit_set:
+            topic.add(dst_pid)
+        elif dst_pid in hit_set:
+            topic.add(src_pid)
+    for pid in hits:
+        topic.update(r for r in papers[pid]["related"] if r in papers)
+    return hits, topic
 
 
 _selection_cache = collections.OrderedDict()
@@ -187,22 +184,23 @@ SELECTION_CACHE_SIZE = 8
 
 
 def _selection(category_ids=None, year_from=None, year_to=None, paper_ids=None,
-               query=None, expand=False, full_only=False):
+               query=None, full_only=False):
     """Everything the map needs for one filter selection: the papers, who wrote
     them, and how often each pair of authors co-authors / cites. Cached, so
     expanding an author doesn't recompute it."""
     st = _get_state()
     key = (st["built_at"], frozenset(category_ids or ()), year_from, year_to,
            frozenset(paper_ids) if paper_ids is not None else None,
-           query or None, bool(expand), bool(full_only))
+           query or None, bool(full_only))
     with _lock:
         if key in _selection_cache:
             _selection_cache.move_to_end(key)
             return _selection_cache[key]
 
     papers = st["papers"]
+    hits = []
     if query:
-        found = topic_papers(query, expand)
+        hits, found = topic_papers(query)
         paper_ids = found if paper_ids is None else set(paper_ids) & found
 
     def selected(pid):
@@ -270,6 +268,8 @@ def _selection(category_ids=None, year_from=None, year_to=None, paper_ids=None,
         "sel": sel, "author_papers": dict(author_papers), "coauthor": coauthor,
         "cites": cites, "field_matrix": field_matrix, "cites_out": cites_out,
         "cites_in": cites_in, "coauthored": coauthored, "neighbours": neighbours,
+        # a topic's search hits that passed the filters, best first
+        "hits": [pid for pid in hits if pid in sel],
     }
     with _lock:
         _selection_cache[key] = result
@@ -285,7 +285,7 @@ def _library():
     return _selection()
 
 
-def _author_row(st, sx, aid, shown, min_weight, lib=None):
+def _author_row(st, sx, aid, shown, min_weight, lib=None, hit_rank=None):
     lib = lib or _library()
     # someone opened into the map from outside the selection: described by the whole library
     outside = aid not in sx["author_papers"]
@@ -307,6 +307,8 @@ def _author_row(st, sx, aid, shown, min_weight, lib=None):
         "coauthored": sx["coauthored"][aid],
         "more": _hidden_count(lib, aid, shown, min_weight),
         "outside": outside,
+        # on a topic map: the best search hit (1 = the top one) they wrote, if any
+        "hit": hit_rank,
         # their whole career, from the authors database
         "citations": profile.get("cited_by_count") or 0,
         "h_index": profile.get("h_index") or 0,
@@ -349,11 +351,12 @@ def _map_links(sx, lib, new, everyone, min_weight, opened=()):
     return links
 
 
-def _pick_connected(ranked, neighbours, min_weight, limit):
+def _pick_connected(ranked, neighbours, min_weight, limit, seed=()):
     """The best-ranked authors such that every one links (at min_weight) to at least
     one other picked author: walking down the ranking, an author joins once someone
-    they link to has joined (or is waiting, then both join)."""
-    picked, picked_set = [], set()
+    they link to has joined (or is waiting, then both join). `seed` authors are on the
+    map from the start, linked or not, and count towards `limit`."""
+    picked, picked_set = list(seed), set(seed)
     waiting = {}   # author -> rank position, linked to nobody picked yet
 
     def add(a):
@@ -386,11 +389,11 @@ def _pick_connected(ranked, neighbours, min_weight, limit):
 
 
 def network(category_ids=None, year_from=None, year_to=None, paper_ids=None,
-            query=None, expand=False, full_only=False,
+            query=None, full_only=False,
             limit=250, min_weight=1, include=None, linked_only=True, refresh=False):
     st = _get_state(refresh)
     papers = st["papers"]
-    sx = _selection(category_ids, year_from, year_to, paper_ids, query, expand, full_only)
+    sx = _selection(category_ids, year_from, year_to, paper_ids, query, full_only)
     sel, author_papers = sx["sel"], sx["author_papers"]
 
     # When there are more authors than fit, show the most cited scientists (career
@@ -407,18 +410,30 @@ def network(category_ids=None, year_from=None, year_to=None, paper_ids=None,
     def rank(aid):
         return ((profiles.get(aid) or {}).get("cited_by_count") or 0, connectivity(aid))
 
-    order = sorted(author_papers, key=rank, reverse=True)
+    # A topic map starts from the people who wrote its search hits, best hit first
+    # (the most cited first among authors of the same hit); the rest of the topic's
+    # authors fill the map by career citations as above.
+    hit_rank = {}
+    for i, pid in enumerate(sx["hits"]):
+        aids = papers[pid]["authors"]
+        if len(aids) > HIT_FIRST_AUTHORS + 1:
+            aids = aids[:HIT_FIRST_AUTHORS] + aids[-1:]
+        for aid in aids:
+            hit_rank.setdefault(aid, i + 1)
+    seed = sorted(hit_rank, key=lambda a: (hit_rank[a], -rank(a)[0]))
+
+    order = [a for a in sorted(author_papers, key=rank, reverse=True) if a not in hit_rank]
     requested_weight = min_weight
     if linked_only:
-        ranked = _pick_connected(order, sx["neighbours"], min_weight, max(1, limit))
+        ranked = _pick_connected(order, sx["neighbours"], min_weight, max(1, limit), seed)
         # A narrow selection (a topic, a decade, one field) seldom has `limit` authors
         # linked this strongly: relax the link strength a step at a time until the map
         # fills. Links, hidden counts and opening all use the strength the map ended on.
         while len(ranked) < limit and min_weight > 1:
             min_weight -= 1
-            ranked = _pick_connected(order, sx["neighbours"], min_weight, max(1, limit))
+            ranked = _pick_connected(order, sx["neighbours"], min_weight, max(1, limit), seed)
     else:
-        ranked = order[:max(1, limit)]
+        ranked = seed + order[:max(0, limit - len(seed))]
     # authors the user opened into the map stay on it, from the selection or beyond it
     lib = _library()
     picked = set(ranked)
@@ -426,7 +441,7 @@ def network(category_ids=None, year_from=None, year_to=None, paper_ids=None,
                if a in lib["author_papers"] and a not in picked]
     shown = set(ranked)
 
-    out_authors = [_author_row(st, sx, aid, shown, min_weight, lib) for aid in ranked]
+    out_authors = [_author_row(st, sx, aid, shown, min_weight, lib, hit_rank.get(aid)) for aid in ranked]
     links = _map_links(sx, lib, shown, shown, min_weight, set(include or ()))
 
     field_matrix = sx["field_matrix"]

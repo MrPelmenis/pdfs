@@ -1011,7 +1011,6 @@ def _mafia_filters(body):
         year_to=_int_arg("year_to"),
         paper_ids=set(paper_ids) if isinstance(paper_ids, list) else None,
         query=request.args.get("q", "").strip() or None,
-        expand=request.args.get("expand") == "1",
         full_only=request.args.get("full_only") == "1",
     )
 

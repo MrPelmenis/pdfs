@@ -254,6 +254,12 @@ export default function SearchPage() {
         chartRef._pendingData = null;
     }, [hasSearched, openPdfFromChart, openUploadFromChart]);
 
+    // leaving the page (e.g. for the author map) takes the graph and its listeners along
+    useEffect(() => () => {
+        chartRef.current?.remove();
+        chartRef.current = null;
+    }, []);
+
     const doSearch = () => {
         const q = inputVal.trim();
         const docs = Math.max(1, docsInput || 1);

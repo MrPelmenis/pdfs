@@ -42,6 +42,11 @@ const SELECT_STROKE = QUERY_FILL;
 // "Center on click": the clicked article glides to the middle of the visible graph.
 const CENTER_KEY = "brims.centerOnClick";
 const CENTER_MS = 520;
+const PILL_ROUND_SPARE = 4;
+// A double-click is two clicks first: a click's expanding and centering wait this long
+// to see whether it is one. Short, so a single click still feels instant; a slower
+// double-click than this counts as a click first.
+const DOUBLE_CLICK_MS = 220;
 
 const LINK_LABEL_STYLE = {
     visible: true,
@@ -593,7 +598,10 @@ function toRendererNode(item, x, y, scale = 1, pinned = false) {
     const colors = pillColors(d, false);
     return {
         id, x, y,
-        shape: { kind: "rect", width: pill.w, height: pill.h, cornerRadius: pill.corner },
+        // A resize keeps the corner radius the node was created with, so it is created
+        // with more than it can ever need: the engine draws at most a half circle, and
+        // the ends stay round while the pill grows or shrinks.
+        shape: { kind: "rect", width: pill.w, height: pill.h, cornerRadius: pill.corner * PILL_ROUND_SPARE },
         flags: { pinned },
         style: {
             fillColor: colors.fill,
@@ -1194,25 +1202,6 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
         octx.restore();
     }
 
-    // The last clicked article: an accent ring with a soft glow.
-    function drawSelectedRing(pill, c, zoom) {
-        const w = pill.w * zoom;
-        const h = pill.h * zoom;
-        if (h < 4) return;
-        const width = Math.max(1.5, 3 * zoom);
-        const gap = Math.max(1, 2 * zoom);
-        const off = gap + width / 2;
-        octx.save();
-        octx.strokeStyle = SELECT_STROKE;
-        octx.lineWidth = width;
-        octx.shadowColor = "rgba(222,161,28,0.6)";
-        octx.shadowBlur = 14 * Math.min(1, zoom);
-        octx.beginPath();
-        octx.roundRect(c.x - w / 2 - off, c.y - h / 2 - off, w + 2 * off, h + 2 * off, h / 2 + off);
-        octx.stroke();
-        octx.restore();
-    }
-
     // Glides the view so the article sits in the middle of the part of the graph not
     // under the results panel. A touch or the wheel stops it.
     function centerOn(id) {
@@ -1231,7 +1220,6 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     // Makes `id` the last clicked article (null: none). Its pill grows, the previous one
     // shrinks back; the title follows through `pops`.
     function select(id) {
-        if (id && centerOnClick) centerOn(id);
         if (id === selectedId) return;
         const prev = selectedId;
         const before = (nid) => (nid ? nodeScale(nid) : 1);
@@ -1251,16 +1239,6 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
                 const pill = pillOf(nid);
                 if (!r.animateNodeSize(nid, pill.w, pill.h, { durationMs: SELECT_MS, easing: "ease-out-back", commit: true })) return;
                 pops.set(nid, { start: now, ms: SELECT_MS, from, to: 1, ease: easeOutBack });
-                // A resize keeps the old corner radius, which leaves square-ish ends on a
-                // pill that grew (and links stopping short of one that shrank): once it
-                // has its size, the pill is re-sent with the right one.
-                setTimeout(() => {
-                    if (removed || !renderer || !knownNodeIds.has(nid) || leaving.has(nid)) return;
-                    safe((rr) => {
-                        const pos = rr.getNodePosition(nid);
-                        if (pos) rr.upsertNode(toRendererNode(allNodes.get(nid), pos.x, pos.y, nodeScale(nid)));
-                    }, renderer);
-                }, SELECT_MS + 30);
             };
             if (prev) resize(prev, prevFrom / nodeScale(prev));
             if (id) resize(id, idFrom / nodeScale(id));
@@ -1270,7 +1248,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
 
     function drawTitle(d, id, c, zoom) {
         const pill = pillOf(id, d);
-        if (id === selectedId) drawSelectedRing(pill, c, zoom);
+        if (id === selectedId) drawSelectedRing(octx, pill, c, zoom);
         else if (expandedIds.has(id)) drawExpandedRing(pill, c, zoom);
         const px = pill.fontSize * zoom;
         if (px < MIN_TEXT_PX) return;
@@ -1773,6 +1751,20 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     //   hoverchange → { hoverNodeId, hoverLinkId }
     //   click / doubleclick / longpress → { nodeId, linkId, screenX, screenY, chartX, chartY, ... }
 
+    // A click on an article, once it is clear it was not half of a double-click.
+    let clickTimer = null;
+    function clickArticle(id, d, touch) {
+        if (centerOnClick) centerOn(id);
+        if (isStub(d)) {
+            // on touch the sheet offers OpenAlex instead of leaving the page at once
+            if (touch) showSheet(id);
+            else window.open(`https://openalex.org/${d.openalex_id || id}`, "_blank");
+            return;
+        }
+        if (remainingFor(id) !== 0) expandNode(id);
+        if (touch) showSheet(id);
+    }
+
     const handleEvent = (event) => {
         switch (event.type) {
             case "hoverchange": {
@@ -1798,6 +1790,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
                 const id = event.nodeId;
                 if (id && fieldsById.has(id) && remainingFor(id) !== 0) {
                     select(id);
+                    if (centerOnClick) centerOn(id);
                     expandNode(id);
                 }
                 break;
@@ -1819,6 +1812,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
                 const hairId = !id && hairHit(hairHits, sx, sy);
                 if (hairId && fieldsById.has(hairId) && remainingFor(hairId) !== 0) {
                     select(hairId);
+                    if (centerOnClick) centerOn(hairId);
                     expandNode(hairId);
                     return;
                 }
@@ -1828,21 +1822,20 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
                 }
                 const d = fieldsById.get(id);
                 if (!d) return;
+                // highlighted at once; the rest waits in case this is a double-click
                 select(id);
-
-                if (isStub(d)) {
-                    // on touch the sheet offers OpenAlex instead of leaving the page at once
-                    if (touch) showSheet(id);
-                    else window.open(`https://openalex.org/${d.openalex_id || id}`, "_blank");
-                    return;
-                }
-
-                if (remainingFor(id) !== 0) expandNode(id);
-                if (touch) showSheet(id);
+                clearTimeout(clickTimer);
+                clickTimer = setTimeout(() => {
+                    clickTimer = null;
+                    if (removed || !renderer || !knownNodeIds.has(id)) return;
+                    safe(() => clickArticle(id, d, touch), renderer);
+                }, DOUBLE_CLICK_MS);
                 break;
             }
 
             case "doubleclick": {
+                clearTimeout(clickTimer);
+                clickTimer = null;
                 const id = event.nodeId;
                 if (!id || id === "query") return;
                 const d = fieldsById.get(id);
@@ -1901,6 +1894,7 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
             if (fitTimer) clearTimeout(fitTimer);
             cancelAnimationFrame(frame);
             stopGlide();
+            clearTimeout(clickTimer);
             if (resizeObserver) resizeObserver.disconnect();
             container.removeEventListener("gesturestart", onGesture);
             container.removeEventListener("gesturechange", onGesture);
@@ -1974,6 +1968,26 @@ const CreateChart = (data = null, initialNodes = [], onOpenPdf = null, onUploadS
     return chart;
 };
 
+// The last clicked node (an article, an author): an accent ring with a soft glow
+// around its pill (w×h world units) centred at screen point c.
+function drawSelectedRing(ctx, pill, c, zoom) {
+    const w = pill.w * zoom;
+    const h = pill.h * zoom;
+    if (h < 4) return;
+    const width = Math.max(1.5, 3 * zoom);
+    const gap = Math.max(1, 2 * zoom);
+    const off = gap + width / 2;
+    ctx.save();
+    ctx.strokeStyle = SELECT_STROKE;
+    ctx.lineWidth = width;
+    ctx.shadowColor = "rgba(222,161,28,0.6)";
+    ctx.shadowBlur = 14 * Math.min(1, zoom);
+    ctx.beginPath();
+    ctx.roundRect(c.x - w / 2 - off, c.y - h / 2 - off, w + 2 * off, h + 2 * off, h / 2 + off);
+    ctx.stroke();
+    ctx.restore();
+}
+
 // "Center on click": one setting for the paper graph and the author map.
 function centerOnClickSetting() {
     try { return localStorage.getItem(CENTER_KEY) !== "0"; } catch { return true; }
@@ -2026,7 +2040,9 @@ function guardHover(container) {
     const down = (e) => { pressOnGraph = onGraph(e); };
     const up = () => { pressOnGraph = false; };
     const move = (e) => {
-        if (onGraph(e) || (pressOnGraph && e.buttons)) return;
+        // a graph that is gone (its page left without removing it) must not block
+        // anything: the next graph needs these moves
+        if (!container.isConnected || onGraph(e) || (pressOnGraph && e.buttons)) return;
         e.stopPropagation();
     };
     document.addEventListener("pointerdown", down, true);
@@ -2043,7 +2059,8 @@ function guardHover(container) {
 
 // Shared with the author network (MafiaChart).
 export {
-    drawHairs, hairHit, MARKER_MAX_HAIRS, guardHover, centerOnClickSetting, saveCenterOnClick, glideToCenter,
+    drawHairs, hairHit, MARKER_MAX_HAIRS, guardHover, centerOnClickSetting, saveCenterOnClick, glideToCenter, DOUBLE_CLICK_MS,
+    drawSelectedRing, PILL_ROUND_SPARE, SELECT_MS,
     CHART_BG, PILL_FONT_FAMILY, LINK_LABEL_STYLE, LONG_PRESS_MS, MIN_TEXT_PX,
     POP_IN_MS, POP_OUT_MS, POP_MIN_SCALE, POP_START_MS, POP_STAGGER_MS, MAX_FIT_ZOOM, FIT_GLIDE_MS,
     parseColor, solidColor, textColorOn, escapeHtml, isEngineFault, adapterOf, easeOutBack, easeInBack,

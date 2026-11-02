@@ -4,7 +4,8 @@ import {
     CHART_BG, PILL_FONT_FAMILY, LINK_LABEL_STYLE, LONG_PRESS_MS, MIN_TEXT_PX,
     POP_IN_MS, POP_OUT_MS, POP_MIN_SCALE, POP_START_MS, POP_STAGGER_MS, MAX_FIT_ZOOM, FIT_GLIDE_MS,
     solidColor, textColorOn, escapeHtml, isEngineFault, adapterOf, easeOutBack, easeInBack,
-    drawHairs, hairHit, MARKER_MAX_HAIRS, guardHover, centerOnClickSetting, glideToCenter,
+    drawHairs, hairHit, MARKER_MAX_HAIRS, guardHover, centerOnClickSetting, glideToCenter, DOUBLE_CLICK_MS,
+    drawSelectedRing, PILL_ROUND_SPARE, SELECT_MS,
     getTooltip, positionTooltip, hideTooltip, legendRow, legendSection, pillSwatch, lineSwatch,
 } from "./Chart";
 
@@ -16,7 +17,6 @@ import {
 
 const MULTI_FILL = "#eef0f2";
 const NO_FIELD_FILL = "#5f6368";
-const SELECTED_STROKE = "#ffffff";
 // Name size = how the scientist ranks by career citations (OpenAlex) among the authors
 // on the map: the most cited is biggest, the least cited smallest, the rest spread in
 // between (a little more room at the top). Sizing by the citation numbers themselves
@@ -164,6 +164,7 @@ function showAuthorTooltip(author, categories, x, y) {
     const tip = getTooltip();
     tip.innerHTML = `
         <div style="font-weight:600;font-size:13px;color:#fff;margin-bottom:4px">${escapeHtml(author.name)}</div>
+        ${author.hit ? `<div style="color:#dea11c;font-weight:600;margin-bottom:4px">Wrote search result #${author.hit}</div>` : ""}
         <div style="color:#9aa0a6;margin-bottom:2px">${(author.citations ?? 0).toLocaleString()} citations · h-index ${author.h_index ?? "—"} <span style="color:#5f6368">(career)</span></div>
         <div style="color:#9aa0a6;margin-bottom:6px">${author.papers} paper${author.papers === 1 ? "" : "s"} in the library
             ${author.multi ? " · <span style='color:#e8eaed'>several fields</span>" : ""}</div>
@@ -246,6 +247,8 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
     let categories = new Map();
     const authors = new Map();         // id -> author row from /mafia
     const layouts = new Map();         // id -> name pill layout
+    // the last clicked author is drawn as big as the biggest name on the map, with a ring
+    let biggestFont = NAME_MIN_FONT;
     const knownLinkIds = new Set();
     const linksById = new Map();       // renderer link id -> link row, for the link tooltip
     let sim = null;
@@ -261,6 +264,7 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
     const neighbours = new Map();      // id -> ids it has a drawn link to
     let selectedId = null;
     let centerOnClick = centerOnClickSetting();   // shared with the paper graph
+    let clickTimer = null;
     let stopGlide = () => {};
 
     let renderer = null;
@@ -347,19 +351,23 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
 
     // ── Mapping ──────────────────────────────────────────────────────────────
 
+    // An author's pill as drawn: the selected one as big as the biggest name.
+    function pillFor(id) {
+        const base = layouts.get(id);
+        const a = authors.get(id);
+        if (id !== selectedId || !base || !a || base.fontSize >= biggestFont) return base;
+        return nameLayout(a.name, biggestFont);
+    }
+
     function toRendererNode(author, x, y, pinned) {
-        const pill = layouts.get(author.id);
+        const pill = pillFor(author.id);
         const colors = authorColors(author, categories);
-        const selected = author.id === selectedId;
         return {
             id: author.id, x, y,
-            shape: { kind: "rect", width: pill.w, height: pill.h, cornerRadius: pill.corner },
+            // more corner than needed keeps the ends round while the pill is resized
+            shape: { kind: "rect", width: pill.w, height: pill.h, cornerRadius: pill.corner * PILL_ROUND_SPARE },
             flags: { pinned },
-            style: {
-                fillColor: colors.fill,
-                strokeColor: selected ? SELECTED_STROKE : colors.stroke,
-                strokeWidth: selected ? Math.max(colors.strokeWidth, 3.5) : colors.strokeWidth,
-            },
+            style: { fillColor: colors.fill, strokeColor: colors.stroke, strokeWidth: colors.strokeWidth },
         };
     }
 
@@ -417,7 +425,7 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
     function popIn(r, ids) {
         const now = performance.now();
         ids.forEach((id, i) => {
-            const pill = layouts.get(id);
+            const pill = pillFor(id);
             if (!r.animateNodeSize(id, pill.w * POP_MIN_SCALE, pill.h * POP_MIN_SCALE, { durationMs: 1, easing: "linear", commit: true })) return;
             const delay = POP_START_MS + Math.min(i, 40) * POP_STAGGER_MS * 0.4;
             pops.set(id, { start: now + delay, ms: POP_IN_MS, from: POP_MIN_SCALE, to: 1, ease: easeOutBack });
@@ -432,7 +440,7 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
     function popOut(r, ids) {
         const now = performance.now();
         for (const id of ids) {
-            const pill = layouts.get(id);
+            const pill = pillFor(id);
             leaving.set(id, { author: authors.get(id), pill });
             pops.set(id, { start: now, ms: POP_OUT_MS, from: 1, to: POP_MIN_SCALE, ease: easeInBack });
             r.animateNodeSize(id, pill.w * POP_MIN_SCALE, pill.h * POP_MIN_SCALE, { durationMs: POP_OUT_MS, easing: "ease-in-back", commit: true });
@@ -470,14 +478,16 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
             const zoom = renderer.getViewport().zoom;
             octx.textAlign = "center";
             octx.textBaseline = "middle";
-            const drawn = [...authors].map(([id, a]) => [id, a, layouts.get(id)])
+            const drawn = [...authors].map(([id, a]) => [id, a, pillFor(id)])
                 .concat([...leaving].map(([id, l]) => [id, l.author, l.pill]));
             for (const [id, a, pill] of drawn) {
                 const pos = renderer.getNodePosition(id);
                 if (!pos || !a || !pill) continue;
                 const c = renderer.worldToScreen(pos.x, pos.y);
                 if (c.x + pill.w * zoom < 0 || c.x - pill.w * zoom > w || c.y + pill.h * zoom < 0 || c.y - pill.h * zoom > h) continue;
-                const px = pill.fontSize * zoom * scaleOf(id, now);
+                const scale = scaleOf(id, now);
+                if (id === selectedId && !leaving.has(id)) drawSelectedRing(octx, pill, c, zoom * scale);
+                const px = pill.fontSize * zoom * scale;
                 if (px < MIN_TEXT_PX) continue;
                 octx.font = `600 ${px}px ${PILL_FONT_FAMILY}`;
                 octx.fillStyle = authorColors(a, categories).text;
@@ -492,7 +502,7 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
                 if (!pos) continue;
                 const c = renderer.worldToScreen(pos.x, pos.y);
                 if (c.x < -200 || c.x > w + 200 || c.y < -200 || c.y > h + 200) continue;
-                const pill = layouts.get(id);
+                const pill = pillFor(id);
                 const towards = [];
                 for (const nb of neighbours.get(id) ?? []) {
                     const p = renderer.getNodePosition(nb);
@@ -543,7 +553,7 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
         const nodes = network.authors.map((a) => {
             const pos = r.getNodePosition(a.id);
             const home = anchorOf(a);
-            const pill = layouts.get(a.id);
+            const pill = pillFor(a.id);
             const pin = pinned.get(a.id);
             const held = pin || (!initial && !fresh.has(a.id) && pos);
             // new authors were inserted at the origin: start them at their island instead
@@ -706,6 +716,8 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
         const network = { ...fullNetwork, authors: visible.authors };
         const next = new Map(network.authors.map((a) => [a.id, a]));
         const ranks = citationRanks(network.authors);
+        const prevSelectedPill = selectedId ? pillFor(selectedId) : null;
+        biggestFont = Math.max(NAME_MIN_FONT, ...network.authors.map((a) => nameSize(ranks.get(a.id) ?? 0)));
 
         // links first: a link must not outlive one of its ends
         const maxWeight = Math.max(1, ...links.map((l) => l.weight));
@@ -743,12 +755,17 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
             const node = pos && toRendererNode(a, pos.x, pos.y, false);
             if (node && styleKey(node) !== nodeStyles.get(a.id)) {
                 restyled.push(node);
-            } else if (prevPill && prevPill !== pill && !fresh.has(a.id)) {
+            } else if (prevPill && prevPill !== pill && !fresh.has(a.id) && a.id !== selectedId) {
                 r.animateNodeSize(a.id, pill.w, pill.h, { durationMs: POP_IN_MS, easing: "ease-out-cubic", commit: true });
             }
             if (node) nodeStyles.set(a.id, styleKey(node));
         }
         if (restyled.length) r.upsertNodes(restyled);
+        // the selected author follows the biggest name
+        if (selectedId && prevSelectedPill && pillFor(selectedId) !== prevSelectedPill) {
+            const target = pillFor(selectedId);
+            r.animateNodeSize(selectedId, target.w, target.h, { durationMs: POP_IN_MS, easing: "ease-out-cubic", commit: true });
+        }
         if (freshNodes.length) {
             r.upsertNodes(freshNodes);
             for (const n of freshNodes) nodeStyles.set(n.id, styleKey(n));
@@ -779,12 +796,6 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
         if (fresh.size === network.authors.length) userMoved = false;
     }
 
-    function restyle(r, id) {
-        const a = authors.get(id);
-        const pos = a && r.getNodePosition(id);
-        if (!pos) return;
-        r.upsertNode(toRendererNode(a, pos.x, pos.y, false));
-    }
 
     // Glides the view so the author sits in the middle of the part of the map not under
     // the filters. A touch or the wheel stops it.
@@ -803,11 +814,27 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
 
     function select(id, notify = false) {
         const prev = selectedId;
-        selectedId = id && authors.has(id) ? id : null;
-        run((r) => {
-            if (prev && prev !== selectedId) restyle(r, prev);
-            if (selectedId) restyle(r, selectedId);
-        });
+        const next = id && authors.has(id) ? id : null;
+        if (next !== prev) {
+            const before = (aid) => (aid ? pillFor(aid) : null);
+            const prevFrom = before(prev);
+            const nextFrom = before(next);
+            selectedId = next;
+            // the pills grow / shrink, the names follow through `pops`
+            run((r) => {
+                const now = performance.now();
+                const resize = (aid, from) => {
+                    if (!aid || !authors.has(aid) || leaving.has(aid) || !from) return;
+                    const pill = pillFor(aid);
+                    if (pill === from) return;
+                    if (!r.animateNodeSize(aid, pill.w, pill.h, { durationMs: SELECT_MS, easing: "ease-out-back", commit: true })) return;
+                    pops.set(aid, { start: now, ms: SELECT_MS, from: from.fontSize / pill.fontSize, to: 1, ease: easeOutBack });
+                };
+                resize(prev, prevFrom);
+                resize(next, nextFrom);
+                invalidate(SELECT_MS + 100);
+            });
+        }
         if (notify && onSelect) onSelect(selectedId);
     }
 
@@ -852,6 +879,9 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
             else if (a) showAuthorTooltip(a, categories, pointerX, pointerY);
             else if (l) showLinkTooltip(l, authors, pointerX, pointerY);
             else hideTooltip();
+        } else if (event.type === "selectionchange") {
+            // the engine's own (blue) selection outline would sit next to our ring
+            if (event.selectedNodeIds?.length || event.selectedLinkIds?.length) renderer?.clearSelection();
         } else if (event.type === "pointerdrag") {
             if (event.nodeIds?.length) {
                 hideTooltip();
@@ -864,6 +894,8 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
             const a = event.nodeId && authors.get(event.nodeId);
             if (a?.more && onExpand) onExpand(a.id);
         } else if (event.type === "doubleclick") {
+            clearTimeout(clickTimer);
+            clickTimer = null;
             const a = event.nodeId && authors.get(event.nodeId);
             if (a && onOpenProfile) { hideTooltip(); onOpenProfile(a); }
         } else if (event.type === "click") {
@@ -878,9 +910,16 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
             }
             const a = event.nodeId && authors.get(event.nodeId);
             select(a ? a.id : null, true);
-            if (a && centerOnClick) centerOn(a.id);
-            // like the citation graph: a click also brings in their hidden connections
-            if (a?.more && onExpand) onExpand(a.id);
+            if (!a) return;
+            // like the citation graph: a click also centers them and brings in their hidden
+            // connections, once it is clear it was not half of a double-click
+            clearTimeout(clickTimer);
+            clickTimer = setTimeout(() => {
+                clickTimer = null;
+                if (removed || !authors.has(a.id)) return;
+                if (centerOnClick) centerOn(a.id);
+                if (a.more && onExpand) onExpand(a.id);
+            }, DOUBLE_CLICK_MS);
         }
     };
 
@@ -943,6 +982,7 @@ export default function createMafiaChart(container, { onSelect, onExpand, onOpen
             cancelAnimationFrame(frame);
             cancelAnimationFrame(simFrame);
             stopGlide();
+            clearTimeout(clickTimer);
             if (sim) sim.stop();
             if (resizeObserver) resizeObserver.disconnect();
             container.removeEventListener("gesturestart", onGesture);

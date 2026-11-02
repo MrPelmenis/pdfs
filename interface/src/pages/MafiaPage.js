@@ -32,7 +32,6 @@ function readFilters(params) {
     };
     return {
         q: params.get("q") ?? "",
-        around: params.get("around") !== "0",
         fields: new Set((params.get("fields") ?? "").split(",").filter(Boolean).map(Number)),
         from: int("from", YEAR_MIN),
         to: int("to", YEAR_MAX),
@@ -49,7 +48,6 @@ function readFilters(params) {
 function writeFilters(f) {
     const p = new URLSearchParams();
     if (f.q) p.set("q", f.q);
-    if (f.q && !f.around) p.set("around", "0");
     if (f.fields.size) p.set("fields", [...f.fields].join(","));
     if (f.from > YEAR_MIN) p.set("from", f.from);
     if (f.to < YEAR_MAX) p.set("to", f.to);
@@ -69,7 +67,7 @@ function networkParams(f) {
     if (f.fields.size) p.set("categories", [...f.fields].sort().join(","));
     if (f.from > YEAR_MIN) p.set("year_from", f.from);
     if (f.to < YEAR_MAX) p.set("year_to", f.to);
-    if (f.q) { p.set("q", f.q); if (f.around) p.set("expand", "1"); }
+    if (f.q) p.set("q", f.q);
     if (f.full) p.set("full_only", "1");
     // "hide unconnected": the server then picks authors who link to someone on the map
     if (f.lonely) p.set("linked_only", "0");
@@ -335,6 +333,9 @@ function AuthorPanel({ author, network, categories, onPick, onOpenPdf, onClose, 
                         {author.papers} paper{author.papers === 1 ? "" : "s"} in the library
                         {dom != null && ` · mostly ${catOf(dom)?.name ?? "unknown"}`}
                     </p>
+                    {author.hit && (
+                        <p className="text-xs font-semibold text-chartizer-yellow mt-1">Wrote search result #{author.hit}</p>
+                    )}
                 </div>
                 <button type="button" onClick={onClose} aria-label="Close"
                     className="w-9 h-9 [@media(pointer:coarse)]:w-11 [@media(pointer:coarse)]:h-11 -mr-2 -mt-1 flex items-center justify-center rounded-lg text-theme-muted hover:text-theme-text-primary hover:bg-theme-hover text-xl">×</button>
@@ -525,7 +526,7 @@ export default function MafiaPage() {
     }, []);
 
     // ── fetch the network whenever a server-side filter changes ──
-    const { q, around, fields, from, to, full, n, min, lonely } = filters;
+    const { q, fields, from, to, full, n, min, lonely } = filters;
     // the link toggles, as the chart applies them (and the stats count them)
     const show = useMemo(() => ({
         cites: filters.cites, coauthors: filters.coauthors, crossField: filters.cross, hideLonely: !filters.lonely,
@@ -561,7 +562,7 @@ export default function MafiaPage() {
                 .finally(() => { clearTimeout(slowTimer); if (live) { setLoading(false); setSlow(false); } });
         }, 250);
         return () => { live = false; clearTimeout(t); clearTimeout(slowTimer); };
-    }, [q, around, fieldsKey, from, to, full, n, min, lonely]);
+    }, [q, fieldsKey, from, to, full, n, min, lonely]);
 
     // ── expanding: an author's strongest hidden connections join the map ──
     const [expanding, setExpanding] = useState(new Set());
@@ -814,12 +815,6 @@ export default function MafiaPage() {
                     right={
                         <>
                             {!wide && filtersButton}
-                            {q && wide && (
-                                <div className="flex-none w-56 [&>div]:h-10 [&_button]:h-full [&_button]:whitespace-nowrap">
-                                    <Segmented options={[false, true]} value={around} onChange={(v) => setFilter({ around: v })}
-                                        format={(v) => (v ? "Around topic" : "Exact")} />
-                                </div>
-                            )}
                             {wide && stats && (
                                 <div className="text-right text-xs text-theme-muted leading-tight whitespace-nowrap">
                                     <div><b className="text-theme-text-primary font-semibold">{onScreen.authors.length}</b> of {stats.authors_total.toLocaleString()} authors</div>
@@ -860,7 +855,7 @@ export default function MafiaPage() {
                         <div className={`absolute top-3 z-10 flex items-center gap-2 h-8 px-3 rounded-full transition-[left] duration-300
                             glass text-xs text-theme-muted
                             ${wide && filtersVisible ? "left-[312px] max-w-[calc(100%-324px)]" : "left-3 max-w-[calc(100%-24px)]"}`}>
-                            <span className="truncate">Authors {around ? "around" : "of papers on"} <b className="text-theme-text-primary">“{q}”</b></span>
+                            <span className="truncate">Authors of the top results on <b className="text-theme-text-primary">“{q}”</b></span>
                         </div>
                     )}
 
@@ -913,12 +908,6 @@ export default function MafiaPage() {
                             <div className="overflow-y-auto overscroll-contain p-4 pt-0">
                                 {sheet === "filters" && (
                                     <div className="flex flex-col gap-6">
-                                        {q && (
-                                            <Section title="Topic">
-                                                <Segmented options={[false, true]} value={around} onChange={(v) => setFilter({ around: v })}
-                                                    format={(v) => (v ? "Around topic" : "Exact matches")} />
-                                            </Section>
-                                        )}
                                         {filterPanel}
                                     </div>
                                 )}
